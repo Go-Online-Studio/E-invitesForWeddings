@@ -1561,6 +1561,7 @@
             function openWhatsApp(message) {
                 const url = `${whatsappBaseUrl}?phone=${targetNumber}&text=${encodeURIComponent(message)}`;
                 window.open(url, '_blank');
+                rsvpForm.reset();
             }
 
             const rsvpForm = document.getElementById("rsvpForm");
