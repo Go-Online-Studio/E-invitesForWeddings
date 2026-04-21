@@ -87,10 +87,85 @@
             max-width: var(--card-w);
             left: 50%;
             transform: translateX(-50%);
-            perspective: 600px;
         }
 
-        
+        /* Envelope halves */
+        .env-top,
+        .env-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(160deg, #1a1510 0%, #100d08 100%);
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1), opacity 0.8s ease;
+            will-change: transform;
+        }
+
+        .env-top {
+            top: 0;
+            border-bottom: 1px solid var(--gold-dim);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 60%, 0 100%);
+        }
+
+        .env-bottom {
+            bottom: 0;
+            border-top: 1px solid var(--gold-dim);
+            clip-path: polygon(0 0, 50% 40%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Gold ornament lines on envelope */
+        .env-top::before,
+        .env-bottom::after {
+            content: '';
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+        }
+
+        .env-top::before {
+            bottom: 30px;
+        }
+
+        .env-bottom::after {
+            top: 30px;
+        }
+
+        /* Corner flourishes */
+        .env-corner {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-color: var(--gold-dim);
+            border-style: solid;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .env-corner.tl {
+            top: 14px;
+            left: 14px;
+            border-width: 1px 0 0 1px;
+        }
+
+        .env-corner.tr {
+            top: 14px;
+            right: 14px;
+            border-width: 1px 1px 0 0;
+        }
+
+        .env-corner.bl {
+            bottom: 14px;
+            left: 14px;
+            border-width: 0 0 1px 1px;
+        }
+
+        .env-corner.br {
+            bottom: 14px;
+            right: 14px;
+            border-width: 0 1px 1px 0;
+        }
 
         /* Seal */
         .seal-wrap {
@@ -196,6 +271,14 @@
             opacity: 0.6;
         }
 
+        /* Opening animation states */
+        #intro.opening .env-top {
+            transform: translateY(-105%);
+        }
+
+        #intro.opening .env-bottom {
+            transform: translateY(105%);
+        }
 
         #intro.opening {
             opacity: 0;
@@ -931,73 +1014,6 @@
             margin-bottom: -5px;
             height: 250px;
          }
-
-
-
-
-
-
-:root {
-  --base: #130f06;
-  --base-light: #1a1407;
-  --base-dark: #0f0c03;
-  --shadow: #1a1508;
-}
-
-
-
-
-
-/* Envelope Styling */
-.envelope {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(#0f0c03 40%, #130f06  100%); 
-  cursor: pointer;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) ;
-  aspect-ratio: 5/3; 
-}
-
-.envelope::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 100%; 
-  transform: translateX(-50%);
-  border-top: 52vh solid #1a1407;
-  border-left: 52vh solid transparent;
-  border-right: 52vh solid transparent;
-  box-sizing: border-box;
-  z-index: 30;
-  transform-origin: top;
-  aspect-ratio: 2.8/1 ;
-}
-
-.envelope::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 124%;
-  aspect-ratio: 5/3 ; 
-  z-index: 25; 
-  background: 
-  linear-gradient(36deg, var(--base) 100%, var(--shadow) 100%, transparent 50%) left top / 54% 55% no-repeat,
-   linear-gradient(145deg, var(--base) 40%, var(--shadow) 41%, var(--base-dark) 48%) left bottom / 50% 53% no-repeat,
-  linear-gradient(39deg, var(--base-dark) 58%, var(--shadow) 65%, var(--base) 66%) right bottom / 100% 57% no-repeat, 
-   linear-gradient(144deg, transparent -20%, var(--shadow) -19%, var(--base) 20%) right top / 54% 55% no-repeat
-}
-
-
-
-
     </style>
 </head>
 
@@ -1009,15 +1025,15 @@
     <!-- ══ INTRO / ENVELOPE ══ -->
     <div id="app">
         <div id="intro">
-            
+            <div class="env-top"></div>
+            <div class="env-bottom"></div>
+            <div class="env-corner tl"></div>
+            <div class="env-corner tr"></div>
+            <div class="env-corner bl"></div>
+            <div class="env-corner br"></div>
 
-
-                    <div class="envelope" ></div>
-
-            
-
-            <div class="seal-wrap"> 
-                <div class="seal" id="openBtn" onclick="openCard()">
+            <div class="seal-wrap">
+                <div class="seal" id="openBtn">
                     <span class="seal-monogram">N & S</span>
                     <div class="seal-line"></div>
                     <span class="seal-sub">Tap to Open</span>
@@ -1218,11 +1234,6 @@
         </div><!-- /main -->
     </div><!-- /app -->
 
-
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CSSRulePlugin.min.js"></script>
-
-
     <script>
         // ══════════════════════════════════════
         // FIREWORKS ENGINE
@@ -1354,39 +1365,6 @@
                 burstConfetti();
             }, 1200);
         });
-
-        /* --- ENVLOPE OPEN / CLOSE LOGIC --- */
-            let t1 = gsap.timeline({ paused: true }); 
-            let flap = CSSRulePlugin.getRule(".envelope:before"); 
-            let t2 = gsap.timeline({ paused: true }); 
-            let flap2 = CSSRulePlugin.getRule(".envelope:after"); 
-
-            t1.to(flap, { 
-            duration: 0.5, 
-            cssRule: {
-                rotateX: 180,
-                translateY: -50,
-                transformOrigin: "top",
-            }
-            })
-            .set(flap, {
-            cssRule: {
-                zIndex: 10
-            }
-            })
-
-            t2.to(flap2, { 
-            duration: 0.5, 
-            cssRule: {
-                translateY: -50,
-                transformOrigin: "top",
-            }
-            })
-
-            function openCard(e) {
-            t1.play();
-            t2.play();
-            }
 
         // ══════════════════════════════════════
         // COUNTDOWN TIMER
