@@ -103,24 +103,20 @@
         }
 
         .seal {
-            width: 110px;
-            height: 110px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #f0d060, #b8920d 60%, #8a6a00);
-            border: 2px solid var(--gold-light);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             cursor: pointer;
-            box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.08), 0 0 40px rgba(212, 175, 55, 0.25), 0 0 80px rgba(212, 175, 55, 0.1);
-            animation: sealPulse 2.5s ease-in-out infinite;
+            background: url('images/GaneshSeel.webp') center/cover no-repeat; 
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .seal:hover {
             transform: scale(1.07);
-            box-shadow: 0 0 0 8px rgba(212, 175, 55, 0.12), 0 0 60px rgba(212, 175, 55, 0.4);
         }
 
         .seal:active {
@@ -150,7 +146,7 @@
             text-transform: uppercase;
         }
 
-        @keyframes sealPulse {
+        /* @keyframes sealPulse {
 
             0%,
             100% {
@@ -160,7 +156,7 @@
             50% {
                 box-shadow: 0 0 0 14px rgba(212, 175, 55, 0.04), 0 0 60px rgba(212, 175, 55, 0.4), 0 0 100px rgba(212, 175, 55, 0.15);
             }
-        }
+        } */
 
         .seal-label {
             font-family: 'Montserrat', sans-serif;
@@ -991,7 +987,7 @@
   background: 
   linear-gradient(36deg, var(--base) 100%, var(--shadow) 100%, transparent 50%) left top / 54% 55% no-repeat,
    linear-gradient(145deg, var(--base) 40%, var(--shadow) 41%, var(--base-dark) 48%) left bottom / 50% 53% no-repeat,
-  linear-gradient(39deg, var(--base-dark) 58%, var(--shadow) 65%, var(--base) 66%) right bottom / 100% 57% no-repeat, 
+  linear-gradient(37deg, var(--base-dark) 58%, var(--shadow) 65%, var(--base) 66%) right bottom / 100% 54% no-repeat, 
    linear-gradient(144deg, transparent -20%, var(--shadow) -19%, var(--base) 20%) right top / 54% 55% no-repeat
 }
 
@@ -1018,9 +1014,9 @@
 
             <div class="seal-wrap"> 
                 <div class="seal" id="openBtn" onclick="openCard()">
-                    <span class="seal-monogram">N & S</span>
+                    <!-- <span class="seal-monogram">N & S</span>
                     <div class="seal-line"></div>
-                    <span class="seal-sub">Tap to Open</span>
+                    <span class="seal-sub">Tap to Open</span> -->
                 </div>
                 <span class="seal-label">You are cordially invited</span>
             </div>
