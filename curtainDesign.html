@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Jethalal & Babita — Wedding Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --text: #280401;
+  --background: #fffdf7;
+  --primary: #ad160b;
+  --secondary: #6b0700;
+  --accent: #dc2b1e;
+  --gold-light: #f9e596;
+  --gold-dark: #b88a22;
+  --gold-mid: #d4a017;
+  --border-light: rgba(40, 4, 1, 0.1);
+  --max-w: 480px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: #111;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+body.unlocked { overflow: auto; }
+#app {
+  width: 100%; max-width: var(--max-w);
+  min-height: 100vh; margin: 0 auto;
+  background: var(--background);
+  position: relative;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+/* TYPOGRAPHY */
+h1, h2, h3, .serif { font-family: 'Playfair Display', serif; font-weight: 400; }
+.script { font-family: 'Alex Brush', cursive; }
+.mono { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.7rem; }
+.subtext { font-size: 0.8rem; color: rgba(40,4,1,0.7); line-height: 1.6; }
+
+/* ══ HERO ══ */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 40px 20px;
+  overflow: hidden; background: var(--background);
+  cursor: pointer;
+}
+/* FIX 1a — remove pointer after open */
+.hero.open { cursor: default; pointer-events: none; }
+
+/* CURTAINS — no ::after pseudo (FIX 1b — orange fringe gone) */
+.curtain {
+  position: absolute; top: 0; bottom: 0; width: 50%; z-index: 10;
+  background: repeating-linear-gradient(90deg,var(--secondary),var(--primary) 10px,var(--secondary) 20px);
+  box-shadow: 4px 0 30px rgba(0,0,0,0.45);
+  transition: transform 1.6s cubic-bezier(0.77,0,0.18,1);
+}
+.curtain.left  { left:0;  transform-origin:left;  border-right:3px solid var(--gold-mid); border-bottom-right-radius:40% 8%; }
+.curtain.right { right:0; transform-origin:right; border-left:3px solid var(--gold-mid);  border-bottom-left-radius:40%  8%; }
+.hero.open .curtain.left  { transform: scaleX(0.1) translateX(-55%); }
+.hero.open .curtain.right { transform: scaleX(0.1) translateX(55%); }
+
+/* TAP HINT — z-index 20, above curtains */
+.tap-hint {
+  position: absolute; bottom: 34px; left: 50%;
+  transform: translateX(-50%); z-index: 20;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  pointer-events: none;
+}
+.tap-hint span {
+  font-family: 'Montserrat', sans-serif; font-size: 0.55rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-light); opacity: 0.95;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+}
+.tap-hint svg { animation: tapBounce 1.4s ease-in-out infinite; }
+@keyframes tapBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+.hero.open .tap-hint { display: none; }
+
+.hero-content {
+  position: relative; z-index: 5;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 1s ease 0.7s, transform 1s ease 0.7s;
+}
+.hero.open .hero-content { opacity: 1; transform: translateY(0); }
+.hero-om { font-size: 3rem; color: var(--gold-dark); margin-bottom: 8px; }
+.hero-bismillah { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 18px; text-transform: uppercase; }
+.hero-names { font-size: 3.8rem; color: var(--text); line-height: 1.2; margin: 22px 0; }
+.hero-names span { display: block; }
+.hero-names .amp { font-family:'Playfair Display',serif; font-size:2rem; font-style:italic; color:var(--accent); margin:-8px 0; }
+.hero-date { font-family:'Playfair Display',serif; font-size:1rem; color:var(--secondary); margin-top:16px; letter-spacing:0.08em; }
+.hero-mandap { font-size: 2rem; margin-top: 10px; }
+
+.gold-div { display:flex; align-items:center; justify-content:center; gap:10px; margin:13px 0; }
+.gold-div::before,.gold-div::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,var(--gold-dark),transparent); }
+.gold-div span { color:var(--gold-dark); font-size:1rem; }
+
+/* ══ AOS — custom scroll reveal ══ */
+[data-aos] { opacity:0; transition-property:opacity,transform; transition-duration:0.75s; transition-timing-function:cubic-bezier(0.22,1,0.36,1); }
+[data-aos="fade-up"]    { transform:translateY(44px); }
+[data-aos="fade-down"]  { transform:translateY(-44px); }
+[data-aos="fade-left"]  { transform:translateX(50px); }
+[data-aos="fade-right"] { transform:translateX(-50px); }
+[data-aos="zoom-in"]    { transform:scale(0.82); }
+[data-aos="flip-up"]    { transform:perspective(600px) rotateX(30deg); }
+[data-aos].aos-animate  { opacity:1; transform:none; }
+[data-aos-delay="100"]  { transition-delay:0.1s; }
+[data-aos-delay="200"]  { transition-delay:0.2s; }
+[data-aos-delay="300"]  { transition-delay:0.3s; }
+[data-aos-delay="400"]  { transition-delay:0.4s; }
+[data-aos-delay="500"]  { transition-delay:0.5s; }
+[data-aos-delay="600"]  { transition-delay:0.6s; }
+
+/* ══ CONFETTI ══ */
+#confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+
+/* ══ SECTIONS ══ */
+.section { padding:70px 24px; text-align:center; position:relative; }
+.section-title { font-size:1.8rem; margin-bottom:6px; color:var(--text); }
+.section-subtitle { font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:36px; }
+.section.alt { background:#fff9ee; }
+
+.family-card { background:#fff; border:1px solid var(--border-light); border-radius:12px; padding:28px 20px; margin:14px 0; position:relative; overflow:hidden; }
+.family-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background:linear-gradient(to bottom,var(--gold-dark),var(--primary)); }
+.family-card h3 { font-size:1.3rem; color:var(--secondary); margin-bottom:6px; }
+.family-label { font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:10px; }
+
+.timeline { max-width:340px; margin:0 auto; text-align:left; }
+.tl-item { display:flex; gap:18px; margin-bottom:36px; position:relative; }
+.tl-item:not(:last-child)::after { content:''; position:absolute; left:19px; top:42px; width:1px; height:100%; background:var(--border-light); }
+.tl-dot { flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--primary); display:flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:0 0 0 4px #fff,0 0 0 5px var(--border-light); }
+.tl-body h3 { font-size:1.05rem; color:var(--secondary); margin-bottom:3px; }
+.tl-body .tl-meta { font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:6px; }
+.tl-body p { font-size:0.78rem; color:rgba(40,4,1,0.7); line-height:1.55; }
+
+.scroll-card { background:linear-gradient(135deg,#fff9ee,#fff3d6); border:2px solid var(--gold-dark); border-radius:50% 4px 50% 4px/10px 4px 10px 4px; padding:40px 28px 36px; max-width:320px; margin:0 auto; position:relative; }
+.scroll-card::before { content:'✨'; position:absolute; font-size:1.4rem; top:10px; left:14px; }
+.scroll-card::after  { content:'✨'; position:absolute; font-size:1.4rem; bottom:10px; right:14px; }
+
+.scratch-wrap { display:flex; justify-content:center; gap:15px; margin:40px 0; }
+.scratch-item { position:relative; width:70px; height:70px; border-radius:50%; background:#fff; box-shadow:inset 0 0 10px rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); }
+.scratch-item canvas { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:50%; touch-action:none; }
+.reveal-msg { opacity:0; font-family:'Alex Brush',cursive; font-size:2.2rem; color:var(--accent); transition:opacity 0.8s; margin-top:20px; }
+
+.cd-grid { display:flex; justify-content:center; gap:10px; margin-bottom:30px; }
+.cd-box { border:1px solid var(--border-light); padding:15px 10px; min-width:65px; border-radius:6px; background:#fff; }
+.cd-num { font-family:'Playfair Display',serif; font-size:1.5rem; display:block; margin-bottom:4px; color:var(--text); }
+.cd-lbl { font-size:0.6rem; letter-spacing:0.1em; color:var(--primary); text-transform:uppercase; }
+
+.menu-frame { position:relative; padding:40px 20px; margin:0 auto; max-width:328px; border:2px solid var(--primary); border-radius:12px 40px 12px 40px; background:linear-gradient(to bottom,transparent,rgba(173,22,11,0.02)); }
+.menu-item { margin-bottom:22px; }
+.menu-item h3 { font-size:1rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--secondary); margin-bottom:5px; }
+
+.dress-grid { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:10px; }
+.dress-card { flex:1; min-width:110px; max-width:140px; padding:20px 14px; border-radius:10px; text-align:center; }
+.dress-card .swatch { width:44px; height:44px; border-radius:50%; margin:0 auto 12px; border:2px solid rgba(255,255,255,0.4); box-shadow:0 2px 8px rgba(0,0,0,0.15); }
+.dress-card p { font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; }
+
+.map-wrap { border-radius:12px; overflow:hidden; border:2px solid var(--gold-dark); margin:24px 0; box-shadow:0 4px 20px rgba(0,0,0,0.1); }
+.map-wrap iframe { display:block; width:100%; height:280px; border:none; }
+
+.blessing-box { background:linear-gradient(135deg,var(--secondary),var(--primary)); color:#fff9ee; border-radius:16px; padding:36px 24px; margin:0 auto; max-width:340px; text-align:center; }
+.blessing-box .script { font-size:2.4rem; color:var(--gold-light); }
+.blessing-box p { font-size:0.78rem; line-height:1.7; opacity:0.9; margin-top:12px; }
+
+/* RSVP FORM */
+.form-wrap { max-width:300px; margin:0 auto; text-align:left; }
+.input-group { margin-bottom:20px; }
+.input-group label { display:block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; }
+.input-field { width:100%; padding:12px 0; border:none; border-bottom:1px solid var(--border-light); background:transparent; font-family:'Playfair Display',serif; font-size:1rem; color:var(--text); outline:none; transition:border-color 0.3s; }
+.input-field:focus { border-bottom-color:var(--primary); }
+.input-field.is-error { border-bottom-color:#e53935; }
+select.input-field { appearance:none; border-radius:0; }
+/* inline error */
+.field-error { display:none; font-size:0.65rem; color:#e53935; margin-top:5px; letter-spacing:0.04em; animation: errShake 0.3s ease; }
+.field-error.visible { display:block; }
+@keyframes errShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+.btn { display:block; width:100%; padding:16px; background:var(--text); color:var(--background); border:none; border-radius:30px; font-family:'Montserrat',sans-serif; font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; margin-top:30px; cursor:pointer; transition:background 0.3s,transform 0.15s; }
+.btn:active { background:var(--secondary); transform:scale(0.98); }
+.btn-wa { background:#25d366; color:#fff; display:flex; align-items:center; justify-content:center; gap:10px; }
+.btn-wa:active { background:#1da851; }
+
+.sep { width:1px; height:60px; background:var(--primary); margin:0 auto; opacity:0.3; }
+
+.footer { background:var(--secondary); padding:36px 24px; text-align:center; color:var(--gold-light); }
+.footer .script { font-size:2.6rem; color:var(--gold-light); }
+.footer p { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; opacity:0.7; margin-top:8px; }
+
+/* ring pulse on curtain open */
+@keyframes ringPulse { 0%{transform:scale(0.5);opacity:0.9} 100%{transform:scale(2.8);opacity:0} }
+.ring-pulse { position:absolute; width:120px; height:120px; border-radius:50%; border:2px solid var(--gold-light); top:50%; left:50%; margin:-60px 0 0 -60px; pointer-events:none; z-index:4; animation:ringPulse 0.9s ease-out forwards; }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div id="app">
+
+  <!-- HERO / CURTAIN -->
+  <section class="hero" id="hero-sec" onclick="openCurtains()">
+    <div class="curtain left"></div>
+    <div class="curtain right"></div>
+    <div class="tap-hint">
+      <span>Tap anywhere to open</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f9e596" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="hero-content">
+      <div class="hero-om">ॐ</div>
+      <p class="hero-bismillah">With the blessings of God</p>
+      <div class="gold-div"><span>✦</span></div>
+      <p class="mono" style="font-size:0.6rem;color:var(--primary);">You are cordially invited to<br>celebrate the wedding of</p>
+      <h1 class="hero-names script"><span>Jethalal</span><span class="amp">&amp;</span><span>Babita</span></h1>
+      <div class="gold-div"><span>💍</span></div>
+      <p class="hero-date">10 September 2027 · Thursday</p>
+      <div class="hero-mandap">🛕</div>
+      <p class="mono" style="font-size:0.55rem;color:var(--text);max-width:260px;margin:16px auto 0;line-height:1.9;opacity:0.7;">
+        Together with their families, they joyfully<br>invite you to share in their happiness
+      </p>
+    </div>
+  </section>
+
+  <!-- COUPLE INTRO -->
+  <section class="section alt">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">The Couple</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Made for each other</p>
+    <div class="family-card" data-aos="fade-right" data-aos-delay="200">
+      <p class="family-label">The Groom</p>
+      <h3 class="script" style="font-size:2rem;">Jethalal Champaklal Gada</h3>
+      <p class="subtext" style="margin-top:6px;">Son of Shri Champaklal Jayantilal Gada &amp; Smt. Hiraben Gada<br>Merchant, Gokulnagar, Ahmedabad</p>
+    </div>
+    <div style="font-size:1.8rem;color:var(--accent);margin:12px 0;font-family:'Playfair Display',serif;font-style:italic;" data-aos="zoom-in" data-aos-delay="300">weds</div>
+    <!-- FIX 2: Bride name = Babita only; father name corrected -->
+    <div class="family-card" data-aos="fade-left" data-aos-delay="400">
+      <p class="family-label">The Bride</p>
+      <h3 class="script" style="font-size:2rem;">Babita</h3>
+      <p class="subtext" style="margin-top:6px;">Daughter of Shri Sunderlal Sharma &amp; Smt. Shantaben Sharma<br>Gokulnagar, Ahmedabad</p>
+    </div>
+  </section>
+  <div class="sep"></div>
+
+  <!-- SCRATCH REVEAL -->
+  <section class="section">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Scratch &amp; Reveal</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">The Wedding Date</p>
+    <p class="subtext" style="max-width:260px;margin:0 auto;" data-aos="fade-up" data-aos-delay="200">Scratch all three coins to reveal our special date!</p>
+    <div class="scratch-wrap" data-aos="zoom-in" data-aos-delay="300">
+      <div class="scratch-item"><span>10</span><canvas id="sc1"></canvas></div>
+      <div class="scratch-item"><span>Sept</span><canvas id="sc2"></canvas></div>
+      <div class="scratch-item"><span>2027</span><canvas id="sc3"></canvas></div>
+    </div>
+    <div class="reveal-msg" id="reveal-msg">Shubh Vivah! 🎊</div>
+  </section>
+  <div class="sep"></div>
+
+  <!-- EVENTS TIMELINE -->
+  <section class="section alt">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Wedding Functions</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Ceremony Schedule</p>
+    <div class="timeline">
+      <div class="tl-item" data-aos="fade-right" data-aos-delay="100"><div class="tl-dot">🌿</div><div class="tl-body"><h3>Haldi Ceremony</h3><p class="tl-meta">8 Sept 2027 · 10:00 AM onwards</p><p>A joyful turmeric ritual blessed by family &amp; close friends at the Gada residence, Gokulnagar.</p></div></div>
+      <div class="tl-item" data-aos="fade-right" data-aos-delay="200"><div class="tl-dot">💃</div><div class="tl-body"><h3>Sangeet &amp; Garba Night</h3><p class="tl-meta">8 Sept 2027 · 7:00 PM – 11:00 PM</p><p>Dance, music &amp; dandiya under the stars. Dress code: Traditional Gujarati attire.</p></div></div>
+      <div class="tl-item" data-aos="fade-right" data-aos-delay="300"><div class="tl-dot">🌸</div><div class="tl-body"><h3>Mehendi Ceremony</h3><p class="tl-meta">9 Sept 2027 · 4:00 PM – 8:00 PM</p><p>Intricate henna art adorning the bride's hands with love and blessings from her family.</p></div></div>
+      <div class="tl-item" data-aos="fade-right" data-aos-delay="400"><div class="tl-dot">🛕</div><div class="tl-body"><h3>Baraat &amp; Saat Phere</h3><p class="tl-meta">10 Sept 2027 · 9:00 AM – 1:00 PM</p><p>The sacred wedding rituals — Varmala, Saptapadi &amp; Kanyadaan — followed by blessings of elders.</p></div></div>
+      <div class="tl-item" data-aos="fade-right" data-aos-delay="500"><div class="tl-dot">🍽️</div><div class="tl-body"><h3>Wedding Reception</h3><p class="tl-meta">10 Sept 2027 · 7:00 PM – 11:00 PM</p><p>Grand reception dinner with music, dance &amp; celebrations. All are welcome!</p></div></div>
+    </div>
+  </section>
+  <div class="sep"></div>
+
+  <!-- SHUBH VIVAH DETAILS -->
+  <section class="section">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Shubh Vivah</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Details of the Ceremony</p>
+    <div class="scroll-card" data-aos="zoom-in" data-aos-delay="200">
+      <div class="gold-div" style="margin-bottom:18px;"><span>✦</span></div>
+      <p class="mono" style="font-size:0.6rem;color:var(--accent);margin-bottom:10px;">Muhurat</p>
+      <h3 class="serif" style="font-size:1.4rem;color:var(--secondary);">Thursday, 10 September 2027</h3>
+      <p class="subtext" style="margin:8px 0 20px;">Shukla Paksha Dvitiya · Tithi: Labh Pancham</p>
+      <div class="gold-div"><span>🌺</span></div>
+      <p class="mono" style="font-size:0.6rem;color:var(--accent);margin:18px 0 8px;">Venue</p>
+      <h3 class="serif" style="font-size:1.3rem;color:var(--secondary);">Gokuldham Banquet Hall</h3>
+      <p class="subtext" style="margin-top:6px;font-size:0.78rem;">Plot No. 4, Gokulnagar Society<br>Near Evergreen CHS, Powder Gali<br>Ahmedabad, Gujarat – 380001</p>
+      <div class="gold-div" style="margin:18px 0 0;"><span>✦</span></div>
+    </div>
+  </section>
+  <div class="sep"></div>
+
+  <!-- COUNTDOWN -->
+  <section class="section alt">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Counting Down</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Until the Saat Phere</p>
+    <div class="cd-grid">
+      <div class="cd-box" data-aos="flip-up" data-aos-delay="100"><span class="cd-num" id="cd-d">00</span><span class="cd-lbl">Days</span></div>
+      <div class="cd-box" data-aos="flip-up" data-aos-delay="200"><span class="cd-num" id="cd-h">00</span><span class="cd-lbl">Hours</span></div>
+      <div class="cd-box" data-aos="flip-up" data-aos-delay="300"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl">Min</span></div>
+      <div class="cd-box" data-aos="flip-up" data-aos-delay="400"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">Sec</span></div>
+    </div>
+    <p class="mono" style="font-size:0.6rem;color:var(--primary);" data-aos="fade-up" data-aos-delay="500">10 · 09 · 2027</p>
+  </section>
+  <div class="sep"></div>
+
+  <!-- GRAND BHOJ -->
+  <section class="section">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Grand Bhoj</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Wedding feast menu</p>
+    <div class="menu-frame" data-aos="zoom-in" data-aos-delay="200">
+      <div class="menu-item"><h3>Swagat Nashta</h3><p class="subtext">Dhokla · Fafda · Jalebi · Khaman<br>Chai &amp; Thandai on arrival</p></div>
+      <div class="menu-item"><h3>Farsan &amp; Starters</h3><p class="subtext">Pani Puri · Sev Puri · Dahi Vada<br>Paneer Tikka &amp; Tandoori Roti</p></div>
+      <div class="menu-item"><h3>Main Course</h3><p class="subtext">Dal Baati Churma · Shahi Paneer<br>Undhiyu · Gujarati Kadhi · Jeera Rice<br>Bajra Rotla &amp; Phulka</p></div>
+      <div class="menu-item"><h3>Mithai &amp; Desserts</h3><p class="subtext">Mohanthal · Basundi · Gulab Jamun<br>Wedding cake &amp; Paan counter</p></div>
+      <div style="font-size:26px;color:var(--primary);margin-top:24px;opacity:0.7;">🙏 Jai Shri Krishna 🙏</div>
+    </div>
+  </section>
+  <div class="sep"></div>
+
+  <!-- DRESS CODE -->
+  <section class="section alt">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Dress Code</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Look your festive best!</p>
+    <div class="dress-grid">
+      <div class="dress-card" style="background:#fff8f0;" data-aos="fade-up" data-aos-delay="100"><div class="swatch" style="background:#d4a017;"></div><p style="color:var(--gold-dark);">Haldi<br>Yellow &amp; White</p></div>
+      <div class="dress-card" style="background:#f9f0ff;" data-aos="fade-up" data-aos-delay="200"><div class="swatch" style="background:linear-gradient(135deg,#c471ed,#f7797d);"></div><p style="color:#a04090;">Sangeet<br>Vibrant &amp; Colourful</p></div>
+      <div class="dress-card" style="background:#fff0f5;" data-aos="fade-up" data-aos-delay="300"><div class="swatch" style="background:linear-gradient(135deg,#e96c8a,#f9e596);"></div><p style="color:#c0406a;">Mehendi<br>Green &amp; Pink</p></div>
+      <div class="dress-card" style="background:#fff7ee;" data-aos="fade-up" data-aos-delay="400"><div class="swatch" style="background:linear-gradient(135deg,var(--primary),var(--gold-dark));"></div><p style="color:var(--secondary);">Wedding<br>Red &amp; Gold</p></div>
+    </div>
+    <p class="subtext" style="margin-top:22px;font-size:0.75rem;" data-aos="fade-up" data-aos-delay="500">Traditional Indian attire is warmly encouraged 🎊</p>
+  </section>
+  <div class="sep"></div>
+
+  <!-- LOCATION & MAP -->
+  <section class="section">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Find Us</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Venue &amp; Directions</p>
+    <div style="max-width:380px;margin:0 auto;">
+      <div style="background:#fff;border-radius:12px;padding:20px;border:1px solid var(--border-light);margin-bottom:18px;text-align:left;" data-aos="fade-right" data-aos-delay="200">
+        <p style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">📍 Venue Address</p>
+        <p class="serif" style="font-size:1.1rem;color:var(--secondary);margin-bottom:6px;">Gokuldham Banquet Hall</p>
+        <p class="subtext" style="font-size:0.78rem;">Plot No. 4, Gokulnagar Society<br>Near Evergreen CHS, Powder Gali<br>Ahmedabad, Gujarat – 380001</p>
+      </div>
+      <div class="map-wrap" data-aos="zoom-in" data-aos-delay="300">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.534372151438!2d72.65679537531436!3d23.040862679160952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e86e3acaa206b%3A0x4905ca56894b79cd!2sGokuldham%20Dining%20Hall!5e0!3m2!1sen!2sin!4v1776938404435!5m2!1sen!2sin" width="100%" height="600" style="border:0;" allowfullscreen="" title="Wedding Venue Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <a href="https://maps.google.com/?q=Gokuldham+Banquet+Hall+Ahmedabad" target="_blank"
+         style="display:block;margin-top:12px;padding:14px;background:var(--secondary);color:var(--gold-light);border-radius:30px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;text-align:center;"
+         data-aos="fade-up" data-aos-delay="400">
+        Open in Google Maps ↗
+      </a>
+    </div>
+  </section>
+  <div class="sep"></div>
+
+  <!-- BLESSINGS -->
+  <section class="section alt">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Our Families</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">With heartfelt blessings</p>
+    <div class="blessing-box" data-aos="zoom-in" data-aos-delay="200">
+      <div class="script">Jay Shri Krishna</div>
+      <p>With the grace of Lord Ganesha and the blessings of all elders, the Gada &amp; Sharma families invite you to witness the auspicious union of our children. Your presence will make this celebration truly complete.</p>
+      <p style="margin-top:14px;font-size:0.8rem;font-style:italic;color:var(--gold-light);">"Vivah ek pavitra bandhan hai, jisme do aatmaon ka milan hota hai."</p>
+    </div>
+  </section>
+  <div class="sep"></div>
+
+  <!-- RSVP FORM -->
+  <section class="section">
+    <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Confirm Attendance</h2>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">RSVP via WhatsApp</p>
+
+    <form class="form-wrap" id="rsvpForm" novalidate>
+      <div class="input-group" data-aos="fade-up" data-aos-delay="150">
+        <label for="fn">Full Name <span style="color:var(--accent)">*</span></label>
+        <input type="text" id="fn" class="input-field" placeholder="Your full name" autocomplete="name">
+        <p class="field-error" id="err-fn">⚠ Please enter your full name.</p>
+      </div>
+      <!-- FIX 3: max guests = 10 with inline error -->
+      <div class="input-group" data-aos="fade-up" data-aos-delay="200">
+        <label for="fg">Number of Guests <span style="color:var(--accent)">*</span></label>
+        <input type="number" id="fg" class="input-field" placeholder="1 – 10" min="1" max="10">
+        <p class="field-error" id="err-fg">⚠ Please enter a number between 1 and 10.</p>
+      </div>
+      <div class="input-group" data-aos="fade-up" data-aos-delay="250">
+        <label for="fa">Attending? <span style="color:var(--accent)">*</span></label>
+        <select id="fa" class="input-field">
+          <option value="" disabled selected>Please select…</option>
+          <option value="✅ Yes, will attend with joy!">✅ Yes, will attend with joy!</option>
+          <option value="❌ Regretfully cannot attend">❌ Regretfully cannot attend</option>
+          <option value="🤔 Will confirm soon">🤔 Will confirm soon</option>
+        </select>
+        <p class="field-error" id="err-fa">⚠ Please select your attendance status.</p>
+      </div>
+      <div class="input-group" data-aos="fade-up" data-aos-delay="300">
+        <label for="fe">Events you will attend</label>
+        <select id="fe" class="input-field">
+          <option value="" disabled selected>Select events…</option>
+          <option value="All events 🎉">All events 🎉</option>
+          <option value="Haldi only 🌿">Haldi only 🌿</option>
+          <option value="Sangeet & Garba 💃">Sangeet &amp; Garba 💃</option>
+          <option value="Mehendi only 🌸">Mehendi only 🌸</option>
+          <option value="Wedding ceremony 🛕">Wedding ceremony 🛕</option>
+          <option value="Reception only 🍽️">Reception only 🍽️</option>
+        </select>
+      </div>
+      <div class="input-group" data-aos="fade-up" data-aos-delay="350">
+        <label for="fm">Your Blessings (optional)</label>
+        <input type="text" id="fm" class="input-field" placeholder="Shagun &amp; blessings…">
+      </div>
+      <button type="submit" class="btn btn-wa" data-aos="fade-up" data-aos-delay="400">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Send RSVP on WhatsApp
+      </button>
+    </form>
+    <p class="subtext" style="text-align:center;margin-top:18px;font-size:0.7rem;opacity:0.6;" data-aos="fade-up" data-aos-delay="450">
+      Tapping the button opens WhatsApp with your RSVP pre-filled.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" data-aos="fade-up">
+    <div class="script">Jethalal &amp; Babita</div>
+    <p>10 · 09 · 2027 &nbsp;·&nbsp; Ahmedabad, Gujarat</p>
+    <p style="margin-top:8px;font-size:1.3rem;">🪔 ॐ 🪔</p>
+    <p style="margin-top:12px;opacity:0.5;">Designed with love for our special day</p>
+  </footer>
+
+</div>
+
+<script>
+/* ══════════════════════════════════
+   ON REFRESH — Start from top
+══════════════════════════════════ */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
+/* ══════════════════════════════════
+   CURTAIN — click only, no auto-open
+   FIX 1: cursor + pointer-events off after open
+══════════════════════════════════ */
+function openCurtains() {
+  var hero = document.getElementById('hero-sec');
+  if (hero.classList.contains('open')) return;
+  hero.classList.add('open');
+  // Ring pulse
+  var ring = document.createElement('div');
+  ring.className = 'ring-pulse';
+  hero.appendChild(ring);
+  setTimeout(function(){ ring.parentNode && ring.parentNode.removeChild(ring); }, 1000);
+  // Unlock scroll + confetti + AOS after animation
+  setTimeout(function() {
+    document.body.classList.add('unlocked');
+    launchConfetti(200);
+    initAOS();
+  }, 1800);
+}
+
+/* COUNTDOWN */
+var targetDate = new Date("Sep 10, 2027 09:00:00").getTime();
+setInterval(function() {
+  var dist = Math.max(0, targetDate - Date.now());
+  document.getElementById('cd-d').innerText = Math.floor(dist/86400000).toString().padStart(2,'0');
+  document.getElementById('cd-h').innerText = Math.floor((dist%86400000)/3600000).toString().padStart(2,'0');
+  document.getElementById('cd-m').innerText = Math.floor((dist%3600000)/60000).toString().padStart(2,'0');
+  document.getElementById('cd-s').innerText = Math.floor((dist%60000)/1000).toString().padStart(2,'0');
+}, 1000);
+
+/* SCRATCH REVEAL */
+var scratchedCount = 0;
+['sc1','sc2','sc3'].forEach(function(id) {
+  var canvas = document.getElementById(id);
+  var ctx = canvas.getContext('2d');
+  var isDrawing = false, isCleared = false;
+  canvas.width = canvas.height = 70;
+  var g = ctx.createRadialGradient(35,35,0,35,35,35);
+  g.addColorStop(0,'#f9e596'); g.addColorStop(1,'#b88a22');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(35,35,35,0,Math.PI*2); ctx.fill();
+  function doScratch(e) {
+    if (!isDrawing||isCleared) return; e.preventDefault();
+    var r=canvas.getBoundingClientRect();
+    var cx=e.touches?e.touches[0].clientX:e.clientX;
+    var cy=e.touches?e.touches[0].clientY:e.clientY;
+    ctx.globalCompositeOperation='destination-out';
+    ctx.beginPath(); ctx.arc(cx-r.left,cy-r.top,13,0,Math.PI*2); ctx.fill();
+  }
+  function check() {
+    if(isCleared) return;
+    var d=ctx.getImageData(0,0,70,70).data,t=0;
+    for(var i=3;i<d.length;i+=4) if(d[i]===0) t++;
+    if(t/(70*70)>0.4){
+      ctx.clearRect(0,0,70,70); isCleared=true; canvas.style.display='none';
+      if(++scratchedCount===3){
+        document.getElementById('reveal-msg').style.opacity='1';
+        launchConfetti(140);
+      }
+    }
+  }
+  canvas.addEventListener('mousedown',  function(e){if(!isCleared){isDrawing=true;doScratch(e);}});
+  canvas.addEventListener('mousemove',  doScratch);
+  canvas.addEventListener('mouseup',    function(){isDrawing=false;check();});
+  canvas.addEventListener('mouseleave', function(){isDrawing=false;check();});
+  canvas.addEventListener('touchstart', function(e){if(!isCleared){isDrawing=true;doScratch(e);}},{passive:false});
+  canvas.addEventListener('touchmove',  doScratch,{passive:false});
+  canvas.addEventListener('touchend',   function(){isDrawing=false;check();});
+});
+
+/* ══════════════════════════════════
+   WHATSAPP RSVP — inline validation
+   FIX 3: error messages + max guests 10
+══════════════════════════════════ */
+(function(){
+  var ph='918200482291';
+  function markErr(fieldId,errId,show){
+    var f=document.getElementById(fieldId), e=document.getElementById(errId);
+    if(show){f.classList.add('is-error');e.classList.add('visible');}
+    else    {f.classList.remove('is-error');e.classList.remove('visible');}
+    return show;
+  }
+  // Live clear on input/change
+  ['fn','fg','fa'].forEach(function(id){
+    ['input','change'].forEach(function(ev){
+      document.getElementById(id).addEventListener(ev,function(){
+        markErr(id,'err-'+id,false);
+      });
+    });
+  });
+  document.getElementById('rsvpForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var n  = document.getElementById('fn').value.trim();
+    var gv = document.getElementById('fg').value.trim();
+    var g  = parseInt(gv,10);
+    var a  = document.getElementById('fa').value;
+    var ev = document.getElementById('fe').value;
+    var m  = document.getElementById('fm').value.trim();
+
+    var err=false;
+    if(!n)                                err=markErr('fn','err-fn',true)||true;
+    else                                  markErr('fn','err-fn',false);
+    if(!gv||isNaN(g)||g<1||g>10)         err=markErr('fg','err-fg',true)||true;
+    else                                  markErr('fg','err-fg',false);
+    if(!a)                                err=markErr('fa','err-fa',true)||true;
+    else                                  markErr('fa','err-fa',false);
+
+    if(err){
+      var first=document.querySelector('.input-field.is-error');
+      if(first) first.scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+
+    var txt='Jai Shri Krishna! 🙏\n\nRSVP — Jethalal & Babita Wedding\n\n';
+    txt+='*Name:* '+n+'\n*Guests:* '+g+'\n*Attendance:* '+a+'\n';
+    if(ev) txt+='*Events:* '+ev+'\n';
+    if(m)  txt+='\n*Blessings:* '+m;
+    txt+='\n\n🪷 Shubh Vivah! 🪷';
+    var base=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)?'https://api.whatsapp.com/send':'https://web.whatsapp.com/send';
+    window.open(base+'?phone='+ph+'&text='+encodeURIComponent(txt),'_blank');
+    this.reset();
+    ['fn','fg','fa'].forEach(function(id){markErr(id,'err-'+id,false);});
+  });
+})();
+
+/* ══════════════════════════════════
+   CONFETTI BURST — Indian colours
+   Shapes: rect · circle · triangle
+══════════════════════════════════ */
+var ccv=document.getElementById('confetti-canvas');
+var cctx=ccv.getContext('2d');
+var particles=[], cfRunning=false, cfRAF=null;
+function resizeCCV(){ccv.width=window.innerWidth;ccv.height=window.innerHeight;}
+resizeCCV(); window.addEventListener('resize',resizeCCV);
+var COLORS=['#ad160b','#f9e596','#b88a22','#ff6f00','#e91e63','#4caf50','#ffffff','#ff9800','#dc2b1e','#ffe082','#9c27b0','#00bcd4'];
+function mkP(x,y){
+  var ang=Math.random()*Math.PI*2, spd=5+Math.random()*10;
+  return {x:x,y:y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd-(6+Math.random()*5),
+    grav:0.3,drag:0.97,color:COLORS[Math.floor(Math.random()*COLORS.length)],
+    w:6+Math.random()*8,h:4+Math.random()*6,rot:Math.random()*360,
+    rs:(Math.random()-0.5)*9,op:1,shape:['rect','circle','tri'][Math.floor(Math.random()*3)]};
+}
+function drawP(p){
+  cctx.save(); cctx.globalAlpha=p.op;
+  cctx.translate(p.x,p.y); cctx.rotate(p.rot*Math.PI/180);
+  cctx.fillStyle=p.color; cctx.beginPath();
+  if(p.shape==='circle'){cctx.arc(0,0,p.w/2,0,Math.PI*2);}
+  else if(p.shape==='tri'){cctx.moveTo(0,-p.h);cctx.lineTo(p.w/2,p.h/2);cctx.lineTo(-p.w/2,p.h/2);}
+  else{cctx.rect(-p.w/2,-p.h/2,p.w,p.h);}
+  cctx.fill(); cctx.restore();
+}
+function tickCF(){
+  cctx.clearRect(0,0,ccv.width,ccv.height);
+  for(var i=particles.length-1;i>=0;i--){
+    var p=particles[i];
+    p.vx*=p.drag; p.vy*=p.drag; p.vy+=p.grav;
+    p.x+=p.vx; p.y+=p.vy; p.rot+=p.rs; p.op-=0.009;
+    if(p.op<=0||p.y>ccv.height+50) particles.splice(i,1);
+    else drawP(p);
+  }
+  if(particles.length>0){cfRAF=requestAnimationFrame(tickCF);}
+  else{cfRunning=false;cctx.clearRect(0,0,ccv.width,ccv.height);}
+}
+function launchConfetti(n){
+  n=n||180;
+  var cx=ccv.width/2, cy=ccv.height*0.4;
+  var origins=[{x:cx*0.4,y:cy},{x:cx,y:cy*0.85},{x:cx*1.6,y:cy}];
+  for(var i=0;i<n;i++){
+    var o=origins[i%origins.length];
+    particles.push(mkP(o.x+(Math.random()-0.5)*60, o.y+(Math.random()-0.5)*40));
+  }
+  if(!cfRunning){cfRunning=true;if(cfRAF)cancelAnimationFrame(cfRAF);tickCF();}
+}
+
+/* ══════════════════════════════════
+   AOS — IntersectionObserver (fires after scroll unlock)
+══════════════════════════════════ */
+var aosObs=null;
+function initAOS(){
+  if(aosObs) return;
+  var els=document.querySelectorAll('[data-aos]');
+  aosObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        var el=en.target;
+        var delay=parseInt(el.getAttribute('data-aos-delay')||'0',10);
+        setTimeout(function(){el.classList.add('aos-animate');},delay);
+        aosObs.unobserve(el);
+      }
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -30px 0px'});
+  els.forEach(function(el){aosObs.observe(el);});
+}
+</script>
+</body>
+</html>
