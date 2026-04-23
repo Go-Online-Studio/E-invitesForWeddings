@@ -56,15 +56,40 @@ h1, h2, h3, .serif { font-family: 'Playfair Display', serif; font-weight: 400; }
 
 /* CURTAINS — no ::after pseudo (FIX 1b — orange fringe gone) */
 .curtain {
-  position: absolute; top: 0; bottom: 0; width: 50%; z-index: 10;
-  background: repeating-linear-gradient(90deg,var(--secondary),var(--primary) 10px,var(--secondary) 20px);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 10;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--secondary),
+    var(--primary) 10px,
+    var(--secondary) 20px
+  );
   box-shadow: 4px 0 30px rgba(0,0,0,0.45);
-  transition: transform 1.6s cubic-bezier(0.77,0,0.18,1);
+
+  /* smoother, more natural */
+  transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
 }
-.curtain.left  { left:0;  transform-origin:left;  border-right:3px solid var(--gold-mid); border-bottom-right-radius:40% 8%; }
-.curtain.right { right:0; transform-origin:right; border-left:3px solid var(--gold-mid);  border-bottom-left-radius:40%  8%; }
-.hero.open .curtain.left  { transform: scaleX(0.1) translateX(-55%); }
-.hero.open .curtain.right { transform: scaleX(0.1) translateX(55%); }
+
+/* INITIAL POSITION */
+.curtain.left  { left: 0; }
+.curtain.right { right: 0; }
+
+/* 👉 SLIDE OUT (no scaling) */
+.hero.open .curtain.left  { 
+  transform: translateX(-100%);
+  transition-delay: 0.05s;
+}
+
+.hero.open .curtain.right { 
+  transform: translateX(100%);
+  transition-delay: 0.1s;
+}
+
+
+
 
 /* TAP HINT — z-index 20, above curtains */
 .tap-hint {
