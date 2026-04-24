@@ -44,13 +44,15 @@ h1, h2, h3, .serif { font-family: 'Playfair Display', serif; font-weight: 400; }
 
 /* ══ HERO ══ */
 .hero {
-  position: relative; min-height: 100vh;
+  position: relative; 
+  min-height: max(100vh, 772px);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center; padding: 40px 20px;
   overflow: hidden; background: #000; /* Behind video */
   cursor: pointer;
   container-type: inline-size;
+
 }
 .hero.open { cursor: unset; pointer-events: unset; } 
 
