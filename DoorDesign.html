@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Jethalal & Babita — Wedding Invitation</title>
+<title>Sourabh & Tejaswini — Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -736,7 +736,7 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
   <!-- Tap button -->
   <div class="btn-zone">
     <button id="door-btn">
-      <span class="btn-mono">J &amp; B</span>
+      <span class="btn-mono">S &amp; T</span>
       <span class="btn-lbl">Tap to open</span>
     </button>
     <span class="door-tagline">You are cordially invited</span>
@@ -846,9 +846,9 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
     <!-- Content -->
     <div class="h-inner">
       <p class="h-families">Together with their families</p>
-      <span class="h-name a">Jethalal</span>
+      <span class="h-name a">Sourabh</span>
       <div class="h-sep"><div class="sl"></div><div class="sd"></div><div class="sl"></div></div>
-      <span class="h-name b">Babita</span>
+      <span class="h-name b">Tejaswini</span>
       <div class="h-red"></div>
       <p class="h-request">Request the honour of your presence</p>
       <div class="h-date">
@@ -858,7 +858,7 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
       </div>
       <!-- Photo frame -->
       <div class="h-photo">
-        <img src="images/JethaBabita.webp" alt="Couple" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1743684821666-05b9c5046937?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==" alt="Couple" loading="lazy">
       </div>
     </div>
 
@@ -986,7 +986,7 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
 
   <!-- RSVP -->
   <section class="rsvp-sec">
-    <p class="s-eyebrow rv">Jethalal &amp; Babita</p>
+    <p class="s-eyebrow rv">Sourabh &amp; Tejaswini</p>
     <h2 class="s-title rv d1" style="margin-bottom:10px">Will You Join Us?</h2>
     <p class="s-sub rv d2">Your presence would mean the world to us.</p>
     <div class="rsvp-dl rv">RSVP by 10th May 2026</div><br><br>
@@ -1003,7 +1003,7 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
     </form>
   </section>
 
-  <footer><p>With love &amp; gratitude · Jethalal &amp; Babita · 25.05.2026</p></footer>
+  <footer><p>With love &amp; gratitude · Sourabh &amp; Tejaswini · 25.05.2026</p></footer>
 </div><!-- /main -->
 </div><!-- /app -->
 
@@ -1286,7 +1286,7 @@ function initScratch(){
     e.preventDefault();
     const n=document.getElementById('fn').value.trim(),g=document.getElementById('fg').value.trim(),a=document.getElementById('fa').value,m=document.getElementById('fm').value.trim();
     if(!n||!g||!a){alert('Please fill in all required fields.');return;}
-    let txt=`Hi Jethalal & Babita,\n\nRSVP for your wedding:\n\n*Name:* ${n}\n*Guests:* ${g}\n*Status:* ${a}`;
+    let txt=`Hi Sourabh & Tejaswini,\n\nRSVP for your wedding:\n\n*Name:* ${n}\n*Guests:* ${g}\n*Status:* ${a}`;
     if(m)txt+=`\n\n*Message:*\n${m}`;
     const base=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)?'https://api.whatsapp.com/send':'https://web.whatsapp.com/send';
     window.open(`${base}?phone=${ph}&text=${encodeURIComponent(txt)}`,'_blank');this.reset();

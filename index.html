@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Wedding Invitation — Nobita & Shizuka</title>
+    <title>Wedding Invitation — Sourabh & Tejaswini</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap"
         rel="stylesheet">
@@ -31,6 +31,7 @@
 
         img {
             width: 100%;
+            object-fit: cover;
         }
 
         a {
@@ -903,8 +904,9 @@
         }
 
         .hero-photo-frame img {
-            width: 100%;
-            height: 100%;
+            width: 120%;
+            height: 120%;
+            aspect-ratio: 1;
             object-fit: cover;
         }
 
@@ -1044,14 +1046,14 @@
            <div class="envelope" ></div>
             <div class="seal-wrap"> 
                 <div class="seal" id="openBtn" onclick="openCard()">
-                    <!-- <span class="seal-monogram">N & S</span>
+                    <!-- <span class="seal-monogram">S & T</span>
                     <div class="seal-line"></div>
                     <span class="seal-sub">Tap to Open</span> -->
                     <span class="TapToOpen"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path fill="currentColor" d="M28.69 14.33v4.83l-2-.43v-5.49a16 16 0 0 0-2.33-.84v5.82l-2-.43V12c-1.1-.18-2.18-.3-3.08-.36v5.51l-2-.43V4.34a2.53 2.53 0 0 0-2.6-2.43a2.53 2.53 0 0 0-2.6 2.43v15.52l-2 1V15.6l-2.33-2.39a2.83 2.83 0 0 0-4 0a2.93 2.93 0 0 0 0 4.09l6 7.1a10.8 10.8 0 0 0 1.39 4.22a8.4 8.4 0 0 0 2.21 2.73v2.56h14.44v-3.29a12.54 12.54 0 0 0 3-8.5v-6a10 10 0 0 0-2.1-1.79" class="clr-i-solid clr-i-solid-path-1"/><path fill="none" d="M0 0h36v36H0z"/></svg></span>
                 </div>
                 <span class="seal-label">You are cordially invited</span>
             </div>
-            <span class="seal-monogram2">N & S</span>
+            <span class="seal-monogram2">S & T</span>
             <span class="intro-tagline">25 · May · 2026</span>
         </div>
 
@@ -1067,9 +1069,9 @@
                 </div>
                 <p class="hero-label">Together with their families</p>
                 <div class="couple-names">
-                    <span class="name">Nobita</span>
+                    <span class="name">Sourabh</span>
                     <span class="amp">&amp;</span>
-                    <span class="name">Shizuka</span>
+                    <span class="name">Tejaswini</span>
                 </div>
                 <div class="hero-divider">
                     <div class="h-line"></div>
@@ -1080,7 +1082,7 @@
                 </div>
                 <p class="hero-date-line">request the honour of your presence</p>
                 <p class="hero-date">Saturday, 25th May 2026</p>
-                <div class="hero-photo-frame"><span><img src="https://i.pinimg.com/736x/7c/2d/6a/7c2d6acee4eaa8f49651cb977b3a9b8f.jpg" alt=""></span></div>
+                <div class="hero-photo-frame"><span><img src="https://images.unsplash.com/photo-1743684821666-05b9c5046937?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Couple Pic"></span></div>
             </section>
 
             <div class="ornament-divider">
@@ -1208,7 +1210,7 @@
 
             <!-- RSVP -->
             <section class="rsvp-section">
-                <p class="rsvp-names">Nobita &amp; Shizuka</p>
+                <p class="rsvp-names">Sourabh &amp; Tejaswini</p>
                 <h2 class="rsvp-title">Will You Join Us?</h2>
                 <p class="rsvp-sub">Your presence would mean the world to us. Please let us know so we can reserve your
                     place at our table.</p>
@@ -1239,7 +1241,7 @@
             </section>
 
             <footer class="footer">
-                <p>With love & gratitude · Nobita &amp; Shizuka · 25.05.2026</p>
+                <p>With love & gratitude · Sourabh &amp; Tejaswini · 25.05.2026</p>
             </footer>
 
         </div><!-- /main -->
@@ -1639,7 +1641,7 @@ window.scrollTo(0, 0);
                         return;
                     }
 
-                    let whatsappMsg = `Hi Nobita & Shizuka,\n\nI am RSVPing for your wedding.\n\n*Name:* ${name}\n*Guests:* ${guests}\n*Status:* ${attendance}`;
+                    let whatsappMsg = `Hi Sourabh & Tejaswini,\n\nI am RSVPing for your wedding.\n\n*Name:* ${name}\n*Guests:* ${guests}\n*Status:* ${attendance}`;
                     
                     if (message) {
                         whatsappMsg += `\n\n*Message:*\n${message}`;
