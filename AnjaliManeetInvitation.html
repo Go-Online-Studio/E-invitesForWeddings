@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Anjali & Maneet — Wedding Invitation</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Playfair Display for elegant serif headings, Montserrat for clean sans-serif body -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Preload Critical Assets -->
+  <link rel="preload" href="images/Envelopopen.webm" as="video" type="video/webm" fetchpriority="high">
+  <link rel="preload" href="images/Cover_invitation.avif" as="image" fetchpriority="high">
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Embla Carousel CSS (Minimal structural CSS required) -->
+  <style>
+    .embla { overflow: hidden; }
+    .embla__container { display: flex; }
+    .embla__slide { flex: 0 0 100%; min-width: 0; padding: 0 10px; }
+  </style>
+
+  <style>
+    /* ==========================================================================
+       CSS Variables & Global Styles
+       ========================================================================== */
+    :root {
+      /* Colors */
+      --color-text: #2c3e35; /* Deep Olive / Charcoal */
+      --color-text-light: #5a6b5d;
+      --color-bg: #faf8f5;
+      --color-accent: #c48b8b; /* Soft blush/rose */
+      --color-accent-dark: #a06b6b;
+      --color-gold: #c5a059;
+      --color-footer: #4a5d23; /* Solid olive green */
+      
+      /* Typography */
+      --font-serif: 'Playfair Display', serif;
+      --font-sans: 'Montserrat', sans-serif;
+      
+      /* Layout */
+      --max-width: 480px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    
+    body {
+      background-color: #111; /* Dark background outside the container */
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden; /* Locked initially for opening sequence */
+    }
+
+    body.unlocked {
+      overflow-y: auto;
+      background-color: #e6e2db;
+    }
+
+    /* Main Mobile Container */
+    #app {
+      width: 100%;
+      max-width: var(--max-width);
+      min-height: 100vh;
+      margin: 0 auto;
+      background-color: var(--color-bg);
+      position: relative;
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
+      overflow-x: hidden;
+    }
+
+    /* Typography Utilities */
+    h1, h2, h3, h4, .serif { font-family: var(--font-serif); font-weight: 500; }
+    .subtitle { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 10px; font-weight: 600; }
+    .section-title { font-size: 2.5rem; color: var(--color-text); margin-bottom: 20px; line-height: 1.2; text-align: center; }
+    p { font-size: 0.9rem; line-height: 1.6; }
+
+    /* Particles Canvas */
+    #petals-canvas {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--max-width);
+      height: 100%;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.349);
+      backdrop-filter: blur(2px); 
+      -webkit-backdrop-filter: blur(2px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 16px;
+      padding: 30px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      text-align: center;
+      margin: 0 15px;
+    }
+
+    /* Scroll Animation Utility */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       1. Opening Sequence (Video Overlay)
+       ========================================================================== */
+    #intro-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100vh;
+      z-index: 9999;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 1.5s ease-in-out;
+      overflow: hidden;
+    }
+    #intro-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #intro-video {
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; height: 100%; min-width: 448px;
+      object-fit: cover;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    .tap-hint {
+      position: relative;
+      z-index: 10000;
+      color: #fff;
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-style: italic;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      animation: pulse 2s infinite;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 30px;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
+
+    /* Audio Controller */
+    .audio-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px; /* Adjust via JS for centered container */
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+    .audio-btn:active { transform: scale(0.9); }
+
+    /* ==========================================================================
+       2. Hero / Welcome Section
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      padding: 40px 20px;
+      /* Watercolor Palace Background */
+      background: url('images/Back_invitation1.avif') bottom/cover no-repeat;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(250, 248, 245, 0.096) 0%, rgba(250, 248, 245, 0.247) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      width: 100%;
+    }
+    .ganesha-icon { width: 64px; height: 86px; margin-bottom: 20px; opacity: 0.8; }
+    .hero-intro {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+      color: var(--color-text-light);
+      line-height: 1.8;
+    }
+    .couple-names {
+      font-size: 30px;
+      line-height: 1.1;
+      color: var(--color-text);
+      margin-bottom: 16px;
+      text-shadow: 0 2px 10px rgba(255,255,255,0.8);
+    }
+    .parents-text {
+      font-size: 10px;
+      color: var(--color-text-light);
+      font-style: italic;
+      line-height: 1.6;
+      background-color: rgba(255, 255, 255, 0.521);
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: rgba(100, 100, 111, 0.158) 0px 7px 29px 0px;
+    }
+
+    /* ==========================================================================
+       3. Countdown Timer
+       ========================================================================== */
+    .countdown-section {
+      padding: 60px 20px;
+      background: var(--color-bg);
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .cd-box {
+      width: 70px;
+      height: 70px;
+      background: #fff;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+    .cd-num {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--color-accent-dark);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .cd-label {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-light);
+    }
+
+    /* ==========================================================================
+       4. Sacred Ceremonies (Event Timeline)
+       ========================================================================== */
+    .ceremonies-section {
+      position: relative;
+      z-index: 10;
+    }
+    .event-block {
+      position: relative;
+      padding: 80px 15px;
+      min-height: 80vh;
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      background-size: cover;
+      background-position: bottom;
+      background-repeat: no-repeat;
+    }
+    /* Distinct Watercolor Backgrounds for events */
+    .event-mehndi { background-image: url('images/Back_invitation2.avif'); }
+    .event-sangeet { background-image: url('images/Back_invitation3.avif'); }
+    .event-baraat { background-image: url('images/Back_invitation4.avif'); }
+    .event-wedding { background-image: url('images/Back_invitation5.avif'); }
+    .event-reception { background-image: url('images/Back_invitation6.avif'); }
+    
+    .event-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(250,248,245,0.35); /* Light overlay to ensure card pops */
+    }
+    
+    .event-card {
+      position: relative;
+      width: 100%;
+      z-index: 2;
+    }
+    .event-date {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--color-accent-dark);
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+    .event-title {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .event-time {
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+      margin-bottom: 15px;
+    }
+    .event-desc {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--color-text);
+    }
+
+    /* ==========================================================================
+       5. Venue, Stay & Travel
+       ========================================================================== */
+    .logistics-section {
+      position: relative;
+      padding: 80px 0;
+      background: url('https://images.unsplash.com/photo-1561501878-aabd62634533?auto=format&fit=crop&w=480&q=80') center/cover no-repeat;
+    }
+    .logistics-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(250,248,245,0.9), rgba(250,248,245,0.7));
+    }
+    .logistics-content {
+      position: relative;
+      z-index: 2;
+    }
+    .info-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      margin: 0 20px 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+      text-align: center;
+    }
+    .info-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .info-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-outline {
+      border: 1px solid var(--color-text);
+      color: var(--color-text);
+      background: transparent;
+    }
+    .btn-primary {
+      background: var(--color-footer);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(74, 93, 35, 0.3);
+    }
+    .stay-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .stay-box {
+      background: var(--color-bg);
+      padding: 15px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .stay-box i { color: var(--color-accent); margin-bottom: 8px; font-size: 1.2rem; }
+    .stay-box p { font-size: 0.75rem; margin-bottom: 3px; font-weight: 600;}
+    .stay-box span { font-size: 0.7rem; color: var(--color-text-light); }
+
+    /* ==========================================================================
+       6. Attire Guidelines
+       ========================================================================== */
+    .attire-section {
+      padding: 60px 20px;
+      background: var(--color-bg);
+    }
+    .attire-list {
+      list-style: none;
+      text-align: left;
+      margin-top: 20px;
+    }
+    .attire-list li {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .attire-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .attire-event { font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-accent-dark); margin-bottom: 5px; display: block;}
+    .attire-desc { font-size: 0.85rem; color: var(--color-text-light); }
+
+    /* ==========================================================================
+       7. RSVP Form
+       ========================================================================== */
+    .rsvp-section {
+      padding: 60px 20px;
+      background: linear-gradient(to bottom, #faf8f5, #f0ece3);
+    }
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: var(--color-text-light);
+      font-weight: 600;
+    }
+    .form-input {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      background: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--color-text);
+      transition: border-color 0.3s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+    textarea.form-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* ==========================================================================
+       8. Our Journey (Embla Carousel)
+       ========================================================================== */
+    .journey-section {
+      padding: 80px 0;
+      background: #fff;
+      text-align: center;
+    }
+    .embla {
+      margin-top: 30px;
+      cursor: grab;
+    }
+    .embla:active { cursor: grabbing; }
+    .slide-inner {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      height: 450px;
+      background: #f0f0f0;
+    }
+    .slide-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ==========================================================================
+       9. Social / Instagram
+       ========================================================================== */
+    .social-section {
+      padding: 60px 20px;
+      text-align: center;
+      background: var(--color-bg);
+    }
+    .ig-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 5px 15px rgba(220, 39, 67, 0.3);
+      margin-top: 20px;
+    }
+
+    /* ==========================================================================
+       10. Footer
+       ========================================================================== */
+    .footer {
+      background: var(--color-footer);
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    .footer-names {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .footer-dates {
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+    .footer-location {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 40px;
+    }
+    .footer-signoff {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-style: italic;
+      opacity: 0.9;
+    }
+    /* Landscape Restriction Warning */
+    #landscape-warning {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: var(--bg, var(--background, var(--color-bg, #000)));
+      color: var(--gold, var(--primary, var(--color-text, #fff)));
+      z-index: 999999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    #landscape-warning svg {
+      margin-bottom: 20px;
+      animation: rotatePhone 2s infinite ease-in-out;
+    }
+    #landscape-warning h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-family: var(--font-serif, 'Playfair Display', 'Cinzel', serif);
+    }
+    #landscape-warning p {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-family: var(--font-sans, 'Montserrat', sans-serif);
+      color: var(--white, var(--text, var(--color-text, #ccc)));
+    }
+    @keyframes rotatePhone {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(-90deg); }
+      100% { transform: rotate(-90deg); }
+    }
+    @media screen and (orientation: landscape) and (max-height: 600px) {
+      #landscape-warning {
+        display: flex;
+      }
+      #app {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="landscape-warning">
+    <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor">
+      <path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm1 18H7V5h10v14z"/>
+    </svg>
+    <h2>Please Rotate Your Device</h2>
+    <p>This invitation is beautifully crafted for portrait viewing.</p>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="bg-music" loop>
+    <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Audio Controller -->
+  <div class="audio-btn" id="audio-ctrl">
+    <i class="fa-solid fa-volume-xmark" id="icon-muted"></i>
+    <i class="fa-solid fa-volume-high" id="icon-unmuted" style="display:none;"></i>
+  </div>
+
+  <div id="app">
+    
+    <!-- Particles Canvas for Petals -->
+    <canvas id="petals-canvas"></canvas>
+
+    <!-- 1. Opening Sequence -->
+    <div id="intro-overlay">
+      <video id="intro-video" playsinline muted disablePictureInPicture fetchpriority="high" preload="auto">
+        <source src="images/Envelopopen.webm" type="video/webm">
+      </video>
+      <div class="tap-hint" id="tap-hint">Tap to Open</div>
+    </div>
+
+    <!-- 2. Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content reveal">
+        <svg class="ganesha-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" zoomAndPan="magnify" viewBox="0 0 375 487.499991" height="650" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="cf348699c6"><path d="M 145 279 L 366 279 L 366 484.753906 L 145 484.753906 Z M 145 279 " clip-rule="nonzero"/></clipPath><clipPath id="5654ef6f21"><path d="M 1.691406 249 L 162 249 L 162 422 L 1.691406 422 Z M 1.691406 249 " clip-rule="nonzero"/></clipPath></defs><path fill="#000000" d="M 238.546875 228.703125 C 247.621094 227.949219 262.375 223.148438 273.121094 231.949219 C 289.042969 244.988281 280.875 268.796875 260.898438 272.949219 C 254.382812 274.300781 246.464844 273.363281 239.503906 273.449219 C 233.320312 273.523438 225.414062 275 219.640625 275.476562 C 222.296875 279.101562 218.941406 276.089844 223.335938 277.753906 C 240.25 284.164062 251.039062 295.082031 256.601562 313.15625 C 261.945312 330.523438 262.59375 344.375 254.484375 360.085938 L 246.890625 370.402344 C 246.75 370.550781 246.554688 370.769531 246.410156 370.917969 L 245.414062 371.914062 C 222.085938 394.378906 176.335938 392.363281 154.78125 365.214844 C 131.417969 335.789062 134.332031 290.261719 145.613281 256.191406 C 147.507812 250.46875 149.71875 247.003906 150.96875 241.640625 C 132.519531 253.996094 119.09375 292.050781 121.953125 317.417969 C 123.527344 331.359375 123.804688 346.910156 131.859375 360.273438 C 155.550781 399.574219 193.714844 416.238281 237.84375 397.183594 C 249.59375 392.109375 261.417969 383.796875 269.109375 374.710938 C 287.21875 353.316406 288.664062 321.574219 277.355469 296.382812 C 276.097656 293.582031 274.152344 291.304688 273.378906 288.417969 C 279.992188 284.917969 285.652344 279.332031 290.042969 273.234375 C 306.109375 250.910156 296.550781 222.753906 276.945312 218.167969 C 263.074219 214.925781 243.175781 222.386719 238.546875 228.707031 Z M 238.546875 228.703125 " fill-opacity="1" fill-rule="evenodd"/><g clip-path="url(#cf348699c6)"><path fill="#000000" d="M 282.335938 288.417969 C 294.382812 294.195312 302.21875 295.898438 314.890625 306.621094 C 336.617188 325.011719 352.019531 361.023438 325.566406 383.398438 C 303.386719 402.15625 264.585938 409.988281 236.5625 409.835938 C 216.617188 409.730469 185.839844 413.644531 169.585938 420.484375 C 155.632812 426.355469 145 432.453125 145 449.640625 C 145 464.746094 157.679688 478.300781 166.894531 484.472656 C 165.53125 479.363281 143.710938 454.738281 159.632812 438.398438 C 169.40625 428.367188 192.433594 426.679688 206.667969 425.71875 C 253.257812 422.578125 333.433594 426.039062 356.988281 378.992188 C 370.527344 351.949219 366.382812 323.4375 348.742188 299.636719 C 340.304688 288.25 322.617188 279.460938 307.214844 279.460938 C 299.042969 279.460938 285.585938 283.980469 282.335938 288.417969 Z M 282.335938 288.417969 " fill-opacity="1" fill-rule="evenodd"/></g><g clip-path="url(#5654ef6f21)"><path fill="#000000" d="M 1.691406 317.277344 C 1.691406 338.820312 11.851562 362.644531 23.566406 378.003906 C 29.222656 385.421875 36.707031 392.585938 44.1875 398.183594 C 74.152344 420.601562 115.90625 426.503906 152.777344 417.609375 C 156.398438 416.734375 159.863281 416.613281 161.917969 413.8125 C 156.238281 413.8125 155.035156 414.808594 148.980469 414.808594 C 118.257812 414.808594 99.523438 414.085938 72.53125 397.707031 C 55.285156 387.246094 44.816406 377.5625 34.332031 360.269531 C 26.964844 348.121094 18.867188 317.992188 25.015625 299.800781 C 28.097656 290.6875 33.683594 282.320312 40.488281 277.453125 C 77.167969 251.207031 107.183594 282.339844 107.183594 303.34375 C 107.183594 314.683594 101.164062 320.792969 97.230469 328.222656 C 110.558594 327.113281 123.992188 306.246094 116.285156 283.296875 C 114.253906 277.261719 108.796875 269.121094 104.101562 264.628906 C 80.257812 241.808594 42.523438 245.964844 22.316406 265.253906 C 11.371094 275.699219 1.691406 296.097656 1.691406 317.277344 Z M 1.691406 317.277344 " fill-opacity="1" fill-rule="evenodd"/></g><path fill="#000000" d="M 127.085938 194.867188 C 127.085938 215.632812 122.300781 216.1875 122.109375 224.722656 C 129.859375 219.535156 134.054688 203.65625 134.054688 190.886719 C 134.054688 174.1875 119.316406 158.105469 112.839844 146.417969 C 100.554688 124.246094 83.179688 99.855469 101.914062 81.121094 C 117.308594 65.726562 146.988281 69.816406 146.988281 103.308594 C 146.988281 110.277344 143.703125 113.234375 141.019531 117.242188 C 135.996094 113.5625 139.449219 111.269531 129.078125 111.269531 C 118.507812 111.269531 113.882812 132.171875 137.039062 132.171875 C 171.03125 132.171875 165.957031 58.527344 119.125 58.527344 C 102.609375 58.527344 89.875 68.421875 84.261719 79.394531 C 69.585938 108.085938 92.1875 135.089844 108.460938 156.765625 C 115.160156 165.6875 127.085938 180.339844 127.085938 194.867188 Z M 127.085938 194.867188 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 40.503906 209.796875 C 40.503906 242.796875 66.988281 260.941406 92.191406 238.59375 L 93.246094 237.65625 C 111.351562 220.402344 109.277344 193.871094 102.207031 193.871094 C 93.765625 193.871094 73.960938 216.820312 75.59375 223.667969 C 76.457031 227.285156 77.941406 226.308594 80.710938 224.277344 C 86.605469 219.960938 85.988281 218.089844 92.253906 214.773438 C 92.253906 222.414062 91.652344 222.464844 88.074219 226.515625 C 84.527344 230.527344 80.019531 236.671875 70.605469 236.183594 C 50.4375 235.136719 49.980469 194.71875 65.640625 176.21875 C 68.105469 173.308594 74.070312 169.25 78.828125 168.546875 C 94.667969 166.207031 89.765625 187.917969 89.269531 193.871094 C 94.5 192.476562 101.210938 179.488281 101.210938 170.984375 C 101.210938 160.210938 96.863281 154.066406 82.300781 154.066406 C 56.199219 154.066406 40.503906 183.164062 40.503906 209.796875 Z M 40.503906 209.796875 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 225.609375 149.089844 C 233.023438 138.972656 249.914062 155.058594 239.542969 155.058594 C 234.367188 155.058594 233.914062 155.449219 229.480469 153.179688 C 224.671875 150.71875 227.484375 152.65625 225.609375 149.089844 Z M 227.601562 139.136719 C 228.457031 135.933594 227.964844 136.476562 230.726562 135.296875 C 236.007812 133.046875 240.128906 134.957031 242.527344 135.15625 C 242.527344 142.820312 243.421875 142.121094 233.570312 142.121094 C 229.886719 142.121094 229.074219 141.152344 227.601562 139.136719 Z M 222.625 138.140625 L 223.621094 144.113281 C 213.679688 146.765625 218.089844 159.039062 241.535156 159.039062 C 241.230469 172.640625 235.007812 199.609375 230.597656 210.800781 C 224.921875 225.214844 208.007812 256.90625 198.148438 271.902344 C 193.886719 278.382812 189.683594 284.765625 186.136719 291.734375 C 174.78125 314.0625 162.082031 348.292969 177.566406 372.289062 C 178.742188 374.109375 177.964844 373 178.835938 374.003906 C 178.835938 367.695312 176.847656 361.921875 176.847656 349.121094 C 176.847656 320.042969 191.992188 298.992188 205.707031 278.464844 C 226.9375 246.683594 248.386719 214.097656 252.328125 174.808594 L 253.035156 164.386719 C 253.84375 157.070312 253.101562 143.59375 252.210938 136.421875 C 251.453125 130.324219 252.433594 122.21875 246.507812 122.21875 C 242.632812 122.21875 243.035156 124.65625 242.5 128.238281 C 241.644531 133.957031 242.652344 131.363281 236.628906 131.238281 C 231.742188 131.136719 222.625 133.691406 222.625 138.140625 Z M 222.625 138.140625 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 154.953125 23.695312 C 160.53125 27.429688 158.410156 26.003906 166.332031 21.023438 C 169.371094 19.113281 173.371094 17.417969 170.992188 22.5625 C 168.816406 27.257812 162.949219 28.78125 159.613281 37.328125 C 150.332031 61.125 187.84375 70.316406 202.464844 58.269531 C 217.453125 45.917969 210.359375 23.695312 194.757812 23.695312 C 179.007812 23.695312 179.683594 37.15625 183.816406 41.597656 C 185.871094 43.808594 188.570312 44.054688 190.777344 45.589844 C 188.101562 46.210938 184.0625 48.574219 181.820312 48.574219 C 173.359375 48.574219 166.320312 42.496094 174.6875 31.488281 C 178.320312 26.707031 184.050781 19.191406 181.953125 12.707031 C 177.207031 -1.964844 155.691406 14.8125 154.949219 23.695312 Z M 154.953125 23.695312 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 263.429688 137.144531 C 277.121094 127.976562 277.375 125.203125 295.273438 125.203125 C 310.230469 125.203125 322.59375 143.375 312.628906 158.484375 C 308.695312 164.449219 309.160156 162.933594 304.46875 167.242188 C 302.890625 168.691406 302.085938 169.738281 300.519531 171.25 C 290.730469 180.703125 267.125 197.027344 258.179688 205.542969 C 255.167969 208.40625 252.695312 211.480469 250.488281 214.773438 C 255.339844 213.476562 277.640625 198.019531 283.753906 194.292969 C 289.738281 190.644531 294.511719 187.738281 299.96875 183.640625 C 305.230469 179.691406 310.828125 176.707031 315.445312 172.246094 C 346.207031 142.550781 326.726562 113.261719 292.289062 113.261719 C 282.390625 113.261719 279.058594 115.605469 272.957031 119.804688 C 267.3125 123.691406 263.429688 128.046875 263.429688 137.144531 Z M 263.429688 137.144531 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 300.25 238.65625 C 300.25 269.144531 327.570312 283.789062 355.152344 268.679688 C 379.113281 255.554688 369.84375 239.4375 356.195312 251.808594 C 349.597656 257.785156 335.132812 265.566406 326.507812 260.183594 C 312.523438 251.453125 325.152344 228.097656 311.199219 218.753906 C 303.808594 220.472656 300.25 229.625 300.25 238.65625 Z M 300.25 238.65625 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 176.847656 115.253906 C 176.847656 128.242188 228.574219 125.242188 249.839844 114.601562 C 272.980469 103.019531 265.429688 92.363281 259.449219 92.363281 C 244.214844 92.363281 244.40625 112.078125 186.804688 111.207031 C 182.25 111.140625 176.847656 110.960938 176.847656 115.253906 Z M 176.847656 115.253906 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 164.902344 92.363281 C 164.902344 111.253906 252.480469 98.828125 252.480469 76.4375 C 252.480469 72.074219 252.617188 67.738281 243.503906 70.363281 C 237.144531 72.191406 219.507812 89.847656 176.847656 89.378906 C 171.984375 89.328125 164.902344 87.835938 164.902344 92.363281 Z M 164.902344 92.363281 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 169.878906 68.476562 C 164.796875 68.476562 156.679688 67.613281 152.960938 68.476562 C 152.960938 73.179688 153.417969 76.457031 159.753906 78.605469 C 176.132812 84.148438 241.535156 76.34375 241.535156 52.554688 C 241.535156 48.867188 237.625 48.574219 234.566406 48.574219 C 226.671875 48.574219 211.621094 68.476562 169.878906 68.476562 Z M 169.878906 68.476562 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 329.109375 236.667969 C 329.109375 259.128906 357.972656 256.121094 357.972656 238.65625 C 357.972656 218.398438 329.109375 220.566406 329.109375 236.667969 Z M 329.109375 236.667969 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 193.765625 189.890625 C 200.230469 189.890625 199.234375 187.488281 201.726562 190.886719 L 193.765625 190.886719 Z M 191.773438 188.898438 L 192.070312 189.195312 C 192.050781 189.175781 191.675781 188.996094 191.773438 188.898438 Z M 187.792969 185.910156 C 184.339844 183.597656 181.820312 178.878906 181.820312 172.972656 C 184.597656 174.832031 186.054688 176.953125 189.785156 177.949219 C 187.433594 181.460938 187.792969 180.113281 187.792969 185.910156 Z M 204.710938 196.859375 C 206.402344 190.519531 214.496094 179.125 194.785156 168.96875 C 181.738281 162.246094 186.753906 164.015625 177.839844 158.046875 C 180.917969 169.5625 203.292969 169.855469 204.710938 186.90625 C 198.667969 179.953125 200.574219 178.765625 187.792969 171.980469 C 172.949219 164.097656 177.496094 159.183594 171.871094 155.058594 C 173.414062 161.691406 172.820312 163.117188 176.589844 168.253906 C 181.195312 174.523438 176.585938 189.628906 197.503906 194.117188 C 202.519531 195.191406 204.398438 196.746094 204.710938 196.859375 Z M 204.710938 196.859375 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 147.984375 228.703125 C 149.839844 235.644531 185.859375 267.71875 168.542969 234.023438 C 166.449219 229.953125 164.898438 226.484375 162.914062 222.734375 C 158.378906 223.945312 156.996094 228.503906 147.984375 228.703125 Z M 147.984375 228.703125 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 212.671875 193.871094 C 219.117188 189.148438 219.5 170.617188 207.425781 160.304688 C 200.457031 154.351562 183.320312 144.300781 174.855469 144.113281 C 177.667969 146.554688 178.816406 146.382812 182.121094 147.792969 C 188.234375 150.40625 197.308594 157.074219 201.980469 161.769531 C 205.878906 165.695312 209.054688 168.660156 211.300781 174.34375 C 214.785156 183.167969 213.425781 184.824219 212.671875 193.871094 Z M 212.671875 193.871094 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 138.035156 216.761719 L 138.035156 220.742188 C 141.941406 221.070312 141.851562 221.519531 145.996094 227.710938 C 151.332031 225.148438 147.796875 228.214844 161.917969 220.742188 C 161.480469 215.476562 159.953125 218.484375 161.980469 213.820312 C 163.789062 209.648438 164.261719 213.59375 162.914062 207.804688 C 155.648438 209.746094 158.964844 216.761719 138.035156 216.761719 Z M 138.035156 216.761719 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 212.671875 193.871094 L 211.675781 193.871094 L 212.507812 195.035156 Z M 212.671875 193.871094 " fill-opacity="1" fill-rule="evenodd"/></svg>
+        <p class="hero-intro">With the blessings of our<br>respected elders</p>
+        <h1 class="couple-names">Anjali Kaur<br>&<br>Maneet Singh</h1>
+        <div class="parents-text">
+          <p>Daughter of<br>Smt. Pritpal Kaur & Late Shri Jasbir Singh</p>
+          <br>
+          <p>Son of<br>Sardarni Vandy Kaur & Sardar Diljeet Singh</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Countdown Timer -->
+    <section class="countdown-section reveal">
+      <p class="subtitle">The Journey Begins In</p>
+      <div class="countdown-grid">
+        <div class="cd-box"><span class="cd-num" id="cd-d">00</span><span class="cd-label">Days</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-h">00</span><span class="cd-label">Hours</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-m">00</span><span class="cd-label">Mins</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-s">00</span><span class="cd-label">Secs</span></div>
+      </div>
+    </section>
+
+    <!-- 4. Sacred Ceremonies -->
+    <section class="ceremonies-section">
+      <!-- Mehndi -->
+      <div class="event-block event-mehndi">
+        <div class="glass-card event-card reveal">
+          <p class="event-date">Oct 25, 2026</p>
+          <h3 class="event-title serif">Mehndi Ceremony</h3>
+          <p class="event-time">1:00 PM Onwards</p>
+          <p class="event-desc">Join us for an event full of colour, music, and joy.</p>
+        </div>
+      </div>
+
+      <!-- Sangeet -->
+      <div class="event-block event-sangeet">
+        <div class="glass-card event-card reveal">
+          <p class="event-date">Oct 25, 2026</p>
+          <h3 class="event-title serif">Sangeet</h3>
+          <p class="event-time">8:00 PM Onwards</p>
+          <p class="event-desc">An evening of sweet traditions, warm celebrations, and endless dancing.</p>
+        </div>
+      </div>
+
+      <!-- Baraat -->
+      <div class="event-block event-baraat">
+        <div class="glass-card event-card reveal">
+          <p class="event-date">Oct 26, 2026</p>
+          <h3 class="event-title serif">Raat Ki Baraat</h3>
+          <p class="event-time">6:00 PM Onwards</p>
+          <p class="event-desc">Dance into the night as the groom makes his grand entrance.</p>
+        </div>
+      </div>
+
+      <!-- Wedding / Anand Karaj -->
+      <div class="event-block event-wedding">
+        <div class="glass-card event-card reveal">
+          <p class="event-date">Oct 27, 2026</p>
+          <h3 class="event-title serif">Anand Karaj</h3>
+          <p class="event-time">10:00 AM Onwards</p>
+          <p class="event-desc">The sacred union of two souls in the presence of the Almighty.</p>
+        </div>
+      </div>
+
+      <!-- Reception -->
+      <div class="event-block event-reception">
+        <div class="glass-card event-card reveal">
+          <p class="event-date">Oct 27, 2026</p>
+          <h3 class="event-title serif">Reception</h3>
+          <p class="event-time">7:30 PM Onwards</p>
+          <p class="event-desc">Join us for a grand celebration to toast the newlyweds.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Venue, Stay & Travel -->
+    <section class="logistics-section">
+      <div class="logistics-content reveal">
+        <p class="subtitle" style="text-align: center;">The Setting</p>
+        <h2 class="section-title">Logistics & Stay</h2>
+        
+        <div class="info-card">
+          <h3 class="info-title">Mementos Ekaaya</h3>
+          <p style="font-size:0.8rem; margin-bottom:15px; color:var(--color-text-light);">Udaipur, Rajasthan</p>
+          <a href="#" class="btn btn-outline" style="margin-bottom: 20px;"><i class="fa-solid fa-map-location-dot"></i> Open in Google Maps</a>
+          
+          <div class="stay-grid">
+            <div class="stay-box">
+              <i class="fa-regular fa-calendar-check"></i>
+              <p>Check-In</p>
+              <span>25 Oct 2026</span>
+            </div>
+            <div class="stay-box">
+              <i class="fa-regular fa-calendar-xmark"></i>
+              <p>Check-Out</p>
+              <span>28 Oct 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card reveal">
+          <h3 class="info-title">We're Here to Help</h3>
+          <p style="font-size:0.85rem; margin-bottom:15px; color:var(--color-text-light);">For any questions regarding travel, accommodation, or the itinerary, please connect with our wedding planners.</p>
+          <a href="#" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Message on WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Attire Guidelines -->
+    <section class="attire-section">
+      <div class="glass-card reveal">
+        <p class="subtitle">What to wear</p>
+        <h2 class="section-title" style="margin-bottom: 10px;">Attire</h2>
+        <p style="font-size:0.8rem; margin-bottom: 20px; color:var(--color-text-light);">To help you prepare, we've curated a style guide for each celebration.</p>
+        <ul class="attire-list">
+          <li>
+            <span class="attire-event">Mehndi</span>
+            <span class="attire-desc">Bright, colourful, vibrant & fun.</span>
+          </li>
+          <li>
+            <span class="attire-event">Sangeet</span>
+            <span class="attire-desc">Elegant, warm & timeless.</span>
+          </li>
+          <li>
+            <span class="attire-event">Raat Ki Baraat</span>
+            <span class="attire-desc">Bold, festive, energetic & celebratory.</span>
+          </li>
+          <li>
+            <span class="attire-event">Anand Karaj</span>
+            <span class="attire-desc">Graceful, soft & traditional pastels. (Please bring a head covering).</span>
+          </li>
+          <li>
+            <span class="attire-event">Reception</span>
+            <span class="attire-desc">Glamorous, sophisticated and celebratory formal wear.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7. RSVP Form -->
+    <section class="rsvp-section reveal">
+      <p class="subtitle" style="text-align: center;">Kindly Respond</p>
+      <h2 class="section-title">Your Details</h2>
+      
+      <form id="rsvp-form" class="glass-card" style="margin:0;">
+        <div class="form-group">
+          <label class="form-label">Lead Passenger's First & Last Name</label>
+          <input type="text" id="rsvp-name" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telephone Number / WhatsApp</label>
+          <input type="tel" id="rsvp-phone" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="rsvp-email" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Number of Guests (Including yourself)</label>
+          <input type="number" id="rsvp-guests" class="form-input" min="1" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Arrival Date & Time</label>
+          <input type="text" id="rsvp-arrival" class="form-input" placeholder="e.g. 25 Oct, 10:00 AM">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Departure Date & Time</label>
+          <input type="text" id="rsvp-departure" class="form-input" placeholder="e.g. 28 Oct, 11:30 AM">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dietary Requirements & Allergies</label>
+          <textarea id="rsvp-diet" class="form-input" placeholder="Please share any dietary needs..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">A song you'd love to dance to</label>
+          <input type="text" id="rsvp-song" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Speech Request (Optional)</label>
+          <input type="text" id="rsvp-speech" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Performance Request (Optional)</label>
+          <input type="text" id="rsvp-perf" class="form-input">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px; padding: 15px;">Submit RSVP & Requests</button>
+      </form>
+    </section>
+
+    <!-- 8. Our Journey (Carousel) -->
+    <section class="journey-section reveal">
+      <p class="subtitle">Our Journey</p>
+      <h2 class="section-title serif" style="font-size: 2rem;">Two souls, one beautiful beginning</h2>
+      
+      <div class="embla">
+        <div class="embla__container">
+          <div class="embla__slide">
+            <div class="slide-inner">
+              <img src="images/WeddingGlimphs1.webp" alt="Couple Photo 1" loading="lazy">
+            </div>
+          </div>
+          <div class="embla__slide">
+            <div class="slide-inner">
+              <img src="images/WeddingGlimphs2.webp" alt="Couple Photo 2" loading="lazy">
+            </div>
+          </div>
+          <div class="embla__slide">
+            <div class="slide-inner">
+              <img src="images/WeddingGlimphs3.webp" alt="Couple Photo 3" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Social -->
+    <section class="social-section reveal">
+      <p class="subtitle">Follow our Journey</p>
+      <a href="#" class="ig-btn">
+        <i class="fa-brands fa-instagram" style="font-size: 1.2rem;"></i> Follow on Instagram
+      </a>
+    </section>
+
+    <!-- 10. Footer -->
+    <footer class="footer">
+      <h2 class="footer-names serif">Anjali Kaur<br>&<br>Maneet Singh</h2>
+      <p class="footer-dates">25 — 28 October 2026</p>
+      <p class="footer-location">Mementos by ITC Hotels, Ekaaya Udaipur</p>
+      <p class="footer-signoff">We cannot wait to celebrate with you.</p>
+      <p class="footer-signoff" style="margin-top: 15px; font-size: 0.75rem; opacity: 0.7;">Designed with ❤️ by <a href="https://shriiitrackingsolution.in/" target="_blank" rel="noreferrer" style="color: inherit; text-decoration: underline;">STS</a></p>
+    </footer>
+
+  </div>
+
+  <!-- Embla Carousel Script -->
+  <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js" defer></script>
+  
+  <!-- Main Application Logic -->
+  <script>
+    // --- 1. Scroll Restoration & Positioning ---
+    if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+    window.scrollTo(0, 0);
+
+    // Audio positioning fix based on container
+    function updateAudioPosition() {
+      const app = document.getElementById('app');
+      const audioBtn = document.getElementById('audio-ctrl');
+      const rect = app.getBoundingClientRect();
+      // Keep button aligned to the right inside the max-width container
+      const rightEdge = window.innerWidth - rect.right;
+      audioBtn.style.right = Math.max(20, rightEdge + 20) + 'px';
+    }
+    window.addEventListener('resize', updateAudioPosition);
+    updateAudioPosition();
+
+    // --- 2. Opening Sequence Logic ---
+    const introOverlay = document.getElementById('intro-overlay');
+    const introVideo = document.getElementById('intro-video');
+    const tapHint = document.getElementById('tap-hint');
+    const bgMusic = document.getElementById('bg-music');
+    const iconMuted = document.getElementById('icon-muted');
+    const iconUnmuted = document.getElementById('icon-unmuted');
+    
+    let isMusicPlaying = false;
+
+    introOverlay.addEventListener('click', () => {
+      tapHint.style.display = 'none';
+      
+      // Play the intro video
+      introVideo.play().catch(e => console.log('Video play error:', e));
+      
+      // Also start background music automatically
+      bgMusic.play().then(() => {
+        isMusicPlaying = true;
+        iconMuted.style.display = 'none';
+        iconUnmuted.style.display = 'block';
+      }).catch(e => console.log('Audio autoplay prevented'));
+
+      // Wait a moment (e.g. 2.5s) to let envelope open animation run, then fade out
+      setTimeout(() => {
+        introOverlay.classList.add('hidden');
+        document.body.classList.add('unlocked');
+      }, 2500);
+    });
+
+    // --- 3. Audio Controller ---
+    document.getElementById('audio-ctrl').addEventListener('click', () => {
+      if (isMusicPlaying) {
+        bgMusic.pause();
+        iconMuted.style.display = 'block';
+        iconUnmuted.style.display = 'none';
+      } else {
+        bgMusic.play();
+        iconMuted.style.display = 'none';
+        iconUnmuted.style.display = 'block';
+      }
+      isMusicPlaying = !isMusicPlaying;
+    });
+
+    // --- 4. Falling Petals Canvas ---
+    const canvas = document.getElementById('petals-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resizeCanvas() {
+      const appRect = document.getElementById('app').getBoundingClientRect();
+      width = appRect.width;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const petals = [];
+    const numPetals = 30; // Lightweight count
+
+    for(let i=0; i<numPetals; i++) {
+      petals.push({
+        x: Math.random() * width,
+        y: Math.random() * height - height,
+        w: Math.random() * 8 + 6,
+        h: Math.random() * 4 + 4,
+        speed: Math.random() * 1.5 + 0.5,
+        angle: Math.random() * 360,
+        spin: (Math.random() * 2 - 1) * 2,
+        // Vibrant petal colors (rose, blush pink, soft white, gold)
+        color: ['rgba(235, 150, 160, 0.75)', 'rgba(215, 120, 135, 0.7)', 'rgba(255, 235, 238, 0.8)', 'rgba(212, 160, 100, 0.75)'][Math.floor(Math.random() * 4)]
+      });
+    }
+
+    function drawPetal(ctx, w, h) {
+      ctx.beginPath();
+      ctx.moveTo(0, -h/2);
+      ctx.bezierCurveTo(w/2, -h/2, w/2, h/2, 0, h/2);
+      ctx.bezierCurveTo(-w/2, h/2, -w/2, -h/2, 0, -h/2);
+      ctx.fill();
+    }
+
+    function animatePetals() {
+      ctx.clearRect(0, 0, width, height);
+      petals.forEach(p => {
+        p.y += p.speed;
+        p.angle += p.spin;
+        p.x += Math.sin(p.angle * Math.PI/180) * 0.5; // gentle sway
+        
+        if (p.y > height + 20) {
+          p.y = -20;
+          p.x = Math.random() * width;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        drawPetal(ctx, p.w, p.h);
+        ctx.restore();
+      });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    // --- 5. Countdown Logic ---
+    const targetDate = new Date("October 25, 2026 13:00:00").getTime();
+    const cdDays = document.getElementById('cd-d');
+    const cdHours = document.getElementById('cd-h');
+    const cdMins = document.getElementById('cd-m');
+    const cdSecs = document.getElementById('cd-s');
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        cdDays.innerText = "00";
+        cdHours.innerText = "00";
+        cdMins.innerText = "00";
+        cdSecs.innerText = "00";
+        return;
+      }
+
+      const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+      cdDays.innerText = d.toString().padStart(2, '0');
+      cdHours.innerText = h.toString().padStart(2, '0');
+      cdMins.innerText = m.toString().padStart(2, '0');
+      cdSecs.innerText = s.toString().padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // --- 6. Intersection Observer for Scroll Animations ---
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          // Optional: unobserve if you only want it to animate once
+          // observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(r => observer.observe(r));
+
+    // --- 7. Embla Carousel Init with Autoplay ---
+    const emblaNode = document.querySelector('.embla');
+    const options = { loop: true, align: 'center' };
+    const embla = EmblaCarousel(emblaNode, options);
+    if (embla) {
+      setInterval(() => {
+        if (embla.canScrollNext()) {
+          embla.scrollNext();
+        } else {
+          embla.scrollTo(0);
+        }
+      }, 3000);
+    }
+
+    // --- 8. RSVP Form WhatsApp Submission ---
+    const rsvpForm = document.getElementById('rsvp-form');
+    // Set the host WhatsApp number here (include country code, no + or spaces)
+    const hostWhatsAppNumber = "919876543210"; 
+
+    rsvpForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('rsvp-name').value;
+      const phone = document.getElementById('rsvp-phone').value;
+      const email = document.getElementById('rsvp-email').value;
+      const guests = document.getElementById('rsvp-guests').value;
+      const arrival = document.getElementById('rsvp-arrival').value || 'Not specified';
+      const departure = document.getElementById('rsvp-departure').value || 'Not specified';
+      const diet = document.getElementById('rsvp-diet').value || 'None';
+      const song = document.getElementById('rsvp-song').value || 'None';
+      const speech = document.getElementById('rsvp-speech').value || 'None';
+      const perf = document.getElementById('rsvp-perf').value || 'None';
+
+      const text = `*RSVP FOR ANJALI & MANEET'S WEDDING* 💍✨\n\n`
+                 + `*Name:* ${name}\n`
+                 + `*Phone:* ${phone}\n`
+                 + `*Email:* ${email}\n`
+                 + `*No. of Guests:* ${guests}\n`
+                 + `*Arrival:* ${arrival}\n`
+                 + `*Departure:* ${departure}\n`
+                 + `*Dietary Req:* ${diet}\n\n`
+                 + `*Special Requests:*\n`
+                 + `- Song: ${song}\n`
+                 + `- Speech: ${speech}\n`
+                 + `- Performance: ${perf}`;
+                 
+      const encodedText = encodeURIComponent(text);
+      window.open(`https://wa.me/${hostWhatsAppNumber}?text=${encodedText}`, '_blank');
+    });
+
+  </script>
+</body>
+</html>
