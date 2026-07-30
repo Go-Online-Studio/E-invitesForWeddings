@@ -9,8 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   
   <!-- Preload Critical Assets -->
-  <link rel="preload" href="images/Envelopopen.webm" as="video" type="video/webm" fetchpriority="high">
-  <link rel="preload" href="images/Main_Invitation2.avif" as="image" fetchpriority="high">
+  <link rel="preload" href="images/Envelopopen.webm" as="fetch" type="video/webm" crossorigin>
+  <link rel="icon" href="data:,">
   
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -652,9 +652,30 @@
   </div>
 
   <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
+    /* ══════════════════════════════════
+       AOS (IntersectionObserver)
+    ══════════════════════════════════ */
+    var aosObs = null;
+    function initAOS() {
+      if (aosObs) return;
+      const els = document.querySelectorAll('[data-aos]');
+      aosObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(en) {
+          if (en.isIntersecting) {
+            const el = en.target;
+            const delay = parseInt(el.getAttribute('data-aos-delay') || '0', 10);
+            setTimeout(() => { el.classList.add('aos-animate'); }, delay);
+            aosObs.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+      
+      els.forEach(function(el) { aosObs.observe(el); });
+    }
+
     /* ══════════════════════════════════
        ON REFRESH
     ══════════════════════════════════ */
@@ -959,26 +980,7 @@
       window.open(base + '?phone=' + ph + '&text=' + encodeURIComponent(txt), '_blank');
     });
 
-    /* ══════════════════════════════════
-       AOS (IntersectionObserver)
-    ══════════════════════════════════ */
-    let aosObs = null;
-    function initAOS() {
-      if (aosObs) return;
-      const els = document.querySelectorAll('[data-aos]');
-      aosObs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(en) {
-          if (en.isIntersecting) {
-            const el = en.target;
-            const delay = parseInt(el.getAttribute('data-aos-delay') || '0', 10);
-            setTimeout(() => { el.classList.add('aos-animate'); }, delay);
-            aosObs.unobserve(el);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-      
-      els.forEach(function(el) { aosObs.observe(el); });
-    }
+
 
     /* ══════════════════════════════════
        TIMELINE EVENT VIDEO OVERLAYS (2s Fade Out)
