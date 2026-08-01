@@ -15,8 +15,6 @@
   <link rel="preload" href="images/Envelopopen.webm" as="fetch" type="video/webm" crossorigin>
   <link rel="icon" href="data:,">
 
-  <!-- FontAwesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Embla Carousel CSS (Minimal structural CSS required) -->
   <style>
@@ -709,8 +707,12 @@
 
   <!-- Audio Controller -->
   <div class="audio-btn" id="audio-ctrl">
-    <i class="fa-solid fa-volume-xmark" id="icon-muted" style="display:none;"></i>
-    <i class="fa-solid fa-volume-high" id="icon-unmuted"></i>
+    <svg id="icon-muted" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;">
+      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+    </svg>
+    <svg id="icon-unmuted" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+    </svg>
   </div>
 
   <div id="app">
@@ -813,16 +815,24 @@
         <div class="info-card">
           <h3 class="info-title">Mementos Ekaaya</h3>
           <p style="font-size:0.8rem; margin-bottom:15px; color:var(--color-text-light);">Udaipur, Rajasthan</p>
-          <a href="#" class="btn btn-outline" style="margin-bottom: 20px;"><i class="fa-solid fa-map-location-dot"></i> Open in Google Maps</a>
+          <a href="#" class="btn btn-outline" style="margin-bottom: 20px;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg> Open in Google Maps
+          </a>
           
           <div class="stay-grid">
             <div class="stay-box">
-              <i class="fa-regular fa-calendar-check"></i>
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-bottom: 8px;">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-2-9h-4v4h4v-4z"/>
+              </svg>
               <p>Check-In</p>
               <span>25 Oct 2026</span>
             </div>
             <div class="stay-box">
-              <i class="fa-regular fa-calendar-xmark"></i>
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-bottom: 8px;">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-5-11h-2v4l3.3 3.3 1.4-1.4-2.7-2.6V8z"/>
+              </svg>
               <p>Check-Out</p>
               <span>28 Oct 2026</span>
             </div>
@@ -832,7 +842,11 @@
         <div class="info-card reveal">
           <h3 class="info-title">We're Here to Help</h3>
           <p style="font-size:0.85rem; margin-bottom:15px; color:var(--color-text-light);">For any questions regarding travel, accommodation, or the itinerary, please connect with our wedding planners.</p>
-          <a href="#" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Message on WhatsApp</a>
+          <a href="#" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 16.27c-1.47 0-2.91-.39-4.18-1.14l-.3-.18-3.1.81.83-3.03-.2-.32c-.82-1.3-1.25-2.8-1.25-4.34 0-4.51 3.67-8.19 8.2-8.19 4.52 0 8.2 3.68 8.2 8.19 0 4.52-3.68 8.2-8.2 8.2m4.49-6.15c-.25-.12-1.47-.73-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.98-.15.17-.29.19-.54.07-1.31-.63-2.4-1.43-3.26-2.52-.22-.28-.01-.43.11-.55.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.32-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.21 0-.54.08-.82.39-.29.31-1.09 1.07-1.09 2.6s1.12 3.03 1.27 3.23c.16.21 2.2 3.36 5.34 4.72.75.32 1.33.52 1.79.66.75.24 1.44.2 1.98.12.61-.09 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.11-.23-.17-.48-.29"/>
+            </svg> Message on WhatsApp
+          </a>
         </div>
       </div>
     </section>
@@ -876,9 +890,11 @@
       <form id="rsvp-form" class="glass-card" style="margin:0;" onsubmit="event.preventDefault(); sendAnjaliRSVP(); return false;" novalidate>
         <!-- Professional Alert Warning Badge -->
         <div id="rsvp-alert" class="custom-alert-box" style="display: none;">
-          <i class="fa-solid fa-circle-exclamation custom-alert-icon"></i>
+          <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="currentColor" class="custom-alert-icon">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
           <span id="rsvp-alert-text">Please fill in your name and phone number to proceed.</span>
-          <button type="button" class="custom-alert-close" onclick="closeRSVPAlert()">&times;</button>
+          <button type="button" class="custom-alert-close" onclick="closeRSVPAlert()">×</button>
         </div>
 
         <div class="form-group">
@@ -955,7 +971,9 @@
     <section class="social-section reveal">
       <p class="subtitle">Follow our Journey</p>
       <a href="#" class="ig-btn">
-        <i class="fa-brands fa-instagram" style="font-size: 1.2rem;"></i> Follow on Instagram
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="vertical-align: middle; margin-right: 8px;">
+          <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+        </svg> Follow on Instagram
       </a>
     </section>
 

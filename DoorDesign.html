@@ -1126,7 +1126,9 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
     <div class="rsvp-dl rv">RSVP by 10th May 2026</div><br><br>
     <form id="rsvpForm" class="rsvp-form" onsubmit="event.preventDefault(); sendDoorRSVP(); return false;" novalidate>
       <div id="rsvp-alert" class="custom-alert-box" style="display: none;">
-        <i class="fa-solid fa-circle-exclamation"></i>
+        <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="currentColor" class="custom-alert-icon">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
         <span id="rsvp-alert-text">Please fill in all required fields.</span>
         <button type="button" class="custom-alert-close" onclick="document.getElementById('rsvp-alert').style.display='none'">&times;</button>
       </div>
