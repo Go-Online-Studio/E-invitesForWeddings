@@ -45,7 +45,7 @@
       font-family: var(--font-sans);
       color: var(--color-text);
       -webkit-font-smoothing: antialiased;
-      overflow-y: auto; /* Unlocked for instant editing view */
+      overflow: hidden;
     }
 
     body.unlocked {
@@ -111,7 +111,7 @@
       top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh;
       z-index: 9999;
       background: #000;
-      display: none !important; /* Hidden for direct editing mode (See revert_intro_guide.md to restore) */
+      display: flex;
       align-items: center;
       justify-content: center;
       transition: opacity 1.5s ease-in-out;
@@ -204,7 +204,7 @@
       top: 0; left: 0; width: 100%; height: 100vh;
       z-index: 9998;
       background: url('images/welcom2.webp') center/cover no-repeat;
-      display: none !important; /* Hidden for direct editing mode (See revert_intro_guide.md to restore) */
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -294,7 +294,7 @@
       padding-top: 2vh;
       background: linear-gradient(to bottom, rgba(253,250,246,0) 60%, rgba(253,250,246,1) 100%), url('images/welcom3.webp') center/cover no-repeat; /* Background image */
       background-color: var(--color-bg);
-      opacity: 1; /* Made 1 directly for instant editing view */
+      opacity: 0;
       position: relative;
     }
     #hero.visible { opacity: 1; }
@@ -1261,6 +1261,10 @@
   });
 
   video.addEventListener('ended', () => {
+    // Increase background music volume but cap at 50%
+    const bgm = document.getElementById('bg-music');
+    if (bgm) bgm.volume = 0.5;
+
     // Fade out video overlay
     introOverlay.style.opacity = '0';
     
@@ -1530,6 +1534,9 @@
     const micon = document.getElementById('micon');
     if (!bgMusic) return;
     
+    // Start with low volume (15%) for the intro sequence
+    bgMusic.volume = 0.15;
+    
     bgMusic.play().then(() => {
       musicPlaying = true;
       if (mfab) mfab.classList.add('on');
@@ -1560,10 +1567,8 @@
     }
   };
 
-  // Auto-initialize for instant playback
+  // Auto-initialize music attempt on load, but let video ended callback handle animations
   document.addEventListener('DOMContentLoaded', () => {
-    initScrollReveal();
-    startPetalsOnce();
     tryAutoPlayMusic();
   });
 
