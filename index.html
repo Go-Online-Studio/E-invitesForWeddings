@@ -876,6 +876,33 @@
         }
         .custom-alert-close:hover { opacity: 1; }
 
+        /* Floating Music FAB */
+        #mfab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f0d060, #d4af37, #a0832a);
+            color: #0d0d0d;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+            z-index: 9999;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        #mfab:hover { transform: scale(1.1); }
+        #mfab.on { animation: fabPulse 2s ease-in-out infinite; }
+        @keyframes fabPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 4px 35px rgba(212, 175, 55, 0.7), 0 0 0 6px rgba(212, 175, 55, 0.15); }
+        }
+
         /* ── ANIMATIONS ── */
         @keyframes fadeUp {
             from {
@@ -1737,7 +1764,64 @@ window.scrollTo(0, 0);
             if (attendanceEl) attendanceEl.selectedIndex = 0;
             if (messageEl) messageEl.value = '';
         };
+
+        /* ══ BACKGROUND MUSIC AUTOPLAY & TOGGLE ══ */
+        let indexMusicPlaying = true;
+        
+        function tryAutoPlayIndexMusic() {
+            const bgMusic = document.getElementById('bg-music');
+            const mfab = document.getElementById('mfab');
+            const micon = document.getElementById('micon');
+            if (!bgMusic) return;
+
+            bgMusic.play().then(() => {
+                indexMusicPlaying = true;
+                if (mfab) mfab.classList.add('on');
+                if (micon) micon.className = 'fa-solid fa-volume-high';
+            }).catch(() => {
+                indexMusicPlaying = false;
+                if (mfab) mfab.classList.remove('on');
+                if (micon) micon.className = 'fa-solid fa-music';
+            });
+        }
+
+        window.toggleIndexMusic = function() {
+            const bgMusic = document.getElementById('bg-music');
+            const mfab = document.getElementById('mfab');
+            const micon = document.getElementById('micon');
+            if (!bgMusic) return;
+
+            if (indexMusicPlaying) {
+                bgMusic.pause();
+                indexMusicPlaying = false;
+                if (mfab) mfab.classList.remove('on');
+                if (micon) micon.className = 'fa-solid fa-music';
+            } else {
+                bgMusic.play().then(() => {
+                    indexMusicPlaying = true;
+                    if (mfab) mfab.classList.add('on');
+                    if (micon) micon.className = 'fa-solid fa-volume-high';
+                }).catch(() => {});
+            }
+        };
+
+        // Try autoplay on page load
+        tryAutoPlayIndexMusic();
+
+        // Autoplay fallback on first interaction if browser held audio
+        function handleIndexFirstTouch() {
+            const bgMusic = document.getElementById('bg-music');
+            if (bgMusic && bgMusic.paused) {
+                tryAutoPlayIndexMusic();
+            }
+        }
+        window.addEventListener('click', handleIndexFirstTouch, { once: true });
+        window.addEventListener('touchstart', handleIndexFirstTouch, { once: true });
     </script>
+
+    <!-- Floating Music Controller & Audio -->
+    <button id="mfab" class="on" title="Toggle Music" onclick="toggleIndexMusic()"><i id="micon" class="fa-solid fa-volume-high"></i></button>
+    <audio id="bg-music" loop autoplay src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3"></audio>
 </body>
 
 </html>

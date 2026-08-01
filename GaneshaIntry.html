@@ -1522,7 +1522,25 @@
     }
   }
 
-  let musicPlaying = false;
+  let musicPlaying = true;
+  
+  function tryAutoPlayMusic() {
+    const bgMusic = document.getElementById('bg-music');
+    const mfab = document.getElementById('mfab');
+    const micon = document.getElementById('micon');
+    if (!bgMusic) return;
+    
+    bgMusic.play().then(() => {
+      musicPlaying = true;
+      if (mfab) mfab.classList.add('on');
+      if (micon) micon.className = 'fa-solid fa-volume-high';
+    }).catch(() => {
+      musicPlaying = false;
+      if (mfab) mfab.classList.remove('on');
+      if (micon) micon.className = 'fa-solid fa-music';
+    });
+  }
+
   window.toggleMusic = function() {
     const bgMusic = document.getElementById('bg-music');
     const mfab = document.getElementById('mfab');
@@ -1542,15 +1560,26 @@
     }
   };
 
-  // Auto-initialize for instant editing view
+  // Auto-initialize for instant playback
   document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     startPetalsOnce();
+    tryAutoPlayMusic();
   });
+
+  // Fallback for first interaction if browser held unmuted autoplay
+  function handleGaneshaFirstInteraction() {
+    const bgMusic = document.getElementById('bg-music');
+    if (bgMusic && bgMusic.paused) {
+      tryAutoPlayMusic();
+    }
+  }
+  window.addEventListener('click', handleGaneshaFirstInteraction, { once: true });
+  window.addEventListener('touchstart', handleGaneshaFirstInteraction, { once: true });
 </script>
 
-<button id="mfab" title="Toggle Music" onclick="toggleMusic()"><i id="micon" class="fa-solid fa-music"></i></button>
-<audio id="bg-music" loop src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3"></audio>
+<button id="mfab" class="on" title="Toggle Music" onclick="toggleMusic()"><i id="micon" class="fa-solid fa-volume-high"></i></button>
+<audio id="bg-music" loop autoplay src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3"></audio>
 
 </body>
 </html>

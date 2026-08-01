@@ -650,14 +650,14 @@
   </div>
 
   <!-- Audio Element -->
-  <audio id="bg-music" loop>
+  <audio id="bg-music" loop autoplay>
     <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Audio Controller -->
   <div class="audio-btn" id="audio-ctrl">
-    <i class="fa-solid fa-volume-xmark" id="icon-muted"></i>
-    <i class="fa-solid fa-volume-high" id="icon-unmuted" style="display:none;"></i>
+    <i class="fa-solid fa-volume-xmark" id="icon-muted" style="display:none;"></i>
+    <i class="fa-solid fa-volume-high" id="icon-unmuted"></i>
   </div>
 
   <div id="app">
@@ -946,7 +946,29 @@
     const iconMuted = document.getElementById('icon-muted');
     const iconUnmuted = document.getElementById('icon-unmuted');
     
-    let isMusicPlaying = false;
+    let isMusicPlaying = true;
+
+    function tryAutoPlayAnjaliMusic() {
+      bgMusic.play().then(() => {
+        isMusicPlaying = true;
+        iconMuted.style.display = 'none';
+        iconUnmuted.style.display = 'block';
+      }).catch(() => {
+        isMusicPlaying = false;
+        iconMuted.style.display = 'block';
+        iconUnmuted.style.display = 'none';
+      });
+    }
+
+    tryAutoPlayAnjaliMusic();
+
+    function handleAnjaliFirstInteraction() {
+      if (bgMusic.paused) {
+        tryAutoPlayAnjaliMusic();
+      }
+    }
+    window.addEventListener('click', handleAnjaliFirstInteraction, { once: true });
+    window.addEventListener('touchstart', handleAnjaliFirstInteraction, { once: true });
 
     introOverlay.addEventListener('click', () => {
       tapHint.style.display = 'none';
@@ -954,12 +976,8 @@
       // Play the intro video
       introVideo.play().catch(e => console.log('Video play error:', e));
       
-      // Also start background music automatically
-      bgMusic.play().then(() => {
-        isMusicPlaying = true;
-        iconMuted.style.display = 'none';
-        iconUnmuted.style.display = 'block';
-      }).catch(e => console.log('Audio autoplay prevented'));
+      // Ensure background music is playing
+      tryAutoPlayAnjaliMusic();
 
       // Wait a moment (e.g. 2.5s) to let envelope open animation run, then fade out
       setTimeout(() => {

@@ -575,7 +575,7 @@ body {
 .custom-alert-close:hover { opacity: 1; }
 
 /* Music FAB */
-#mfab { position: fixed; bottom: 20px; right: 18px; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-lt), var(--gold)); border: none; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.05rem; box-shadow: 0 4px 16px rgba(212,175,55,0.32); z-index: 5000; transition: transform 0.25s, box-shadow 0.25s; }
+#mfab { position: fixed; bottom: 20px; right: 18px; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-lt), var(--gold)); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; box-shadow: 0 4px 16px rgba(212,175,55,0.32); z-index: 5000; transition: transform 0.25s, box-shadow 0.25s; }
 #mfab:hover { transform: scale(1.1); }
 #mfab.on { animation: fabGl 2.2s ease-in-out infinite; }
 @keyframes fabGl { 0%,100%{box-shadow:0 4px 16px rgba(212,175,55,0.32);}50%{box-shadow:0 4px 32px rgba(212,175,55,0.62),0 0 0 6px rgba(212,175,55,0.05);} }
@@ -742,7 +742,7 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
   </div>
 
 <canvas id="spark-canvas"></canvas>
-<button id="mfab" aria-label="Music">🎵</button>
+<button id="mfab" class="on" aria-label="Music">🔊</button>
 <audio id="bg-audio" loop>
   <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
 </audio>
@@ -1362,10 +1362,53 @@ function initScratch(){
 }
 
 
-/* ══ MUSIC FAB ══ */
+/* ══ MUSIC FAB (Autoplay Enabled by Default) ══ */
 (function(){
-  const fab=document.getElementById('mfab'),audio=document.getElementById('bg-audio');let on=false;
-  fab.addEventListener('click',()=>{if(on){audio.pause();fab.textContent='🎵';fab.classList.remove('on');}else{audio.play().catch(()=>{});fab.textContent='🔊';fab.classList.add('on');}on=!on;});
+  const fab = document.getElementById('mfab'), audio = document.getElementById('bg-audio');
+  if (!fab || !audio) return;
+  
+  let isPlaying = true;
+
+  function startAudio() {
+    audio.play().then(() => {
+      isPlaying = true;
+      fab.textContent = '🔊';
+      fab.classList.add('on');
+    }).catch(() => {
+      // Autoplay blocked by browser policy until first user interaction
+      isPlaying = false;
+      fab.textContent = '🎵';
+      fab.classList.remove('on');
+    });
+  }
+
+  // Attempt autoplay immediately
+  startAudio();
+
+  // Also auto-play on first user interaction anywhere on page if held by browser policy
+  function handleFirstTouch() {
+    if (audio.paused) {
+      startAudio();
+    }
+  }
+  window.addEventListener('click', handleFirstTouch, { once: true });
+  window.addEventListener('touchstart', handleFirstTouch, { once: true });
+
+  fab.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isPlaying) {
+      audio.pause();
+      fab.textContent = '🎵';
+      fab.classList.remove('on');
+      isPlaying = false;
+    } else {
+      audio.play().then(() => {
+        fab.textContent = '🔊';
+        fab.classList.add('on');
+        isPlaying = true;
+      }).catch(() => {});
+    }
+  });
 })();
 
 /* ══ WHATSAPP RSVP ══ */
