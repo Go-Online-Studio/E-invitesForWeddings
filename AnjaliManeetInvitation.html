@@ -605,6 +605,39 @@
         display: none !important;
       }
     }
+    /* Professional Dismissible Alert Box */
+    .custom-alert-box {
+      background: rgba(220, 39, 67, 0.1);
+      border: 1px solid rgba(220, 39, 67, 0.3);
+      border-left: 4px solid #dc2743;
+      color: #721c24;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      animation: alertSlideDown 0.3s ease-out;
+    }
+    @keyframes alertSlideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .custom-alert-icon { font-size: 1.1rem; color: #dc2743; flex-shrink: 0; }
+    .custom-alert-close {
+      margin-left: auto;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #721c24;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+    }
+    .custom-alert-close:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -787,7 +820,14 @@
       <p class="subtitle" style="text-align: center;">Kindly Respond</p>
       <h2 class="section-title">Your Details</h2>
       
-      <form id="rsvp-form" class="glass-card" style="margin:0;">
+      <form id="rsvp-form" class="glass-card" style="margin:0;" onsubmit="event.preventDefault(); sendAnjaliRSVP(); return false;" novalidate>
+        <!-- Professional Alert Warning Badge -->
+        <div id="rsvp-alert" class="custom-alert-box" style="display: none;">
+          <i class="fa-solid fa-circle-exclamation custom-alert-icon"></i>
+          <span id="rsvp-alert-text">Please fill in your name and phone number to proceed.</span>
+          <button type="button" class="custom-alert-close" onclick="closeRSVPAlert()">&times;</button>
+        </div>
+
         <div class="form-group">
           <label class="form-label">Lead Passenger's First & Last Name</label>
           <input type="text" id="rsvp-name" class="form-input" required>
@@ -828,7 +868,7 @@
           <label class="form-label">Performance Request (Optional)</label>
           <input type="text" id="rsvp-perf" class="form-input">
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px; padding: 15px;">Submit RSVP & Requests</button>
+        <button type="button" class="btn btn-primary" onclick="sendAnjaliRSVP()" style="width: 100%; margin-top: 10px; padding: 15px;">Submit RSVP & Requests</button>
       </form>
     </section>
 
@@ -1069,13 +1109,33 @@
     // Set the host WhatsApp number here (include country code, no + or spaces)
     const hostWhatsAppNumber = "919876543210"; 
 
-    rsvpForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const name = document.getElementById('rsvp-name').value;
-      const phone = document.getElementById('rsvp-phone').value;
-      const email = document.getElementById('rsvp-email').value;
-      const guests = document.getElementById('rsvp-guests').value;
+    window.showRSVPAlert = function(msg) {
+      const alertBox = document.getElementById('rsvp-alert');
+      const alertText = document.getElementById('rsvp-alert-text');
+      if (alertBox && alertText) {
+        alertText.textContent = msg;
+        alertBox.style.display = 'flex';
+        alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    };
+
+    window.closeRSVPAlert = function() {
+      const alertBox = document.getElementById('rsvp-alert');
+      if (alertBox) alertBox.style.display = 'none';
+    };
+
+    window.sendAnjaliRSVP = function() {
+      const name = document.getElementById('rsvp-name').value.trim();
+      const phone = document.getElementById('rsvp-phone').value.trim();
+
+      if (!name || !phone) {
+        showRSVPAlert("Please enter your Lead Passenger Name and Phone Number to proceed.");
+        return;
+      }
+      closeRSVPAlert();
+
+      const email = document.getElementById('rsvp-email').value || 'Not specified';
+      const guests = document.getElementById('rsvp-guests').value || '1';
       const arrival = document.getElementById('rsvp-arrival').value || 'Not specified';
       const departure = document.getElementById('rsvp-departure').value || 'Not specified';
       const diet = document.getElementById('rsvp-diet').value || 'None';
@@ -1098,7 +1158,10 @@
                  
       const encodedText = encodeURIComponent(text);
       window.open(`https://wa.me/${hostWhatsAppNumber}?text=${encodedText}`, '_blank');
-    });
+
+      const rsvpForm = document.getElementById('rsvp-form');
+      if (rsvpForm) rsvpForm.reset();
+    };
 
   </script>
 </body>

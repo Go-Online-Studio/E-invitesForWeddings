@@ -70,6 +70,7 @@
     .section-title { font-size: 2.2rem; color: var(--color-primary); margin-bottom: 25px; line-height: 1.2; text-align: center; }
     p { font-size: 0.95rem; line-height: 1.6; }
     .text-center { text-align: center; }
+    .text-left { text-align: left; }
 
     /* Floating Petals Canvas */
     #petals-canvas {
@@ -373,6 +374,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+    
     }
     .event-title { font-size: 1.5rem; color: var(--color-primary); margin-bottom: 5px; }
     .event-time { font-size: 0.85rem; font-weight: 600; color: var(--color-text); margin-bottom: 5px; letter-spacing: 1px; }
@@ -408,7 +410,7 @@
     .rub-reveal-hint {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      background: rgba(0,0,0,0.6);
+      background: linear-gradient(to bottom, #00000000 0%, #0000004d 40%, #0000009d 100%);
       color: #fff;
       font-size: 0.55rem;
       text-align: center;
@@ -436,59 +438,208 @@
     .story-title { font-size: 1.8rem; color: var(--color-primary); margin-bottom: 10px; }
     .story-img {
       width: 100%;
-      height: 400px;
+      aspect-ratio: 3/4;
       object-fit: cover;
+      object-position: center;
       border-radius: 15px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
     /* Pick Your Side */
+    #pick-side {
+      padding: 50px 20px 40px;
+    }
     .sides-container {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin-top: 30px;
-    }
-    .side-btn {
-      flex: 1;
-      background: #fff;
-      border: 2px solid transparent;
-      border-radius: 20px;
-      padding: 30px 15px;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    .side-icon {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      color: var(--color-text-light);
-    }
-    .side-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; }
-    .side-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-light); margin-top: 5px; }
-    
-    .side-btn.active {
-      border-color: var(--color-secondary);
-      background: rgba(229, 154, 67, 0.05);
-      transform: translateY(-5px);
-    }
-    .side-btn.active .side-icon { color: var(--color-primary); }
-    .side-btn.active::after {
-      content: '\f00c';
-      font-family: 'Font Awesome 6 Free';
-      font-weight: 900;
-      position: absolute;
-      top: -10px; right: -10px;
-      background: var(--color-secondary);
-      color: #fff;
-      width: 25px; height: 25px;
-      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
+      gap: 10px;
+      margin-top: 30px;
+      position: relative;
+    }
+    .side-btn {
+      flex: 1;
+      background: #ffffff;
+      border: 2px solid #eaeaea;
+      border-radius: 20px;
+      padding: 24px 10px 20px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+      transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: visible;
+    }
+    
+    /* You're In Badge */
+    .youre-in-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.8);
+      opacity: 0;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      white-space: nowrap;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .side-btn.active .youre-in-badge {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+    .side-btn.bride .youre-in-badge {
+      background: linear-gradient(135deg, #e91e63, #ff4081);
+    }
+    .side-btn.groom .youre-in-badge {
+      background: linear-gradient(135deg, #1976d2, #2196f3);
+    }
+
+    /* Icon circle */
+    .side-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .side-btn.bride .side-icon-wrap {
+      background: rgba(233, 30, 99, 0.1);
+      color: #e91e63;
+    }
+    .side-btn.groom .side-icon-wrap {
+      background: rgba(33, 150, 243, 0.1);
+      color: #2196f3;
+    }
+    .side-btn.bride.active .side-icon-wrap {
+      background: linear-gradient(135deg, #e91e63, #ff4081);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+    }
+    .side-btn.groom.active .side-icon-wrap {
+      background: linear-gradient(135deg, #1976d2, #2196f3);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+    .side-icon-wrap i {
+      font-size: 1.5rem;
+    }
+
+    /* Labels & Names */
+    .side-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-light);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .side-name {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .side-btn.bride .side-name { color: #d81b60; }
+    .side-btn.groom .side-name { color: #1565c0; }
+
+    /* PINK Shadow for Girl (Bride) Active */
+    .side-btn.bride.active {
+      border-color: #ff4081;
+      background: #fffafc;
+      box-shadow: 0 10px 25px rgba(233, 30, 99, 0.28), 0 0 0 2px rgba(255, 64, 129, 0.35);
+      transform: translateY(-4px);
+    }
+
+    /* BLUE Shadow for Man (Groom) Active */
+    .side-btn.groom.active {
+      border-color: #2196f3;
+      background: #f4f9ff;
+      box-shadow: 0 10px 25px rgba(33, 150, 243, 0.28), 0 0 0 2px rgba(33, 150, 243, 0.35);
+      transform: translateY(-4px);
+    }
+
+    /* VS Divider */
+    .vs-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 2px;
+      flex-shrink: 0;
+    }
+    .vs-line-dot {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .vs-line {
+      width: 12px;
+      height: 1px;
+      background: var(--color-secondary);
+      opacity: 0.5;
+    }
+    .vs-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-secondary), #b8860b);
+      box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+    }
+    .vs-text {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: var(--color-text-light);
+      font-family: var(--font-serif);
+      opacity: 0.7;
+    }
+
+    /* Cheer Message Container */
+    .cheer-message-wrapper {
+      margin-top: 25px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cheer-message {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.4;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    .cheer-message.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .cheer-message.bride-cheer {
+      color: #c2185b;
+    }
+    .cheer-message.bride-cheer span {
+      font-weight: 600;
+      border-bottom: 1.5px solid rgba(194, 24, 91, 0.3);
+      padding-bottom: 1px;
+    }
+    .cheer-message.groom-cheer {
+      color: #1565c0;
+    }
+    .cheer-message.groom-cheer span {
+      font-weight: 600;
+      border-bottom: 1.5px solid rgba(21, 101, 192, 0.3);
+      padding-bottom: 1px;
     }
 
     /* Countdown Timer */
@@ -526,6 +677,71 @@
       border-radius: 20px;
       padding: 30px 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    
+    /* Professional Dismissible Alert Box */
+    .custom-alert-box {
+      background: #fff0f3;
+      border: 1px solid #f8bbd0;
+      border-left: 4px solid #e91e63;
+      color: #880e4f;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(233, 30, 99, 0.12);
+      animation: alertSlideDown 0.3s ease-out;
+    }
+    @keyframes alertSlideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .custom-alert-icon {
+      font-size: 1.1rem;
+      color: #e91e63;
+      flex-shrink: 0;
+    }
+    .custom-alert-close {
+      margin-left: auto;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #880e4f;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    /* Floating Music FAB */
+    #mfab {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-secondary), #c07a2c);
+      border: 2px solid #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(212,175,55,0.4);
+      z-index: 9500;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    #mfab:hover { transform: scale(1.1); }
+    #mfab.on { animation: fabPulse 2s ease-in-out infinite; }
+    @keyframes fabPulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(212,175,55,0.4); }
+      50% { box-shadow: 0 4px 28px rgba(212,175,55,0.7), 0 0 0 6px rgba(212,175,55,0.15); }
     }
     .form-group { margin-bottom: 25px; }
     .form-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; color: var(--color-text); text-transform: uppercase; letter-spacing: 1px; }
@@ -770,10 +986,10 @@
           <p class="event-time">WEDNESDAY, 9 DECEMBER 2026</p>
           <p class="event-desc">A sprinkle of turmeric, a shower of blessings. Join us for a vibrant morning of colors, music, and love.</p>
           <p class="event-time" style="margin-top: 10px;">6 AM onwards - Taj Palace</p>
-          <a href="https://maps.app.goo.gl/placeholder" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
+          <a href="https://maps.app.goo.gl/ivQ3f7wzMC5p5n846" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
         </div>
-        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/haldi-large.jpg" data-caption="Haldi Ceremony">
-          <img src="images/haldi-thumb.jpg" alt="Haldi" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic1.webp" data-caption="Haldi Ceremony">
+          <img src="images/EventPic1.webp" alt="Haldi" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
           <div class="rub-reveal-hint">TAP TO REVEAL</div>
         </div>
       </div>
@@ -786,10 +1002,10 @@
           <p class="event-desc">The sacred vows and the seven steps. Request the honor of your presence as we tie the knot.</p>
           <p class="event-time" style="margin-top: 10px;">7 PM onwards - Taj Palace</p>
           <p class="event-desc" style="font-size: 0.8rem; margin-bottom: 10px;">Dress code: Traditional</p>
-          <a href="https://maps.app.goo.gl/placeholder" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
+          <a href="https://maps.app.goo.gl/ivQ3f7wzMC5p5n846" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
         </div>
-        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/wedding-large.jpg" data-caption="The Wedding Ceremony">
-          <img src="images/wedding-thumb.jpg" alt="Wedding" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic2.webp" data-caption="The Wedding Ceremony">
+          <img src="images/EventPic2.webp" alt="Wedding" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
           <div class="rub-reveal-hint">TAP TO REVEAL</div>
         </div>
       </div>
@@ -801,10 +1017,10 @@
           <p class="event-time">MONDAY, 14 DECEMBER 2026</p>
           <p class="event-desc">Two hearts, one beautiful beginning. Let's celebrate the newlyweds with dinner and dancing!</p>
           <p class="event-time" style="margin-top: 10px;">7 PM onwards - Taj Palace</p>
-          <a href="https://maps.app.goo.gl/placeholder" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
+          <a href="https://maps.app.goo.gl/ivQ3f7wzMC5p5n846" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
         </div>
-        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/reception-large.jpg" data-caption="Wedding Reception">
-          <img src="images/reception-thumb.jpg" alt="Reception" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic3.webp" data-caption="Wedding Reception">
+          <img src="images/EventPic3.webp" alt="Reception" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
           <div class="rub-reveal-hint">TAP TO REVEAL</div>
         </div>
       </div>
@@ -822,7 +1038,7 @@
         <h3 class="story-title">Two Paths Cross</h3>
         <p style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text-light);">A chance meeting turned into a conversation neither of us wanted to end — and somehow, it never really did.</p>
       </div>
-      <img src="images/story1.jpg" alt="Two Paths Cross" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
+      <img src="images/Story1.avif" alt="Two Paths Cross" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
     </div>
 
     <div class="story-card reveal">
@@ -831,7 +1047,7 @@
         <h3 class="story-title">Hearts Find Home</h3>
         <p style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text-light);">Between long calls, shared laughter, and little everyday moments, we found our favorite place in the world — each other.</p>
       </div>
-      <img src="images/story2.jpg" alt="Hearts Find Home" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
+      <img src="images/Story2.avif" alt="Hearts Find Home" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
     </div>
 
     <div class="story-card reveal">
@@ -840,7 +1056,7 @@
         <h3 class="story-title">A Promise Made</h3>
         <p style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text-light);">One question, one joyful yes — and two hearts became one beautiful promise.</p>
       </div>
-      <img src="images/story3.jpg" alt="A Promise Made" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
+      <img src="images/Story3.avif" alt="A Promise Made" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
     </div>
 
     <div class="story-card reveal">
@@ -849,27 +1065,49 @@
         <h3 class="story-title">Forever Begins</h3>
         <p style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text-light);">With the blessings of our families, our forever begins — and we would love for you to be there.</p>
       </div>
-      <img src="images/story4.jpg" alt="Forever Begins" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
+      <img src="images/Story4.avif" alt="Forever Begins" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
     </div>
   </section>
 
   <!-- Pick Your Side -->
   <section id="pick-side" class="section text-center">
     <p class="subtitle reveal">A little friendly rivalry</p>
-    <h2 class="section-title reveal">Pick Your Side</h2>
-    <p class="reveal" style="font-size:0.9rem;">Whose side are you cheering for? Tap to join — your pick rides along with your RSVP.</p>
+    <h2 class="section-title reveal" style="margin-bottom: 12px;">Pick your side</h2>
+    <p class="reveal" style="font-size:0.85rem; color: var(--color-text-light); max-width: 340px; margin: 0 auto 10px; line-height: 1.5;">Whose side are you cheering for? Tap to join — your pick rides along with your RSVP.</p>
     
     <div class="sides-container reveal">
-      <div class="side-btn" data-side="Bride" onclick="selectSide('Bride')">
-        <i class="fa-solid fa-ring side-icon" style="color: #c48b8b;"></i>
+      <div class="side-btn bride active" data-side="Bride" onclick="selectSide('Bride')">
+        <div class="youre-in-badge"><i class="fa-solid fa-check"></i> YOU'RE IN</div>
+        <div class="side-icon-wrap">
+          <i class="fa-solid fa-ring"></i>
+        </div>
         <div class="side-label">Team Bride</div>
         <div class="side-name">Sravya</div>
       </div>
-      <div class="side-btn" data-side="Groom" onclick="selectSide('Groom')">
-        <i class="fa-solid fa-hat-cowboy side-icon" style="color: #c5a059;"></i>
+
+      <div class="vs-divider">
+        <div class="vs-text">vs</div>
+        <div class="vs-line-dot">
+          <div class="vs-line"></div>
+          <div class="vs-dot"></div>
+          <div class="vs-line"></div>
+        </div>
+      </div>
+
+      <div class="side-btn groom" data-side="Groom" onclick="selectSide('Groom')">
+        <div class="youre-in-badge"><i class="fa-solid fa-check"></i> YOU'RE IN</div>
+        <div class="side-icon-wrap">
+          <i class="fa-solid fa-user-tie"></i>
+        </div>
         <div class="side-label">Team Groom</div>
         <div class="side-name">Sai</div>
       </div>
+    </div>
+
+    <div class="cheer-message-wrapper reveal">
+      <p id="cheer-message" class="cheer-message bride-cheer visible">
+        You're cheering for <span>Team Bride — Sravya!</span> 🌺
+      </p>
     </div>
   </section>
 
@@ -902,6 +1140,13 @@
     <p class="text-center reveal" style="margin-bottom: 30px;">Kindly reply by 1 December 2026.<br>Your response opens straight in WhatsApp.</p>
 
     <div class="rsvp-card reveal">
+      <!-- Professional Alert Warning Badge -->
+      <div id="rsvp-alert" class="custom-alert-box" style="display: none;">
+        <i class="fa-solid fa-circle-exclamation custom-alert-icon"></i>
+        <span id="rsvp-alert-text">Please enter your name to proceed.</span>
+        <button type="button" class="custom-alert-close" onclick="closeRSVPAlert()">&times;</button>
+      </div>
+
       <div class="form-group">
         <label class="form-label">Your Name</label>
         <input type="text" id="rsvp-name" class="form-control" placeholder="e.g. Lakshmi Iyer">
@@ -939,8 +1184,8 @@
   <footer>
     <div class="om-symbol reveal">ॐ</div>
     <p class="reveal serif" style="font-size:1.2rem; line-height:1.8;">With the blessings of our elders<br>and the warmth of your presence.</p>
-    <h1 class="couple-names reveal">Sai & Sravya</h1>
-    <p class="made-with-love reveal">MADE WITH LOVE</p>
+    <h1 class="couple-names reveal">Sai &nbsp;& &nbsp;Sravya</h1>
+    <p class="made-with-love reveal">Designed with ❤️ by <a href="https://shriiitrackingsolution.in/" target="_blank" rel="noreferrer" style="color: inherit; text-decoration: underline;">STS</a></p>
   </footer>
 
 </div>
@@ -986,7 +1231,7 @@
   const heroSection = document.getElementById('hero');
   
   let hasPaused = false;
-  let selectedSide = "Undecided";
+  let selectedSide = "Bride";
   let attendance = "yes";
 
   /* ==========================================================================
@@ -1065,8 +1310,24 @@
      ========================================================================== */
   window.selectSide = function(side) {
     document.querySelectorAll('.side-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`.side-btn[data-side="${side}"]`).classList.add('active');
+    const activeBtn = document.querySelector(`.side-btn[data-side="${side}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
     selectedSide = side;
+
+    const msgEl = document.getElementById('cheer-message');
+    if (msgEl) {
+      msgEl.classList.remove('visible');
+      setTimeout(() => {
+        if (side === 'Bride') {
+          msgEl.className = 'cheer-message bride-cheer';
+          msgEl.innerHTML = `You're cheering for <span>Team Bride — Sravya!</span> 🌺💐`;
+        } else if (side === 'Groom') {
+          msgEl.className = 'cheer-message groom-cheer';
+          msgEl.innerHTML = `You're cheering for <span>Team Groom — Sai!</span> 🤵‍♂️🎉`;
+        }
+        msgEl.classList.add('visible');
+      }, 150);
+    }
   };
 
   window.toggleAttendance = function(val) {
@@ -1089,9 +1350,30 @@
     }
   };
 
+  window.showRSVPAlert = function(msg) {
+    const alertBox = document.getElementById('rsvp-alert');
+    const alertText = document.getElementById('rsvp-alert-text');
+    if (alertBox && alertText) {
+      alertText.textContent = msg;
+      alertBox.style.display = 'flex';
+      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  };
+
+  window.closeRSVPAlert = function() {
+    const alertBox = document.getElementById('rsvp-alert');
+    if (alertBox) alertBox.style.display = 'none';
+  };
+
   window.sendRSVP = function() {
-    const name = document.getElementById('rsvp-name').value.trim();
-    if (!name) { alert("Please enter your name."); return; }
+    const nameInput = document.getElementById('rsvp-name');
+    const name = nameInput ? nameInput.value.trim() : '';
+    if (!name) {
+      showRSVPAlert("Please enter your name before sending RSVP on WhatsApp.");
+      if (nameInput) nameInput.focus();
+      return;
+    }
+    closeRSVPAlert();
 
     let message = `Hello! This is *${name}*.\n\n`;
     
@@ -1112,6 +1394,11 @@
     const whatsappNumber = "918200482291";
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+
+    // Reset form fields
+    if (nameInput) nameInput.value = '';
+    const guestsInput = document.getElementById('rsvp-guests');
+    if (guestsInput) guestsInput.value = '1';
   };
 
   /* ==========================================================================
@@ -1235,12 +1522,35 @@
     }
   }
 
+  let musicPlaying = false;
+  window.toggleMusic = function() {
+    const bgMusic = document.getElementById('bg-music');
+    const mfab = document.getElementById('mfab');
+    const micon = document.getElementById('micon');
+    if (!bgMusic) return;
+    if (musicPlaying) {
+      bgMusic.pause();
+      musicPlaying = false;
+      if (mfab) mfab.classList.remove('on');
+      if (micon) micon.className = 'fa-solid fa-music';
+    } else {
+      bgMusic.play().then(() => {
+        musicPlaying = true;
+        if (mfab) mfab.classList.add('on');
+        if (micon) micon.className = 'fa-solid fa-volume-high';
+      }).catch(e => console.log('Audio error:', e));
+    }
+  };
+
   // Auto-initialize for instant editing view
   document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     startPetalsOnce();
   });
 </script>
+
+<button id="mfab" title="Toggle Music" onclick="toggleMusic()"><i id="micon" class="fa-solid fa-music"></i></button>
+<audio id="bg-music" loop src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3"></audio>
 
 </body>
 </html>

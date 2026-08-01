@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Wedding Invitation — Sourabh & Tejaswini</title>
     <link rel="preload" href="images/GaneshSeel.webp" as="image" fetchpriority="high">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CSSRulePlugin.min.js"></script>
     <style>
         :root {
             --gold: #D4AF37;
@@ -837,6 +838,44 @@
             letter-spacing: 0.05em;
         }
 
+        /* ══ CUSTOM ALERT BADGE (Lux Gold/Crimson) ══ */
+        .custom-alert-box {
+            background: rgba(220, 53, 69, 0.12);
+            border: 1px solid rgba(220, 53, 69, 0.35);
+            border-left: 4px solid #ff4d4d;
+            color: #ff9999;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            font-size: 0.82rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 18px rgba(220, 53, 69, 0.2);
+            animation: alertSlideIn 0.3s ease-out;
+        }
+        @keyframes alertSlideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .custom-alert-icon {
+            font-size: 1.1rem;
+            color: #ff4d4d;
+            flex-shrink: 0;
+        }
+        .custom-alert-close {
+            margin-left: auto;
+            background: transparent;
+            border: none;
+            color: #ff9999;
+            font-size: 1.25rem;
+            cursor: pointer;
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .custom-alert-close:hover { opacity: 1; }
+
         /* ── ANIMATIONS ── */
         @keyframes fadeUp {
             from {
@@ -1258,36 +1297,42 @@
                 <p class="scratch-hint">✦ Use your finger to scratch ✦</p>
             </section>
 
-            <!-- RSVP -->
+            <!-- RSVP SECTION -->
             <section class="rsvp-section">
                 <p class="rsvp-names">Sourabh &amp; Tejaswini</p>
                 <h2 class="rsvp-title">Will You Join Us?</h2>
-                <p class="rsvp-sub">Your presence would mean the world to us. Please let us know so we can reserve your
-                    place at our table.</p>
+                <p class="rsvp-sub">Your presence would mean the world to us. Please let us know so we can reserve your place at our table.</p>
                 <div class="rsvp-deadline">RSVP by 10th May 2026</div><br><br>
                 
-                <form id="rsvpForm" class="rsvp-form">
-                    <div class="form-group">
-                        <input type="text" class="form-input" id="name" placeholder="Your Full Name" required>
+                <div class="rsvp-form-container" style="max-width: 340px; margin: 0 auto; text-align: left;">
+                    <!-- Alert Notification Box -->
+                    <div id="rsvp-alert" class="custom-alert-box" style="display: none;">
+                        <i class="fa-solid fa-circle-exclamation custom-alert-icon"></i>
+                        <span id="rsvp-alert-text">Please fill in all required fields.</span>
+                        <button type="button" class="custom-alert-close" onclick="closeRSVPAlert()">&times;</button>
                     </div>
-                    <div class="form-group">
-                        <input type="number" class="form-input" id="guests" placeholder="Number of Guests" min="1" max="10" required>
+
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <input type="text" class="form-input" id="rsvp-name" placeholder="Your Full Name *">
                     </div>
-                    <div class="form-group">
-                        <select class="form-input" id="attendance" required>
-                            <option value="" selected disabled>Will you be attending?</option>
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <input type="number" class="form-input" id="rsvp-guests" placeholder="Number of Guests *" min="1" max="10">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <select class="form-input" id="rsvp-attendance">
+                            <option value="" selected disabled>Will you be attending? *</option>
                             <option value="Joyfully Accept">Joyfully Accept</option>
                             <option value="Regretfully Decline">Regretfully Decline</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <textarea class="form-input" id="message" rows="3" placeholder="Leave a wish or dietary requirements..."></textarea>
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <textarea class="form-input" id="rsvp-message" rows="3" placeholder="Leave a wish or dietary requirements..."></textarea>
                     </div>
                     
-                    <button type="submit" class="btn-rsvp btn-whatsapp">
+                    <button type="button" class="btn-rsvp btn-whatsapp" onclick="sendIndexRSVP()" style="width: 100%; cursor: pointer;">
                         <span>SEND VIA WHATSAPP 💌</span>
                     </button>
-                </form>
+                </div>
             </section>
 
             <footer class="footer">
@@ -1297,10 +1342,6 @@
 
         </div><!-- /main -->
     </div><!-- /app -->
-
-
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CSSRulePlugin.min.js" defer></script>
 
 
     <script>
@@ -1444,38 +1485,44 @@ window.scrollTo(0, 0);
             }, 1200);
         });
 
-        /* --- ENVLOPE OPEN / CLOSE LOGIC --- */
-            let t1 = gsap.timeline({ paused: true }); 
-            let flap = CSSRulePlugin.getRule(".envelope:before"); 
-            let t2 = gsap.timeline({ paused: true }); 
-            let flap2 = CSSRulePlugin.getRule(".envelope:after"); 
+        /* --- ENVELOPE OPEN / CLOSE LOGIC --- */
+        let t1, t2;
+        try {
+            if (typeof gsap !== 'undefined') {
+                t1 = gsap.timeline({ paused: true });
+                let flap = typeof CSSRulePlugin !== 'undefined' ? CSSRulePlugin.getRule(".envelope:before") : null;
+                t2 = gsap.timeline({ paused: true });
+                let flap2 = typeof CSSRulePlugin !== 'undefined' ? CSSRulePlugin.getRule(".envelope:after") : null;
 
-            t1.to(flap, { 
-            duration: 0.5, 
-            cssRule: {
-                rotateX: 180,
-                translateY: -50,
-                transformOrigin: "top",
-            }
-            })
-            .set(flap, {
-            cssRule: {
-                zIndex: 10
-            }
-            })
+                if (t1 && flap) {
+                    t1.to(flap, {
+                        duration: 0.5,
+                        cssRule: {
+                            rotateX: 180,
+                            translateY: -50,
+                            transformOrigin: "top",
+                        }
+                    }).set(flap, { cssRule: { zIndex: 10 } });
+                }
 
-            t2.to(flap2, { 
-            duration: 0.5, 
-            cssRule: {
-                translateY: -50,
-                transformOrigin: "top",
+                if (t2 && flap2) {
+                    t2.to(flap2, {
+                        duration: 0.5,
+                        cssRule: {
+                            translateY: -50,
+                            transformOrigin: "top",
+                        }
+                    });
+                }
             }
-            })
+        } catch(err) {
+            console.warn("Envelope animation initialization:", err);
+        }
 
-            function openCard(e) {
-            t1.play();
-            t2.play();
-            }
+        window.openCard = function(e) {
+            if (t1) t1.play();
+            if (t2) t2.play();
+        };
 
         // ══════════════════════════════════════
         // COUNTDOWN TIMER
@@ -1639,69 +1686,57 @@ window.scrollTo(0, 0);
         }
 
         // ══════════════════════════════════════
-        // WHATSAPP RSVP HANDLING
+        // WHATSAPP RSVP HANDLER (Scratch Built)
         // ══════════════════════════════════════
-        (function () {
-            'use strict';
-            
-            const targetNumber = "918200482291"; 
-            
-            // Debounce implementation
-            function debounce(func, wait) {
-                let timeout;
-                return function executedFunction(...args) {
-                    const later = () => { clearTimeout(timeout); func(...args); };
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                };
+        window.closeRSVPAlert = function() {
+            const alertBox = document.getElementById('rsvp-alert');
+            if (alertBox) alertBox.style.display = 'none';
+        };
+
+        window.sendIndexRSVP = function() {
+            const nameEl = document.getElementById('rsvp-name');
+            const guestsEl = document.getElementById('rsvp-guests');
+            const attendanceEl = document.getElementById('rsvp-attendance');
+            const messageEl = document.getElementById('rsvp-message');
+
+            const name = nameEl ? nameEl.value.trim() : '';
+            const guests = guestsEl ? guestsEl.value.trim() : '';
+            const attendance = attendanceEl ? attendanceEl.value : '';
+            const message = messageEl ? messageEl.value.trim() : '';
+
+            const alertBox = document.getElementById('rsvp-alert');
+            const alertText = document.getElementById('rsvp-alert-text');
+
+            // Validation Check
+            if (!name || !guests || !attendance) {
+                if (alertBox && alertText) {
+                    alertText.textContent = "Please fill in all required fields (Name, Guests & Attendance).";
+                    alertBox.style.display = "flex";
+                    alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
             }
 
-            // Determine correct URL based on device
-            let whatsappBaseUrl = '';
-            
-            function updateWhatsAppUrl() {
-                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 992;
-                whatsappBaseUrl = isMobile ? `https://api.whatsapp.com/send` : `https://web.whatsapp.com/send`;
+            // Hide alert if previously visible
+            if (alertBox) alertBox.style.display = "none";
+
+            // Format message
+            let msg = `Hi Sourabh & Tejaswini,\n\nRSVP for your wedding:\n\n*Name:* ${name}\n*Guests:* ${guests}\n*Status:* ${attendance}`;
+            if (message) {
+                msg += `\n\n*Message:*\n${message}`;
             }
 
-            // Initial check & Listen to resize
-            updateWhatsAppUrl();
-            window.addEventListener('resize', debounce(updateWhatsAppUrl, 250));
+            // Open WhatsApp directly
+            const whatsappNumber = "918200482291";
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+            window.open(whatsappUrl, '_blank');
 
-            // Helper to Open WhatsApp
-            function openWhatsApp(message) {
-                const url = `${whatsappBaseUrl}?phone=${targetNumber}&text=${encodeURIComponent(message)}`;
-                window.open(url, '_blank');
-                rsvpForm.reset();
-            }
-
-            const rsvpForm = document.getElementById("rsvpForm");
-
-            if (rsvpForm) {
-                rsvpForm.addEventListener("submit", function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    const name = document.getElementById("name").value.trim();
-                    const guests = document.getElementById("guests").value.trim();
-                    const attendance = document.getElementById("attendance").value;
-                    const message = document.getElementById("message").value.trim();
-
-                    if (!name || !guests || !attendance) {
-                        alert("Please fill in all required fields.");
-                        return;
-                    }
-
-                    let whatsappMsg = `Hi Sourabh & Tejaswini,\n\nI am RSVPing for your wedding.\n\n*Name:* ${name}\n*Guests:* ${guests}\n*Status:* ${attendance}`;
-                    
-                    if (message) {
-                        whatsappMsg += `\n\n*Message:*\n${message}`;
-                    }
-
-                    openWhatsApp(whatsappMsg);
-                }, false);
-            }
-        })();
+            // Reset form fields
+            if (nameEl) nameEl.value = '';
+            if (guestsEl) guestsEl.value = '';
+            if (attendanceEl) attendanceEl.selectedIndex = 0;
+            if (messageEl) messageEl.value = '';
+        };
     </script>
 </body>
 

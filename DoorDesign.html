@@ -542,6 +542,38 @@ body {
 .fi::placeholder { color: rgba(120,112,96,0.4); }
 .fi option { background: var(--bg2); color: var(--white); }
 
+/* Professional Dismissible Alert Box */
+.custom-alert-box {
+  background: rgba(212,175,55,0.08);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-left: 4px solid var(--gold);
+  color: var(--gold-lt, #e8c872);
+  padding: 11px 14px;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  animation: alertSlideDown 0.3s ease-out;
+}
+@keyframes alertSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.custom-alert-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--gold);
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.7;
+}
+.custom-alert-close:hover { opacity: 1; }
+
 /* Music FAB */
 #mfab { position: fixed; bottom: 20px; right: 18px; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-lt), var(--gold)); border: none; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.05rem; box-shadow: 0 4px 16px rgba(212,175,55,0.32); z-index: 5000; transition: transform 0.25s, box-shadow 0.25s; }
 #mfab:hover { transform: scale(1.1); }
@@ -1039,7 +1071,12 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
     <h2 class="s-title rv d1" style="margin-bottom:10px">Will You Join Us?</h2>
     <p class="s-sub rv d2">Your presence would mean the world to us.</p>
     <div class="rsvp-dl rv">RSVP by 10th May 2026</div><br><br>
-    <form id="rsvpForm" class="rsvp-form">
+    <form id="rsvpForm" class="rsvp-form" onsubmit="event.preventDefault(); sendDoorRSVP(); return false;" novalidate>
+      <div id="rsvp-alert" class="custom-alert-box" style="display: none;">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="rsvp-alert-text">Please fill in all required fields.</span>
+        <button type="button" class="custom-alert-close" onclick="document.getElementById('rsvp-alert').style.display='none'">&times;</button>
+      </div>
       <input type="text"   class="fi" id="fn" placeholder="Your Full Name" required>
       <input type="number" class="fi" id="fg" placeholder="Number of Guests" min="1" max="10" required>
       <select              class="fi" id="fa" required>
@@ -1048,7 +1085,7 @@ footer p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-si
         <option value="Regretfully Decline">Regretfully Decline</option>
       </select>
       <textarea            class="fi" id="fm" rows="3" placeholder="Leave a wish..."></textarea>
-      <button type="submit" class="btn-g" style="width:100%;text-align:center">SEND VIA WHATSAPP 💌</button>
+      <button type="button" class="btn-g" onclick="sendDoorRSVP()" style="width:100%;text-align:center">SEND VIA WHATSAPP 💌</button>
     </form>
   </section>
 
@@ -1332,18 +1369,28 @@ function initScratch(){
 })();
 
 /* ══ WHATSAPP RSVP ══ */
-(function(){
+window.sendDoorRSVP = function(){
   const ph='918200482291';
-  document.getElementById('rsvpForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    const n=document.getElementById('fn').value.trim(),g=document.getElementById('fg').value.trim(),a=document.getElementById('fa').value,m=document.getElementById('fm').value.trim();
-    if(!n||!g||!a){alert('Please fill in all required fields.');return;}
-    let txt=`Hi Sourabh & Tejaswini,\n\nRSVP for your wedding:\n\n*Name:* ${n}\n*Guests:* ${g}\n*Status:* ${a}`;
-    if(m)txt+=`\n\n*Message:*\n${m}`;
-    const base=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)?'https://api.whatsapp.com/send':'https://web.whatsapp.com/send';
-    window.open(`${base}?phone=${ph}&text=${encodeURIComponent(txt)}`,'_blank');this.reset();
-  });
-})();
+  const n=document.getElementById('fn').value.trim(),g=document.getElementById('fg').value.trim(),a=document.getElementById('fa').value,m=document.getElementById('fm').value.trim();
+  const alertBox = document.getElementById('rsvp-alert');
+  const alertText = document.getElementById('rsvp-alert-text');
+  if(!n||!g||!a){
+    if(alertBox && alertText){
+      alertText.textContent = 'Please fill in all required fields (Name, Guests & Attendance).';
+      alertBox.style.display = 'flex';
+      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    return;
+  }
+  if(alertBox) alertBox.style.display = 'none';
+  let txt=`Hi Sourabh & Tejaswini,\n\nRSVP for your wedding:\n\n*Name:* ${n}\n*Guests:* ${g}\n*Status:* ${a}`;
+  if(m)txt+=`\n\n*Message:*\n${m}`;
+  const base=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)?'https://api.whatsapp.com/send':'https://web.whatsapp.com/send';
+  window.open(`${base}?phone=${ph}&text=${encodeURIComponent(txt)}`,'_blank');
+  
+  const form = document.getElementById('rsvpForm');
+  if(form) form.reset();
+};
 </script>
 </body>
 </html>
