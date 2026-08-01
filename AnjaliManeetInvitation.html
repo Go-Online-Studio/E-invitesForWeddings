@@ -638,6 +638,33 @@
       opacity: 0.7;
     }
     .custom-alert-close:hover { opacity: 1; }
+
+    /* Global Loader */
+    #global-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--dark-bg, #000);
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    #global-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader-ring {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(220, 39, 67, 0.2);
+      border-top-color: var(--primary, #dc2743);
+      border-radius: 50%;
+      animation: spinLoader 0.8s linear infinite;
+    }
+    @keyframes spinLoader {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -648,6 +675,32 @@
     <h2>Please Rotate Your Device</h2>
     <p>This invitation is beautifully crafted for portrait viewing.</p>
   </div>
+
+  <!-- Global Loader -->
+  <div id="global-loader">
+    <div class="loader-ring"></div>
+  </div>
+  <script>
+    (function() {
+      const loader = document.getElementById('global-loader');
+      let isLoaded = false;
+      function hideLoader() {
+        if (isLoaded) return;
+        isLoaded = true;
+        loader.classList.add('hidden');
+      }
+      Promise.all([
+        document.fonts ? document.fonts.ready : Promise.resolve(),
+        new Promise(resolve => {
+          if (document.readyState === 'complete') resolve();
+          else window.addEventListener('load', resolve);
+        })
+      ]).then(hideLoader).catch(hideLoader);
+      
+      // Fallback max 2 seconds
+      setTimeout(hideLoader, 2000);
+    })();
+  </script>
 
   <!-- Audio Element -->
   <audio id="bg-music" loop autoplay>

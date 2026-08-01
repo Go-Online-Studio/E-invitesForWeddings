@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -878,6 +878,33 @@
       100% { transform: rotate(0deg); }
     }
 
+    /* Global Loader */
+    #global-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--color-bg, #000);
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    #global-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader-ring {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(229, 154, 67, 0.2);
+      border-top-color: var(--color-secondary, #e59a43);
+      border-radius: 50%;
+      animation: spinLoader 0.8s linear infinite;
+    }
+    @keyframes spinLoader {
+      to { transform: rotate(360deg); }
+    }
+
   </style>
 </head>
 <body>
@@ -888,6 +915,32 @@
   <h3 class="serif" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 10px;">Please Rotate Your Device</h3>
   <p style="font-size: 0.9rem; max-width: 300px; color: #d4c4b7;">This wedding invitation is optimized for portrait mode. Please rotate your phone for the best experience.</p>
 </div>
+
+<!-- Global Loader -->
+<div id="global-loader">
+  <div class="loader-ring"></div>
+</div>
+<script>
+  (function() {
+    const loader = document.getElementById('global-loader');
+    let isLoaded = false;
+    function hideLoader() {
+      if (isLoaded) return;
+      isLoaded = true;
+      loader.classList.add('hidden');
+    }
+    Promise.all([
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+      new Promise(resolve => {
+        if (document.readyState === 'complete') resolve();
+        else window.addEventListener('load', resolve);
+      })
+    ]).then(hideLoader).catch(hideLoader);
+    
+    // Fallback max 2 seconds
+    setTimeout(hideLoader, 2000);
+  })();
+</script>
 
 <div id="app">
   <!-- Global Canvas for Petals -->
@@ -989,7 +1042,7 @@
           <a href="https://maps.app.goo.gl/ivQ3f7wzMC5p5n846" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
         </div>
         <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic1.webp" data-caption="Haldi Ceremony">
-          <img src="images/EventPic1.webp" alt="Haldi" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+          <img loading="lazy" src="images/EventPic1.webp" alt="Haldi" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
           <div class="rub-reveal-hint">TAP TO REVEAL</div>
         </div>
       </div>
@@ -1005,7 +1058,7 @@
           <a href="https://maps.app.goo.gl/ivQ3f7wzMC5p5n846" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
         </div>
         <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic2.webp" data-caption="The Wedding Ceremony">
-          <img src="images/EventPic2.webp" alt="Wedding" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+          <img loading="lazy" src="images/EventPic2.webp" alt="Wedding" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
           <div class="rub-reveal-hint">TAP TO REVEAL</div>
         </div>
       </div>
@@ -1020,7 +1073,7 @@
           <a href="https://maps.app.goo.gl/ivQ3f7wzMC5p5n846" target="_blank" class="btn btn-directions"><i class="fa-solid fa-location-dot"></i> Directions to this venue</a>
         </div>
         <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic3.webp" data-caption="Wedding Reception">
-          <img src="images/EventPic3.webp" alt="Reception" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+          <img loading="lazy" src="images/EventPic3.webp" alt="Reception" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
           <div class="rub-reveal-hint">TAP TO REVEAL</div>
         </div>
       </div>
@@ -1038,7 +1091,7 @@
         <h3 class="story-title">Two Paths Cross</h3>
         <p style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text-light);">A chance meeting turned into a conversation neither of us wanted to end — and somehow, it never really did.</p>
       </div>
-      <img src="images/Story1.avif" alt="Two Paths Cross" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
+      <img loading="lazy" src="images/Story1.avif" alt="Two Paths Cross" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
     </div>
 
     <div class="story-card reveal">
@@ -1047,7 +1100,7 @@
         <h3 class="story-title">Hearts Find Home</h3>
         <p style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text-light);">Between long calls, shared laughter, and little everyday moments, we found our favorite place in the world — each other.</p>
       </div>
-      <img src="images/Story2.avif" alt="Hearts Find Home" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
+      <img loading="lazy" src="images/Story2.avif" alt="Hearts Find Home" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
     </div>
 
     <div class="story-card reveal">
@@ -1056,7 +1109,7 @@
         <h3 class="story-title">A Promise Made</h3>
         <p style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text-light);">One question, one joyful yes — and two hearts became one beautiful promise.</p>
       </div>
-      <img src="images/Story3.avif" alt="A Promise Made" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
+      <img loading="lazy" src="images/Story3.avif" alt="A Promise Made" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
     </div>
 
     <div class="story-card reveal">
@@ -1065,7 +1118,7 @@
         <h3 class="story-title">Forever Begins</h3>
         <p style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text-light);">With the blessings of our families, our forever begins — and we would love for you to be there.</p>
       </div>
-      <img src="images/Story4.avif" alt="Forever Begins" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
+      <img loading="lazy" src="images/Story4.avif" alt="Forever Begins" class="story-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'400\' height=\'250\' fill=\'%23eee\'/></svg>'">
     </div>
   </section>
 
