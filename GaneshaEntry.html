@@ -101,6 +101,48 @@
     }
     .btn:active { transform: scale(0.95); }
 
+    /* Scroll Down Indicator */
+    .scroll-down-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 15px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      pointer-events: none;
+    }
+    .scroll-down-indicator.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .scroll-down-indicator.user-scrolled {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .scroll-down-indicator span {
+      font-size: 0.6rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 3px;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+    .scroll-down-indicator svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--color-primary);
+      animation: miniScrollBounce 1.8s infinite ease-in-out;
+    }
+    @keyframes miniScrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.7; }
+      50% { transform: translateY(6px); opacity: 1; }
+    }
+
     /* ==========================================================================
        1. Opening Sequence (Video Overlay)
        ========================================================================== */
@@ -1022,6 +1064,13 @@
       <div style="color: var(--color-secondary); font-size: 0.55rem; letter-spacing: 3px; margin-bottom: 4px;">✦ ✦ ✦</div>
       
       <p style="font-size: 0.75rem; font-weight: 700; color: var(--color-primary);">Venue: Taj Palace</p>
+
+      <div class="scroll-down-indicator" id="scroll-down-indicator" onclick="document.getElementById('festivities').scrollIntoView({ behavior: 'smooth' })">
+        <span>Scroll Down</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+        </svg>
+      </div>
     </div>
   </section>
 
@@ -1361,12 +1410,25 @@
             welcomeOverlay.style.display = 'none';
             document.body.classList.add('unlocked'); // Allow scroll
             heroSection.classList.add('visible');
+            const scrollIndicator = document.getElementById('scroll-down-indicator');
+            if (scrollIndicator) scrollIndicator.classList.add('visible');
             initScrollReveal();
             startPetalsOnce(); // Start falling petals
           }, 2000);
         }, 3000);
       }, 3000);
     }, 1500);
+  });
+
+  window.addEventListener('scroll', () => {
+    const indicator = document.getElementById('scroll-down-indicator');
+    if (indicator) {
+      if (window.scrollY > 50) {
+        indicator.classList.add('user-scrolled');
+      } else {
+        indicator.classList.remove('user-scrolled');
+      }
+    }
   });
 
   /* ==========================================================================

@@ -28,6 +28,48 @@ body {
   overflow: hidden;
 }
 body.unlocked { overflow: auto; }
+
+/* Scroll Down Indicator */
+.scroll-down-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  pointer-events: none;
+}
+.scroll-down-indicator.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.scroll-down-indicator.user-scrolled {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.scroll-down-indicator span {
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary, #b08d57);
+  margin-bottom: 3px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+.scroll-down-indicator svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--primary, #b08d57);
+  animation: miniScrollBounce 1.8s infinite ease-in-out;
+}
+@keyframes miniScrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
 #app {
   width: 100%; max-width: var(--max-w);
   min-height: 100vh; margin: 0 auto;
@@ -335,6 +377,13 @@ select.input-field { appearance:none; border-radius:0; }
       <p class="mono" style="font-size:0.55rem;color:var(--text);max-width:260px;margin:16px auto 0;line-height:1.9;opacity:0.7;">
         Together with their families, they joyfully<br>invite you to share in their happiness
       </p>
+
+      <div class="scroll-down-indicator" id="scroll-down-indicator" onclick="event.stopPropagation(); document.querySelector('.section.alt').scrollIntoView({ behavior: 'smooth' })">
+        <span>Scroll Down</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+        </svg>
+      </div>
     </div>
   </section>
 
@@ -562,10 +611,23 @@ function openCurtains() {
   // (2s delay + 1s text fade-in)
   setTimeout(function() {
     document.body.classList.add('unlocked');
+    var scrollIndicator = document.getElementById('scroll-down-indicator');
+    if (scrollIndicator) scrollIndicator.classList.add('visible');
     launchConfetti(200);
     initAOS();
   }, 4000);
 }
+
+window.addEventListener('scroll', function() {
+  var indicator = document.getElementById('scroll-down-indicator');
+  if (indicator) {
+    if (window.scrollY > 50) {
+      indicator.classList.add('user-scrolled');
+    } else {
+      indicator.classList.remove('user-scrolled');
+    }
+  }
+});
 
 /* COUNTDOWN */
 var targetDate = new Date("Sep 10, 2027 09:00:00").getTime();

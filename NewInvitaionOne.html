@@ -119,9 +119,9 @@
     .section { padding: 60px 12px; position: relative; }
     .hero-sec { text-align: center; min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     .ganesha-icon { width: 64px; height: 86px; margin-bottom: 20px; opacity: 0.8; }
-    .blessing-text { font-size: 0.8rem; line-height: 1.8; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 30px; max-width: 300px; }
+    .blessing-text { font-size: 10px; line-height: 1.8; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; max-width: 300px; }
     .parents-section { width: 100%; display: flex; flex-direction: column; gap: 20px; }
-    .parent-block { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); box-shadow: 0 4px 15px rgba(138,58,59,0.03); }
+    .parent-block { background: #fff; padding: 12px; border-radius: 12px; border: 1px solid var(--border-light); box-shadow: 0 4px 15px rgba(138,58,59,0.03); }
     .parent-block h3 { font-family: 'Alex Brush', cursive; font-size: 2rem; color: var(--primary); margin-bottom: 8px; }
     .parent-block p { font-size: 0.75rem; color: var(--text); line-height: 1.5; }
     .parent-block span { display: block; font-size: 0.65rem; color: var(--text-light); margin-top: 6px; }
@@ -151,6 +151,48 @@
     .cd-box { flex: 1; border: 1px solid var(--border-light); padding: 15px 5px; border-radius: 12px; background: #fff; box-shadow: 0 4px 10px rgba(138,58,59,0.05); }
     .cd-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; display: block; margin-bottom: 4px; color: var(--primary); }
     .cd-lbl { font-size: 0.6rem; letter-spacing: 0.1em; color: var(--text-light); text-transform: uppercase; }
+
+    /* Scroll Down Indicator */
+    .scroll-down-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      pointer-events: none;
+    }
+    .scroll-down-indicator.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .scroll-down-indicator.user-scrolled {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .scroll-down-indicator span {
+      font-size: 0.6rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary, #8a3a3b);
+      margin-bottom: 3px;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+    .scroll-down-indicator svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--primary, #8a3a3b);
+      animation: miniScrollBounce 1.8s infinite ease-in-out;
+    }
+    @keyframes miniScrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.7; }
+      50% { transform: translateY(6px); opacity: 1; }
+    }
 
     /* ══ 5. CAROUSEL ══ */
     .carousel-sec { background: #f9f5f0; }
@@ -469,6 +511,13 @@
             <p>Daughter of Mr. Kedar M Ghasari & Mrs. Shail Ghasari</p>
             <span>(Granddaughter of Late Shri Marutrao Ghasari & Smt. Chanda, Smt. Ranjana)</span>
           </div>
+        </div>
+
+        <div class="scroll-down-indicator" id="scroll-down-indicator" onclick="document.querySelector('.scratch-sec').scrollIntoView({ behavior: 'smooth' })">
+          <span>Scroll Down</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+          </svg>
         </div>
       </section>
 
@@ -820,10 +869,23 @@
         setTimeout(() => {
           layer.style.display = 'none';
           document.body.classList.add('unlocked');
+          const scrollIndicator = document.getElementById('scroll-down-indicator');
+          if (scrollIndicator) scrollIndicator.classList.add('visible');
           try { video.pause(); } catch(e) {}
           initAOS();
         }, 1500);
       };
+
+      window.addEventListener('scroll', () => {
+        const indicator = document.getElementById('scroll-down-indicator');
+        if (indicator) {
+          if (window.scrollY > 50) {
+            indicator.classList.add('user-scrolled');
+          } else {
+            indicator.classList.remove('user-scrolled');
+          }
+        }
+      });
 
       // Trigger fade 1.5s before video ends so it plays continuously during full 1.5s fade
       video.ontimeupdate = () => {
