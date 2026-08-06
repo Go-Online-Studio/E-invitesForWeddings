@@ -1419,11 +1419,13 @@
      Opening Sequence Logic
      ========================================================================== */
   btnBegin.addEventListener('click', () => {
+    // Synchronously trigger video play inside click gesture context for Safari unmuted audio
+    video.classList.add('playing');
+    safePlayVideo();
+
     staticWelcome.style.opacity = '0';
     setTimeout(() => {
       staticWelcome.style.display = 'none';
-      video.classList.add('playing');
-      safePlayVideo();
     }, 1000);
   });
 
