@@ -1441,6 +1441,15 @@
   btnOpenDoor.addEventListener('click', () => {
     btnOpenDoor.classList.remove('visible');
     safePlayVideo();
+
+    // Pre-unlock BGM audio context on this user gesture so Safari allows play after video ends
+    const bgm = document.getElementById('bg-music');
+    if (bgm) {
+      bgm.muted = true;
+      bgm.play().then(() => bgm.pause()).catch(() => {});
+      bgm.muted = false;
+      bgm.currentTime = 0;
+    }
   });
 
   video.addEventListener('ended', () => {
