@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Sai & Sravya - Wedding Invitation</title>
   
+  <!-- Video Preload for Instant Load & Safari Optimization -->
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1786011456/Ganeshji_vi94t3.mp4" as="video" type="video/mp4" crossorigin="anonymous">
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -989,8 +992,9 @@
 
   <!-- 1. Opening Sequence -->
   <div id="intro-overlay">
-    <video id="intro-video" playsinline webkit-playsinline preload="auto">
-      <source src="images/Ganeshji.mp4" type="video/mp4">
+    <video id="intro-video" playsinline webkit-playsinline x5-playsinline muted disablePictureInPicture fetchpriority="high" preload="auto">
+      <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1786011456/Ganeshji_vi94t3.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
+      <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1786011456/Ganeshji_vi94t3.mp4" type="video/mp4">
     </video>
     
     <div class="static-welcome" id="static-welcome">
@@ -1361,6 +1365,50 @@
   let attendance = "yes";
 
   /* ==========================================================================
+     Instant Video Preload & Safari Engine Warmup
+     ========================================================================== */
+  const GANESH_VIDEO_URL = "https://res.cloudinary.com/dticzwbrv/video/upload/v1786011456/Ganeshji_vi94t3.mp4";
+  let videoBlobReady = false;
+
+  if (video) {
+    // Warm up standard HTML5 video load immediately for WebKit / Safari media pipeline
+    video.load();
+
+    // Background fetch into local Blob for instant 0ms latency playback on user interaction
+    fetch(GANESH_VIDEO_URL, { mode: 'cors' })
+      .then(res => {
+        if (!res.ok) throw new Error('Fetch failed');
+        return res.blob();
+      })
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(blob);
+        if (video && video.paused && !videoBlobReady && (video.currentTime || 0) === 0) {
+          videoBlobReady = true;
+          video.src = blobUrl;
+          video.load();
+        }
+      })
+      .catch(err => {
+        console.log("Background video blob pre-fetch fallback to direct stream:", err);
+      });
+  }
+
+  // Safe play helper to handle Safari promise rejection & autoplay policy
+  function safePlayVideo() {
+    if (!video) return;
+    video.muted = true; // Ensure muted for instant Safari play permission
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(e => {
+        console.warn("Video play error (Safari retry):", e);
+        setTimeout(() => {
+          video.play().catch(err => console.log("Final video play error:", err));
+        }, 50);
+      });
+    }
+  }
+
+  /* ==========================================================================
      Opening Sequence Logic
      ========================================================================== */
   btnBegin.addEventListener('click', () => {
@@ -1368,7 +1416,7 @@
     setTimeout(() => {
       staticWelcome.style.display = 'none';
       video.classList.add('playing');
-      video.play().catch(e => console.log("Video play error:", e));
+      safePlayVideo();
     }, 1000);
   });
 
@@ -1383,7 +1431,7 @@
 
   btnOpenDoor.addEventListener('click', () => {
     btnOpenDoor.classList.remove('visible');
-    video.play();
+    safePlayVideo();
   });
 
   video.addEventListener('ended', () => {
