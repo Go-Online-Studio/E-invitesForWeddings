@@ -992,7 +992,7 @@
 
   <!-- 1. Opening Sequence -->
   <div id="intro-overlay">
-    <video id="intro-video" playsinline webkit-playsinline x5-playsinline muted disablePictureInPicture fetchpriority="high" preload="auto">
+    <video id="intro-video" playsinline webkit-playsinline x5-playsinline disablePictureInPicture fetchpriority="high" preload="auto">
       <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1786011456/Ganeshji_vi94t3.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
       <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1786011456/Ganeshji_vi94t3.mp4" type="video/mp4">
     </video>
@@ -1393,17 +1393,25 @@
       });
   }
 
-  // Safe play helper to handle Safari promise rejection & autoplay policy
+  // Safe play helper to handle video audio playback from start
   function safePlayVideo() {
     if (!video) return;
-    video.muted = true; // Ensure muted for instant Safari play permission
+    video.muted = false;
+    video.volume = 1.0;
+
+    // Temporarily pause BGM so video audio plays crisp and clear
+    const bgm = document.getElementById('bg-music');
+    if (bgm && !bgm.paused) {
+      bgm.pause();
+    }
+
     const playPromise = video.play();
     if (playPromise !== undefined) {
       playPromise.catch(e => {
-        console.warn("Video play error (Safari retry):", e);
-        setTimeout(() => {
-          video.play().catch(err => console.log("Final video play error:", err));
-        }, 50);
+        console.warn("Unmuted video play error (fallback retry):", e);
+        // Fallback to muted if browser blocks unmuted playback before user gesture
+        video.muted = true;
+        video.play().catch(err => console.log("Final video play failure:", err));
       });
     }
   }
@@ -1435,9 +1443,18 @@
   });
 
   video.addEventListener('ended', () => {
-    // Increase background music volume but cap at 50%
+    // Resume background music when video ends
     const bgm = document.getElementById('bg-music');
-    if (bgm) bgm.volume = 0.5;
+    if (bgm) {
+      bgm.volume = 0.5;
+      bgm.play().then(() => {
+        musicPlaying = true;
+        const mfab = document.getElementById('mfab');
+        if (mfab) mfab.classList.add('on');
+        if (document.getElementById('icon-unmuted')) document.getElementById('icon-unmuted').style.display = 'block';
+        if (document.getElementById('icon-muted')) document.getElementById('icon-muted').style.display = 'none';
+      }).catch(e => console.log("BGM resume error:", e));
+    }
 
     // Fade out video overlay
     introOverlay.style.opacity = '0';
