@@ -1410,7 +1410,6 @@
       playPromise.catch(e => {
         console.warn("Unmuted video play error (fallback retry):", e);
         // Fallback to muted if browser blocks unmuted playback before user gesture
-        video.muted = true;
         video.play().catch(err => console.log("Final video play failure:", err));
       });
     }
