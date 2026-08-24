@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Sai & Sravya - Wedding Invitation</title>
+  <title>Rohan & Priya - Wedding Invitation</title>
   
   <!-- Video Preload for Instant Load & Safari Optimization -->
   <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1786011456/Ganeshji_vi94t3.mp4" as="video" type="video/mp4" crossorigin="anonymous">
@@ -320,7 +320,7 @@
        Main Application Sections
        ========================================================================== */
     .section {
-      padding: 60px 25px;
+      padding: 60px 12px;
       position: relative;
       z-index: 20;
     }
@@ -334,7 +334,7 @@
       justify-content: center;
       padding-right: 15px;
       padding-top: 2vh;
-      background: linear-gradient(to bottom, rgba(253,250,246,0) 60%, rgba(253,250,246,1) 100%), url('images/welcom3.webp') center/cover no-repeat; /* Background image */
+      background: linear-gradient(to bottom, rgba(253,250,246,0) 82%, rgba(253,250,246,1) 100%), url('images/welcom3.webp') center/cover no-repeat; /* Background image */
       background-color: var(--color-bg);
       opacity: 0;
       position: relative;
@@ -363,7 +363,7 @@
         0 1px 2px rgba(255, 255, 255, 1),
         0 -1px 2px rgba(255, 255, 255, 1);
     }
-    .couple-names { font-size: 3.5rem; color: var(--color-primary); line-height: 1.1; margin: 10px 0; }
+    .couple-names { font-size: 2.8rem; color: var(--color-primary); line-height: 1.1; margin: 10px 0; }
     .ampersand { font-size: 2rem; color: var(--color-secondary); font-style: italic; }
     .wedding-date { font-weight: 600; letter-spacing: 2px; margin-top: 15px; color: var(--color-text); }
     .venue-short { font-size: 0.85rem; color: var(--color-text-light); margin-top: 5px; }
@@ -382,72 +382,71 @@
     /* Festivities (Timeline) */
     .timeline {
       position: relative;
-      padding-left: 30px;
       margin-top: 30px;
     }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0; width: 2px;
-      background: var(--color-secondary);
-      opacity: 0.3;
+    .mb-0 {
+      margin-bottom: 0 !important;
+    }
+    .pb-0 {
+      padding-bottom: 0 !important;
     }
     .event-card {
       position: relative;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
       background: transparent;
       padding: 0 0 20px 0;
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: center;
       gap: 15px;
     }
-    .event-card::before {
-      content: '';
-      position: absolute;
-      left: -34px; top: 5px;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--color-secondary);
-      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+    .event-card:last-of-type {
+     margin-bottom: 0;
     }
     .event-info {
       flex: 1;
       display: flex;
       flex-direction: column;
-    
+      align-items: center;
+      text-align: center;
+      width: 100%;
     }
-    .event-title { font-size: 1.5rem; color: var(--color-primary); margin-bottom: 5px; }
+    .event-title { font-size: 1.8rem; color: var(--color-primary); margin-bottom: 5px; }
     .event-time { font-size: 0.85rem; font-weight: 600; color: var(--color-text); margin-bottom: 5px; letter-spacing: 1px; }
     .event-desc { font-size: 0.85rem; color: var(--color-text-light); margin-bottom: 10px; line-height: 1.4; }
     
     .btn-directions {
-      align-self: flex-start;
-      padding: 6px 14px;
-      font-size: 0.75rem;
+      align-self: center;
+      padding: 8px 18px;
+      font-size: 0.8rem;
       color: var(--color-primary);
       border: 1px solid var(--color-primary);
       background: transparent;
-      border-radius: 20px;
+      border-radius: 25px;
       text-decoration: none;
       display: inline-block;
       margin-top: 5px;
+      transition: all 0.3s ease;
+    }
+    .btn-directions:hover {
+      background: var(--color-primary);
+      color: #fff;
     }
     
     .event-media-wrapper {
       position: relative;
-      width: 90px;
-      height: 120px;
-      border-radius: 10px;
+      width: 100%;
+      height: 340px;
+      border-radius: 15px;
       overflow: hidden;
       flex-shrink: 0;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
       border: 2px solid var(--color-secondary);
+      margin-bottom: 15px;
     }
     .event-thumbnail {
-      width: 100%; height: 100%; object-fit: cover;
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
     }
     .rub-reveal-hint {
       position: absolute;
@@ -472,6 +471,9 @@
       display: flex;
       flex-direction: column;
     }
+    .story-card:last-of-type{
+      margin-bottom: 0;
+    }
     .story-content { 
       padding: 0 0 15px 0; 
       text-align: left;
@@ -493,157 +495,111 @@
     }
     .sides-container {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      flex-direction: column;
+      gap: 15px;
       margin-top: 30px;
       position: relative;
     }
     .side-btn {
-      flex: 1;
-      background: #ffffff;
-      border: 2px solid #eaeaea;
-      border-radius: 20px;
-      padding: 24px 10px 20px;
-      text-align: center;
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--color-secondary);
+      border-radius: 12px;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
       position: relative;
-      overflow: visible;
+      overflow: hidden;
+    }
+    .side-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(163, 42, 56, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
     }
     
-    /* You're In Badge */
+    .side-btn.active {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(163, 42, 56, 0.15);
+    }
+    .side-btn.active::before {
+      opacity: 1;
+    }
+    
+    .side-btn-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
     .youre-in-badge {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%) scale(0.8);
+      position: relative;
+      z-index: 1;
       opacity: 0;
-      padding: 4px 12px;
-      border-radius: 20px;
+      padding: 4px 10px;
+      border-radius: 12px;
       font-size: 0.65rem;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: 0.5px;
-      color: #ffffff;
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary);
       white-space: nowrap;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
       transition: all 0.3s ease;
-      pointer-events: none;
-      z-index: 5;
+      transform: scale(0.9);
     }
     .side-btn.active .youre-in-badge {
       opacity: 1;
-      transform: translateX(-50%) scale(1);
+      transform: scale(1);
     }
-    .side-btn.bride .youre-in-badge {
-      background: linear-gradient(135deg, #e91e63, #ff4081);
-    }
-    .side-btn.groom .youre-in-badge {
-      background: linear-gradient(135deg, #1976d2, #2196f3);
-    }
-
+    
     /* Icon circle */
     .side-icon-wrap {
-      width: 52px;
-      height: 52px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
-      margin: 0 auto 12px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--color-secondary);
+      border: 1px solid rgba(212, 175, 55, 0.3);
       transition: all 0.3s ease;
     }
-    .side-btn.bride .side-icon-wrap {
-      background: rgba(233, 30, 99, 0.1);
-      color: #e91e63;
-    }
-    .side-btn.groom .side-icon-wrap {
-      background: rgba(33, 150, 243, 0.1);
-      color: #2196f3;
-    }
-    .side-btn.bride.active .side-icon-wrap {
-      background: linear-gradient(135deg, #e91e63, #ff4081);
+    .side-btn.active .side-icon-wrap {
+      background: var(--color-primary);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
-    }
-    .side-btn.groom.active .side-icon-wrap {
-      background: linear-gradient(135deg, #1976d2, #2196f3);
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
-    }
-    .side-icon-wrap i {
-      font-size: 1.5rem;
+      border-color: var(--color-primary);
     }
 
     /* Labels & Names */
+    .side-text {
+      text-align: left;
+    }
     .side-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: var(--color-text-light);
-      margin-bottom: 4px;
-      font-weight: 500;
+      margin-bottom: 2px;
     }
     .side-name {
       font-family: var(--font-serif);
-      font-size: 1.5rem;
-      font-weight: 600;
-      line-height: 1.2;
+      font-size: 1.6rem;
+      color: var(--color-primary);
+      line-height: 1.1;
     }
-    .side-btn.bride .side-name { color: #d81b60; }
-    .side-btn.groom .side-name { color: #1565c0; }
-
-    /* PINK Shadow for Girl (Bride) Active */
-    .side-btn.bride.active {
-      border-color: #ff4081;
-      background: #fffafc;
-      box-shadow: 0 10px 25px rgba(233, 30, 99, 0.28), 0 0 0 2px rgba(255, 64, 129, 0.35);
-      transform: translateY(-4px);
-    }
-
-    /* BLUE Shadow for Man (Groom) Active */
-    .side-btn.groom.active {
-      border-color: #2196f3;
-      background: #f4f9ff;
-      box-shadow: 0 10px 25px rgba(33, 150, 243, 0.28), 0 0 0 2px rgba(33, 150, 243, 0.35);
-      transform: translateY(-4px);
-    }
-
-    /* VS Divider */
-    .vs-divider {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 0 2px;
-      flex-shrink: 0;
-    }
-    .vs-line-dot {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-    .vs-line {
-      width: 12px;
-      height: 1px;
-      background: var(--color-secondary);
-      opacity: 0.5;
-    }
-    .vs-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--color-secondary), #b8860b);
-      box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-    }
-    .vs-text {
-      font-size: 0.7rem;
-      font-style: italic;
-      color: var(--color-text-light);
-      font-family: var(--font-serif);
-      opacity: 0.7;
+    .side-btn.active .side-name {
+      color: var(--color-primary);
     }
 
     /* Cheer Message Container */
@@ -656,9 +612,9 @@
     }
     .cheer-message {
       font-family: var(--font-serif);
-      font-size: 18px;
-      font-style: italic;
+      font-size: 1.2rem;
       line-height: 1.4;
+      color: var(--color-primary);
       transition: all 0.3s ease;
       opacity: 0;
       transform: translateY(6px);
@@ -667,75 +623,74 @@
       opacity: 1;
       transform: translateY(0);
     }
-    .cheer-message.bride-cheer {
-      color: #c2185b;
-    }
-    .cheer-message.bride-cheer span {
+    .cheer-message span {
       font-weight: 600;
-      border-bottom: 1.5px solid rgba(194, 24, 91, 0.3);
-      padding-bottom: 1px;
-    }
-    .cheer-message.groom-cheer {
-      color: #1565c0;
-    }
-    .cheer-message.groom-cheer span {
-      font-weight: 600;
-      border-bottom: 1.5px solid rgba(21, 101, 192, 0.3);
-      padding-bottom: 1px;
+      font-style: italic;
+      color: var(--color-secondary);
     }
 
     /* Countdown Timer */
     #countdown {
-      background: var(--color-primary);
-      color: #fff;
+      background: transparent;
+      color: var(--color-text);
       text-align: center;
       padding: 50px 20px;
     }
-    #countdown .section-title { color: #fff; }
+    #countdown .section-title { color: var(--color-primary); }
     .timer-container {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 12px;
       margin-top: 30px;
     }
     .time-box {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(5px);
+      background: #ffffff;
       border-radius: 12px;
-      width: 70px;
-      height: 80px;
+      width: 75px;
+      height: 85px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid var(--color-secondary);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+      position: relative;
     }
-    .time-val { font-size: 2rem; font-family: var(--font-serif); font-weight: 600; line-height: 1; }
-    .time-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; opacity: 0.8; }
+    .time-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 4px;
+      background: var(--color-secondary);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    .time-val { font-size: 2.2rem; font-family: var(--font-serif); font-weight: 600; line-height: 1; color: var(--color-primary); }
+    .time-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; color: var(--color-text-light); font-weight: 500; }
 
     /* RSVP Form */
     .rsvp-card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 30px 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 35px 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid rgba(212, 175, 55, 0.2);
     }
     
     /* Professional Dismissible Alert Box */
     .custom-alert-box {
-      background: #fff0f3;
-      border: 1px solid #f8bbd0;
-      border-left: 4px solid #e91e63;
-      color: #880e4f;
+      background: #fdf5e6;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-left: 4px solid var(--color-primary);
+      color: var(--color-primary);
       padding: 12px 16px;
-      border-radius: 12px;
+      border-radius: 10px;
       margin-bottom: 20px;
       font-size: 0.85rem;
       display: flex;
       align-items: center;
       gap: 10px;
       position: relative;
-      box-shadow: 0 4px 12px rgba(233, 30, 99, 0.12);
+      box-shadow: 0 4px 12px rgba(163, 42, 56, 0.08);
       animation: alertSlideDown 0.3s ease-out;
     }
     @keyframes alertSlideDown {
@@ -744,7 +699,7 @@
     }
     .custom-alert-icon {
       font-size: 1.1rem;
-      color: #e91e63;
+      color: var(--color-primary);
       flex-shrink: 0;
     }
     .custom-alert-close {
@@ -753,7 +708,7 @@
       border: none;
       font-size: 1.3rem;
       font-weight: bold;
-      color: #880e4f;
+      color: var(--color-primary);
       cursor: pointer;
       line-height: 1;
       opacity: 0.7;
@@ -786,65 +741,74 @@
       50% { box-shadow: 0 4px 28px rgba(212,175,55,0.7), 0 0 0 6px rgba(212,175,55,0.15); }
     }
     .form-group { margin-bottom: 25px; }
-    .form-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; color: var(--color-text); text-transform: uppercase; letter-spacing: 1px; }
+    .form-label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; color: var(--color-text); text-transform: uppercase; letter-spacing: 1.5px; }
     .form-control {
       width: 100%;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
+      padding: 12px 15px;
+      border: none;
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+      border-radius: 0;
       font-family: var(--font-sans);
       font-size: 1rem;
-      background: #fafafa;
+      background: transparent;
+      transition: border-color 0.3s ease;
+      color: var(--color-text);
     }
-    .form-control:focus { outline: none; border-color: var(--color-secondary); background: #fff; }
+    .form-control:focus { outline: none; border-bottom-color: var(--color-primary); }
+    .form-control::placeholder { color: #aaa; font-weight: 300; }
     
-    .attendance-toggle { display: flex; gap: 10px; }
+    .attendance-toggle { display: flex; gap: 15px; }
     .att-btn {
-      flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 10px; background: #fff; cursor: pointer; text-align: center; font-weight: 600; transition: all 0.2s;
+      flex: 1; padding: 12px; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 12px; background: transparent; cursor: pointer; text-align: center; font-weight: 600; transition: all 0.3s ease; color: var(--color-text); font-size: 14px;
     }
-    .att-btn.yes.active { background: #4a6c4a; color: #fff; border-color: #4a6c4a; }
-    .att-btn.no.active { background: #888; color: #fff; border-color: #888; }
+    .att-btn.yes.active { background: var(--color-secondary); color: #fff; border-color: var(--color-secondary); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+    .att-btn.no.active { background: var(--color-text-light); color: #fff; border-color: var(--color-text-light); box-shadow: 0 4px 12px rgba(123, 99, 84, 0.3); }
 
-    .events-checkboxes { display: flex; flex-wrap: wrap; gap: 10px; }
+    .events-checkboxes { display: flex; flex-wrap: wrap; gap: 12px; }
     .event-chk {
-      padding: 8px 16px; border: 1px solid var(--color-secondary); border-radius: 20px; color: var(--color-secondary); cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s;
+      padding: 10px 18px; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 25px; color: var(--color-text); cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.3s ease; background: transparent;
     }
-    .event-chk.active { background: var(--color-secondary); color: #fff; }
+    .event-chk.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(163, 42, 56, 0.3); }
 
     .btn-whatsapp {
       width: 100%;
-      background: #25D366;
+      background: linear-gradient(135deg, #25D366, #128C7E);
       color: #fff;
-      padding: 16px;
-      border-radius: 10px;
-      font-size: 1.1rem;
+      padding: 14px;
+      border-radius: 30px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 12px;
+      margin-top: 35px;
       font-weight: 600;
       border: none;
       cursor: pointer;
+      box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s ease;
     }
-    .btn-whatsapp:active { transform: scale(0.98); }
+    .btn-whatsapp:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(37, 211, 102, 0.2); }
 
     /* Footer */
     footer {
-      background: #1a1a1a;
-      color: #d4c4b7;
+      background: var(--color-text);
+      color: var(--color-bg);
       text-align: center;
       padding: 60px 20px 40px;
       position: relative;
+      border-top: 3px solid var(--color-secondary);
     }
     .om-symbol {
-      font-size: 3rem;
+      font-size: 3.5rem;
       color: var(--color-secondary);
-      margin-bottom: 20px;
-      text-shadow: 0 0 20px rgba(229, 154, 67, 0.4);
+      margin-bottom: 15px;
+      text-shadow: 0 2px 15px rgba(212, 175, 55, 0.3);
     }
-    footer .couple-names { color: var(--color-bg); font-size: 2.5rem; margin: 20px 0 10px; }
-    .made-with-love { font-size: 0.75rem; letter-spacing: 2px; opacity: 0.6; margin-top: 40px; }
+    footer .couple-names { color: var(--color-secondary); font-size: 2.5rem; margin: 25px 0 5px; font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    .made-with-love { font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase; opacity: 0.7; margin-top: 50px; color: var(--color-secondary); }
 
     /* Orientation Restriction Overlay */
     #orientation-warning {
@@ -1024,7 +988,7 @@
     <div class="butterfly b3" style="bottom: 30%; left: 20%; animation-delay: 0.4s; background-image: url('images/colorful-butterfly-flight3.webp'); width: 55px; height: 55px; opacity: 0.85;"></div>
     <h2 class="serif welcome-text" style="font-weight: 600;">
       <span style="display:block; font-size:1.5rem; color:var(--color-primary); margin-bottom:10px; font-weight: 400;">The</span>
-      NAIDU
+      SHARMA
       <span style="display:block; font-family:var(--font-sans); font-size:1rem; font-weight:300; margin-top:10px; text-transform:uppercase; letter-spacing:4px;">Family</span>
       <span class="serif" style="display:block; font-size:1.5rem; color:var(--color-secondary); margin-top:10px; font-style:italic; font-weight: 400;">welcomes you</span>
     </h2>
@@ -1044,15 +1008,15 @@
       </div>
 
       <div style="margin: 6px 0;">
-        <h1 class="serif" style="margin: 0; font-size: 2.5rem; color: var(--color-primary); line-height: 1;">Sai</h1>
-        <p style="font-size: 0.65rem; color: #4a3020; font-weight: 600; margin-top: 2px;">S/O Anita &amp; S.R Iyer</p>
+        <h1 class="serif" style="margin: 0; font-size: 2rem; color: var(--color-primary); line-height: 1;">Rohan</h1>
+        <p style="font-size: 0.65rem; color: #4a3020; font-weight: 600; margin-top: 2px;">S/O Rakesh &amp; Sunita Sharma</p>
       </div>
 
       <div class="serif" style="font-size: 1.8rem; color: var(--color-primary); margin: 2px 0;">&amp;</div>
 
       <div style="margin: 6px 0;">
-        <h1 class="serif" style="margin: 0; font-size: 2.5rem; color: var(--color-primary); line-height: 1;">Sravya</h1>
-        <p style="font-size: 0.65rem; color: #4a3020; font-weight: 600; margin-top: 2px;">D/O G. Madhu &amp; Ram Naidu</p>
+        <h1 class="serif" style="margin: 0; font-size: 2rem; color: var(--color-primary); line-height: 1;">Priya</h1>
+        <p style="font-size: 0.65rem; color: #4a3020; font-weight: 600; margin-top: 2px;">D/O Amit &amp; Kavita Verma</p>
       </div>
 
       <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px auto; width: 85%;">
@@ -1067,7 +1031,7 @@
       
       <div style="color: var(--color-secondary); font-size: 0.55rem; letter-spacing: 3px; margin-bottom: 4px;">✦ ✦ ✦</div>
       
-      <p style="font-size: 0.75rem; font-weight: 700; color: var(--color-primary);">Venue: Taj Palace</p>
+      <p style="font-size: 0.75rem; font-weight: 700; color: var(--color-text);">Venue: Taj Palace</p>
 
       <div class="scroll-down-indicator" id="scroll-down-indicator" onclick="document.getElementById('festivities').scrollIntoView({ behavior: 'smooth' })">
         <span>Scroll Down</span>
@@ -1079,13 +1043,17 @@
   </section>
 
   <!-- Festivities Section -->
-  <section id="festivities" class="section text-center">
+  <section id="festivities" class="section text-center pb-0">
     <p class="subtitle reveal">Three days of celebration</p>
     <h2 class="section-title reveal">The Festivities</h2>
     
-    <div class="timeline text-left">
+    <div class="timeline text-center">
       <!-- Event 1 -->
       <div class="event-card reveal">
+        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic1.webp" data-caption="Haldi Ceremony">
+          <img loading="lazy" src="images/EventPic1.webp" alt="Haldi" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+          <div class="rub-reveal-hint">TAP TO REVEAL</div>
+        </div>
         <div class="event-info">
           <h3 class="event-title">Haldi Ceremony</h3>
           <p class="event-time">WEDNESDAY, 9 DECEMBER 2026</p>
@@ -1097,14 +1065,14 @@
             </svg> Directions to this venue
           </a>
         </div>
-        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic1.webp" data-caption="Haldi Ceremony">
-          <img loading="lazy" src="images/EventPic1.webp" alt="Haldi" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
-          <div class="rub-reveal-hint">TAP TO REVEAL</div>
-        </div>
       </div>
 
       <!-- Event 2 -->
       <div class="event-card reveal">
+        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic2.webp" data-caption="The Wedding Ceremony">
+          <img loading="lazy" src="images/EventPic2.webp" alt="Wedding" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+          <div class="rub-reveal-hint">TAP TO REVEAL</div>
+        </div>
         <div class="event-info">
           <h3 class="event-title">The Wedding</h3>
           <p class="event-time">FRIDAY, 11 DECEMBER 2026</p>
@@ -1117,14 +1085,14 @@
             </svg> Directions to this venue
           </a>
         </div>
-        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic2.webp" data-caption="The Wedding Ceremony">
-          <img loading="lazy" src="images/EventPic2.webp" alt="Wedding" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
-          <div class="rub-reveal-hint">TAP TO REVEAL</div>
-        </div>
       </div>
 
       <!-- Event 3 -->
       <div class="event-card reveal">
+        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic3.webp" data-caption="Wedding Reception">
+          <img loading="lazy" src="images/EventPic3.webp" alt="Reception" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
+          <div class="rub-reveal-hint">TAP TO REVEAL</div>
+        </div>
         <div class="event-info">
           <h3 class="event-title">Reception</h3>
           <p class="event-time">MONDAY, 14 DECEMBER 2026</p>
@@ -1135,10 +1103,6 @@
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
             </svg> Directions to this venue
           </a>
-        </div>
-        <div class="event-media-wrapper" data-fancybox="gallery" data-src="images/EventPic3.webp" data-caption="Wedding Reception">
-          <img loading="lazy" src="images/EventPic3.webp" alt="Reception" class="event-thumbnail" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23eee\'/></svg>'">
-          <div class="rub-reveal-hint">TAP TO REVEAL</div>
         </div>
       </div>
     </div>
@@ -1188,58 +1152,56 @@
 
   <!-- Pick Your Side -->
   <section id="pick-side" class="section text-center">
-    <p class="subtitle reveal">A little friendly rivalry</p>
-      <div class="sides-container reveal">
-      <div class="side-btn bride active" data-side="Bride" onclick="selectSide('Bride')">
+    <h2 class="section-title reveal" style="margin-bottom: 5px;">A Little Friendly Rivalry</h2>
+    <p class="subtitle reveal" style="margin-bottom: 25px;">Which side are you on?</p>
+    
+    <div class="sides-container reveal">
+      <div class="side-btn active" data-side="Bride" onclick="selectSide('Bride')">
+        <div class="side-btn-content">
+          <div class="side-icon-wrap">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
+          <div class="side-text">
+            <div class="side-label">Team Bride</div>
+            <div class="side-name">Priya</div>
+          </div>
+        </div>
         <div class="youre-in-badge">
-          <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" style="vertical-align:text-bottom;">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-          </svg> YOU'RE IN
-        </div>
-        <div class="event-icon-circle">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-            <circle cx="12" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 7l2-4 2 4h-4z"/>
-          </svg>
-        </div>
-        <div class="side-label">Team Bride</div>
-        <div class="side-name">Sravya</div>
-      </div>
-
-      <div class="vs-divider">
-        <div class="vs-text">vs</div>
-        <div class="vs-line-dot">
-          <div class="vs-line"></div>
-          <div class="vs-dot"></div>
-          <div class="vs-line"></div>
+          YOU'RE IN
         </div>
       </div>
 
-      <div class="side-btn groom" data-side="Groom" onclick="selectSide('Groom')">
+      <div class="side-btn" data-side="Groom" onclick="selectSide('Groom')">
+        <div class="side-btn-content">
+          <div class="side-icon-wrap">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+          <div class="side-text">
+            <div class="side-label">Team Groom</div>
+            <div class="side-name">Rohan</div>
+          </div>
+        </div>
         <div class="youre-in-badge">
-          <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" style="vertical-align:text-bottom;">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-          </svg> YOU'RE IN
+          YOU'RE IN
         </div>
-        <div class="event-icon-circle">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-          </svg>
-        </div>
-        <div class="side-label">Team Groom</div>
-        <div class="side-name">Sai</div>
       </div>
     </div>
 
     <div class="cheer-message-wrapper reveal">
-      <p id="cheer-message" class="cheer-message bride-cheer visible">
-        You're cheering for <span>Team Bride — Sravya!</span> 🌺
+      <p id="cheer-message" class="cheer-message visible">
+        You're cheering for <span>Team Bride!</span> 🌺
       </p>
     </div>
   </section>
 
   <!-- Countdown Timer -->
   <section id="countdown" class="section text-center">
-    <p class="subtitle reveal" style="color: rgba(255,255,255,0.7);">Counting down to the wedding</p>
+    <p class="subtitle reveal">Counting down to forever</p>
+    <h2 class="section-title reveal">The Big Day</h2>
     <div class="timer-container reveal">
       <div class="time-box">
         <span class="time-val" id="cd-days">00</span>
@@ -1314,7 +1276,7 @@
   <footer>
     <div class="om-symbol reveal">ॐ</div>
     <p class="reveal serif" style="font-size:1.2rem; line-height:1.8;">With the blessings of our elders<br>and the warmth of your presence.</p>
-    <h1 class="couple-names reveal">Sai &nbsp;& &nbsp;Sravya</h1>
+    <h1 class="couple-names reveal">Rohan &nbsp;& &nbsp;Priya</h1>
     <p class="made-with-love reveal">Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" style="color: inherit; text-decoration: underline;">Invite&nbsp;Box</a></p>
   </footer>
 
@@ -1528,10 +1490,10 @@
       setTimeout(() => {
         if (side === 'Bride') {
           msgEl.className = 'cheer-message bride-cheer';
-          msgEl.innerHTML = `You're cheering for <span>Team Bride — Sravya!</span> 🌺💐`;
+          msgEl.innerHTML = `You're cheering for <span>Team Bride - Priya!</span> 🌺`;
         } else if (side === 'Groom') {
           msgEl.className = 'cheer-message groom-cheer';
-          msgEl.innerHTML = `You're cheering for <span>Team Groom — Sai!</span> 🤵‍♂️🎉`;
+          msgEl.innerHTML = `You're cheering for <span>Team Groom - Rohan!</span> 🥂`;
         }
         msgEl.classList.add('visible');
       }, 150);
