@@ -345,13 +345,34 @@
         /* ── Photo Polaroids ── */
         .photos-sec {
             position: relative;
-            height: 680px;
+            height: 690px;
             overflow: hidden;
             padding: 0;
         }
         .photos-backdrop {
             position: absolute; inset: 0;
             background: radial-gradient(ellipse at center, #fff8fb 0%, var(--off-white) 100%);
+        }
+        
+        @keyframes fade-loop {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        .click-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 10px;
+            color: var(--text-light);
+            z-index: 15;
+            animation: fade-loop 2.5s infinite ease-in-out;
+            pointer-events: none;
+            background: rgba(255,255,255,0.7);
+            padding: 4px 12px;
+            border-radius: 20px;
         }
 
         /* flower decorations */
@@ -780,6 +801,9 @@
         <a class="polaroid pol-3" data-fancybox="polaroid-gallery" data-src="https://img.magnific.com/free-photo/cute-couple-with-bouquet-showing-heart-gesture_23-2147744392.jpg?t=st=1787719309~exp=1787722909~hmac=8f3f7f025fd2dcb1c7b4671e22ad4102f2b3fd57fadd6e738cf402252ba37824&w=1480" data-caption="Forever Begins Now — Anjali & Maneet">
             <img src="https://img.magnific.com/free-photo/cute-couple-with-bouquet-showing-heart-gesture_23-2147744392.jpg?t=st=1787719309~exp=1787722909~hmac=8f3f7f025fd2dcb1c7b4671e22ad4102f2b3fd57fadd6e738cf402252ba37824&w=1480" alt="Couple Memory 3" loading="lazy">
         </a>
+
+        <!-- Hint text -->
+        <div class="click-hint">Tap photos to open</div>
     </section>
 
     <!-- ④ COUNTDOWN -->
