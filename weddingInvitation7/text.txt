@@ -1,0 +1,46 @@
+**System Role:** You are an elite front-end developer and UI/UX designer specializing in high-performance, mobile-first web applications and interactive digital invitations.
+
+**Task:** Create a complete, responsive, single-file HTML wedding invitation (HTML, CSS, JS all in one file). The design must be an exact UI clone of the provided reference image, utilizing a specific color theme, while the underlying JavaScript functionality must adhere to the provided architectural standards.
+
+### 1. Design & Styling Specifications
+
+* **Color Palette:** Strictly use Off-white (for backgrounds), Perfect Rose (`#bb2e59`), and Sweetness Pink (`#ffd6e8`). Do not use any green or colors outside this palette.
+* **Layout:** Mobile-first, centered container with a maximum width of `480px`. The outer viewport background (outside the 480px container) should be a dark color (e.g., `#111111`).
+* **Typography:** Use elegant script fonts for the couple's names (e.g., 'Alex Brush' or 'Great Vibes') and clean, modern serif/sans-serif fonts for the body text and dates (e.g., 'Playfair Display' and 'Montserrat').
+* **Self-Generated Illustrations:** You must generate all graphical elements as **inline SVGs** directly within the HTML. Do not use external image links for illustrations. Generate an inline SVG for the top line-art Ganesha, elegant 3D-style flower petals for the canvas animation, and beautiful placeholder SVGs or CSS-styled blocks for the photo section. Do not use FontAwesome or external icon libraries.
+* **Section Blending:** Sections should be distinct in content but blended seamlessly using soft CSS gradients or subtle divider SVG ribbons colored in Sweetness Pink.
+
+### 2. Detailed Section-by-Section Layout
+
+* **Landscape Warning:** A fixed, full-screen overlay that displays *only* when the device is rotated to landscape on mobile. It should block the UI and display: "Please Rotate Your Device."
+* **Opening Video Overlay:** A full-cover black/dark overlay displaying a muted, looping intro video. It must include a pulsating "Tap anywhere to reveal" text.
+* **Hero Section:** Minimalist inline SVG Ganesha at the top. Below, traditional Indian blessings in a small, clean serif font, followed by the couple's names prominently displayed in a Perfect Rose script font.
+* **Save the Date (Scratch Card):** A visually distinct section featuring an HTML5 Canvas element layered over the reveal text. The canvas must look like a scratchable metallic/painted circle.
+* **Stacked Photo Memories Section:** Instead of a slider or carousel, display a gorgeous **stacked/overlapping polaroid photo layout** with realistic drop shadows and delicate 3D pink floral accents interwoven between the frames, exactly matching the reference design.
+* **Countdown Timer:** A clean, horizontal 4-block grid displaying Days, Hours, Minutes, and Seconds.
+* **Ceremony Dates:** An elegant, minimalist vertical list or timeline detailing events like "Sangeet Night" and "Marriage" alongside their respective dates and venues. Use floral SVG accents on the edges.
+* **RSVP Form:** A clean, card-style form with inputs for Name, Email, and Number of Guests (dropdown). Include a Sweetness Pink submit button.
+* **Footer:** A minimal, elegant footer with a subtle script sign-off and standard "Designed by..." credits.
+
+### 3. Required JavaScript Functionality & Animations
+
+You are permitted to analyze previously provided files strictly to understand the underlying JS logic, but **do not** copy their visual CSS or layout structure. Implement the following features:
+
+* **Scroll Restoration:** On page load or resize, force the scroll position to the absolute top (`window.scrollTo(0, 0)`) and set `history.scrollRestoration = 'manual'`.
+* **Scroll Lock & Video Intro:**
+* Lock the body scroll (`overflow: hidden`) on load.
+* When the user taps the overlay, the intro video should play (unmuted) and fade out smoothly.
+* **Crucial:** Scroll must remain locked until the video fully completes or the fade-out animation finishes. Once unlocked, append an `unlocked` class to the body.
+
+
+* **Background Music & Scroll Indicator:**
+* Trigger the background music to play exactly when the scroll is unlocked.
+* Reveal a floating scroll-down indicator (a bouncing SVG arrow ONLY, no text) once the scroll unlocks. Hide this arrow automatically when the user scrolls past 50px.
+
+
+* **Falling Petals Canvas:** Implement an HTML5 canvas (`#particles-canvas`) spanning the background that drops animated, gently swaying flower petals (using inline SVGs or colored shapes matching the pink theme) using `requestAnimationFrame`.
+* **Real-time Countdown:** JavaScript interval logic targeting a specific future date, updating the DOM elements dynamically.
+* **Scroll Reveal Animations:** Use an IntersectionObserver (or AOS logic) to trigger fade-up and zoom-in animations as the user scrolls down through the sections.
+* **WhatsApp RSVP Integration:** Intercept the RSVP form submission. Format the input values (Name, Email, Guests) into a clean markdown string and redirect the user to the WhatsApp API (`[https://wa.me/](https://wa.me/)` or `[https://api.whatsapp.com/send](https://api.whatsapp.com/send)`) using a predefined host phone number.
+
+**Output Requirement:** Provide the complete, production-ready code in a single code block containing the HTML, CSS, and JS. Ensure the CSS perfectly mirrors the aesthetic of the reference image provided.
