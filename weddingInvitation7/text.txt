@@ -23,3 +23,6 @@ Apply the following UI/UX and Engineering specifications:
 check other common instructions which was for another invitation which may be common in current file too so check RESPONSIVE_INVITATION_GUIDE.md file but remember that classes may be different but functions may be same 
 
 Output the complete, production-ready HTML and  CSS code for this transformation.
+
+Note for Video Intro (Responsive Video Loader):
+When handling responsive video loading (swapping mobile/desktop video intro sources based on window resize and device rotation), implement a fast debounce (e.g. 120ms) on the window 'resize' event listener, and listen to 'orientationchange' (and screen.orientation change) with staggered timeouts (150ms, 350ms) to ensure mobile rotation reflows are caught properly.

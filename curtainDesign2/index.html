@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Sourabh & Tejaswini — Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<!-- Responsive Curtain Videos -->
+<link rel="preload" href="images/CurtainVideo.mp4" as="video" type="video/mp4" media="(max-width: 767.98px)" fetchpriority="high">
+<link rel="preload" href="images/CurtainVideo.mp4" as="video" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
 <style>
+/* ══════════════════════════════════
+   ROOT VARIABLES & RESET
+══════════════════════════════════ */
 :root {
   --text: #280401;
   --background: #fffdf7;
@@ -16,7 +22,6 @@
   --gold-dark: #b88a22;
   --gold-mid: #d4a017;
   --border-light: rgba(40, 4, 1, 0.1);
-  --max-w: 480px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -29,7 +34,27 @@ body {
 }
 body.unlocked { overflow: auto; }
 
-/* Scroll Down Indicator */
+#app {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--background);
+  position: relative;
+}
+
+/* ══════════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════════ */
+h1, h2, h3, .serif { font-family: 'Playfair Display', serif; font-weight: 400; }
+.script { font-family: 'Alex Brush', cursive; }
+.mono { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6rem; }
+.subtext { font-size: 0.8rem; color: rgba(40,4,1,0.7); line-height: 1.6; }
+
+.hero-content .mono { max-width: 260px; font-size: 0.55rem; }
+
+/* ══════════════════════════════════
+   SCROLL DOWN INDICATOR
+══════════════════════════════════ */
 .scroll-down-indicator {
   display: flex;
   flex-direction: column;
@@ -70,35 +95,26 @@ body.unlocked { overflow: auto; }
   0%, 100% { transform: translateY(0); opacity: 0.7; }
   50% { transform: translateY(6px); opacity: 1; }
 }
-#app {
-  width: 100%; max-width: var(--max-w);
-  min-height: 100vh; margin: 0 auto;
-  background: var(--background);
-  position: relative;
-  box-shadow: 0 0 40px rgba(0,0,0,0.5);
-}
 
-/* TYPOGRAPHY */
-h1, h2, h3, .serif { font-family: 'Playfair Display', serif; font-weight: 400; }
-.script { font-family: 'Alex Brush', cursive; }
-.mono { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.7rem; }
-.subtext { font-size: 0.8rem; color: rgba(40,4,1,0.7); line-height: 1.6; }
-
-/* ══ HERO ══ */
+/* ══════════════════════════════════
+   HERO & CURTAIN VIDEO
+══════════════════════════════════ */
 .hero {
   position: relative; 
-  min-height: max(100vh, 772px);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; padding: 40px 20px;
-  overflow: hidden; background: #000; /* Behind video */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  overflow: hidden;
+  background: #000;
   cursor: pointer;
-  container-type: inline-size;
-
 }
 .hero.open { cursor: unset; pointer-events: unset; } 
 
-/* ══ NEW VIDEO BACKGROUND ══ */
 #curtain-video {
   position: absolute;
   top: 0;
@@ -109,186 +125,207 @@ h1, h2, h3, .serif { font-family: 'Playfair Display', serif; font-weight: 400; }
   min-width: 448px;
   object-fit: cover;
   z-index: 10;
-  pointer-events: none; /* Let clicks pass through to the hero section */
+  pointer-events: none;
 }
 
-/* TAP HINT — z-index 20, above video */
 .tap-hint {
-  position: absolute; top: 50vh; left: 50%;
-  transform: translateX(-50%); z-index: 20;
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  position: absolute;
+  top: 50vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   pointer-events: none;
 }
 .tap-hint span {
-  font-family: 'Montserrat', sans-serif; font-size: 0.55rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--gold-light); opacity: 0.95;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  opacity: 0.95;
   text-shadow: 0 1px 6px rgba(0,0,0,0.6);
 }
 .tap-hint svg { animation: tapBounce 1.4s ease-in-out infinite; }
 @keyframes tapBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 .hero.open .tap-hint { display: none; }
 
-/* HERO CONTENT - 2 SECOND DELAY ADDED */
 .hero-content {
-  position: relative; z-index: 15; /* Above video, below tap hint */
-  opacity: 0; transform: translateY(24px);
-  /* Triggers exactly 2 seconds after the video starts playing */
-  transition: opacity 1s ease 3s, transform 1s ease 3s; 
-  pointer-events: unset;
-}
-.hero.open .hero-content { opacity: 1; transform: translateY(0); }
-
-.hero-om { font-size: 3rem; color: var(--gold-dark); margin-bottom: 8px; } 
-.hero-ashirwad {font-size: max(2.2cqw, 8px); letter-spacing: 0.2em; color: var(--accent); margin-bottom: 18px; text-transform: uppercase; max-width: 194px;  margin-left: auto; margin-right: auto; line-height: 1.25;}
-.hero-names { font-size: 3.8rem; color: var(--text); line-height: 1.2; margin: 22px 0; }
-.hero-names span { display: block; }
-.hero-names .amp { font-family:'Playfair Display',serif; font-size:2rem; font-style:italic; color:var(--accent); margin:-8px 0; }
-.hero-date { font-family:'Playfair Display',serif; font-size:1rem; color:var(--secondary); margin-top:16px; letter-spacing:0.08em; }
-.hero-mandap { font-size: 2rem; margin-top: 10px; }
-
-.gold-div { display:flex; align-items:center; justify-content:center; gap:10px; margin:13px 0; max-width: 194px;  margin-left: auto; margin-right: auto;}
-.gold-div::before,.gold-div::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,var(--gold-dark),transparent); }
-.gold-div span { color:var(--gold-dark); font-size:1rem; }
-
-/* ══ AOS — custom scroll reveal ══ */
-[data-aos] { opacity:0; transition-property:opacity,transform; transition-duration:0.75s; transition-timing-function:cubic-bezier(0.22,1,0.36,1); }
-[data-aos="fade-up"]    { transform:translateY(44px); }
-[data-aos="fade-down"]  { transform:translateY(-44px); }
-[data-aos="fade-left"]  { transform:translateX(50px); }
-[data-aos="fade-right"] { transform:translateX(-50px); }
-[data-aos="zoom-in"]    { transform:scale(0.82); }
-[data-aos="flip-up"]    { transform:perspective(600px) rotateX(30deg); }
-[data-aos].aos-animate  { opacity:1; transform:none; }
-[data-aos-delay="100"]  { transition-delay:0.1s; }
-[data-aos-delay="200"]  { transition-delay:0.2s; }
-[data-aos-delay="300"]  { transition-delay:0.3s; }
-[data-aos-delay="400"]  { transition-delay:0.4s; }
-[data-aos-delay="500"]  { transition-delay:0.5s; }
-[data-aos-delay="600"]  { transition-delay:0.6s; }
-
-/* ══ CONFETTI ══ */
-#confetti-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
-
-/* ══ SECTIONS ══ */
-.section { padding:70px 24px; text-align:center; position:relative; }
-.section-title { font-size:1.8rem; margin-bottom:6px; color:var(--text); }
-.section-subtitle { font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:36px; }
-.section.alt { background:#fff9ee; }
-
-.family-card { background:#fff; border:1px solid var(--border-light); border-radius:12px; padding:28px 20px; margin:14px 0; position:relative; overflow:hidden; }
-.family-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background:linear-gradient(to bottom,var(--gold-dark),var(--primary)); }
-.family-card h3 { font-size:1.3rem; color:var(--secondary); margin-bottom:6px; }
-.family-label { font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:10px; }
-
-.timeline { max-width:340px; margin:0 auto; text-align:left; }
-.tl-item { display:flex; gap:18px; margin-bottom:36px; position:relative; }
-.tl-item:not(:last-child)::after { content:''; position:absolute; left:19px; top:42px; width:1px; height:100%; background:var(--border-light); }
-.tl-dot { flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--primary); display:flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:0 0 0 4px #fff,0 0 0 5px var(--border-light); }
-.tl-body h3 { font-size:1.05rem; color:var(--secondary); margin-bottom:3px; }
-.tl-body .tl-meta { font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:6px; }
-.tl-body p { font-size:0.78rem; color:rgba(40,4,1,0.7); line-height:1.55; }
-
-.scroll-card { background:linear-gradient(135deg,#fff9ee,#fff3d6); border:2px solid var(--gold-dark); border-radius:50% 4px 50% 4px/10px 4px 10px 4px; padding:40px 28px 36px; max-width:320px; margin:0 auto; position:relative; }
-.scroll-card::before { content:'✨'; position:absolute; font-size:1.4rem; top:10px; left:14px; }
-.scroll-card::after  { content:'✨'; position:absolute; font-size:1.4rem; bottom:10px; right:14px; }
-
-.scratch-wrap { display:flex; justify-content:center; gap:15px; margin:40px 0; }
-.scratch-item { position:relative; width:70px; height:70px; border-radius:50%; background:#fff; box-shadow:inset 0 0 10px rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); }
-.scratch-item canvas { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:50%; touch-action:none; }
-.reveal-msg { opacity:0; font-family:'Alex Brush',cursive; font-size:2.2rem; color:var(--accent); transition:opacity 0.8s; margin-top:20px; }
-
-.cd-grid { display:flex; justify-content:center; gap:10px; margin-bottom:30px; }
-.cd-box { border:1px solid var(--border-light); padding:15px 10px; min-width:65px; border-radius:6px; background:#fff; }
-.cd-num { font-family:'Playfair Display',serif; font-size:1.5rem; display:block; margin-bottom:4px; color:var(--text); }
-.cd-lbl { font-size:0.6rem; letter-spacing:0.1em; color:var(--primary); text-transform:uppercase; }
-
-.menu-frame { position:relative; padding:40px 20px; margin:0 auto; max-width:328px; border:2px solid var(--primary); border-radius:12px 40px 12px 40px; background:linear-gradient(to bottom,transparent,rgba(173,22,11,0.02)); }
-.menu-item { margin-bottom:22px; }
-.menu-item h3 { font-size:1rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--secondary); margin-bottom:5px; }
-
-.dress-grid { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:10px; }
-.dress-card { flex:1; min-width:110px; max-width:140px; padding:20px 14px; border-radius:10px; text-align:center; }
-.dress-card .swatch { width:44px; height:44px; border-radius:50%; margin:0 auto 12px; border:2px solid rgba(255,255,255,0.4); box-shadow:0 2px 8px rgba(0,0,0,0.15); }
-.dress-card p { font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; }
-
-.map-wrap { border-radius:12px; overflow:hidden; border:2px solid var(--gold-dark); margin:24px 0; box-shadow:0 4px 20px rgba(0,0,0,0.1); }
-.map-wrap iframe { display:block; width:100%; height:280px; border:none; }
-
-.blessing-box { background:linear-gradient(135deg,var(--secondary),var(--primary)); color:#fff9ee; border-radius:16px; padding:36px 24px; margin:0 auto; max-width:340px; text-align:center; }
-.blessing-box .script { font-size:2.4rem; color:var(--gold-light); }
-.blessing-box p { font-size:0.78rem; line-height:1.7; opacity:0.9; margin-top:12px; }
-
-/* RSVP FORM */
-.form-wrap { max-width:300px; margin:0 auto; text-align:left; }
-.input-group { margin-bottom:20px; }
-.input-group label { display:block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; }
-.input-field { width:100%; padding:12px 0; border:none; border-bottom:1px solid var(--border-light); background:transparent; font-family:'Playfair Display',serif; font-size:1rem; color:var(--text); outline:none; transition:border-color 0.3s; }
-.input-field:focus { border-bottom-color:var(--primary); }
-.input-field.is-error { border-bottom-color:#e53935; }
-select.input-field { appearance:none; border-radius:0; }
-.field-error { display:none; font-size:0.65rem; color:#e53935; margin-top:5px; letter-spacing:0.04em; animation: errShake 0.3s ease; }
-.field-error.visible { display:block; }
-@keyframes errShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
-
-.btn { display:block; width:100%; padding:16px; background:var(--text); color:var(--background); border:none; border-radius:30px; font-family:'Montserrat',sans-serif; font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; margin-top:30px; cursor:pointer; transition:background 0.3s,transform 0.15s; }
-.btn:active { background:var(--secondary); transform:scale(0.98); }
-.btn-wa { background:#25d366; color:#fff; display:flex; align-items:center; justify-content:center; gap:10px; }
-.btn-wa:active { background:#1da851; }
-
-.sep { width:1px; height:60px; background:var(--primary); margin:0 auto; opacity:0.3; }
-
-.footer { background:var(--secondary); padding:36px 24px; text-align:center; color:var(--gold-light); }
-.footer .script { font-size:2.6rem; color:var(--gold-light); }
-.footer p { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; opacity:0.7; margin-top:8px; }
-
-/* ring pulse on tap */
-@keyframes ringPulse { 0%{transform:scale(0.5);opacity:0.9} 100%{transform:scale(2.8);opacity:0} }
-.ring-pulse { position:absolute; width:120px; height:120px; border-radius:50%; border:2px solid var(--gold-light); top:50%; left:50%; margin:-60px 0 0 -60px; pointer-events:none; z-index:4; animation:ringPulse 0.9s ease-out forwards; }
-/* Landscape Restriction Warning */
-#landscape-warning {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background: var(--bg, var(--background, var(--color-bg, #000)));
-  color: var(--gold, var(--primary, var(--color-text, #fff)));
-  z-index: 999999;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  position: relative;
+  z-index: 15;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1s ease 3s, transform 1s ease 3s; 
+  pointer-events: unset;
+  container-type: inline-size;
 }
-#landscape-warning svg {
-  margin-bottom: 20px;
-  animation: rotatePhone 2s infinite ease-in-out;
-}
-#landscape-warning h2 {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-  font-family: var(--font-serif, 'Playfair Display', 'Cinzel', serif);
-}
-#landscape-warning p {
-  font-size: 1rem;
-  opacity: 0.9;
-  font-family: var(--font-sans, 'Montserrat', sans-serif);
-  color: var(--white, var(--text, var(--color-text, #ccc)));
-}
-@keyframes rotatePhone {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(-90deg); }
-  100% { transform: rotate(-90deg); }
-}
-@media screen and (orientation: landscape) and (max-height: 600px) {
-  #landscape-warning {
-    display: flex;
-  }
-  #app {
-    display: none !important;
-  }
-}
+.hero.open .hero-content { opacity: 1; transform: translateY(0); }
 
-/* Global Loader */
+.hero-om { font-size: clamp(3rem, 6vw, 5.5rem); color: var(--gold-dark); margin-bottom: 8px; } 
+.hero-ashirwad { font-size: clamp(max(1.8cqw, 7px), 1.5vw, 1.4rem); letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; max-width: 250px; margin-left: auto; margin-right: auto; line-height: 1.25; }
+.hero-names { font-size: clamp(3.8rem, 9vw, 9.5rem); color: var(--text); line-height: 1.2; }
+.hero-names span { display: block; }
+.hero-names .amp { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 4.5rem); font-style: italic; color: var(--accent); margin: -8px 0; }
+.hero-date { font-family: 'Playfair Display', serif; font-size: clamp(1rem, 2vw, 2.2rem); color: var(--secondary); margin-top: 24px; letter-spacing: 0.08em; }
+.hero-mandap { font-size: clamp(2rem, 4vw, 4.5rem); margin-top: 10px; }
+
+.gold-div { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 13px 0; max-width: 194px; margin-left: auto; margin-right: auto; }
+.gold-div::before, .gold-div::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dark), transparent); }
+.gold-div span { color: var(--gold-dark); font-size: 1rem; }
+
+/* ══════════════════════════════════
+   AOS (SCROLL ANIMATIONS)
+══════════════════════════════════ */
+[data-aos] { opacity: 0; transition-property: opacity, transform; transition-duration: 0.75s; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+[data-aos="fade-up"]    { transform: translateY(44px); }
+[data-aos="fade-down"]  { transform: translateY(-44px); }
+[data-aos="fade-left"]  { transform: translateX(50px); }
+[data-aos="fade-right"] { transform: translateX(-50px); }
+[data-aos="zoom-in"]    { transform: scale(0.82); }
+[data-aos="flip-up"]    { transform: perspective(600px) rotateX(30deg); }
+[data-aos].aos-animate  { opacity: 1; transform: none; }
+[data-aos-delay="100"]  { transition-delay: 0.1s; }
+[data-aos-delay="200"]  { transition-delay: 0.2s; }
+[data-aos-delay="300"]  { transition-delay: 0.3s; }
+[data-aos-delay="400"]  { transition-delay: 0.4s; }
+[data-aos-delay="500"]  { transition-delay: 0.5s; }
+[data-aos-delay="600"]  { transition-delay: 0.6s; }
+
+/* ══════════════════════════════════
+   CONFETTI CANVAS
+══════════════════════════════════ */
+#confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+
+/* ══════════════════════════════════
+   SECTIONS BASE
+══════════════════════════════════ */
+.section { padding: clamp(50px, 8vh, 120px) clamp(20px, 4vw, 40px); text-align: center; position: relative; }
+.section-title { font-size: clamp(2.8rem, 6vw, 5.5rem) !important; margin-bottom: 12px; color: var(--text); }
+.section-subtitle { font-size: clamp(0.7rem, 1.5vw, 1rem); letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 46px; }
+.section.alt { background: #fff9ee; }
+
+/* ══════════════════════════════════
+   THE COUPLE
+══════════════════════════════════ */
+.couple-wrap { display: flex; flex-direction: column; align-items: center; }
+.family-card { background: #fff; border: 1px solid var(--border-light); border-radius: 12px; padding: 28px 20px; margin: 14px 0; position: relative; overflow: hidden; }
+.family-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--gold-dark), var(--primary)); }
+.family-card h3 { font-size: 1.3rem; color: var(--secondary); margin-bottom: 6px; }
+.family-label { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 10px; }
+
+/* ══════════════════════════════════
+   TIMELINE (WEDDING FUNCTIONS)
+══════════════════════════════════ */
+.timeline { max-width: 340px; margin: 0 auto; text-align: left; }
+.tl-item { display: flex; gap: 18px; margin-bottom: 36px; position: relative; }
+.tl-item:not(:last-child)::after { content: ''; position: absolute; left: 19px; top: 42px; width: 1px; height: 100%; background: var(--border-light); }
+.tl-dot { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: 0 0 0 4px #fff, 0 0 0 5px var(--border-light); }
+.tl-body h3 { font-size: clamp(1.05rem, 2vw, 1.8rem); color: var(--secondary); margin-bottom: 6px; }
+.tl-body .tl-meta { font-size: clamp(0.65rem, 1.2vw, 0.9rem); letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 10px; }
+.tl-body p { font-size: clamp(0.78rem, 1.5vw, 1.1rem); color: rgba(40,4,1,0.7); line-height: 1.6; }
+
+/* ══════════════════════════════════
+   SHUBH VIVAH (SCROLL CARD)
+══════════════════════════════════ */
+.scroll-card { background: linear-gradient(135deg, #fff9ee, #fff3d6); border: 2px solid var(--gold-dark); border-radius: 50% 4px 50% 4px/10px 4px 10px 4px; padding: 40px 28px 36px; max-width: 320px; margin: 0 auto; position: relative; }
+.scroll-card::before { content: '✨'; position: absolute; font-size: 1.4rem; top: 10px; left: 14px; }
+.scroll-card::after  { content: '✨'; position: absolute; font-size: 1.4rem; bottom: 10px; right: 14px; }
+
+/* ══════════════════════════════════
+   SCRATCH REVEAL
+══════════════════════════════════ */
+.scratch-wrap { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
+.scratch-item { position: relative; width: 70px; height: 70px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); }
+.scratch-item canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; touch-action: none; }
+.reveal-msg { opacity: 0; font-family: 'Alex Brush', cursive; font-size: 2.2rem; color: var(--accent); transition: opacity 0.8s; margin-top: 20px; }
+
+/* ══════════════════════════════════
+   COUNTDOWN
+══════════════════════════════════ */
+.cd-grid { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+.cd-box { border: 1px solid var(--border-light); padding: clamp(15px, 2vw, 25px) clamp(10px, 2vw, 25px); min-width: 65px; border-radius: 8px; background: #fff; }
+.cd-num { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 5vw, 4.5rem); display: block; margin-bottom: 4px; color: var(--text); }
+.cd-lbl { font-size: clamp(0.6rem, 1.5vw, 1.1rem); letter-spacing: 0.1em; color: var(--primary); text-transform: uppercase; }
+
+/* ══════════════════════════════════
+   GRAND BHOJ (MENU)
+══════════════════════════════════ */
+.menu-frame { position: relative; padding: 40px 20px; margin: 0 auto; max-width: 328px; border: 2px solid var(--primary); border-radius: 12px 40px 12px 40px; background: linear-gradient(to bottom, transparent, rgba(173,22,11,0.02)); }
+.menu-item { margin-bottom: 22px; }
+.menu-item h3 { font-size: clamp(1rem, 2vw, 1.8rem); letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
+.menu-item .subtext { font-size: clamp(0.78rem, 1.5vw, 1.1rem); line-height: 1.6; }
+
+/* ══════════════════════════════════
+   DRESS CODE
+══════════════════════════════════ */
+.dress-grid { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.dress-card { flex: 1; min-width: 110px; max-width: 140px; padding: 20px 14px; border-radius: 10px; text-align: center; }
+.dress-card .swatch { width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 12px; border: 2px solid rgba(255,255,255,0.4); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.dress-card p { font-size: clamp(0.7rem, 1.2vw, 1rem); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; line-height: 1.5; }
+
+/* ══════════════════════════════════
+   FIND US & MAP
+══════════════════════════════════ */
+.map-wrap { border-radius: 12px; overflow: hidden; border: 2px solid var(--gold-dark); margin: 24px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+.map-wrap iframe { display: block; width: 100%; height: 280px; border: none; }
+.find-us-wrap { display: flex; flex-direction: column; gap: 20px; max-width: 380px; margin: 0 auto; }
+.find-us-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid var(--border-light); margin-bottom: 18px; text-align: left; }
+.find-us-card .find-lbl { font-size: clamp(0.65rem, 1.2vw, 0.9rem); letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.find-us-card .find-title { font-size: clamp(1.1rem, 2vw, 1.8rem); color: var(--secondary); margin-bottom: 12px; }
+.find-us-card .find-desc { font-size: clamp(0.78rem, 1.5vw, 1.1rem); line-height: 1.6; }
+.find-btn { display: block; margin-top: 12px; padding: clamp(14px, 2vw, 20px); background: var(--secondary); color: var(--gold-light); border-radius: 40px; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: clamp(0.75rem, 1.2vw, 1rem); letter-spacing: 0.15em; text-transform: uppercase; text-align: center; transition: background 0.3s; }
+.find-btn:hover { background: var(--primary); }
+
+/* ══════════════════════════════════
+   BLESSING BOX
+══════════════════════════════════ */
+.blessing-box { background: linear-gradient(135deg, var(--secondary), var(--primary)); color: #fff9ee; border-radius: 16px; padding: 36px 24px; margin: 0 auto; max-width: 340px; text-align: center; }
+.blessing-box .script { font-size: 2.4rem; color: var(--gold-light); }
+.blessing-box p { font-size: 0.78rem; line-height: 1.7; opacity: 0.9; margin-top: 12px; }
+
+/* ══════════════════════════════════
+   RSVP FORM
+══════════════════════════════════ */
+.form-wrap { max-width: 300px; margin: 0 auto; text-align: left; }
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; font-size: clamp(0.7rem, 1.2vw, 0.9rem); letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
+.input-field { width: 100%; padding: 14px 0; border: none; border-bottom: 1px solid var(--border-light); background: transparent; font-family: 'Playfair Display', serif; font-size: clamp(1rem, 1.8vw, 1.4rem); color: var(--text); outline: none; transition: border-color 0.3s; }
+.input-field:focus { border-bottom-color: var(--primary); }
+.input-field.is-error { border-bottom-color: #e53935; }
+select.input-field { appearance: none; border-radius: 0; }
+.field-error { display: none; font-size: 0.65rem; color: #e53935; margin-top: 5px; letter-spacing: 0.04em; animation: errShake 0.3s ease; }
+.field-error.visible { display: block; }
+@keyframes errShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+.btn { display: block; width: 100%; padding: 16px; background: var(--text); color: var(--background); border: none; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 30px; cursor: pointer; transition: background 0.3s, transform 0.15s; }
+.btn:active { background: var(--secondary); transform: scale(0.98); }
+.btn-wa { background: #25d366; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.btn-wa:active { background: #1da851; }
+
+/* ══════════════════════════════════
+   DIVIDER & FOOTER
+══════════════════════════════════ */
+.sep { width: 1px; height: 60px; background: var(--primary); margin: 0 auto; opacity: 0.3; }
+.footer { background: var(--secondary); padding: 36px 24px; text-align: center; color: var(--gold-light); }
+.footer .script { font-size: 2.6rem; color: var(--gold-light); }
+.footer p { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-top: 8px; }
+
+/* ══════════════════════════════════
+   RING PULSE & GLOBAL LOADER
+══════════════════════════════════ */
+@keyframes ringPulse { 0%{transform:scale(0.5);opacity:0.9} 100%{transform:scale(2.8);opacity:0} }
+.ring-pulse { position: absolute; width: 120px; height: 120px; border-radius: 50%; border: 2px solid var(--gold-light); top: 50%; left: 50%; margin: -60px 0 0 -60px; pointer-events: none; z-index: 4; animation: ringPulse 0.9s ease-out forwards; }
+
 #global-loader {
   position: fixed;
   inset: 0;
@@ -314,17 +351,155 @@ select.input-field { appearance:none; border-radius:0; }
 @keyframes spinLoader {
   to { transform: rotate(360deg); }
 }
+
+/* ══════════════════════════════════
+   FLOATING MUSIC FAB
+══════════════════════════════════ */
+#music-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 253, 247, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid var(--gold-dark);
+  box-shadow: 0 4px 18px rgba(40, 4, 1, 0.22), 0 0 0 3px rgba(212, 160, 23, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 99999;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  color: var(--secondary);
+}
+#music-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(40, 4, 1, 0.3), 0 0 0 5px rgba(212, 160, 23, 0.25);
+}
+#music-fab:active {
+  transform: scale(0.92);
+}
+#music-fab.playing {
+  animation: musicFabGlow 2.5s infinite ease-in-out;
+}
+#music-fab.playing .icon-playing {
+  display: block;
+}
+#music-fab.playing .icon-muted {
+  display: none;
+}
+#music-fab.muted .icon-playing {
+  display: none;
+}
+#music-fab.muted .icon-muted {
+  display: block;
+  opacity: 0.65;
+}
+@keyframes musicFabGlow {
+  0%, 100% { box-shadow: 0 4px 18px rgba(40, 4, 1, 0.22), 0 0 0 3px rgba(184, 138, 34, 0.2); }
+  50% { box-shadow: 0 6px 26px rgba(173, 22, 11, 0.35), 0 0 0 6px rgba(184, 138, 34, 0.4); }
+}
+
+/* ══════════════════════════════════
+   RESPONSIVE BREAKPOINTS (Desktop & Tablet)
+══════════════════════════════════ */
+@media (min-width: 768px) {
+  /* Utility */
+  .desktop-hide { display: none !important; }
+
+  /* Hero Section */
+  .hero-ashirwad { max-width: 800px; 
+ font-size: clamp(20px, 1.5vw, 1.4rem);
+  }
+  .hero-names { font-size: clamp(3rem, 6vw, 5rem);}
+.hero-names .amp { font-size: clamp(28px, 4vw, 4.5rem);}
+
+.hero-content .mono { max-width: 800px; font-size: clamp(0.7rem, 1.2vw, 0.95rem); }
+
+  /* The Couple */
+  .couple-wrap { flex-direction: row; justify-content: center; gap: 40px; }
+  .family-card { flex: 1; max-width: 400px; margin: 0; }
+  .weds-text { margin: 0 20px !important; }
+
+  /* Timeline (Wedding Functions) */
+  .timeline { max-width: 1200px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; }
+  .tl-item { margin-bottom: 0; }
+  .tl-item:not(:last-child)::after { display: none; }
+
+  .tap-hint span {
+  font-size: 24px;
+}
+
+  /* Shubh Vivah Card */
+  .scroll-card { max-width: 900px; padding: 80px 60px; }
+  .scroll-card .serif { font-size: clamp(1.4rem, 3vw, 2.8rem) !important; }
+  .scroll-card .subtext { font-size: clamp(0.78rem, 1.5vw, 1.2rem) !important; margin: 16px 0 30px !important; }
+  .scroll-card .mono { font-size: clamp(0.6rem, 1.5vw, 0.9rem); margin-bottom: 20px; }
+  .mono { font-size: clamp(0.6rem, 1.5vw, 0.9rem); }
+
+  /* Countdown */
+  .cd-grid { gap: 30px; margin-bottom: 50px; }
+  .cd-box { min-width: 140px; }
+
+  /* Grand Bhoj (Menu) */
+  .menu-frame { max-width: 1200px; padding: 80px 60px; }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; text-align: left; }
+  .menu-item { margin-bottom: 0; }
+
+  /* Dress Code */
+  .dress-grid { gap: 30px; margin-top: 30px; }
+  .dress-card { max-width: 250px; padding: 40px 20px; }
+  .dress-card .swatch { width: 70px; height: 70px; margin-bottom: 20px; border-width: 4px; }
+
+  /* Find Us & Map */
+  .find-us-wrap { flex-direction: row; max-width: 1200px; align-items: stretch; gap: 60px; }
+  .find-us-wrap > div { flex: 1; margin: 0 !important; }
+  .map-wrap { height: 100%; display: flex; flex-direction: column; margin: 0 !important; }
+  .map-wrap iframe { height: 100%; min-height: 450px; flex: 1; }
+  .find-us-details { display: flex; flex-direction: column; justify-content: center; }
+  .find-us-card { padding: 50px 40px; margin-bottom: 24px; }
+
+  /* Blessing Box */
+  .blessing-box { max-width: 1000px; padding: 80px 60px; }
+  .blessing-box .script { font-size: clamp(3.5rem, 6vw, 5rem); }
+  .blessing-box p { font-size: clamp(1rem, 2vw, 1.4rem); margin-top: 24px; line-height: 1.8; }
+
+  /* RSVP Form */
+  .form-wrap { max-width: 1000px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 60px; align-items: start; }
+  .form-wrap .btn-wa { grid-column: span 2; max-width: 400px; justify-self: center; margin-top: 50px; font-size: 1rem; padding: 20px; }
+  .form-wrap .full-width { grid-column: span 2; }
+
+  /* Music FAB desktop positioning */
+  #music-fab { bottom: 28px; right: 28px; width: 50px; height: 50px; }
+}
+
+/* 1. Small & Older Smartphones in Landscape (e.g., iPhone SE, older Galaxy) */
+@media screen and (min-width: 480px) and (max-width: 667px) and (orientation: landscape) {
+  .hero{
+    padding: 88px 20px 40px;
+  }
+}
+
+/* 2. Standard & Modern Smartphones in Landscape (e.g., iPhone 13/14/15, Galaxy S-Series) */
+@media screen and (min-width: 668px) and (max-width: 932px) and (orientation: landscape) and (max-height: 450px) {
+  .hero{
+    padding: 88px 20px 40px;
+  }
+}
+
+/* 3. Large Foldables & Plus/Max Devices in Landscape (e.g., iPhone Pro Max, Pixel Fold/XL) */
+@media screen and (min-width: 933px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 500px) {
+  .hero{
+    padding: 88px 20px 40px;
+  }
+}
+
 </style>
 </head>
 <body>
-  <div id="landscape-warning">
-    <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor">
-      <path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm1 18H7V5h10v14z"/>
-    </svg>
-    <h2>Please Rotate Your Device</h2>
-    <p>This invitation is beautifully crafted for portrait viewing.</p>
-  </div>
-
   <!-- Global Loader -->
   <div id="global-loader">
     <div class="loader-ring"></div>
@@ -353,11 +528,25 @@ select.input-field { appearance:none; border-radius:0; }
 
 <canvas id="confetti-canvas"></canvas>
 
+<!-- Background Music Audio & Floating FAB Controller -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="images/bg-music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music-fab" class="muted" aria-label="Toggle Background Music">
+  <svg class="icon-playing" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+  </svg>
+  <svg class="icon-muted" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+  </svg>
+</button>
+
 <div id="app">
 
   <section class="hero" id="hero-sec" onclick="openCurtains()">
     
-    <video id="curtain-video" playsinline muted disablePictureInPicture>
+    <video id="curtain-video" playsinline muted disablePictureInPicture preload="auto" poster="images/CurtainVideoThumb.webp">
       <source src="images/CurtainVideo.mp4" type="video/mp4"> 
     </video>
 
@@ -371,10 +560,10 @@ select.input-field { appearance:none; border-radius:0; }
       <p class="hero-ashirwad">With the blessings of God</p>
       <div class="gold-div"><span>✦</span></div>
       <h1 class="hero-names script"><span>Sourabh</span><span class="amp">&</span><span>Tejaswini</span></h1>
-      <div class="gold-div"><span>💍</span></div>
+      <div class="desktop-hide gold-div"><span>💍</span></div>
       <p class="hero-date">10 September 2027 · Thursday</p>
-      <div class="hero-mandap">🛕</div>
-      <p class="mono" style="font-size:0.55rem;color:var(--text);max-width:260px;margin:16px auto 0;line-height:1.9;opacity:0.7;">
+      <div class="desktop-hide hero-mandap">🛕</div>
+      <p class="mono" style="color:var(--text);margin:16px auto 0;line-height:1.9;opacity:0.7;">
         Together with their families, they joyfully<br>invite you to share in their happiness
       </p>
 
@@ -390,16 +579,18 @@ select.input-field { appearance:none; border-radius:0; }
   <section class="section alt">
     <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">The Couple</h2>
     <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Made for each other</p>
-    <div class="family-card" data-aos="fade-right" data-aos-delay="200">
-      <p class="family-label">The Groom</p>
-      <h3 class="script" style="font-size:2rem;">Sourabh</h3>
-      <p class="subtext" style="margin-top:6px;">Son of Mr. Kamlesh M Mehra & Mrs. Madhu Mehra<br>Merchant, Belagavi, Karnataka</p>
-    </div>
-    <div style="font-size:1.8rem;color:var(--accent);margin:12px 0;font-family:'Playfair Display',serif;font-style:italic;" data-aos="zoom-in" data-aos-delay="300">weds</div>
-    <div class="family-card" data-aos="fade-left" data-aos-delay="400">
-      <p class="family-label">The Bride</p>
-      <h3 class="script" style="font-size:2rem;">Tejaswini</h3>
-      <p class="subtext" style="margin-top:6px;">Daughter of Mr. Kedar M Ghasari & Mrs. Shail Ghasari<br>Belagavi, Karnataka</p>
+    <div class="couple-wrap">
+      <div class="family-card" data-aos="fade-right" data-aos-delay="200">
+        <p class="family-label">The Groom</p>
+        <h3 class="script" style="font-size:2rem;">Sourabh</h3>
+        <p class="subtext" style="margin-top:6px;">Son of Mr. Kamlesh M Mehra & Mrs. Madhu Mehra<br>Merchant, Belagavi, Karnataka</p>
+      </div>
+      <div class="weds-text" style="font-size:1.8rem;color:var(--accent);margin:12px 0;font-family:'Playfair Display',serif;font-style:italic;" data-aos="zoom-in" data-aos-delay="300">weds</div>
+      <div class="family-card" data-aos="fade-left" data-aos-delay="400">
+        <p class="family-label">The Bride</p>
+        <h3 class="script" style="font-size:2rem;">Tejaswini</h3>
+        <p class="subtext" style="margin-top:6px;">Daughter of Mr. Kedar M Ghasari & Mrs. Shail Ghasari<br>Belagavi, Karnataka</p>
+      </div>
     </div>
   </section>
   <div class="sep"></div>
@@ -435,14 +626,14 @@ select.input-field { appearance:none; border-radius:0; }
     <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Details of the Ceremony</p>
     <div class="scroll-card" data-aos="zoom-in" data-aos-delay="200">
       <div class="gold-div" style="margin-bottom:18px;"><span>✦</span></div>
-      <p class="mono" style="font-size:0.6rem;color:var(--accent);margin-bottom:10px;">Muhurat</p>
+      <p class="mono" style="color:var(--accent);margin-bottom:10px;">Muhurat</p>
       <h3 class="serif" style="font-size:1.4rem;color:var(--secondary);">Thursday, 10 September 2027</h3>
       <p class="subtext" style="margin:8px 0 20px;">Shukla Paksha Dvitiya · Tithi: Labh Pancham</p>
       <div class="gold-div"><span>🌺</span></div>
-      <p class="mono" style="font-size:0.6rem;color:var(--accent);margin:18px 0 8px;">Venue</p>
+      <p class="mono" style="color:var(--accent);margin:18px 0 8px;">Venue</p>
       <h3 class="serif" style="font-size:1.3rem;color:var(--secondary);">Gokuldham Banquet Hall</h3>
       <p class="subtext" style="margin-top:6px;font-size:0.78rem;">Plot No. 4, Belagavi Society<br>Near Evergreen CHS, Powder Gali<br>Ahmedabad, Gujarat – 380001</p>
-      <div class="gold-div" style="margin:18px 0 0;"><span>✦</span></div>
+      <div class="gold-div" style="margin:18px auto 0;"><span>✦</span></div>
     </div>
   </section>
   <div class="sep"></div>
@@ -456,7 +647,7 @@ select.input-field { appearance:none; border-radius:0; }
       <div class="cd-box" data-aos="flip-up" data-aos-delay="300"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl">Min</span></div>
       <div class="cd-box" data-aos="flip-up" data-aos-delay="400"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">Sec</span></div>
     </div>
-    <p class="mono" style="font-size:0.6rem;color:var(--primary);" data-aos="fade-up" data-aos-delay="500">10 · 09 · 2027</p>
+    <p class="mono" style="color:var(--primary);" data-aos="fade-up" data-aos-delay="500">10 · 09 · 2027</p>
   </section>
   <div class="sep"></div>
 
@@ -464,11 +655,13 @@ select.input-field { appearance:none; border-radius:0; }
     <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Grand Bhoj</h2>
     <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Wedding feast menu</p>
     <div class="menu-frame" data-aos="zoom-in" data-aos-delay="200">
-      <div class="menu-item"><h3>Swagat Nashta</h3><p class="subtext">Dhokla · Fafda · Jalebi · Khaman<br>Chai & Thandai on arrival</p></div>
-      <div class="menu-item"><h3>Farsan & Starters</h3><p class="subtext">Pani Puri · Sev Puri · Dahi Vada<br>Paneer Tikka & Tandoori Roti</p></div>
-      <div class="menu-item"><h3>Main Course</h3><p class="subtext">Dal Baati Churma · Shahi Paneer<br>Undhiyu · Gujarati Kadhi · Jeera Rice<br>Bajra Rotla & Phulka</p></div>
-      <div class="menu-item"><h3>Mithai & Desserts</h3><p class="subtext">Mohanthal · Basundi · Gulab Jamun<br>Wedding cake & Paan counter</p></div>
-      <div style="font-size:26px;color:var(--primary);margin-top:24px;opacity:0.7;">🙏 Jai Shri Krishna 🙏</div>
+      <div class="menu-grid">
+        <div class="menu-item"><h3>Swagat Nashta</h3><p class="subtext">Dhokla · Fafda · Jalebi · Khaman<br>Chai & Thandai on arrival</p></div>
+        <div class="menu-item"><h3>Farsan & Starters</h3><p class="subtext">Pani Puri · Sev Puri · Dahi Vada<br>Paneer Tikka & Tandoori Roti</p></div>
+        <div class="menu-item"><h3>Main Course</h3><p class="subtext">Dal Baati Churma · Shahi Paneer<br>Undhiyu · Gujarati Kadhi · Jeera Rice<br>Bajra Rotla & Phulka</p></div>
+        <div class="menu-item"><h3>Mithai & Desserts</h3><p class="subtext">Mohanthal · Basundi · Gulab Jamun<br>Wedding cake & Paan counter</p></div>
+      </div>
+      <div style="font-size:26px;color:var(--primary);margin-top:24px;opacity:0.7;text-align:center;">🙏 Jai Shri Krishna 🙏</div>
     </div>
   </section>
   <div class="sep"></div>
@@ -489,20 +682,21 @@ select.input-field { appearance:none; border-radius:0; }
   <section class="section">
     <h2 class="section-title script" style="font-size:2.8rem;" data-aos="fade-down">Find Us</h2>
     <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Venue & Directions</p>
-    <div style="max-width:380px;margin:0 auto;">
-      <div style="background:#fff;border-radius:12px;padding:20px;border:1px solid var(--border-light);margin-bottom:18px;text-align:left;" data-aos="fade-right" data-aos-delay="200">
-        <p style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">📍 Venue Address</p>
-        <p class="serif" style="font-size:1.1rem;color:var(--secondary);margin-bottom:6px;">Gokuldham Banquet Hall</p>
-        <p class="subtext" style="font-size:0.78rem;">Plot No. 4, Belagavi Society<br>Near Evergreen CHS, Powder Gali<br>Ahmedabad, Gujarat – 380001</p>
+    <div class="find-us-wrap">
+      <div class="find-us-details">
+        <div class="find-us-card" data-aos="fade-right" data-aos-delay="200">
+          <p class="find-lbl">📍 Venue Address</p>
+          <p class="serif find-title">Gokuldham Banquet Hall</p>
+          <p class="subtext find-desc">Plot No. 4, Belagavi Society<br>Near Evergreen CHS, Powder Gali<br>Ahmedabad, Gujarat – 380001</p>
+        </div>
+        <a href="https://maps.google.com/?q=Gokuldham+Banquet+Hall+Ahmedabad" target="_blank"
+           class="find-btn" data-aos="fade-up" data-aos-delay="400">
+          Open in Google Maps ↗
+        </a>
       </div>
       <div class="map-wrap" data-aos="zoom-in" data-aos-delay="300">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.534372151438!2d72.65679537531436!3d23.040862679160952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e86e3acaa206b%3A0x4905ca56894b79cd!2sGokuldham%20Dining%20Hall!5e0!3m2!1sen!2sin!4v1776938404435!5m2!1sen!2sin" width="100%" height="600" style="border:0;" allowfullscreen="" title="Wedding Venue Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <a href="https://maps.google.com/?q=Gokuldham+Banquet+Hall+Ahmedabad" target="_blank"
-         style="display:block;margin-top:12px;padding:14px;background:var(--secondary);color:var(--gold-light);border-radius:30px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;text-align:center;"
-         data-aos="fade-up" data-aos-delay="400">
-        Open in Google Maps ↗
-      </a>
     </div>
   </section>
   <div class="sep"></div>
@@ -555,7 +749,7 @@ select.input-field { appearance:none; border-radius:0; }
           <option value="Reception only 🍽️">Reception only 🍽️</option>
         </select>
       </div>
-      <div class="input-group" data-aos="fade-up" data-aos-delay="350">
+      <div class="input-group full-width" data-aos="fade-up" data-aos-delay="350">
         <label for="fm">Your Blessings (optional)</label>
         <input type="text" id="fm" class="input-field" placeholder="Shagun & blessings…">
       </div>
@@ -580,6 +774,73 @@ select.input-field { appearance:none; border-radius:0; }
 
 <script>
 /* ══════════════════════════════════
+   BACKGROUND MUSIC CONTROLLER
+══════════════════════════════════ */
+var bgAudio = document.getElementById('bg-audio');
+var musicFab = document.getElementById('music-fab');
+
+function syncMusicState() {
+  if (!bgAudio || !musicFab) return;
+  if (!bgAudio.paused) {
+    musicFab.classList.remove('muted');
+    musicFab.classList.add('playing');
+  } else {
+    musicFab.classList.remove('playing');
+    musicFab.classList.add('muted');
+  }
+}
+
+function playAudio() {
+  if (!bgAudio) return;
+  bgAudio.volume = 0.6;
+  var playPromise = bgAudio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(function() {
+      syncMusicState();
+    }).catch(function(err) {
+      // Browser autoplay policy restricted unmuted playback until user interaction
+      syncMusicState();
+    });
+  }
+}
+
+// 1. Attempt immediate play on page load
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  playAudio();
+} else {
+  window.addEventListener('DOMContentLoaded', playAudio);
+}
+
+// 2. Play on first user interaction anywhere if held back by browser policy
+function handleFirstUserGesture() {
+  if (bgAudio && bgAudio.paused) {
+    playAudio();
+  }
+}
+['click', 'touchstart', 'pointerdown', 'keydown'].forEach(function(ev) {
+  window.addEventListener(ev, handleFirstUserGesture, { once: true, passive: true });
+});
+
+// 3. Sync icon whenever audio play or pause fires
+if (bgAudio) {
+  bgAudio.addEventListener('play', syncMusicState);
+  bgAudio.addEventListener('pause', syncMusicState);
+}
+
+// 4. Manual toggle on FAB click
+if (musicFab) {
+  musicFab.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (!bgAudio) return;
+    if (bgAudio.paused) {
+      playAudio();
+    } else {
+      bgAudio.pause();
+    }
+  });
+}
+
+/* ══════════════════════════════════
    ON REFRESH — Start from top
 ══════════════════════════════════ */
 if ('scrollRestoration' in history) {
@@ -590,9 +851,87 @@ window.scrollTo(0, 0);
 /* ══════════════════════════════════
    VIDEO CURTAIN LOGIC
 ══════════════════════════════════ */
+var curtainOpened = false;
+var MOBILE_VIDEO_SRC   = "images/CurtainVideo.mp4";
+var DESKTOP_VIDEO_SRC  = "https://res.cloudinary.com/dticzwbrv/video/upload/v1788334246/Theater_Curtains_Opening_Desktop_jhrb8l.mp4";
+var MOBILE_POSTER_SRC  = "images/CurtainVideoThumb.webp";
+var DESKTOP_POSTER_SRC = "images/CurtainVideoThumbDesktop.webp";
+
+function checkIsMobileView() {
+  // If in landscape orientation on wide/mobile-landscape screen (e.g. phones turned sideways)
+  var isLandscape = window.matchMedia && window.matchMedia('(orientation: landscape)').matches;
+  if (isLandscape && window.innerWidth >= 480) {
+    return false; // use desktop/horizontal 16:9 video
+  }
+  // Standard portrait / width breakpoint
+  return window.innerWidth < 768;
+}
+
+function updateVideoSourceAndPoster() {
+  if (curtainOpened) return;
+  var video = document.getElementById('curtain-video');
+  if (!video) return;
+
+  var isMobile = checkIsMobileView();
+  var targetSrc = isMobile ? MOBILE_VIDEO_SRC : DESKTOP_VIDEO_SRC;
+  var targetPoster = isMobile ? MOBILE_POSTER_SRC : DESKTOP_POSTER_SRC;
+
+  // 1. Update poster FIRST before reload so browser paints the correct thumbnail
+  if (targetPoster && video.getAttribute('poster') !== targetPoster) {
+    video.poster = targetPoster;
+    video.setAttribute('poster', targetPoster);
+  }
+
+  // 2. Update source and video element if source changed
+  if (video.getAttribute('data-active-src') !== targetSrc) {
+    video.setAttribute('data-active-src', targetSrc);
+    
+    // Update child <source> tag so both video.src and <source> stay in sync
+    var source = video.querySelector('source');
+    if (source) {
+      source.src = targetSrc;
+    }
+    video.src = targetSrc;
+    video.load();
+  }
+}
+
+// Initial load check
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  updateVideoSourceAndPoster();
+} else {
+  window.addEventListener('DOMContentLoaded', updateVideoSourceAndPoster);
+}
+
+// Fast debounce on window resize
+var videoResizeTimer;
+window.addEventListener('resize', function() {
+  clearTimeout(videoResizeTimer);
+  videoResizeTimer = setTimeout(updateVideoSourceAndPoster, 120);
+});
+
+// Full orientation change support for smartphones and tablets
+window.addEventListener('orientationchange', function() {
+  updateVideoSourceAndPoster();
+  setTimeout(updateVideoSourceAndPoster, 150);
+  setTimeout(updateVideoSourceAndPoster, 350);
+});
+if (window.screen && window.screen.orientation) {
+  window.screen.orientation.addEventListener('change', function() {
+    updateVideoSourceAndPoster();
+    setTimeout(updateVideoSourceAndPoster, 150);
+    setTimeout(updateVideoSourceAndPoster, 350);
+  });
+}
+
 function openCurtains() {
+  if (curtainOpened) return;
+  curtainOpened = true;
+
+  // Guarantee audio plays unmuted on opening the curtains
+  playAudio();
+
   var hero = document.getElementById('hero-sec');
-  if (hero.classList.contains('open')) return;
   
   // Play the video
   var video = document.getElementById('curtain-video');
