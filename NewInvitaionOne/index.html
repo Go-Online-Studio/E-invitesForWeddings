@@ -5,11 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Sourabh & Tejaswini — Wedding Invitation</title>
   
+  <!-- Preconnect & DNS-Prefetch for Fast CDN and External Asset Resolution -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   
-  <!-- Preload Critical Assets -->
-  <link rel="preload" href="images/Envelopopen.webm" as="fetch" type="video/webm" crossorigin>
+  <!-- 1. Intro Video & Poster Preloads (High Priority & Responsive to JS Sources) -->
+  <link rel="preload" href="images/Envelopopen.webm" as="video" type="video/webm" media="(max-width: 767.98px)" fetchpriority="high">
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1788321178/Invelop_Desktop_wzhcvs.mp4" as="video" type="video/mp4" media="(min-width: 768px)" fetchpriority="high" crossorigin>
+  <link rel="preload" href="images/invelopThumb.webp" as="image" type="image/webp" media="(max-width: 767.98px)" fetchpriority="high">
+  <link rel="preload" href="images/Envelopopen_Desktop.webp" as="image" type="image/webp" media="(min-width: 768px)" fetchpriority="high">
+
   <link rel="icon" href="data:,">
   
   <!-- Swiper CSS -->
@@ -27,7 +39,6 @@
       --gold-light: #f9e596;
       --gold-dark: #b88a22;
       --border-light: rgba(138, 58, 59, 0.15);
-      --max-w: 480px;
     }
 
     /* RESET & BASE */
@@ -40,34 +51,32 @@
       -webkit-font-smoothing: antialiased;
       overflow: hidden; /* Locked initially */
     }
-    body.unlocked { overflow: auto; background: #e0d9d3; } /* Outer background when unlocked */
+    body.unlocked { overflow: auto; background: var(--background); }
 
-    /* APP CONTAINER */
+    /* APP CONTAINER - Fluid */
     #app {
-      width: 100%; max-width: var(--max-w);
-      min-height: 100vh; margin: 0 auto;
+      width: 100%;
+      min-height: 100vh;
+      margin: 0 auto;
       background: var(--background);
       position: relative;
-      box-shadow: 0 0 40px rgba(0,0,0,0.5);
       overflow-x: hidden;
     }
 
-    /* TYPOGRAPHY */
+    /* TYPOGRAPHY - Fluid with clamp() */
     h1, h2, h3, .serif { font-family: 'Playfair Display', serif; font-weight: 400; }
     .script { font-family: 'Alex Brush', cursive; }
     .mono { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.7rem; }
-    .subtext { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; }
     
-    .section-subtitle { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; text-align: center; }
-    .section-title { font-size: 3.2rem; color: var(--primary); margin-bottom: 12px; text-align: center; line-height: 1.1; }
+    .section-subtitle { font-size: clamp(0.65rem, 1.5vw, 0.85rem); letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; text-align: center; }
+    .section-title { font-size: clamp(2.4rem, 6vw, 4.5rem); color: var(--primary); margin-bottom: 12px; text-align: center; line-height: 1.1; }
+    .subtext { font-size: clamp(0.8rem, 1.5vw, 1rem); color: var(--text-light); line-height: 1.6; }
 
     /* PARTICLES CANVAS */
     #particles-canvas {
       position: fixed;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 100%; max-width: var(--max-w);
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       pointer-events: none;
       z-index: 1;
     }
@@ -83,7 +92,7 @@
 
     /* ══ 1. OPENING SEQUENCE (VIDEO CURTAIN) ══ */
     #curtain-layer {
-      position: absolute;
+      position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
       z-index: 100;
       background: #000;
@@ -92,10 +101,14 @@
       overflow: hidden;
       cursor: pointer;
     }
+    #curtain-layer.fading {
+      opacity: 0;
+      pointer-events: none;
+    }
     #curtain-video {
       position: absolute;
       top: 0; left: 50%; transform: translateX(-50%);
-      width: 100%; height: 100%; min-width: 448px;
+      width: 100%; height: 100%; min-width: 100vw;
       object-fit: cover;
       pointer-events: none;
     }
@@ -116,77 +129,132 @@
     @keyframes tapPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
 
     /* ══ 2. HERO / WELCOME SECTION ══ */
-    .section { padding: 60px 12px; position: relative; }
-    .hero-sec { text-align: center; min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .ganesha-icon { width: 64px; height: 86px; margin-bottom: 20px; opacity: 0.8; }
-    .blessing-text { font-size: 10px; line-height: 1.8; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; max-width: 300px; }
-    .parents-section { width: 100%; display: flex; flex-direction: column; gap: 20px; }
-    .parent-block { background: #fff; padding: 12px; border-radius: 12px; border: 1px solid var(--border-light); box-shadow: 0 4px 15px rgba(138,58,59,0.03); }
-    .parent-block h3 { font-family: 'Alex Brush', cursive; font-size: 2rem; color: var(--primary); margin-bottom: 8px; }
-    .parent-block p { font-size: 0.75rem; color: var(--text); line-height: 1.5; }
-    .parent-block span { display: block; font-size: 0.65rem; color: var(--text-light); margin-top: 6px; }
-
-    /* ══ 3. SAVE THE DATE ══ */
-    .scratch-sec { text-align: center; background: linear-gradient(to bottom, transparent, rgba(209,141,130,0.1)); }
-    .scratch-wrap { display: flex; justify-content: center; gap: 15px; margin: 40px 0 20px; }
-    .scratch-item {
-      position: relative; width: 90px; height: 90px;
-      background: #fff; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      
-      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
-      -webkit-mask-size: 100% 100%;
-      -webkit-mask-repeat: no-repeat;
-      mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
-      mask-size: 100% 100%; mask-repeat: no-repeat;
+    .section { padding: clamp(40px, 8vw, 80px) clamp(12px, 4vw, 40px); position: relative; }
+    
+    .hero-sec { 
+      text-align: center; 
+      min-height: 100vh;
+      min-height: 100dvh; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: relative;
+      overflow: hidden;
     }
-    .scratch-content { text-align: center; color: var(--primary); }
-    .scratch-content .lbl { display: block; font-size: 0.6rem; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 2px; }
-    .scratch-content .val { display: block; font-size: 1rem; font-family: 'Playfair Display', serif; }
-    .scratch-item canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; cursor: pointer; }
-
-    /* ══ 4. COUNTDOWN ══ */
-    .countdown-sec { text-align: center; }
-    .cd-grid { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
-    .cd-box { flex: 1; border: 1px solid var(--border-light); padding: 15px 5px; border-radius: 12px; background: #fff; box-shadow: 0 4px 10px rgba(138,58,59,0.05); }
-    .cd-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; display: block; margin-bottom: 4px; color: var(--primary); }
-    .cd-lbl { font-size: 0.6rem; letter-spacing: 0.1em; color: var(--text-light); text-transform: uppercase; }
-
-    /* Scroll Down Indicator */
-    .scroll-down-indicator {
+    .hero-content-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-top: 20px;
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      pointer-events: none;
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
     }
-    .scroll-down-indicator.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+    
+    @media (min-width: 1024px) {
+      .hero-content-wrap::before, .hero-content-wrap::after {
+        content: '';
+        position: absolute;
+        width: 150px; height: 150px;
+        border: 2px solid var(--gold-dark);
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .hero-content-wrap::before {
+        top: -60px; left: -60px;
+        border-right: none; border-bottom: none;
+      }
+      .hero-content-wrap::after {
+        bottom: -40px; right: -60px;
+        border-left: none; border-top: none;
+      }
     }
-    .scroll-down-indicator.user-scrolled {
-      opacity: 0 !important;
-      pointer-events: none !important;
+    .ganesha-icon { width: clamp(50px, 8vw, 80px); height: auto; margin-bottom: 20px; opacity: 0.8; }
+    .blessing-text { 
+      font-size: clamp(10px, 1.2vw, 13px); 
+      line-height: 1.8; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; 
+      margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto; 
     }
+    
+    .parents-section { 
+      width: 100%; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 20px; 
+    }
+    @media (min-width: 768px) {
+      .parents-section { flex-direction: row; justify-content: center; }
+    }
+    
+    .parent-block { 
+      flex: 1;
+      background: #fff; 
+      padding: clamp(15px, 3vw, 25px); 
+      border-radius: 12px; border: 1px solid var(--border-light); 
+      box-shadow: 0 4px 15px rgba(138,58,59,0.03); 
+    }
+    .parent-block h3 { font-family: 'Alex Brush', cursive; font-size: clamp(2rem, 4vw, 2.5rem); color: var(--primary); margin-bottom: 8px; }
+    .parent-block p { font-size: clamp(0.75rem, 1.2vw, 0.9rem); color: var(--text); line-height: 1.5; }
+    .parent-block span { display: block; font-size: clamp(0.65rem, 1vw, 0.8rem); color: var(--text-light); margin-top: 6px; }
+
+    /* ══ 3. SAVE THE DATE ══ */
+    .scratch-sec { text-align: center; background: linear-gradient(to bottom, transparent, rgba(209,141,130,0.1)); }
+    .scratch-wrap { 
+      display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(15px, 3vw, 30px); 
+      margin: 40px auto 20px; 
+      max-width: 600px;
+    }
+    .scratch-item {
+      position: relative; width: clamp(90px, 15vw, 120px); aspect-ratio: 1/1; height: auto;
+      background: #fff; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+      -webkit-mask-size: 100% 100%; -webkit-mask-repeat: no-repeat;
+      mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+      mask-size: 100% 100%; mask-repeat: no-repeat;
+    }
+    .scratch-content { text-align: center; color: var(--primary); }
+    .scratch-content .lbl { display: block; font-size: clamp(0.5rem, 1vw, 0.7rem); letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 2px; }
+    .scratch-content .val { display: block; font-size: clamp(1rem, 2vw, 1.3rem); font-family: 'Playfair Display', serif; }
+    .scratch-item canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; cursor: pointer; }
+
+    /* ══ 4. COUNTDOWN ══ */
+    .countdown-sec { text-align: center; }
+    .cd-grid { 
+      display: flex; justify-content: center; flex-wrap: nowrap; gap: clamp(8px, 2vw, 20px); 
+      margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .cd-box { 
+      flex: 1; min-width: 0;
+      border: 1px solid var(--border-light); padding: clamp(10px, 2vw, 20px) 2px; 
+      border-radius: 12px; background: #fff; box-shadow: 0 4px 10px rgba(138,58,59,0.05); 
+    }
+    @media (min-width: 768px) {
+      .cd-box { flex: 1; max-width: 160px; padding: 20px 5px; }
+    }
+    .cd-num { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 4vw, 2.5rem); display: block; margin-bottom: 4px; color: var(--primary); }
+    .cd-lbl { font-size: clamp(0.5rem, 1vw, 0.7rem); letter-spacing: 0.1em; color: var(--text-light); text-transform: uppercase; }
+
+    /* Scroll Down Indicator */
+    .scroll-down-indicator {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      margin-top: clamp(20px, 4vw, 40px); cursor: pointer; opacity: 0; transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease; pointer-events: none;
+    }
+    .scroll-down-indicator.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .scroll-down-indicator.user-scrolled { opacity: 0 !important; pointer-events: none !important; }
     .scroll-down-indicator span {
-      font-size: 0.6rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--primary, #8a3a3b);
-      margin-bottom: 3px;
-      font-weight: 500;
-      opacity: 0.85;
+      font-size: 0.6rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 3px; font-weight: 500; opacity: 0.85;
     }
     .scroll-down-indicator svg {
-      width: 18px;
-      height: 18px;
-      stroke: var(--primary, #8a3a3b);
+      width: 18px; height: 18px; stroke: var(--primary);
       animation: miniScrollBounce 1.8s infinite ease-in-out;
     }
     @keyframes miniScrollBounce {
@@ -195,86 +263,109 @@
     }
 
     /* ══ 5. CAROUSEL ══ */
-    .carousel-sec { background: #f9f5f0; }
-    .swiper { width: 100%; padding: 20px 0 40px; }
-    .swiper-slide { background-position: center; background-size: cover; width: 280px; height: 380px; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 4px solid #fff; }
+    .carousel-sec { background: #f9f5f0; padding-bottom: 60px; }
+    .swiper { width: 100%; max-width: 1200px; padding: 20px 0 40px; margin: 0 auto; }
+    .swiper-slide { 
+      background-position: center; background-size: cover; 
+      width: 280px; height: 380px; 
+      border-radius: 16px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 4px solid #fff; 
+    }
+    @media (min-width: 768px) {
+      .swiper-slide { width: auto; height: 450px; }
+    }
     .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
     /* ══ 6. TIMELINE ══ */
-    .events-sec { text-align: center; }
-    .event-card { position: relative; background: #fff; border-radius: 20px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 25px rgba(138,58,59,0.08); border: 1px solid var(--border-light); }
+    .events-sec { text-align: center; max-width: 1200px; margin: 0 auto; }
+    .events-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    @media (min-width: 768px) {
+      .events-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    }
+    @media (min-width: 1024px) {
+      .events-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    }
+    .event-card { 
+      position: relative; background: #fff; border-radius: 20px; overflow: hidden; 
+      box-shadow: 0 8px 25px rgba(138,58,59,0.08); border: 1px solid var(--border-light); 
+      display: flex; flex-direction: column; height: 100%;  
+    }
     .event-header { padding: 25px 20px 15px; }
-    .e-date { font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 5px; }
-    .e-title { font-size: 3rem; color: var(--primary); }
-    .event-bg-wrap { position: relative; height: 450px; width: calc(100% - 30px); margin: 0 auto; border-radius: 16px; overflow: hidden; }
-    .event-bg { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.6); position: relative; }
-    
-    /* Event Card Videos & Overlay */
+    .e-date { font-size: clamp(0.65rem, 1vw, 0.75rem); letter-spacing: 0.2em; color: var(--accent); margin-bottom: 5px; }
+    .e-title { font-size: clamp(2.5rem, 4vw, 3rem); color: var(--primary); }
+    .event-bg-wrap { position: relative; height: clamp(250px, 45vh, 450px); width: calc(100% - 30px); margin: 0 auto; border-radius: 16px; overflow: hidden; flex: 1 0 auto; }
     .event-video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      pointer-events: none;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; pointer-events: none;
     }
     .event-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      /* Subtle top black-to-transparent gradient (not too dark) */
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 45%, transparent 80%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start; /* Positioned at top */
-      padding: 16px 15px;
-      text-align: center;
-      z-index: 2;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.8s ease;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      padding: 16px 15px; text-align: center; z-index: 2; opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
     }
-    .event-overlay.show {
-      opacity: 1;
-    }
-    .event-overlay-text h4 { font-family: 'Alex Brush', cursive; font-size: 2.2rem; margin-bottom: 4px; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
-    .event-overlay-text p { font-family: 'Playfair Display', serif; font-size: 0.85rem; line-height: 1.4; color: rgba(255,255,255,0.95); text-shadow: 0 2px 6px rgba(0,0,0,0.7); }
-    
+    .event-card:hover .event-overlay { opacity: 1; } /* Desktop hover effect */
+    .event-overlay.show { opacity: 1; } /* Mobile tap effect */
+    .event-overlay-text h4 { font-family: 'Alex Brush', cursive; font-size: clamp(1.8rem, 3vw, 2.2rem); margin-bottom: 4px; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
+    .event-overlay-text p { font-family: 'Playfair Display', serif; font-size: clamp(0.75rem, 1vw, 0.85rem); line-height: 1.4; color: rgba(255,255,255,0.95); text-shadow: 0 2px 6px rgba(0,0,0,0.7); }
     .event-info { padding: 20px; text-align: center; }
-    .event-info p { font-size: 0.8rem; color: var(--text); margin-bottom: 20px; }
-    .btn-outline { display: inline-block; padding: 12px 30px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 30px; font-size: 0.75rem; letter-spacing: 0.15em; font-weight: 500; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(138,58,59,0.3); }
+    .event-info p { font-size: clamp(0.75rem, 1vw, 0.8rem); color: var(--text); margin-bottom: 20px; }
+    .btn-outline { 
+      display: inline-block; padding: 12px 30px; background: var(--primary); color: #fff; 
+      text-decoration: none; border-radius: 30px; font-size: 0.75rem; letter-spacing: 0.15em; 
+      font-weight: 500; transition: all 0.3s; box-shadow: 0 4px 10px rgba(138,58,59,0.3); 
+    }
+    .btn-outline:hover { background: var(--accent); transform: translateY(-2px); }
     .btn-outline:active { transform: scale(0.95); }
 
     /* ══ 7. RSVP FORM ══ */
     .rsvp-sec { background: linear-gradient(to bottom, #fdfaf6, #f9f5f0); }
-    .rsvp-form { margin-top: 30px; }
-    .form-card { background: #fff; border-radius: 16px; padding: 24px 12px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(138,58,59,0.05); border: 1px solid var(--border-light); text-align: left; }
+    .rsvp-container { max-width: 900px; margin: 0 auto; }
+    .rsvp-form { margin-top: 30px; text-align: left; }
     
-    .form-label { display: block; font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; }
-    .form-label small { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; margin-top: 4px; text-transform: none; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 768px) {
+      .form-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+      .form-card.full-col { grid-column: 1 / -1; }
+    }
+
+    .form-card { background: #fff; border-radius: 16px; padding: clamp(20px, 3vw, 30px) clamp(12px, 3vw, 30px); box-shadow: 0 4px 15px rgba(138,58,59,0.05); border: 1px solid var(--border-light); }
+    .form-label { display: block; font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 15px; font-size: clamp(1.1rem, 2vw, 1.3rem); }
+    .form-label small { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: #888; margin-top: 4px; text-transform: none; }
     
-    .input-field { width: 100%; padding: 12px 0; border: none; border-bottom: 1px solid var(--border-light); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: var(--text); outline: none; margin-bottom: 15px; transition: border-color 0.3s; }
+    .input-field { width: 100%; padding: 12px 0; border: none; border-bottom: 1px solid var(--border-light); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: var(--text); outline: none; margin-bottom: 15px; transition: border-color 0.3s; }
     .input-field:focus { border-bottom-color: var(--primary); }
-    .input-field::placeholder { color: #ccc; font-size: 0.8rem; letter-spacing: 0.1em; }
-    textarea.input-field { resize: vertical; min-height: 60px; margin-bottom: 0; }
+    .input-field::placeholder { color: #ccc; font-size: 0.85rem; letter-spacing: 0.05em; }
+    textarea.input-field { resize: vertical; min-height: 80px; margin-bottom: 0; }
     
     /* Toggle */
     .toggle-group { display: flex; gap: 10px; }
     .toggle-btn { flex: 1; text-align: center; cursor: pointer; }
     .toggle-btn input { display: none; }
-    .toggle-btn .btn-text { display: block; padding: 14px 10px; border-radius: 30px; border: 1px solid var(--primary); color: var(--primary); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; transition: all 0.3s; background: #fff; }
+    .toggle-btn .btn-text { display: block; padding: 14px 10px; border-radius: 30px; border: 1px solid var(--primary); color: var(--primary); font-size: clamp(0.65rem, 2vw, 0.75rem); font-weight: 600; letter-spacing: 0.05em; transition: all 0.3s; background: #fff; }
+    .toggle-btn:hover .btn-text { background: rgba(138, 58, 59, 0.05); }
     .toggle-btn input:checked + .btn-text { background: var(--primary); color: #fff; }
+    @media (max-width: 600px){ .toggle-group{ flex-direction: column; } }
 
     /* Pills */
-    .pill-group { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-    .pill-group.two-col { display: grid; grid-template-columns: 1fr 1fr; }
-    .pill { flex: 1; text-align: center; cursor: pointer; }
+    .pill-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .pill { text-align: center; cursor: pointer; }
     .pill input { display: none; }
-    .pill .pill-text { display: block; padding: 14px 5px; border: 1px solid var(--border-light); border-radius: 30px; font-size: 0.75rem; font-weight: 500; color: var(--text); background: #fdfaf6; transition: all 0.3s; }
+    .pill .pill-text { display: block; padding: 14px 5px; border: 1px solid var(--border-light); border-radius: 30px; font-size: clamp(0.7rem, 1vw, 0.8rem); font-weight: 500; color: var(--text); background: #fdfaf6; transition: all 0.3s; }
+    .pill:hover .pill-text { background: rgba(138, 58, 59, 0.05); }
     .pill input:checked + .pill-text { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     /* Custom Checkboxes */
-    .chk-label { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; }
+    .chk-label { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background 0.3s; }
+    .chk-label:hover { background: rgba(0,0,0,0.01); }
     .chk-label:last-child { border-bottom: none; padding-bottom: 0; }
     .chk-label input { appearance: none; width: 24px; height: 24px; border: 1.5px solid var(--primary); border-radius: 6px; position: relative; margin-right: 15px; outline: none; cursor: pointer; flex-shrink: 0; }
     .chk-label input:checked { background: var(--primary); }
@@ -287,62 +378,49 @@
     .guess-group { display: flex; justify-content: space-around; padding: 10px 0; }
     .guess-item { text-align: center; cursor: pointer; }
     .guess-item input { display: none; }
-    .guess-item .circle { width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-family: 'Alex Brush', cursive; font-size: 1.8rem; color: var(--primary); margin: 0 auto 10px; transition: all 0.3s; background: #fdfaf6; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-    .guess-item span.label { font-size: 0.65rem; color: var(--text-light); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
+    .guess-item .circle { 
+      width: clamp(50px, 6vw, 70px); height: clamp(50px, 6vw, 70px); 
+      border-radius: 50%; border: 1px solid var(--border-light); 
+      display: flex; align-items: center; justify-content: center; 
+      font-family: 'Alex Brush', cursive; font-size: clamp(1.5rem, 3vw, 2rem); color: var(--primary); 
+      margin: 0 auto 10px; transition: all 0.3s; background: #fdfaf6; box-shadow: 0 4px 10px rgba(0,0,0,0.03); 
+    }
+    .guess-item:hover .circle { background: rgba(138, 58, 59, 0.05); }
+    .guess-item span.label { font-size: clamp(0.6rem, 1vw, 0.7rem); color: var(--text-light); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
     .guess-item input:checked ~ .circle { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-    .submit-btn { width: 100%; padding: 18px; background: var(--primary); color: #fff; border: none; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em; font-weight: 600; cursor: pointer; transition: transform 0.2s; margin-top: 10px; box-shadow: 0 6px 15px rgba(138,58,59,0.3); }
+    .submit-btn { 
+      width: 100%; padding: 20px; background: var(--primary); color: #fff; border: none; 
+      border-radius: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; 
+      letter-spacing: 0.15em; font-weight: 600; cursor: pointer; transition: all 0.3s; 
+      margin-top: 30px; box-shadow: 0 6px 15px rgba(138,58,59,0.3); grid-column: 1 / -1; 
+    }
+    .submit-btn:hover { background: var(--accent); transform: translateY(-2px); }
     .submit-btn:active { transform: scale(0.98); }
-
-    /* ══ 8. FOOTER ══ */
-    .footer { background: var(--primary); color: var(--background); padding: 40px 24px; text-align: center; position: relative; z-index: 2; }
-    .footer .script { font-size: 3rem; margin-bottom: 15px; color: #fff; }
-    .footer p { font-size: 0.7rem; letter-spacing: 0.1em; opacity: 0.8; }
-    .footer .sign-off { margin-top: 30px; font-size: 0.65rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.15em; }
-
-    /* ══ AUDIO CONTROLLER ══ */
-    .audio-ctrl { position: fixed; bottom: 20px; right: calc(50% - 240px + 20px); width: 48px; height: 48px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2); }
-    @media (max-width: 480px) { .audio-ctrl { right: 20px; } }
 
     /* Professional Dismissible Alert Box */
     .custom-alert-box {
-      background: rgba(163, 42, 56, 0.1);
-      border: 1px solid rgba(163, 42, 56, 0.3);
-      border-left: 4px solid var(--primary, #a32a38);
-      color: #721c24;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      position: relative;
-      animation: alertSlideDown 0.3s ease-out;
+      background: rgba(163, 42, 56, 0.1); border: 1px solid rgba(163, 42, 56, 0.3); border-left: 4px solid var(--primary);
+      color: #721c24; padding: 16px 20px; border-radius: 12px; margin-bottom: 20px; font-size: 0.95rem; display: flex;
+      align-items: center; gap: 10px; position: relative; animation: alertSlideDown 0.3s ease-out;
     }
-    @keyframes alertSlideDown {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .custom-alert-icon { font-size: 1.1rem; color: var(--primary, #a32a38); flex-shrink: 0; }
+    @keyframes alertSlideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .custom-alert-icon { font-size: 1.2rem; color: var(--primary); flex-shrink: 0; }
     .custom-alert-close {
-      margin-left: auto;
-      background: none;
-      border: none;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #721c24;
-      cursor: pointer;
-      line-height: 1;
-      opacity: 0.7;
+      margin-left: auto; background: none; border: none; font-size: 1.5rem; font-weight: bold; color: #721c24; cursor: pointer; line-height: 1; opacity: 0.7;
     }
     .custom-alert-close:hover { opacity: 1; }
 
-       @media (max-width: 332px){
-        .toggle-group{
-          flex-direction: column;
-        }
-       }
+    /* ══ 8. FOOTER ══ */
+    .footer { background: var(--primary); color: var(--background); padding: clamp(40px, 8vw, 60px) 24px; text-align: center; position: relative; z-index: 2; }
+    .footer .script { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 15px; color: #fff; }
+    .footer p { font-size: clamp(0.7rem, 1vw, 0.85rem); letter-spacing: 0.1em; opacity: 0.8; }
+    .footer .sign-off { margin-top: 30px; font-size: clamp(0.65rem, 1vw, 0.75rem); opacity: 0.6; text-transform: uppercase; letter-spacing: 0.15em; }
+
+    /* ══ AUDIO CONTROLLER ══ */
+    .audio-ctrl { position: fixed; bottom: 30px; right: 30px; width: 56px; height: 56px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
+    .audio-ctrl:hover { transform: scale(1.1); }
+    @media (max-width: 768px) { .audio-ctrl { bottom: 20px; right: 20px; width: 48px; height: 48px; } }
 
     /* AOS Animations */
     [data-aos] { opacity: 0; transition-property: opacity, transform; transition-duration: 0.8s; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
@@ -356,85 +434,19 @@
     [data-aos-delay="200"] { transition-delay: 0.2s; }
     [data-aos-delay="300"] { transition-delay: 0.3s; }
     [data-aos-delay="400"] { transition-delay: 0.4s; }
-    /* Landscape Restriction Warning */
-    #landscape-warning {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: var(--bg, var(--background, var(--color-bg, #000)));
-      color: var(--gold, var(--primary, var(--color-text, #fff)));
-      z-index: 999999;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-    }
-    #landscape-warning svg {
-      margin-bottom: 20px;
-      animation: rotatePhone 2s infinite ease-in-out;
-    }
-    #landscape-warning h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      font-family: var(--font-serif, 'Playfair Display', 'Cinzel', serif);
-    }
-    #landscape-warning p {
-      font-size: 1rem;
-      opacity: 0.9;
-      font-family: var(--font-sans, 'Montserrat', sans-serif);
-      color: var(--white, var(--text, var(--color-text, #ccc)));
-    }
-    @keyframes rotatePhone {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(-90deg); }
-      100% { transform: rotate(-90deg); }
-    }
-    @media screen and (orientation: landscape) and (max-height: 600px) {
-      #landscape-warning {
-        display: flex;
-      }
-      #app {
-        display: none !important;
-      }
-    }
 
     /* Global Loader */
     #global-loader {
-      position: fixed;
-      inset: 0;
-      background: var(--bg, #000);
-      z-index: 9999999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: fixed; inset: 0; background: var(--background); z-index: 9999999;
+      display: flex; align-items: center; justify-content: center;
       transition: opacity 0.4s ease, visibility 0.4s ease;
     }
-    #global-loader.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-    .loader-ring {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(212, 175, 55, 0.2);
-      border-top-color: var(--gold, #D4AF37);
-      border-radius: 50%;
-      animation: spinLoader 0.8s linear infinite;
-    }
-    @keyframes spinLoader {
-      to { transform: rotate(360deg); }
-    }
+    #global-loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-ring { width: 50px; height: 50px; border: 3px solid var(--border-light); border-top-color: var(--primary); border-radius: 50%; animation: spinLoader 0.8s linear infinite; }
+    @keyframes spinLoader { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
-  <div id="landscape-warning">
-    <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor">
-      <path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm1 18H7V5h10v14z"/>
-    </svg>
-    <h2>Please Rotate Your Device</h2>
-    <p>This invitation is beautifully crafted for portrait viewing.</p>
-  </div>
 
   <!-- Global Loader -->
   <div id="global-loader">
@@ -457,23 +469,21 @@
         })
       ]).then(hideLoader).catch(hideLoader);
       
-      // Fallback max 2 seconds
-      setTimeout(hideLoader, 2000);
+      setTimeout(hideLoader, 2000); // Fallback max 2s
     })();
   </script>
 
 
   <!-- Audio Controller -->
   <div id="audio-ctrl" class="audio-ctrl">
-    <svg id="icon-muted" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;">
+    <svg id="icon-muted" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="display:none;">
       <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
     </svg>
-    <svg id="icon-unmuted" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+    <svg id="icon-unmuted" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
       <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
     </svg>
   </div>
   <audio id="bg-music" loop autoplay>
-    <!-- Use valid audio file path -->
     <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
   </audio>
 
@@ -481,8 +491,9 @@
     
     <!-- 1. OPENING SEQUENCE -->
     <div id="curtain-layer" onclick="openCurtains()">
-      <video id="curtain-video" playsinline muted disablePictureInPicture fetchpriority="high" preload="auto" poster="images/invelopThumb.webp">
-        <source src="images/Envelopopen.webm" type="video/webm"> 
+      <video id="curtain-video" playsinline webkit-playsinline muted disablePictureInPicture fetchpriority="high" preload="auto" poster="images/invelopThumb.webp">
+        <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1788321178/Invelop_Desktop_wzhcvs.mp4" type="video/mp4" media="(min-width: 768px)">
+        <source src="images/Envelopopen.webm" type="video/webm" media="(max-width: 767.98px)">
       </video>
       <div class="tap-overlay">
         <span class="tap-text">Tap anywhere to reveal</span>
@@ -496,28 +507,30 @@
 
       <!-- 2. HERO SECTION -->
       <section class="section hero-sec">
-        <!-- SVG Ganesha replacing image to avoid broken links -->
-        
-        <svg class="ganesha-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" zoomAndPan="magnify" viewBox="0 0 375 487.499991" height="650" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="cf348699c6"><path d="M 145 279 L 366 279 L 366 484.753906 L 145 484.753906 Z M 145 279 " clip-rule="nonzero"/></clipPath><clipPath id="5654ef6f21"><path d="M 1.691406 249 L 162 249 L 162 422 L 1.691406 422 Z M 1.691406 249 " clip-rule="nonzero"/></clipPath></defs><path fill="#000000" d="M 238.546875 228.703125 C 247.621094 227.949219 262.375 223.148438 273.121094 231.949219 C 289.042969 244.988281 280.875 268.796875 260.898438 272.949219 C 254.382812 274.300781 246.464844 273.363281 239.503906 273.449219 C 233.320312 273.523438 225.414062 275 219.640625 275.476562 C 222.296875 279.101562 218.941406 276.089844 223.335938 277.753906 C 240.25 284.164062 251.039062 295.082031 256.601562 313.15625 C 261.945312 330.523438 262.59375 344.375 254.484375 360.085938 L 246.890625 370.402344 C 246.75 370.550781 246.554688 370.769531 246.410156 370.917969 L 245.414062 371.914062 C 222.085938 394.378906 176.335938 392.363281 154.78125 365.214844 C 131.417969 335.789062 134.332031 290.261719 145.613281 256.191406 C 147.507812 250.46875 149.71875 247.003906 150.96875 241.640625 C 132.519531 253.996094 119.09375 292.050781 121.953125 317.417969 C 123.527344 331.359375 123.804688 346.910156 131.859375 360.273438 C 155.550781 399.574219 193.714844 416.238281 237.84375 397.183594 C 249.59375 392.109375 261.417969 383.796875 269.109375 374.710938 C 287.21875 353.316406 288.664062 321.574219 277.355469 296.382812 C 276.097656 293.582031 274.152344 291.304688 273.378906 288.417969 C 279.992188 284.917969 285.652344 279.332031 290.042969 273.234375 C 306.109375 250.910156 296.550781 222.753906 276.945312 218.167969 C 263.074219 214.925781 243.175781 222.386719 238.546875 228.707031 Z M 238.546875 228.703125 " fill-opacity="1" fill-rule="evenodd"/><g clip-path="url(#cf348699c6)"><path fill="#000000" d="M 282.335938 288.417969 C 294.382812 294.195312 302.21875 295.898438 314.890625 306.621094 C 336.617188 325.011719 352.019531 361.023438 325.566406 383.398438 C 303.386719 402.15625 264.585938 409.988281 236.5625 409.835938 C 216.617188 409.730469 185.839844 413.644531 169.585938 420.484375 C 155.632812 426.355469 145 432.453125 145 449.640625 C 145 464.746094 157.679688 478.300781 166.894531 484.472656 C 165.53125 479.363281 143.710938 454.738281 159.632812 438.398438 C 169.40625 428.367188 192.433594 426.679688 206.667969 425.71875 C 253.257812 422.578125 333.433594 426.039062 356.988281 378.992188 C 370.527344 351.949219 366.382812 323.4375 348.742188 299.636719 C 340.304688 288.25 322.617188 279.460938 307.214844 279.460938 C 299.042969 279.460938 285.585938 283.980469 282.335938 288.417969 Z M 282.335938 288.417969 " fill-opacity="1" fill-rule="evenodd"/></g><g clip-path="url(#5654ef6f21)"><path fill="#000000" d="M 1.691406 317.277344 C 1.691406 338.820312 11.851562 362.644531 23.566406 378.003906 C 29.222656 385.421875 36.707031 392.585938 44.1875 398.183594 C 74.152344 420.601562 115.90625 426.503906 152.777344 417.609375 C 156.398438 416.734375 159.863281 416.613281 161.917969 413.8125 C 156.238281 413.8125 155.035156 414.808594 148.980469 414.808594 C 118.257812 414.808594 99.523438 414.085938 72.53125 397.707031 C 55.285156 387.246094 44.816406 377.5625 34.332031 360.269531 C 26.964844 348.121094 18.867188 317.992188 25.015625 299.800781 C 28.097656 290.6875 33.683594 282.320312 40.488281 277.453125 C 77.167969 251.207031 107.183594 282.339844 107.183594 303.34375 C 107.183594 314.683594 101.164062 320.792969 97.230469 328.222656 C 110.558594 327.113281 123.992188 306.246094 116.285156 283.296875 C 114.253906 277.261719 108.796875 269.121094 104.101562 264.628906 C 80.257812 241.808594 42.523438 245.964844 22.316406 265.253906 C 11.371094 275.699219 1.691406 296.097656 1.691406 317.277344 Z M 1.691406 317.277344 " fill-opacity="1" fill-rule="evenodd"/></g><path fill="#000000" d="M 127.085938 194.867188 C 127.085938 215.632812 122.300781 216.1875 122.109375 224.722656 C 129.859375 219.535156 134.054688 203.65625 134.054688 190.886719 C 134.054688 174.1875 119.316406 158.105469 112.839844 146.417969 C 100.554688 124.246094 83.179688 99.855469 101.914062 81.121094 C 117.308594 65.726562 146.988281 69.816406 146.988281 103.308594 C 146.988281 110.277344 143.703125 113.234375 141.019531 117.242188 C 135.996094 113.5625 139.449219 111.269531 129.078125 111.269531 C 118.507812 111.269531 113.882812 132.171875 137.039062 132.171875 C 171.03125 132.171875 165.957031 58.527344 119.125 58.527344 C 102.609375 58.527344 89.875 68.421875 84.261719 79.394531 C 69.585938 108.085938 92.1875 135.089844 108.460938 156.765625 C 115.160156 165.6875 127.085938 180.339844 127.085938 194.867188 Z M 127.085938 194.867188 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 40.503906 209.796875 C 40.503906 242.796875 66.988281 260.941406 92.191406 238.59375 L 93.246094 237.65625 C 111.351562 220.402344 109.277344 193.871094 102.207031 193.871094 C 93.765625 193.871094 73.960938 216.820312 75.59375 223.667969 C 76.457031 227.285156 77.941406 226.308594 80.710938 224.277344 C 86.605469 219.960938 85.988281 218.089844 92.253906 214.773438 C 92.253906 222.414062 91.652344 222.464844 88.074219 226.515625 C 84.527344 230.527344 80.019531 236.671875 70.605469 236.183594 C 50.4375 235.136719 49.980469 194.71875 65.640625 176.21875 C 68.105469 173.308594 74.070312 169.25 78.828125 168.546875 C 94.667969 166.207031 89.765625 187.917969 89.269531 193.871094 C 94.5 192.476562 101.210938 179.488281 101.210938 170.984375 C 101.210938 160.210938 96.863281 154.066406 82.300781 154.066406 C 56.199219 154.066406 40.503906 183.164062 40.503906 209.796875 Z M 40.503906 209.796875 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 225.609375 149.089844 C 233.023438 138.972656 249.914062 155.058594 239.542969 155.058594 C 234.367188 155.058594 233.914062 155.449219 229.480469 153.179688 C 224.671875 150.71875 227.484375 152.65625 225.609375 149.089844 Z M 227.601562 139.136719 C 228.457031 135.933594 227.964844 136.476562 230.726562 135.296875 C 236.007812 133.046875 240.128906 134.957031 242.527344 135.15625 C 242.527344 142.820312 243.421875 142.121094 233.570312 142.121094 C 229.886719 142.121094 229.074219 141.152344 227.601562 139.136719 Z M 222.625 138.140625 L 223.621094 144.113281 C 213.679688 146.765625 218.089844 159.039062 241.535156 159.039062 C 241.230469 172.640625 235.007812 199.609375 230.597656 210.800781 C 224.921875 225.214844 208.007812 256.90625 198.148438 271.902344 C 193.886719 278.382812 189.683594 284.765625 186.136719 291.734375 C 174.78125 314.0625 162.082031 348.292969 177.566406 372.289062 C 178.742188 374.109375 177.964844 373 178.835938 374.003906 C 178.835938 367.695312 176.847656 361.921875 176.847656 349.121094 C 176.847656 320.042969 191.992188 298.992188 205.707031 278.464844 C 226.9375 246.683594 248.386719 214.097656 252.328125 174.808594 L 253.035156 164.386719 C 253.84375 157.070312 253.101562 143.59375 252.210938 136.421875 C 251.453125 130.324219 252.433594 122.21875 246.507812 122.21875 C 242.632812 122.21875 243.035156 124.65625 242.5 128.238281 C 241.644531 133.957031 242.652344 131.363281 236.628906 131.238281 C 231.742188 131.136719 222.625 133.691406 222.625 138.140625 Z M 222.625 138.140625 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 154.953125 23.695312 C 160.53125 27.429688 158.410156 26.003906 166.332031 21.023438 C 169.371094 19.113281 173.371094 17.417969 170.992188 22.5625 C 168.816406 27.257812 162.949219 28.78125 159.613281 37.328125 C 150.332031 61.125 187.84375 70.316406 202.464844 58.269531 C 217.453125 45.917969 210.359375 23.695312 194.757812 23.695312 C 179.007812 23.695312 179.683594 37.15625 183.816406 41.597656 C 185.871094 43.808594 188.570312 44.054688 190.777344 45.589844 C 188.101562 46.210938 184.0625 48.574219 181.820312 48.574219 C 173.359375 48.574219 166.320312 42.496094 174.6875 31.488281 C 178.320312 26.707031 184.050781 19.191406 181.953125 12.707031 C 177.207031 -1.964844 155.691406 14.8125 154.949219 23.695312 Z M 154.953125 23.695312 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 263.429688 137.144531 C 277.121094 127.976562 277.375 125.203125 295.273438 125.203125 C 310.230469 125.203125 322.59375 143.375 312.628906 158.484375 C 308.695312 164.449219 309.160156 162.933594 304.46875 167.242188 C 302.890625 168.691406 302.085938 169.738281 300.519531 171.25 C 290.730469 180.703125 267.125 197.027344 258.179688 205.542969 C 255.167969 208.40625 252.695312 211.480469 250.488281 214.773438 C 255.339844 213.476562 277.640625 198.019531 283.753906 194.292969 C 289.738281 190.644531 294.511719 187.738281 299.96875 183.640625 C 305.230469 179.691406 310.828125 176.707031 315.445312 172.246094 C 346.207031 142.550781 326.726562 113.261719 292.289062 113.261719 C 282.390625 113.261719 279.058594 115.605469 272.957031 119.804688 C 267.3125 123.691406 263.429688 128.046875 263.429688 137.144531 Z M 263.429688 137.144531 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 300.25 238.65625 C 300.25 269.144531 327.570312 283.789062 355.152344 268.679688 C 379.113281 255.554688 369.84375 239.4375 356.195312 251.808594 C 349.597656 257.785156 335.132812 265.566406 326.507812 260.183594 C 312.523438 251.453125 325.152344 228.097656 311.199219 218.753906 C 303.808594 220.472656 300.25 229.625 300.25 238.65625 Z M 300.25 238.65625 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 176.847656 115.253906 C 176.847656 128.242188 228.574219 125.242188 249.839844 114.601562 C 272.980469 103.019531 265.429688 92.363281 259.449219 92.363281 C 244.214844 92.363281 244.40625 112.078125 186.804688 111.207031 C 182.25 111.140625 176.847656 110.960938 176.847656 115.253906 Z M 176.847656 115.253906 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 164.902344 92.363281 C 164.902344 111.253906 252.480469 98.828125 252.480469 76.4375 C 252.480469 72.074219 252.617188 67.738281 243.503906 70.363281 C 237.144531 72.191406 219.507812 89.847656 176.847656 89.378906 C 171.984375 89.328125 164.902344 87.835938 164.902344 92.363281 Z M 164.902344 92.363281 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 169.878906 68.476562 C 164.796875 68.476562 156.679688 67.613281 152.960938 68.476562 C 152.960938 73.179688 153.417969 76.457031 159.753906 78.605469 C 176.132812 84.148438 241.535156 76.34375 241.535156 52.554688 C 241.535156 48.867188 237.625 48.574219 234.566406 48.574219 C 226.671875 48.574219 211.621094 68.476562 169.878906 68.476562 Z M 169.878906 68.476562 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 329.109375 236.667969 C 329.109375 259.128906 357.972656 256.121094 357.972656 238.65625 C 357.972656 218.398438 329.109375 220.566406 329.109375 236.667969 Z M 329.109375 236.667969 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 193.765625 189.890625 C 200.230469 189.890625 199.234375 187.488281 201.726562 190.886719 L 193.765625 190.886719 Z M 191.773438 188.898438 L 192.070312 189.195312 C 192.050781 189.175781 191.675781 188.996094 191.773438 188.898438 Z M 187.792969 185.910156 C 184.339844 183.597656 181.820312 178.878906 181.820312 172.972656 C 184.597656 174.832031 186.054688 176.953125 189.785156 177.949219 C 187.433594 181.460938 187.792969 180.113281 187.792969 185.910156 Z M 204.710938 196.859375 C 206.402344 190.519531 214.496094 179.125 194.785156 168.96875 C 181.738281 162.246094 186.753906 164.015625 177.839844 158.046875 C 180.917969 169.5625 203.292969 169.855469 204.710938 186.90625 C 198.667969 179.953125 200.574219 178.765625 187.792969 171.980469 C 172.949219 164.097656 177.496094 159.183594 171.871094 155.058594 C 173.414062 161.691406 172.820312 163.117188 176.589844 168.253906 C 181.195312 174.523438 176.585938 189.628906 197.503906 194.117188 C 202.519531 195.191406 204.398438 196.746094 204.710938 196.859375 Z M 204.710938 196.859375 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 147.984375 228.703125 C 149.839844 235.644531 185.859375 267.71875 168.542969 234.023438 C 166.449219 229.953125 164.898438 226.484375 162.914062 222.734375 C 158.378906 223.945312 156.996094 228.503906 147.984375 228.703125 Z M 147.984375 228.703125 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 212.671875 193.871094 C 219.117188 189.148438 219.5 170.617188 207.425781 160.304688 C 200.457031 154.351562 183.320312 144.300781 174.855469 144.113281 C 177.667969 146.554688 178.816406 146.382812 182.121094 147.792969 C 188.234375 150.40625 197.308594 157.074219 201.980469 161.769531 C 205.878906 165.695312 209.054688 168.660156 211.300781 174.34375 C 214.785156 183.167969 213.425781 184.824219 212.671875 193.871094 Z M 212.671875 193.871094 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 138.035156 216.761719 L 138.035156 220.742188 C 141.941406 221.070312 141.851562 221.519531 145.996094 227.710938 C 151.332031 225.148438 147.796875 228.214844 161.917969 220.742188 C 161.480469 215.476562 159.953125 218.484375 161.980469 213.820312 C 163.789062 209.648438 164.261719 213.59375 162.914062 207.804688 C 155.648438 209.746094 158.964844 216.761719 138.035156 216.761719 Z M 138.035156 216.761719 " fill-opacity="1" fill-rule="evenodd"/><path fill="#000000" d="M 212.671875 193.871094 L 211.675781 193.871094 L 212.507812 195.035156 Z M 212.671875 193.871094 " fill-opacity="1" fill-rule="evenodd"/></svg>
-        <p class="blessing-text" data-aos="fade-up">With the blessings of the Almighty & our respected elders, we joyfully request your gracious presence on the wedding celebration of</p>
-        <div class="parents-section">
-          <div class="parent-block" data-aos="fade-right">
-            <h3>Sourabh</h3>
-            <p>Son of Mr. Kamlesh M Mehra & Mrs. Madhu Mehra</p>
-            <span>(Grandson of Late Shri Motilalji Mehra & Late Smt. Jayawanti)</span>
+        <div class="hero-content-wrap">
+          <svg class="ganesha-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" zoomAndPan="magnify" viewBox="0 0 375 487.499991" height="650" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="cf348699c6"><path d="M 145 279 L 366 279 L 366 484.753906 L 145 484.753906 Z M 145 279 " clip-rule="nonzero"/></clipPath><clipPath id="5654ef6f21"><path d="M 1.691406 249 L 162 249 L 162 422 L 1.691406 422 Z M 1.691406 249 " clip-rule="nonzero"/></clipPath></defs><path fill="var(--primary)" d="M 238.546875 228.703125 C 247.621094 227.949219 262.375 223.148438 273.121094 231.949219 C 289.042969 244.988281 280.875 268.796875 260.898438 272.949219 C 254.382812 274.300781 246.464844 273.363281 239.503906 273.449219 C 233.320312 273.523438 225.414062 275 219.640625 275.476562 C 222.296875 279.101562 218.941406 276.089844 223.335938 277.753906 C 240.25 284.164062 251.039062 295.082031 256.601562 313.15625 C 261.945312 330.523438 262.59375 344.375 254.484375 360.085938 L 246.890625 370.402344 C 246.75 370.550781 246.554688 370.769531 246.410156 370.917969 L 245.414062 371.914062 C 222.085938 394.378906 176.335938 392.363281 154.78125 365.214844 C 131.417969 335.789062 134.332031 290.261719 145.613281 256.191406 C 147.507812 250.46875 149.71875 247.003906 150.96875 241.640625 C 132.519531 253.996094 119.09375 292.050781 121.953125 317.417969 C 123.527344 331.359375 123.804688 346.910156 131.859375 360.273438 C 155.550781 399.574219 193.714844 416.238281 237.84375 397.183594 C 249.59375 392.109375 261.417969 383.796875 269.109375 374.710938 C 287.21875 353.316406 288.664062 321.574219 277.355469 296.382812 C 276.097656 293.582031 274.152344 291.304688 273.378906 288.417969 C 279.992188 284.917969 285.652344 279.332031 290.042969 273.234375 C 306.109375 250.910156 296.550781 222.753906 276.945312 218.167969 C 263.074219 214.925781 243.175781 222.386719 238.546875 228.707031 Z M 238.546875 228.703125 " fill-opacity="1" fill-rule="evenodd"/><g clip-path="url(#cf348699c6)"><path fill="var(--primary)" d="M 282.335938 288.417969 C 294.382812 294.195312 302.21875 295.898438 314.890625 306.621094 C 336.617188 325.011719 352.019531 361.023438 325.566406 383.398438 C 303.386719 402.15625 264.585938 409.988281 236.5625 409.835938 C 216.617188 409.730469 185.839844 413.644531 169.585938 420.484375 C 155.632812 426.355469 145 432.453125 145 449.640625 C 145 464.746094 157.679688 478.300781 166.894531 484.472656 C 165.53125 479.363281 143.710938 454.738281 159.632812 438.398438 C 169.40625 428.367188 192.433594 426.679688 206.667969 425.71875 C 253.257812 422.578125 333.433594 426.039062 356.988281 378.992188 C 370.527344 351.949219 366.382812 323.4375 348.742188 299.636719 C 340.304688 288.25 322.617188 279.460938 307.214844 279.460938 C 299.042969 279.460938 285.585938 283.980469 282.335938 288.417969 Z M 282.335938 288.417969 " fill-opacity="1" fill-rule="evenodd"/></g><g clip-path="url(#5654ef6f21)"><path fill="var(--primary)" d="M 1.691406 317.277344 C 1.691406 338.820312 11.851562 362.644531 23.566406 378.003906 C 29.222656 385.421875 36.707031 392.585938 44.1875 398.183594 C 74.152344 420.601562 115.90625 426.503906 152.777344 417.609375 C 156.398438 416.734375 159.863281 416.613281 161.917969 413.8125 C 156.238281 413.8125 155.035156 414.808594 148.980469 414.808594 C 118.257812 414.808594 99.523438 414.085938 72.53125 397.707031 C 55.285156 387.246094 44.816406 377.5625 34.332031 360.269531 C 26.964844 348.121094 18.867188 317.992188 25.015625 299.800781 C 28.097656 290.6875 33.683594 282.320312 40.488281 277.453125 C 77.167969 251.207031 107.183594 282.339844 107.183594 303.34375 C 107.183594 314.683594 101.164062 320.792969 97.230469 328.222656 C 110.558594 327.113281 123.992188 306.246094 116.285156 283.296875 C 114.253906 277.261719 108.796875 269.121094 104.101562 264.628906 C 80.257812 241.808594 42.523438 245.964844 22.316406 265.253906 C 11.371094 275.699219 1.691406 296.097656 1.691406 317.277344 Z M 1.691406 317.277344 " fill-opacity="1" fill-rule="evenodd"/></g><path fill="var(--primary)" d="M 127.085938 194.867188 C 127.085938 215.632812 122.300781 216.1875 122.109375 224.722656 C 129.859375 219.535156 134.054688 203.65625 134.054688 190.886719 C 134.054688 174.1875 119.316406 158.105469 112.839844 146.417969 C 100.554688 124.246094 83.179688 99.855469 101.914062 81.121094 C 117.308594 65.726562 146.988281 69.816406 146.988281 103.308594 C 146.988281 110.277344 143.703125 113.234375 141.019531 117.242188 C 135.996094 113.5625 139.449219 111.269531 129.078125 111.269531 C 118.507812 111.269531 113.882812 132.171875 137.039062 132.171875 C 171.03125 132.171875 165.957031 58.527344 119.125 58.527344 C 102.609375 58.527344 89.875 68.421875 84.261719 79.394531 C 69.585938 108.085938 92.1875 135.089844 108.460938 156.765625 C 115.160156 165.6875 127.085938 180.339844 127.085938 194.867188 Z M 127.085938 194.867188 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 40.503906 209.796875 C 40.503906 242.796875 66.988281 260.941406 92.191406 238.59375 L 93.246094 237.65625 C 111.351562 220.402344 109.277344 193.871094 102.207031 193.871094 C 93.765625 193.871094 73.960938 216.820312 75.59375 223.667969 C 76.457031 227.285156 77.941406 226.308594 80.710938 224.277344 C 86.605469 219.960938 85.988281 218.089844 92.253906 214.773438 C 92.253906 222.414062 91.652344 222.464844 88.074219 226.515625 C 84.527344 230.527344 80.019531 236.671875 70.605469 236.183594 C 50.4375 235.136719 49.980469 194.71875 65.640625 176.21875 C 68.105469 173.308594 74.070312 169.25 78.828125 168.546875 C 94.667969 166.207031 89.765625 187.917969 89.269531 193.871094 C 94.5 192.476562 101.210938 179.488281 101.210938 170.984375 C 101.210938 160.210938 96.863281 154.066406 82.300781 154.066406 C 56.199219 154.066406 40.503906 183.164062 40.503906 209.796875 Z M 40.503906 209.796875 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 225.609375 149.089844 C 233.023438 138.972656 249.914062 155.058594 239.542969 155.058594 C 234.367188 155.058594 233.914062 155.449219 229.480469 153.179688 C 224.671875 150.71875 227.484375 152.65625 225.609375 149.089844 Z M 227.601562 139.136719 C 228.457031 135.933594 227.964844 136.476562 230.726562 135.296875 C 236.007812 133.046875 240.128906 134.957031 242.527344 135.15625 C 242.527344 142.820312 243.421875 142.121094 233.570312 142.121094 C 229.886719 142.121094 229.074219 141.152344 227.601562 139.136719 Z M 222.625 138.140625 L 223.621094 144.113281 C 213.679688 146.765625 218.089844 159.039062 241.535156 159.039062 C 241.230469 172.640625 235.007812 199.609375 230.597656 210.800781 C 224.921875 225.214844 208.007812 256.90625 198.148438 271.902344 C 193.886719 278.382812 189.683594 284.765625 186.136719 291.734375 C 174.78125 314.0625 162.082031 348.292969 177.566406 372.289062 C 178.742188 374.109375 177.964844 373 178.835938 374.003906 C 178.835938 367.695312 176.847656 361.921875 176.847656 349.121094 C 176.847656 320.042969 191.992188 298.992188 205.707031 278.464844 C 226.9375 246.683594 248.386719 214.097656 252.328125 174.808594 L 253.035156 164.386719 C 253.84375 157.070312 253.101562 143.59375 252.210938 136.421875 C 251.453125 130.324219 252.433594 122.21875 246.507812 122.21875 C 242.632812 122.21875 243.035156 124.65625 242.5 128.238281 C 241.644531 133.957031 242.652344 131.363281 236.628906 131.238281 C 231.742188 131.136719 222.625 133.691406 222.625 138.140625 Z M 222.625 138.140625 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 154.953125 23.695312 C 160.53125 27.429688 158.410156 26.003906 166.332031 21.023438 C 169.371094 19.113281 173.371094 17.417969 170.992188 22.5625 C 168.816406 27.257812 162.949219 28.78125 159.613281 37.328125 C 150.332031 61.125 187.84375 70.316406 202.464844 58.269531 C 217.453125 45.917969 210.359375 23.695312 194.757812 23.695312 C 179.007812 23.695312 179.683594 37.15625 183.816406 41.597656 C 185.871094 43.808594 188.570312 44.054688 190.777344 45.589844 C 188.101562 46.210938 184.0625 48.574219 181.820312 48.574219 C 173.359375 48.574219 166.320312 42.496094 174.6875 31.488281 C 178.320312 26.707031 184.050781 19.191406 181.953125 12.707031 C 177.207031 -1.964844 155.691406 14.8125 154.949219 23.695312 Z M 154.953125 23.695312 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 263.429688 137.144531 C 277.121094 127.976562 277.375 125.203125 295.273438 125.203125 C 310.230469 125.203125 322.59375 143.375 312.628906 158.484375 C 308.695312 164.449219 309.160156 162.933594 304.46875 167.242188 C 302.890625 168.691406 302.085938 169.738281 300.519531 171.25 C 290.730469 180.703125 267.125 197.027344 258.179688 205.542969 C 255.167969 208.40625 252.695312 211.480469 250.488281 214.773438 C 255.339844 213.476562 277.640625 198.019531 283.753906 194.292969 C 289.738281 190.644531 294.511719 187.738281 299.96875 183.640625 C 305.230469 179.691406 310.828125 176.707031 315.445312 172.246094 C 346.207031 142.550781 326.726562 113.261719 292.289062 113.261719 C 282.390625 113.261719 279.058594 115.605469 272.957031 119.804688 C 267.3125 123.691406 263.429688 128.046875 263.429688 137.144531 Z M 263.429688 137.144531 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 300.25 238.65625 C 300.25 269.144531 327.570312 283.789062 355.152344 268.679688 C 379.113281 255.554688 369.84375 239.4375 356.195312 251.808594 C 349.597656 257.785156 335.132812 265.566406 326.507812 260.183594 C 312.523438 251.453125 325.152344 228.097656 311.199219 218.753906 C 303.808594 220.472656 300.25 229.625 300.25 238.65625 Z M 300.25 238.65625 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 176.847656 115.253906 C 176.847656 128.242188 228.574219 125.242188 249.839844 114.601562 C 272.980469 103.019531 265.429688 92.363281 259.449219 92.363281 C 244.214844 92.363281 244.40625 112.078125 186.804688 111.207031 C 182.25 111.140625 176.847656 110.960938 176.847656 115.253906 Z M 176.847656 115.253906 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 164.902344 92.363281 C 164.902344 111.253906 252.480469 98.828125 252.480469 76.4375 C 252.480469 72.074219 252.617188 67.738281 243.503906 70.363281 C 237.144531 72.191406 219.507812 89.847656 176.847656 89.378906 C 171.984375 89.328125 164.902344 87.835938 164.902344 92.363281 Z M 164.902344 92.363281 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 169.878906 68.476562 C 164.796875 68.476562 156.679688 67.613281 152.960938 68.476562 C 152.960938 73.179688 153.417969 76.457031 159.753906 78.605469 C 176.132812 84.148438 241.535156 76.34375 241.535156 52.554688 C 241.535156 48.867188 237.625 48.574219 234.566406 48.574219 C 226.671875 48.574219 211.621094 68.476562 169.878906 68.476562 Z M 169.878906 68.476562 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 329.109375 236.667969 C 329.109375 259.128906 357.972656 256.121094 357.972656 238.65625 C 357.972656 218.398438 329.109375 220.566406 329.109375 236.667969 Z M 329.109375 236.667969 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 193.765625 189.890625 C 200.230469 189.890625 199.234375 187.488281 201.726562 190.886719 L 193.765625 190.886719 Z M 191.773438 188.898438 L 192.070312 189.195312 C 192.050781 189.175781 191.675781 188.996094 191.773438 188.898438 Z M 187.792969 185.910156 C 184.339844 183.597656 181.820312 178.878906 181.820312 172.972656 C 184.597656 174.832031 186.054688 176.953125 189.785156 177.949219 C 187.433594 181.460938 187.792969 180.113281 187.792969 185.910156 Z M 204.710938 196.859375 C 206.402344 190.519531 214.496094 179.125 194.785156 168.96875 C 181.738281 162.246094 186.753906 164.015625 177.839844 158.046875 C 180.917969 169.5625 203.292969 169.855469 204.710938 186.90625 C 198.667969 179.953125 200.574219 178.765625 187.792969 171.980469 C 172.949219 164.097656 177.496094 159.183594 171.871094 155.058594 C 173.414062 161.691406 172.820312 163.117188 176.589844 168.253906 C 181.195312 174.523438 176.585938 189.628906 197.503906 194.117188 C 202.519531 195.191406 204.398438 196.746094 204.710938 196.859375 Z M 204.710938 196.859375 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 147.984375 228.703125 C 149.839844 235.644531 185.859375 267.71875 168.542969 234.023438 C 166.449219 229.953125 164.898438 226.484375 162.914062 222.734375 C 158.378906 223.945312 156.996094 228.503906 147.984375 228.703125 Z M 147.984375 228.703125 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 212.671875 193.871094 C 219.117188 189.148438 219.5 170.617188 207.425781 160.304688 C 200.457031 154.351562 183.320312 144.300781 174.855469 144.113281 C 177.667969 146.554688 178.816406 146.382812 182.121094 147.792969 C 188.234375 150.40625 197.308594 157.074219 201.980469 161.769531 C 205.878906 165.695312 209.054688 168.660156 211.300781 174.34375 C 214.785156 183.167969 213.425781 184.824219 212.671875 193.871094 Z M 212.671875 193.871094 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 138.035156 216.761719 L 138.035156 220.742188 C 141.941406 221.070312 141.851562 221.519531 145.996094 227.710938 C 151.332031 225.148438 147.796875 228.214844 161.917969 220.742188 C 161.480469 215.476562 159.953125 218.484375 161.980469 213.820312 C 163.789062 209.648438 164.261719 213.59375 162.914062 207.804688 C 155.648438 209.746094 158.964844 216.761719 138.035156 216.761719 Z M 138.035156 216.761719 " fill-opacity="1" fill-rule="evenodd"/><path fill="var(--primary)" d="M 212.671875 193.871094 L 211.675781 193.871094 L 212.507812 195.035156 Z M 212.671875 193.871094 " fill-opacity="1" fill-rule="evenodd"/></svg>
+          
+          <p class="blessing-text" data-aos="fade-up">With the blessings of the Almighty & our respected elders, we joyfully request your gracious presence on the wedding celebration of</p>
+          
+          <div class="parents-section">
+            <div class="parent-block" data-aos="fade-right">
+              <h3>Sourabh</h3>
+              <p>Son of Mr. Kamlesh M Mehra & Mrs. Madhu Mehra</p>
+              <span>(Grandson of Late Shri Motilalji Mehra & Late Smt. Jayawanti)</span>
+            </div>
+            <div class="parent-block" data-aos="fade-left">
+              <h3>Tejaswini</h3>
+              <p>Daughter of Mr. Kedar M Ghasari & Mrs. Shail Ghasari</p>
+              <span>(Granddaughter of Late Shri Marutrao Ghasari & Smt. Chanda, Smt. Ranjana)</span>
+            </div>
           </div>
-          <div class="parent-block" data-aos="fade-left">
-            <h3>Tejaswini</h3>
-            <p>Daughter of Mr. Kedar M Ghasari & Mrs. Shail Ghasari</p>
-            <span>(Granddaughter of Late Shri Marutrao Ghasari & Smt. Chanda, Smt. Ranjana)</span>
+  
+          <div class="scroll-down-indicator" id="scroll-down-indicator" onclick="document.querySelector('.scratch-sec').scrollIntoView({ behavior: 'smooth' })">
+            <span>Scroll Down</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
           </div>
-        </div>
-
-        <div class="scroll-down-indicator" id="scroll-down-indicator" onclick="document.querySelector('.scratch-sec').scrollIntoView({ behavior: 'smooth' })">
-          <span>Scroll Down</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-          </svg>
         </div>
       </section>
 
@@ -525,24 +538,24 @@
       <section class="section scratch-sec">
         <p class="section-subtitle" data-aos="fade-down">SAVE THE DATE</p>
         <h2 class="section-title script" data-aos="zoom-in">Reveal Our<br>Big Day</h2>
-        <p class="subtext" data-aos="fade-up">Scratch the hearts to reveal</p>
+        <p class="subtext" data-aos="fade-up">Scratch the boxes to reveal</p>
         
         <div class="scratch-wrap" data-aos="fade-up" data-aos-delay="200">
-          <div class="scratch-item">
+          <div class="scratch-item" id="item-day">
             <div class="scratch-content">
               <span class="lbl">DAY</span>
               <span class="val">08</span>
             </div>
             <canvas id="sc-day"></canvas>
           </div>
-          <div class="scratch-item">
+          <div class="scratch-item" id="item-month">
             <div class="scratch-content">
               <span class="lbl">MONTH</span>
               <span class="val">May</span>
             </div>
             <canvas id="sc-month"></canvas>
           </div>
-          <div class="scratch-item">
+          <div class="scratch-item" id="item-year">
             <div class="scratch-content">
               <span class="lbl">YEAR</span>
               <span class="val">2026</span>
@@ -554,7 +567,7 @@
 
       <!-- 4. COUNTDOWN -->
       <section class="section countdown-sec">
-        <h2 class="section-title script" data-aos="fade-down" style="font-size: 2.5rem;">The start of a beautiful<br>journey...</h2>
+        <h2 class="section-title script" data-aos="fade-down">The start of a beautiful<br>journey...</h2>
         <div class="cd-grid">
           <div class="cd-box" data-aos="zoom-in" data-aos-delay="100">
             <span class="cd-num" id="cd-d">00</span><span class="cd-lbl">DAYS</span>
@@ -572,15 +585,14 @@
       </section>
 
       <!-- 5. CAROUSEL -->
-      <section class="section carousel-sec" style="text-align: center;">
+      <section class="section carousel-sec">
         <p class="section-subtitle" data-aos="fade-down">A GLIMPSE OF US</p>
         <h2 class="section-title script" data-aos="zoom-in">Our Beautiful<br>Moments</h2>
         
         <div class="swiper mySwiper" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
-            <!-- Moments images (duplicated for infinite cards loop) -->
             <div class="swiper-slide">
-              <img src="images/WeddingGlimphs1.webp" alt="Couple Moment 1" loading="lazy">
+              <img src="images/WeddingGlimphs1.webp" alt="Couple Moment 1" loading="eager" fetchpriority="high">
             </div>
             <div class="swiper-slide">
               <img src="images/WeddingGlimphs2.webp" alt="Couple Moment 2" loading="lazy">
@@ -606,190 +618,199 @@
         <p class="section-subtitle" data-aos="fade-down">THE CELEBRATION UNFOLDS</p>
         <h2 class="section-title script" data-aos="zoom-in">Sacred<br>Ceremonies</h2>
         
-        <!-- Sangeet -->
-        <div class="event-card" data-aos="fade-up">
-          <div class="event-header">
-            <p class="e-date">07TH MAY, 2026</p>
-            <h3 class="e-title script">Sangeet</h3>
-          </div>
-          <div class="event-bg-wrap">
-            <video class="event-video" autoplay loop muted playsinline disablePictureInPicture preload="none">
-              <source src="images/Sangeet.webm" type="video/webm">
-            </video>
-            <div class="event-overlay">
-              <div class="event-overlay-text">
-                <h4>Sangeet</h4>
-                <p>Thursday | 07 | May 2026<br>8:00 PM Onwards</p>
+        <div class="events-grid">
+          <!-- Sangeet -->
+          <div class="event-card" data-aos="fade-up">
+            <div class="event-header">
+              <p class="e-date">07TH MAY, 2026</p>
+              <h3 class="e-title script">Sangeet</h3>
+            </div>
+            <div class="event-bg-wrap">
+              <video class="event-video" autoplay loop muted playsinline disablePictureInPicture preload="auto">
+                <source src="images/Sangeet.webm" type="video/webm">
+              </video>
+              <div class="event-overlay">
+                <div class="event-overlay-text">
+                  <h4>Sangeet</h4>
+                  <p>Thursday | 07 | May 2026<br>8:00 PM Onwards</p>
+                </div>
               </div>
             </div>
+            <div class="event-info">
+              <p>Venue: Woodrow Banquets and Hotel,<br>Belagavi</p>
+              <a href="#" class="btn-outline">VIEW ON MAPS</a>
+            </div>
           </div>
-          <div class="event-info">
-            <p>Venue: Woodrow Banquets and Hotel,<br>Belagavi</p>
-            <a href="#" class="btn-outline">VIEW ON MAPS</a>
-          </div>
-        </div>
 
-        <!-- Marriage -->
-        <div class="event-card" data-aos="fade-up">
-          <div class="event-header">
-            <p class="e-date">08TH MAY, 2026</p>
-            <h3 class="e-title script">Marriage</h3>
-          </div>
-          <div class="event-bg-wrap">
-            <video class="event-video" autoplay loop muted playsinline disablePictureInPicture preload="none">
-              <source src="images/Wedding.webm" type="video/webm">
-            </video>
-            <div class="event-overlay">
-              <div class="event-overlay-text">
-                <h4>Wedding Ceremony</h4>
-                <p>Friday | 08 | May 2026<br>9:00 AM Onwards</p>
+          <!-- Marriage -->
+          <div class="event-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="event-header">
+              <p class="e-date">08TH MAY, 2026</p>
+              <h3 class="e-title script">Marriage</h3>
+            </div>
+            <div class="event-bg-wrap">
+              <video class="event-video" autoplay loop muted playsinline disablePictureInPicture preload="auto">
+                <source src="images/Wedding.webm" type="video/webm">
+              </video>
+              <div class="event-overlay">
+                <div class="event-overlay-text">
+                  <h4>Wedding Ceremony</h4>
+                  <p>Friday | 08 | May 2026<br>9:00 AM Onwards</p>
+                </div>
               </div>
             </div>
+            <div class="event-info">
+              <p>Venue: The Grand Palace,<br>Belagavi</p>
+              <a href="#" class="btn-outline">VIEW ON MAPS</a>
+            </div>
           </div>
-          <div class="event-info">
-            <p>Venue: The Grand Palace,<br>Belagavi</p>
-            <a href="#" class="btn-outline">VIEW ON MAPS</a>
-          </div>
-        </div>
 
-        <!-- Reception -->
-        <div class="event-card" data-aos="fade-up">
-          <div class="event-header">
-            <p class="e-date">10TH MAY, 2026</p>
-            <h3 class="e-title script">Reception</h3>
-          </div>
-          <div class="event-bg-wrap">
-            <video class="event-video" autoplay loop muted playsinline disablePictureInPicture preload="none">
-              <source src="images/Reception.webm" type="video/webm">
-            </video>
-            <div class="event-overlay">
-              <div class="event-overlay-text">
-                <h4>Reception</h4>
-                <p>Sunday | 10 | May 2026<br>7:00 PM Onwards</p>
+          <!-- Reception -->
+          <div class="event-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="event-header">
+              <p class="e-date">10TH MAY, 2026</p>
+              <h3 class="e-title script">Reception</h3>
+            </div>
+            <div class="event-bg-wrap">
+              <video class="event-video" autoplay loop muted playsinline disablePictureInPicture preload="auto">
+                <source src="images/Reception.webm" type="video/webm">
+              </video>
+              <div class="event-overlay">
+                <div class="event-overlay-text">
+                  <h4>Reception</h4>
+                  <p>Sunday | 10 | May 2026<br>7:00 PM Onwards</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="event-info">
-            <p>Venue: Woodrow Banquets and Hotel,<br>Belagavi</p>
-            <a href="#" class="btn-outline">VIEW ON MAPS</a>
+            <div class="event-info">
+              <p>Venue: Woodrow Banquets and Hotel,<br>Belagavi</p>
+              <a href="#" class="btn-outline">VIEW ON MAPS</a>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- 7. RSVP FORM -->
-      <section class="section rsvp-sec" style="text-align: center;">
-        <p class="section-subtitle" data-aos="fade-down">JOIN THE CELEBRATION</p>
-        <h2 class="section-title script" data-aos="zoom-in">Celebrate<br>With Us</h2>
-        <p class="subtext" data-aos="fade-up">A few fun questions before the big day!</p>
-        
-        <form id="rsvpForm" class="rsvp-form" onsubmit="event.preventDefault(); sendNewOneRSVP(); return false;" novalidate>
-          <!-- Professional Alert Warning Badge -->
-          <div id="rsvp-alert" class="custom-alert-box" style="display: none;">
-            <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="currentColor" class="custom-alert-icon">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-            </svg>
-            <span id="rsvp-alert-text">Please provide your Full Name and Phone Number.</span>
-            <button type="button" class="custom-alert-close" onclick="closeRSVPAlert()">&times;</button>
-          </div>
+      <section class="section rsvp-sec">
+        <div class="rsvp-container">
+          <p class="section-subtitle" data-aos="fade-down">JOIN THE CELEBRATION</p>
+          <h2 class="section-title script" data-aos="zoom-in">Celebrate<br>With Us</h2>
+          <p class="subtext" data-aos="fade-up" style="text-align: center; margin-bottom: 30px;">A few fun questions before the big day!</p>
           
-          <div class="form-card" data-aos="fade-up">
-            <label class="form-label">Guest Details</label>
-            <input type="text" id="fn" class="input-field" placeholder="FULL NAME *" required>
-            <input type="tel" id="pn" class="input-field" placeholder="PHONE NUMBER *" required>
-          </div>
-          
-          <div class="form-card" data-aos="fade-up">
-            <label class="form-label">Will you join us?</label>
-            <div class="toggle-group">
-              <label class="toggle-btn">
-                <input type="radio" name="attending" value="Joyfully Accept" checked>
-                <span class="btn-text">JOYFULLY ACCEPT</span>
-              </label>
-              <label class="toggle-btn">
-                <input type="radio" name="attending" value="Regretfully Decline">
-                <span class="btn-text">REGRETFULLY DECLINE</span>
-              </label>
+          <form id="rsvpForm" class="rsvp-form" onsubmit="event.preventDefault(); sendNewOneRSVP(); return false;" novalidate>
+            <!-- Professional Alert Warning Badge -->
+            <div id="rsvp-alert" class="custom-alert-box" style="display: none;">
+              <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="currentColor" class="custom-alert-icon">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              </svg>
+              <span id="rsvp-alert-text">Please provide your Full Name and Phone Number.</span>
+              <button type="button" class="custom-alert-close" onclick="closeRSVPAlert()">&times;</button>
             </div>
-          </div>
-          
-          <div class="form-card" data-aos="fade-up" id="partySizeBlock">
-            <label class="form-label">Party Size<br><small>Including yourself, how many guests?</small></label>
-            <select id="partySize" class="input-field">
-              <option value="1">1 (Just me)</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5+">5+</option>
-            </select>
-          </div>
-          
-          <div class="form-card" data-aos="fade-up" id="eventsBlock">
-            <label class="form-label">Events You'll Attend<br><small>Select the days you will be joining us</small></label>
-            <div class="checkbox-group">
-              <label class="chk-label">
-                <input type="checkbox" name="events" value="Sangeet" checked>
-                <div class="chk-text"><strong>Sangeet</strong><span>07th May 2026</span></div>
-              </label>
-              <label class="chk-label">
-                <input type="checkbox" name="events" value="Marriage" checked>
-                <div class="chk-text"><strong>Marriage</strong><span>08th May 2026</span></div>
-              </label>
-              <label class="chk-label">
-                <input type="checkbox" name="events" value="Reception">
-                <div class="chk-text"><strong>Reception</strong><span>10th May 2026</span></div>
-              </label>
+            
+            <div class="form-grid">
+              
+              <div class="form-card full-col" data-aos="fade-up">
+                <label class="form-label">Guest Details</label>
+                <div class="form-grid">
+                  <input type="text" id="fn" class="input-field" placeholder="FULL NAME *" required>
+                  <input type="tel" id="pn" class="input-field" placeholder="PHONE NUMBER *" required>
+                </div>
+              </div>
+              
+              <div class="form-card" data-aos="fade-up">
+                <label class="form-label">Will you join us?</label>
+                <div class="toggle-group">
+                  <label class="toggle-btn">
+                    <input type="radio" name="attending" value="Joyfully Accept" checked>
+                    <span class="btn-text">JOYFULLY ACCEPT</span>
+                  </label>
+                  <label class="toggle-btn">
+                    <input type="radio" name="attending" value="Regretfully Decline">
+                    <span class="btn-text">REGRETFULLY DECLINE</span>
+                  </label>
+                </div>
+              </div>
+              
+              <div class="form-card" data-aos="fade-up" id="partySizeBlock">
+                <label class="form-label">Party Size<br><small>Including yourself, how many guests?</small></label>
+                <select id="partySize" class="input-field">
+                  <option value="1">1 (Just me)</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5+">5+</option>
+                </select>
+              </div>
+              
+              <div class="form-card full-col" data-aos="fade-up" id="eventsBlock">
+                <label class="form-label">Events You'll Attend<br><small>Select the days you will be joining us</small></label>
+                <div class="form-grid">
+                  <label class="chk-label">
+                    <input type="checkbox" name="events" value="Sangeet" checked>
+                    <div class="chk-text"><strong>Sangeet</strong><span>07th May 2026</span></div>
+                  </label>
+                  <label class="chk-label">
+                    <input type="checkbox" name="events" value="Marriage" checked>
+                    <div class="chk-text"><strong>Marriage</strong><span>08th May 2026</span></div>
+                  </label>
+                  <label class="chk-label" style="grid-column: 1 / -1; max-width: 50%;">
+                    <input type="checkbox" name="events" value="Reception">
+                    <div class="chk-text"><strong>Reception</strong><span>10th May 2026</span></div>
+                  </label>
+                </div>
+              </div>
+  
+              <div class="form-card full-col" data-aos="fade-up">
+                <label class="form-label" style="text-align: center;">Make a Guess<br><small>Who will get emotional first?</small></label>
+                <div class="guess-group" style="max-width: 500px; margin: 0 auto;">
+                  <label class="guess-item">
+                    <input type="radio" name="emotional" value="Sourabh">
+                    <div class="circle">S</div>
+                    <span class="label">SOURABH</span>
+                  </label>
+                  <label class="guess-item">
+                    <input type="radio" name="emotional" value="Tejaswini">
+                    <div class="circle">T</div>
+                    <span class="label">TEJASWINI</span>
+                  </label>
+                  <label class="guess-item">
+                    <input type="radio" name="emotional" value="Both">
+                    <div class="circle">B</div>
+                    <span class="label">BOTH</span>
+                  </label>
+                </div>
+              </div>
+  
+              <div class="form-card" data-aos="fade-up">
+                <label class="form-label">Your Wedding Mood<br><small>I'm coming for...</small></label>
+                <div class="pill-group">
+                  <label class="pill"><input type="radio" name="mood" value="The Food"><span class="pill-text">THE FOOD 🥘</span></label>
+                  <label class="pill"><input type="radio" name="mood" value="Dance Floor"><span class="pill-text">DANCE FLOOR 💃</span></label>
+                  <label class="pill"><input type="radio" name="mood" value="The Love"><span class="pill-text">THE LOVE ❤️</span></label>
+                  <label class="pill"><input type="radio" name="mood" value="All of it"><span class="pill-text">ALL OF IT ✨</span></label>
+                </div>
+              </div>
+  
+              <div class="form-card" data-aos="fade-up">
+                <label class="form-label">Leave Us a Note<br><small>Share a wish or memory</small></label>
+                <textarea id="note" class="input-field" placeholder="Write something from the heart..."></textarea>
+              </div>
+              
+              <div class="form-card full-col" data-aos="fade-up">
+                <label class="form-label">Words for Forever<br><small>Advice for married life</small></label>
+                <textarea id="advice" class="input-field" placeholder="One piece of advice..."></textarea>
+              </div>
+  
+              <button type="button" class="submit-btn full-col" onclick="sendNewOneRSVP()" data-aos="fade-up">SEND LOVE</button>
             </div>
-          </div>
-
-          <div class="form-card" data-aos="fade-up">
-            <label class="form-label">Make a Guess<br><small>Who will get emotional first?</small></label>
-            <div class="guess-group">
-              <label class="guess-item">
-                <input type="radio" name="emotional" value="Sourabh">
-                <div class="circle">S</div>
-                <span class="label">SOURABH</span>
-              </label>
-              <label class="guess-item">
-                <input type="radio" name="emotional" value="Tejaswini">
-                <div class="circle">T</div>
-                <span class="label">TEJASWINI</span>
-              </label>
-              <label class="guess-item">
-                <input type="radio" name="emotional" value="Both">
-                <div class="circle">B</div>
-                <span class="label">BOTH</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="form-card" data-aos="fade-up">
-            <label class="form-label">Your Wedding Mood<br><small>I'm coming for...</small></label>
-            <div class="pill-group two-col">
-              <label class="pill"><input type="radio" name="mood" value="The Food"><span class="pill-text">THE FOOD 🥘</span></label>
-              <label class="pill"><input type="radio" name="mood" value="Dance Floor"><span class="pill-text">DANCE FLOOR 💃</span></label>
-              <label class="pill"><input type="radio" name="mood" value="The Love"><span class="pill-text">THE LOVE ❤️</span></label>
-              <label class="pill"><input type="radio" name="mood" value="All of it"><span class="pill-text">ALL OF IT ✨</span></label>
-            </div>
-          </div>
-
-          <div class="form-card" data-aos="fade-up">
-            <label class="form-label">Leave Us a Note<br><small>Share a wish or memory</small></label>
-            <textarea id="note" class="input-field" placeholder="Write something from the heart..."></textarea>
-          </div>
-          
-          <div class="form-card" data-aos="fade-up">
-            <label class="form-label">Words for Forever<br><small>Advice for married life</small></label>
-            <textarea id="advice" class="input-field" placeholder="One piece of advice..."></textarea>
-          </div>
-
-          <button type="button" class="submit-btn" onclick="sendNewOneRSVP()" data-aos="fade-up">SEND LOVE</button>
-        </form>
+          </form>
+        </div>
       </section>
 
       <!-- 8. FOOTER -->
       <footer class="footer">
         <h2 class="script">Sourabh & Tejaswini</h2>
-        <p>MAY 2026  ·  BELAGAVI</p>
+        <p>MAY 2026 &nbsp;·&nbsp; BELAGAVI</p>
         <p class="sign-off">Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" style="color: inherit; text-decoration: underline;">Invite&nbsp;Box</a></p>
       </footer>
 
@@ -800,6 +821,40 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
+    /* ══════════════════════════════════
+       RESPONSIVE VIDEO / POSTER SWITCHING
+    ══════════════════════════════════ */
+    let isCurtainOpened = false;
+    const MOBILE_VIDEO_SRC   = "images/Envelopopen.webm"; // Placeholder for mobile if different
+    const DESKTOP_VIDEO_SRC  = "https://res.cloudinary.com/dticzwbrv/video/upload/v1788321178/Invelop_Desktop_wzhcvs.mp4"; // Desktop specific video can go here
+    const MOBILE_POSTER_SRC  = "images/invelopThumb.webp";
+    const DESKTOP_POSTER_SRC = "images/Envelopopen_Desktop.webp"; // Desktop poster
+
+    function updateVideoSourceAndPoster() {
+      if (isCurtainOpened) return;
+      const video = document.getElementById('curtain-video');
+      if (!video) return;
+
+      const isMobile     = window.innerWidth < 768;
+      const targetSrc    = isMobile ? MOBILE_VIDEO_SRC : DESKTOP_VIDEO_SRC;
+      const targetPoster = isMobile ? MOBILE_POSTER_SRC : DESKTOP_POSTER_SRC;
+
+      if (video.getAttribute('data-active-src') !== targetSrc) {
+        video.setAttribute('data-active-src', targetSrc);
+        video.src = targetSrc;
+        video.load();
+      }
+      if (video.getAttribute('poster') !== targetPoster) {
+        video.setAttribute('poster', targetPoster);
+      }
+    }
+
+    // Immediate execution for instant poster & src matching
+    updateVideoSourceAndPoster();
+    window.addEventListener('DOMContentLoaded', updateVideoSourceAndPoster);
+    window.addEventListener('resize', updateVideoSourceAndPoster);
+
+
     /* ══════════════════════════════════
        AOS (IntersectionObserver)
     ══════════════════════════════════ */
@@ -830,23 +885,28 @@
     /* ══════════════════════════════════
        VIDEO CURTAIN LOGIC
     ══════════════════════════════════ */
-    let curtainOpened = false;
     function openCurtains() {
-      if (curtainOpened) return;
-      curtainOpened = true;
+      if (isCurtainOpened) return;
+      isCurtainOpened = true;
       
       const layer = document.getElementById('curtain-layer');
       const video = document.getElementById('curtain-video');
       const tapOverlay = document.querySelector('.tap-overlay');
       const audio = document.getElementById('bg-music');
       
-      tapOverlay.style.display = 'none';
-      video.play().catch(e => console.log('Video play failed', e));
-      audio.play().catch(e => console.log('Audio play failed', e));
-      
-      // Update Audio Icon
-      document.getElementById('icon-muted').style.display = 'none';
-      document.getElementById('icon-unmuted').style.display = 'block';
+      if (tapOverlay) tapOverlay.style.display = 'none';
+      if (video && !video.src) updateVideoSourceAndPoster();
+
+      if (audio) {
+        audio.play().catch(e => console.log('Audio play failed', e));
+        document.getElementById('icon-muted').style.display = 'none';
+        document.getElementById('icon-unmuted').style.display = 'block';
+      }
+
+      if (video) {
+        video.muted = true; // Kept muted for auto-play compatibility on click bypass
+        video.play().catch(e => console.log('Video play failed', e));
+      }
 
       let revealed = false;
       const revealContent = () => {
@@ -854,25 +914,28 @@
         revealed = true;
 
         const mainContent = document.getElementById('main-content');
-        mainContent.style.display = 'block';
-        mainContent.style.transition = 'none';
-        mainContent.style.opacity = '1';
+        if (mainContent) {
+          mainContent.style.display = 'block';
+          mainContent.style.transition = 'none';
+          mainContent.style.opacity = '1';
+        }
+        
         initAOS();
         if (typeof swiper !== 'undefined' && swiper.autoplay) {
           swiper.update();
           swiper.autoplay.start();
         }
 
-        layer.style.opacity = '0';
+        if (layer) layer.classList.add('fading');
 
-        // Wait full 1.5s until fade-out is 100% finished before hiding layer or pausing video
+        // Wait 1.5s until fade-out is 100% finished
         setTimeout(() => {
-          layer.style.display = 'none';
+          if (layer) layer.style.display = 'none';
           document.body.classList.add('unlocked');
           const scrollIndicator = document.getElementById('scroll-down-indicator');
           if (scrollIndicator) scrollIndicator.classList.add('visible');
           try { video.pause(); } catch(e) {}
-          initAOS();
+          resizeScratchCanvas(); // Make sure scratch canvases are drawn
         }, 1500);
       };
 
@@ -887,14 +950,14 @@
         }
       });
 
-      // Trigger fade 1.5s before video ends so it plays continuously during full 1.5s fade
-      video.ontimeupdate = () => {
-        if (video.duration && video.currentTime >= video.duration - 1.5) {
-          revealContent();
-        }
-      };
-
-      video.onended = revealContent;
+      if (video) {
+        video.ontimeupdate = () => {
+          if (video.duration && video.currentTime >= video.duration - 1.5) {
+            revealContent();
+          }
+        };
+        video.onended = revealContent;
+      }
 
       // Safety timeout in case video loading fails
       setTimeout(() => {
@@ -949,120 +1012,145 @@
     /* ══════════════════════════════════
        PARTICLE ANIMATION (PETALS)
     ══════════════════════════════════ */
-    const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = document.getElementById('app').offsetWidth;
-    canvas.height = window.innerHeight;
+    const pCanvas = document.getElementById('particles-canvas');
+    if (pCanvas) {
+      const ctx = pCanvas.getContext('2d');
+      pCanvas.width = window.innerWidth;
+      pCanvas.height = window.innerHeight;
 
-    const particlesArray = [];
-    const numberOfParticles = 35;
+      const particlesArray = [];
+      const numberOfParticles = 35;
 
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 4 + 2;
-        this.speedY = Math.random() * 1.5 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 1;
-        this.angle = Math.random() * 360;
-        this.spin = (Math.random() - 0.5) * 4;
-        this.color = Math.random() > 0.5 ? 'rgba(181, 101, 93, 0.4)' : 'rgba(209, 141, 130, 0.4)';
-      }
-      update() {
-        this.y += this.speedY;
-        this.x += this.speedX;
-        this.angle += this.spin;
-        if (this.y > canvas.height) {
-          this.y = -10;
-          this.x = Math.random() * canvas.width;
+      class Particle {
+        constructor() {
+          this.x = Math.random() * pCanvas.width;
+          this.y = Math.random() * pCanvas.height;
+          this.size = Math.random() * 4 + 2;
+          this.speedY = Math.random() * 1.5 + 0.5;
+          this.speedX = (Math.random() - 0.5) * 1;
+          this.angle = Math.random() * 360;
+          this.spin = (Math.random() - 0.5) * 4;
+          this.color = Math.random() > 0.5 ? 'rgba(181, 101, 93, 0.4)' : 'rgba(209, 141, 130, 0.4)';
+        }
+        update() {
+          this.y += this.speedY;
+          this.x += this.speedX;
+          this.angle += this.spin;
+          if (this.y > pCanvas.height) {
+            this.y = -10;
+            this.x = Math.random() * pCanvas.width;
+          }
+        }
+        draw() {
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.angle * Math.PI / 180);
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
         }
       }
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle * Math.PI / 180);
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        // Draw petal shape
-        ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-    }
 
-    function initParticles() {
-      for (let i = 0; i < numberOfParticles; i++) {
-        particlesArray.push(new Particle());
-      }
-    }
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-        particlesArray[i].draw();
-      }
-      requestAnimationFrame(animateParticles);
-    }
-    initParticles();
-    animateParticles();
+      for (let i = 0; i < numberOfParticles; i++) particlesArray.push(new Particle());
 
-    window.addEventListener('resize', () => {
-      canvas.width = document.getElementById('app').offsetWidth;
-      canvas.height = window.innerHeight;
-    });
+      function animateParticles() {
+        ctx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        for (let i = 0; i < particlesArray.length; i++) {
+          particlesArray[i].update();
+          particlesArray[i].draw();
+        }
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+
+      window.addEventListener('resize', () => {
+        pCanvas.width = window.innerWidth;
+        pCanvas.height = window.innerHeight;
+      });
+    }
 
     /* ══════════════════════════════════
-       SCRATCH CARDS
+       SCRATCH CARDS (Dynamic Resize)
     ══════════════════════════════════ */
+    const scratchData = {
+      'sc-day': { cleared: false },
+      'sc-month': { cleared: false },
+      'sc-year': { cleared: false }
+    };
+
+    function drawScratchOverlay(canvas, ctx, width, height) {
+      ctx.fillStyle = '#b5655d';
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = '#ffffff';
+      // Responsive font size for scratch overlay
+      const fontSize = Math.max(10, Math.floor(width * 0.12)); 
+      ctx.font = `500 ${fontSize}px Montserrat`;
+      ctx.textAlign = 'center';
+      ctx.fillText('SCRATCH', width/2, height/2 + (fontSize/3));
+    }
+
+    function resizeScratchCanvas() {
+      ['sc-day','sc-month','sc-year'].forEach(function(id) {
+        if (scratchData[id].cleared) return; // Don't redraw if already cleared
+        const c = document.getElementById(id);
+        const wrapper = c.closest('.scratch-item');
+        if (!c || !wrapper) return;
+        
+        const rect = wrapper.getBoundingClientRect();
+        c.width = rect.width;
+        c.height = rect.height;
+        
+        const cx = c.getContext('2d');
+        cx.globalCompositeOperation = 'source-over';
+        drawScratchOverlay(c, cx, rect.width, rect.height);
+      });
+    }
+
+    window.addEventListener('resize', resizeScratchCanvas);
+
     ['sc-day','sc-month','sc-year'].forEach(function(id) {
       const c = document.getElementById(id);
-      const cx = c.getContext('2d');
-      c.width = 90; c.height = 90;
-      
-      // Draw Cover
-      cx.fillStyle = '#b5655d';
-      cx.fillRect(0, 0, 90, 90);
-      
-      cx.fillStyle = '#ffffff';
-      cx.font = '500 11px Montserrat';
-      cx.textAlign = 'center';
-      cx.fillText('SCRATCH', 45, 50);
-
-      let isDrawing = false, isCleared = false;
+      let isDrawing = false;
       
       function scratch(e) {
-        if (!isDrawing || isCleared) return;
+        if (!isDrawing || scratchData[id].cleared) return;
         e.preventDefault();
         const rect = c.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const cx = c.getContext('2d');
         
         cx.globalCompositeOperation = 'destination-out';
         cx.beginPath();
-        cx.arc(clientX - rect.left, clientY - rect.top, 15, 0, Math.PI*2);
+        // Responsive brush size based on canvas width
+        const brushSize = Math.max(15, rect.width * 0.2); 
+        cx.arc(clientX - rect.left, clientY - rect.top, brushSize, 0, Math.PI*2);
         cx.fill();
       }
       
       function checkClear() {
-        if (isCleared) return;
-        const data = cx.getImageData(0,0,90,90).data;
+        if (scratchData[id].cleared) return;
+        const cx = c.getContext('2d');
+        const data = cx.getImageData(0,0,c.width,c.height).data;
         let transparent = 0;
         for (let i = 3; i < data.length; i+=4) {
           if (data[i] === 0) transparent++;
         }
-        if (transparent / (90*90) > 0.5) {
-          cx.clearRect(0,0,90,90);
-          isCleared = true;
+        if (transparent / (c.width * c.height) > 0.5) {
+          cx.clearRect(0,0,c.width,c.height);
+          scratchData[id].cleared = true;
           c.style.display = 'none';
         }
       }
 
-      c.addEventListener('mousedown', e => { if(!isCleared){ isDrawing=true; scratch(e); } });
+      c.addEventListener('mousedown', e => { if(!scratchData[id].cleared){ isDrawing=true; scratch(e); } });
       c.addEventListener('mousemove', scratch);
       c.addEventListener('mouseup', () => { isDrawing=false; checkClear(); });
       c.addEventListener('mouseleave', () => { isDrawing=false; checkClear(); });
       
-      c.addEventListener('touchstart', e => { if(!isCleared){ isDrawing=true; scratch(e); } }, {passive:false});
+      c.addEventListener('touchstart', e => { if(!scratchData[id].cleared){ isDrawing=true; scratch(e); } }, {passive:false});
       c.addEventListener('touchmove', scratch, {passive:false});
       c.addEventListener('touchend', () => { isDrawing=false; checkClear(); });
     });
@@ -1070,38 +1158,63 @@
     /* ══════════════════════════════════
        COUNTDOWN
     ══════════════════════════════════ */
-    const targetDate = new Date("May 08, 2026 09:00:00").getTime();
-    setInterval(function() {
+    // Future wedding date
+    const targetDate = new Date("Dec 18, 2026 09:00:00").getTime();
+    function updateCountdown() {
       const dist = Math.max(0, targetDate - Date.now());
-      document.getElementById('cd-d').innerText = Math.floor(dist/86400000).toString().padStart(2,'0');
-      document.getElementById('cd-h').innerText = Math.floor((dist%86400000)/3600000).toString().padStart(2,'0');
-      document.getElementById('cd-m').innerText = Math.floor((dist%3600000)/60000).toString().padStart(2,'0');
-      document.getElementById('cd-s').innerText = Math.floor((dist%60000)/1000).toString().padStart(2,'0');
-    }, 1000);
+      const dEl = document.getElementById('cd-d');
+      if(dEl) {
+        dEl.innerText = Math.floor(dist/86400000).toString().padStart(2,'0');
+        document.getElementById('cd-h').innerText = Math.floor((dist%86400000)/3600000).toString().padStart(2,'0');
+        document.getElementById('cd-m').innerText = Math.floor((dist%3600000)/60000).toString().padStart(2,'0');
+        document.getElementById('cd-s').innerText = Math.floor((dist%60000)/1000).toString().padStart(2,'0');
+      }
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
     /* ══════════════════════════════════
-       CAROUSEL (SWIPER)
+       CAROUSEL (SWIPER) - Responsive Breakpoints
     ══════════════════════════════════ */
-    const swiper = new Swiper('.mySwiper', {
-      effect: 'cards',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      loop: true,
-      loopedSlides: 3,
-      observer: true,
-      observeParents: true,
-      autoplay: {
-        delay: 2500,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: false,
-      },
-    });
+    let mySwiper = null;
+    function initSwiper() {
+      const isDesktop = window.innerWidth >= 768;
+      const currentEffect = isDesktop ? 'slide' : 'cards';
+      
+      if (mySwiper) {
+        if (mySwiper.params.effect === currentEffect) {
+          // If effect hasn't changed, let swiper's own breakpoints handle it (only applies for slide)
+          return;
+        }
+        // Effect changed, destroy and recreate
+        mySwiper.destroy(true, true);
+      }
+      
+      mySwiper = new Swiper('.mySwiper', {
+        effect: currentEffect,
+        grabCursor: true,
+        loop: true,
+        centeredSlides: !isDesktop,
+        slidesPerView: isDesktop ? (window.innerWidth >= 1024 ? 3 : 2) : 'auto',
+        spaceBetween: isDesktop ? 30 : 0,
+        observer: true,
+        observeParents: true,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }
+      });
+    }
+
+    // Initialize on load
+    window.addEventListener('load', initSwiper);
+    // Re-evaluate on resize
+    window.addEventListener('resize', initSwiper);
 
     /* ══════════════════════════════════
        RSVP FORM & WHATSAPP
     ══════════════════════════════════ */
-    // Hide extra fields if declining
     const attendingRadios = document.querySelectorAll('input[name="attending"]');
     const pSizeBlock = document.getElementById('partySizeBlock');
     const eventsBlock = document.getElementById('eventsBlock');
@@ -1170,7 +1283,7 @@
       if(note) txt += `\n*Note:* ${note}\n`;
       if(advice) txt += `*Advice:* ${advice}\n`;
       
-      const ph = '918200482291'; // Original number from old file
+      const ph = '918200482291';
       const base = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 'https://api.whatsapp.com/send' : 'https://web.whatsapp.com/send';
       
       window.open(base + '?phone=' + ph + '&text=' + encodeURIComponent(txt), '_blank');
@@ -1179,10 +1292,8 @@
       if (form) form.reset();
     };
 
-
-
     /* ══════════════════════════════════
-       TIMELINE EVENT VIDEO OVERLAYS (2s Fade Out)
+       TIMELINE EVENT VIDEO OVERLAYS 
     ══════════════════════════════════ */
     document.querySelectorAll('.event-bg-wrap').forEach(wrap => {
       const video = wrap.querySelector('.event-video');
@@ -1193,6 +1304,7 @@
       let lastTime = 0;
 
       function triggerOverlay() {
+        if(window.innerWidth >= 1024) return; // On desktop hover handles it, avoid js flickering
         overlay.classList.add('show');
         clearTimeout(timer);
         timer = setTimeout(() => {
@@ -1210,8 +1322,8 @@
         lastTime = video.currentTime;
       });
 
-      // Trigger overlay initial display
-      triggerOverlay();
+      // Initial overlay pulse on mobile
+      if(window.innerWidth < 1024) triggerOverlay();
     });
   </script>
 </body>
