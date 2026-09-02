@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Container scales proportionally */
+.envelope-wrapper {
+  /* Set your max-width for desktop, width for mobile */
+  width: 90%;
+  max-width: 600px;
+  margin: 15rem auto;
+  
+  /* Binds the container to a strict proportion */
+  aspect-ratio: 3 / 2;
+  position: relative;
+}
+
+/* Hide the checkbox */
+.hidden-checkbox {
+  display: none;
+}
+
+/* The main envelope body */
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  /* Adds depth for the top flap's 3D rotation */
+  perspective: 1200px; 
+}
+
+/* Envelope Layers */
+.envelope-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #c9bcae; /* Darkest inside color */
+  z-index: 1;
+}
+
+/* The Letter */
+.letter {
+  position: absolute;
+  width: 88%;
+  height: 90%;
+  left: 6%;
+  bottom: 2%;
+  background-color: #fff;
+  border-radius: 2%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 2;
+  
+  /* Animations for sliding in (Close state) */
+  transition: transform 0.4s ease 0s, z-index 0s 0.4s;
+}
+
+.letter-content {
+  padding: 8%;
+  text-align: center;
+  font-family: sans-serif;
+  color: #333;
+}
+
+/* General Flap Settings */
+.flap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* Left & Right Flaps */
+.flap-left {
+  background-color: #dfd3c5;
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+  z-index: 3;
+}
+
+.flap-right {
+  background-color: #dfd3c5;
+  clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+  z-index: 3;
+}
+
+/* Bottom Flap */
+.flap-bottom {
+  background-color: #e8ddd0;
+  clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+  z-index: 4;
+}
+
+/* Top Flap */
+.flap-top {
+  background-color: #f2e7db;
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  transform-origin: top center;
+  z-index: 5;
+  
+  /* Animations for folding down (Close state) */
+  transition: transform 0.4s ease 0.4s, z-index 0s 0.4s;
+}
+
+/* ========================================= */
+/* OPEN STATE ANIMATIONS                     */
+/* ========================================= */
+
+/* 1. Open the top flap immediately */
+.hidden-checkbox:checked ~ .envelope .flap-top {
+  transform: rotateX(180deg);
+  z-index: 1; /* Drop it behind the letter visually */
+  transition: transform 0.4s ease 0s, z-index 0s 0s;
+}
+
+/* 2. Slide the letter out AFTER the flap opens */
+.hidden-checkbox:checked ~ .envelope .letter {
+  transform: translateY(-40%);
+  z-index: 6; /* Bring letter to the very front */
+  transition: transform 0.4s ease 0.4s, z-index 0s 0.4s;
+}
+    </style>
+</head>
+<body>
+    <div class="envelope-wrapper">
+  <input type="checkbox" id="envelope-toggle" class="hidden-checkbox">
+  
+  <label for="envelope-toggle" class="envelope">
+    <div class="envelope-back"></div>
+    
+    <div class="letter">
+      <div class="letter-content">
+        <h3>Hello!</h3>
+        <p>This is a purely CSS responsive envelope.</p>
+      </div>
+    </div>
+    
+    <div class="flap flap-left"></div>
+    <div class="flap flap-right"></div>
+    <div class="flap flap-bottom"></div>
+    <div class="flap flap-top"></div>
+  </label>
+</div>
+</body>
+</html>
