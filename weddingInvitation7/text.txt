@@ -1,5 +1,3 @@
-
-
 Act as a Senior UI/UX Designer and Expert Frontend Developer specializing in responsive design systems. 
 
 Task: Refactor a mobile-only digital invitation website into a fully responsive, dynamic, multi-device experience (Mobile, Tablet, Desktop, Wide Desktop). Do not simply scale up or expand elements linearly. You must re-architect the layout, typography, and component behavior for each breakpoint.
@@ -23,4 +21,5 @@ Apply the following UI/UX and Engineering specifications:
 
 
 check other common instructions which was for another invitation which may be common in current file too so check RESPONSIVE_INVITATION_GUIDE.md file but remember that classes may be different but functions may be same 
+
 Output the complete, production-ready HTML and  CSS code for this transformation.
