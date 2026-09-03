@@ -11,21 +11,53 @@
   <!-- Playfair Display for elegant serif headings, Montserrat for clean sans-serif body -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   
-  <!-- Preload Critical Assets -->
-  <link rel="preload" href="images/Envelopopen.webm" as="fetch" type="video/webm" crossorigin>
+  <!-- Preconnect External Domains for Instant Handshake -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+
+  <!-- ==========================================================================
+       Preload Critical Above-The-Fold Assets (Highest Priority)
+       ========================================================================== -->
+  <!-- 1. Intro Curtain Videos -->
+  <link rel="preload" href="images/Envelopopen.webm" as="video" type="video/webm" media="(max-width: 767.98px)" fetchpriority="high">
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1788321178/Invelop_Desktop_wzhcvs.mp4" as="video" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
+
+  <!-- 2. Intro Curtain Poster Thumbnails -->
+  <link rel="preload" href="images/invelopThumb.webp" as="image" type="image/webp" media="(max-width: 767.98px)" fetchpriority="high">
+  <link rel="preload" href="images/Envelopopen_Desktop.webp" as="image" type="image/webp" media="(min-width: 768px)" fetchpriority="high">
+
+  <!-- 3. First Section (Hero Banner) Background Images -->
+  <link rel="preload" href="images/Back_invitation1.avif" as="image" type="image/avif" media="(max-width: 767.98px)" fetchpriority="high">
+  <link rel="preload" href="images/Back_invitationDesktop1.avif" as="image" type="image/avif" media="(min-width: 768px)" fetchpriority="high">
+
+  <!-- ==========================================================================
+       Prefetch Subsequent Section Assets (Low Priority Idle Download)
+       ========================================================================== -->
+  <!-- Ceremony Backgrounds (Mobile) -->
+  <link rel="prefetch" href="images/Back_invitation2.avif" as="image" type="image/avif">
+  <link rel="prefetch" href="images/Back_invitation3.avif" as="image" type="image/avif">
+  <link rel="prefetch" href="images/Back_invitation4.avif" as="image" type="image/avif">
+  <link rel="prefetch" href="images/Back_invitation5.avif" as="image" type="image/avif">
+  <link rel="prefetch" href="images/Back_invitation6.avif" as="image" type="image/avif">
+
+  <!-- Ceremony Backgrounds (Desktop) -->
+  <link rel="prefetch" href="images/Back_invitationDesktop2.avif" as="image" type="image/avif">
+  <link rel="prefetch" href="images/Back_invitationDesktop3.avif" as="image" type="image/avif">
+  <link rel="prefetch" href="images/Back_invitationDesktop4.avif" as="image" type="image/avif">
+  <link rel="prefetch" href="images/Back_invitationDesktop5.avif" as="image" type="image/avif">
+  <link rel="prefetch" href="images/Back_invitationDesktop6.avif" as="image" type="image/avif">
+
+  <!-- Journey Carousel Images -->
+  <link rel="prefetch" href="images/WeddingGlimphs1.webp" as="image" type="image/webp">
+  <link rel="prefetch" href="images/WeddingGlimphs2.webp" as="image" type="image/webp">
+  <link rel="prefetch" href="images/WeddingGlimphs3.webp" as="image" type="image/webp">
+  
   <link rel="icon" href="data:,">
 
 
-  <!-- Embla Carousel CSS (Minimal structural CSS required) -->
-  <style>
-    .embla { overflow: hidden; }
-    .embla__container { display: flex; }
-    .embla__slide { flex: 0 0 100%; min-width: 0; padding: 0 10px; }
-  </style>
-
   <style>
     /* ==========================================================================
-       CSS Variables & Global Styles
+       1. CSS Variables & Theme Tokens
        ========================================================================== */
     :root {
       /* Colors */
@@ -40,13 +72,20 @@
       /* Typography */
       --font-serif: 'Playfair Display', serif;
       --font-sans: 'Montserrat', sans-serif;
-      
-      /* Layout */
-      --max-width: 480px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    /* ==========================================================================
+       2. Reset & Global Base Styles
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
     
     body {
       background-color: #111; /* Dark background outside the container */
@@ -61,10 +100,9 @@
       background-color: #e6e2db;
     }
 
-    /* Main Mobile Container */
+    /* Main Container */
     #app {
       width: 100%;
-      max-width: var(--max-width);
       min-height: 100vh;
       margin: 0 auto;
       background-color: var(--color-bg);
@@ -73,23 +111,46 @@
       overflow-x: hidden;
     }
 
-    /* Typography Utilities */
-    h1, h2, h3, h4, .serif { font-family: var(--font-serif); font-weight: 500; }
-    .subtitle { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 10px; font-weight: 600; }
-    .section-title { font-size: 2.5rem; color: var(--color-text); margin-bottom: 20px; line-height: 1.2; text-align: center; }
-    p { font-size: 0.9rem; line-height: 1.6; }
-
     /* Particles Canvas */
     #petals-canvas {
       position: fixed;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
       width: 100%;
-      max-width: var(--max-width);
       height: 100%;
       pointer-events: none;
       z-index: 99;
+    }
+
+    /* ==========================================================================
+       3. Typography & Utility Classes
+       ========================================================================== */
+    h1, h2, h3, h4, .serif {
+      font-family: var(--font-serif);
+      font-weight: 500;
+    }
+
+    .subtitle {
+      font-size: clamp(0.75rem, 1.2vw, 1rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 10px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--color-text);
+      margin-bottom: 20px;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    p {
+      font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+      line-height: 1.6;
     }
 
     /* Glassmorphism Card Style */
@@ -111,17 +172,48 @@
       transform: translateY(40px);
       transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
+
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
 
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-outline {
+      border: 1px solid var(--color-text);
+      color: var(--color-text);
+      background: transparent;
+    }
+
+    .btn-primary {
+      background: var(--color-footer);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(74, 93, 35, 0.3);
+    }
+
     /* ==========================================================================
-       1. Opening Sequence (Video Overlay)
+       4. Opening Sequence (Video Overlay)
        ========================================================================== */
     #intro-overlay {
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100vh;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
       z-index: 9999;
       background: #000;
       display: flex;
@@ -131,18 +223,25 @@
       transition: opacity 1.5s ease-in-out;
       overflow: hidden;
     }
+
     #intro-overlay.hidden {
       opacity: 0;
       pointer-events: none;
     }
+
     #intro-video {
       position: absolute;
-      top: 0; left: 50%; transform: translateX(-50%);
-      width: 100%; height: 100%; min-width: 448px;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      min-width: 448px;
       object-fit: cover;
       opacity: 0.8;
       pointer-events: none;
     }
+
     .tap-hint {
       position: relative;
       z-index: 10000;
@@ -158,6 +257,7 @@
       background: rgba(0,0,0,0.3);
       backdrop-filter: blur(5px);
     }
+
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 0.8; }
       50% { transform: scale(1.05); opacity: 1; }
@@ -176,15 +276,18 @@
       transition: opacity 0.8s ease, transform 0.8s ease;
       pointer-events: none;
     }
+
     .scroll-down-indicator.visible {
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
     }
+
     .scroll-down-indicator.user-scrolled {
       opacity: 0 !important;
       pointer-events: none !important;
     }
+
     .scroll-down-indicator span {
       font-size: 0.6rem;
       letter-spacing: 1.5px;
@@ -194,22 +297,24 @@
       font-weight: 500;
       opacity: 0.85;
     }
+
     .scroll-down-indicator svg {
       width: 18px;
       height: 18px;
       stroke: var(--color-primary, #8c3342);
       animation: miniScrollBounce 1.8s infinite ease-in-out;
     }
+
     @keyframes miniScrollBounce {
       0%, 100% { transform: translateY(0); opacity: 0.7; }
       50% { transform: translateY(6px); opacity: 1; }
     }
 
-    /* Audio Controller */
+    /* Floating Audio Controller */
     .audio-btn {
       position: fixed;
       bottom: 25px;
-      right: 25px; /* Adjust via JS for centered container */
+      right: 25px;
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -226,63 +331,84 @@
       border: 1px solid rgba(0,0,0,0.05);
       transition: transform 0.3s;
     }
-    .audio-btn:active { transform: scale(0.9); }
+
+    .audio-btn:active {
+      transform: scale(0.9);
+    }
 
     /* ==========================================================================
-       2. Hero / Welcome Section
+       5. Hero / Welcome Section
        ========================================================================== */
     .hero-section {
       position: relative;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
-      padding: 40px 20px;
+      justify-content: center;
+      padding: clamp(40px, 6vh, 80px) 20px;
       /* Watercolor Palace Background */
-      background: url('images/Back_invitation1.avif') bottom/cover no-repeat;
+      background: url('images/Back_invitation1.avif') center bottom/cover no-repeat;
     }
+
     .hero-section::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: linear-gradient(to bottom, rgba(250, 248, 245, 0.096) 0%, rgba(250, 248, 245, 0.247) 100%);
     }
+
     .hero-content {
       position: relative;
       z-index: 10;
       text-align: center;
       width: 100%;
+      max-width: 900px;
+      margin: auto;
     }
-    .ganesha-icon { width: 64px; height: 86px; margin-bottom: 20px; opacity: 0.8; }
+
+    .ganesha-icon {
+      width: clamp(64px, 8vw, 90px);
+      height: clamp(86px, 10vw, 120px);
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
     .hero-intro {
-      font-size: 10px;
+      font-size: clamp(10px, 1.2vw, 14px);
       text-transform: uppercase;
       letter-spacing: 0.15em;
       margin-bottom: 8px;
       color: var(--color-text-light);
       line-height: 1.8;
     }
+
     .couple-names {
-      font-size: 30px;
+      font-size: clamp(30px, 5vw, 60px);
       line-height: 1.1;
       color: var(--color-text);
       margin-bottom: 16px;
       text-shadow: 0 2px 10px rgba(255,255,255,0.8);
     }
+
     .parents-text {
-      font-size: 10px;
+      font-size: clamp(10px, 1.2vw, 14px);
       color: var(--color-text-light);
       font-style: italic;
       line-height: 1.6;
       background-color: rgba(255, 255, 255, 0.521);
       border-radius: 16px;
-      padding: 8px;
+      padding: 12px 20px;
       box-shadow: rgba(100, 100, 111, 0.158) 0px 7px 29px 0px;
+      display: inline-block;
     }
 
     /* ==========================================================================
-       3. Countdown Timer
+       6. Countdown Timer
        ========================================================================== */
     .countdown-section {
       padding: 60px 20px;
@@ -291,15 +417,17 @@
       position: relative;
       z-index: 10;
     }
+
     .countdown-grid {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: clamp(15px, 3vw, 30px);
       margin-top: 30px;
     }
+
     .cd-box {
-      width: 70px;
-      height: 70px;
+      width: clamp(70px, 12vw, 100px);
+      height: clamp(70px, 12vw, 100px);
       background: #fff;
       border-radius: 12px;
       display: flex;
@@ -309,38 +437,42 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.03);
       border: 1px solid rgba(0,0,0,0.02);
     }
+
     .cd-num {
       font-family: var(--font-serif);
-      font-size: 1.8rem;
+      font-size: clamp(1.8rem, 4vw, 3rem);
       color: var(--color-accent-dark);
       line-height: 1;
       margin-bottom: 4px;
     }
+
     .cd-label {
-      font-size: 0.55rem;
+      font-size: clamp(0.55rem, 1vw, 0.8rem);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--color-text-light);
     }
 
     /* ==========================================================================
-       4. Sacred Ceremonies (Event Timeline)
+       7. Sacred Ceremonies (Event Timeline)
        ========================================================================== */
     .ceremonies-section {
       position: relative;
       z-index: 10;
     }
+
     .event-block {
       position: relative;
-      padding: 80px 15px;
-      min-height: 80vh;
+      padding: clamp(80px, 10vh, 120px) 15px;
+      min-height: clamp(80vh, 80dvh, 600px);
       display: flex;
-      align-items: start;
+      align-items: center;
       justify-content: center;
       background-size: cover;
-      background-position: bottom;
+      background-position: center;
       background-repeat: no-repeat;
     }
+
     /* Distinct Watercolor Backgrounds for events */
     .event-mehndi { background-image: url('images/Back_invitation2.avif'); }
     .event-sangeet { background-image: url('images/Back_invitation3.avif'); }
@@ -351,155 +483,212 @@
     .event-block::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(250,248,245,0.35); /* Light overlay to ensure card pops */
     }
     
     .event-card {
       position: relative;
       width: 100%;
+      max-width: 500px;
       z-index: 2;
     }
+
     .event-date {
-      font-size: 0.8rem;
+      font-size: clamp(0.8rem, 1.2vw, 1rem);
       letter-spacing: 0.15em;
       color: var(--color-accent-dark);
       margin-bottom: 15px;
       text-transform: uppercase;
     }
+
     .event-title {
-      font-size: 2.5rem;
+      font-size: clamp(2.5rem, 4vw, 4rem);
       margin-bottom: 10px;
     }
+
     .event-time {
-      font-size: 0.9rem;
+      font-size: clamp(0.9rem, 1.2vw, 1.2rem);
       color: var(--color-text-light);
       margin-bottom: 15px;
     }
+
     .event-desc {
-      font-size: 0.85rem;
+      font-size: clamp(0.85rem, 1.2vw, 1.2rem);
       font-style: italic;
       color: var(--color-text);
     }
 
     /* ==========================================================================
-       5. Venue, Stay & Travel
+       8. Venue, Stay & Travel
        ========================================================================== */
     .logistics-section {
       position: relative;
       padding: 80px 0;
       background: url('https://images.unsplash.com/photo-1561501878-aabd62634533?auto=format&fit=crop&w=480&q=80') center/cover no-repeat;
     }
+
     .logistics-section::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: linear-gradient(to bottom, rgba(250,248,245,0.9), rgba(250,248,245,0.7));
     }
+
     .logistics-content {
       position: relative;
       z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
     }
+
+    .logistics-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
     .info-card {
       background: #fff;
       border-radius: 12px;
-      padding: 25px;
-      margin: 0 20px 20px;
+      padding: 30px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.04);
       text-align: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
+
     .info-card img {
       width: 100%;
-      height: 180px;
+      height: clamp(180px, 30vh, 250px);
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 15px;
     }
+
     .info-title {
       font-family: var(--font-serif);
-      font-size: 1.5rem;
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
       margin-bottom: 10px;
     }
-    .btn {
-      display: inline-block;
-      padding: 12px 25px;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-    }
-    .btn-outline {
-      border: 1px solid var(--color-text);
-      color: var(--color-text);
-      background: transparent;
-    }
-    .btn-primary {
-      background: var(--color-footer);
-      color: #fff;
-      box-shadow: 0 4px 15px rgba(74, 93, 35, 0.3);
-    }
+
     .stay-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-top: 15px;
     }
+
     .stay-box {
       background: var(--color-bg);
       padding: 15px 10px;
       border-radius: 8px;
       border: 1px solid rgba(0,0,0,0.05);
     }
-    .stay-box i { color: var(--color-accent); margin-bottom: 8px; font-size: 1.2rem; }
-    .stay-box p { font-size: 0.75rem; margin-bottom: 3px; font-weight: 600;}
-    .stay-box span { font-size: 0.7rem; color: var(--color-text-light); }
+
+    .stay-box i {
+      color: var(--color-accent);
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+    }
+
+    .stay-box p {
+      font-size: 0.75rem;
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+
+    .stay-box span {
+      font-size: 0.7rem;
+      color: var(--color-text-light);
+    }
 
     /* ==========================================================================
-       6. Attire Guidelines
+       9. Attire Guidelines
        ========================================================================== */
     .attire-section {
       padding: 60px 20px;
       background: var(--color-bg);
     }
+
+    .attire-section .glass-card {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
     .attire-list {
       list-style: none;
       text-align: left;
       margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
     }
+
     .attire-list li {
       margin-bottom: 15px;
       padding-bottom: 15px;
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
-    .attire-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .attire-event { font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-accent-dark); margin-bottom: 5px; display: block;}
-    .attire-desc { font-size: 0.85rem; color: var(--color-text-light); }
+
+    .attire-list li:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .attire-event {
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      color: var(--color-accent-dark);
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .attire-desc {
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      color: var(--color-text-light);
+    }
 
     /* ==========================================================================
-       7. RSVP Form
+       10. RSVP Form
        ========================================================================== */
     .rsvp-section {
       padding: 60px 20px;
       background: linear-gradient(to bottom, #faf8f5, #f0ece3);
     }
+
+    #rsvp-form {
+      max-width: 900px;
+      margin: 0 auto !important;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 0; /* Handled by gap */
       text-align: left;
     }
+
     .form-label {
       display: block;
-      font-size: 0.75rem;
+      font-size: clamp(0.75rem, 1vw, 0.85rem);
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 8px;
       color: var(--color-text-light);
       font-weight: 600;
     }
+
     .form-input {
       width: 100%;
       padding: 14px 15px;
@@ -507,39 +696,58 @@
       border-radius: 8px;
       background: #fff;
       font-family: var(--font-sans);
-      font-size: 0.9rem;
+      font-size: clamp(0.9rem, 1.2vw, 1rem);
       color: var(--color-text);
       transition: border-color 0.3s;
     }
+
     .form-input:focus {
       outline: none;
       border-color: var(--color-accent);
     }
+
     textarea.form-input {
       resize: vertical;
-      min-height: 80px;
+      min-height: 100px;
     }
 
     /* ==========================================================================
-       8. Our Journey (Embla Carousel)
+       11. Our Journey (Embla Carousel)
        ========================================================================== */
     .journey-section {
       padding: 80px 0;
       background: #fff;
       text-align: center;
     }
+
     .embla {
+      overflow: hidden;
       margin-top: 30px;
       cursor: grab;
     }
-    .embla:active { cursor: grabbing; }
+
+    .embla:active {
+      cursor: grabbing;
+    }
+
+    .embla__container {
+      display: flex;
+    }
+
+    .embla__slide {
+      flex: 0 0 100%;
+      min-width: 0;
+      padding: 0 10px;
+    }
+
     .slide-inner {
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      height: 450px;
+      aspect-ratio: 3/4;
       background: #f0f0f0;
     }
+
     .slide-inner img {
       width: 100%;
       height: 100%;
@@ -547,13 +755,14 @@
     }
 
     /* ==========================================================================
-       9. Social / Instagram
+       12. Social / Instagram
        ========================================================================== */
     .social-section {
       padding: 60px 20px;
       text-align: center;
       background: var(--color-bg);
     }
+
     .ig-btn {
       display: inline-flex;
       align-items: center;
@@ -570,7 +779,7 @@
     }
 
     /* ==========================================================================
-       10. Footer
+       13. Footer
        ========================================================================== */
     .footer {
       background: var(--color-footer);
@@ -580,11 +789,18 @@
       position: relative;
       z-index: 10;
     }
+
     .footer-names {
       font-size: 2.5rem;
       margin-bottom: 20px;
       color: #fff;
     }
+
+    .footer-names .amp {
+      display: block;
+      margin: 10px 0;
+    }
+
     .footer-dates {
       font-size: 0.85rem;
       letter-spacing: 0.15em;
@@ -592,60 +808,23 @@
       margin-bottom: 10px;
       opacity: 0.9;
     }
+
     .footer-location {
       font-size: 0.8rem;
       opacity: 0.7;
       margin-bottom: 40px;
     }
+
     .footer-signoff {
       font-family: var(--font-serif);
       font-size: 1.2rem;
       font-style: italic;
       opacity: 0.9;
     }
-    /* Landscape Restriction Warning */
-    #landscape-warning {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: var(--bg, var(--background, var(--color-bg, #000)));
-      color: var(--gold, var(--primary, var(--color-text, #fff)));
-      z-index: 999999;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-    }
-    #landscape-warning svg {
-      margin-bottom: 20px;
-      animation: rotatePhone 2s infinite ease-in-out;
-    }
-    #landscape-warning h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      font-family: var(--font-serif, 'Playfair Display', 'Cinzel', serif);
-    }
-    #landscape-warning p {
-      font-size: 1rem;
-      opacity: 0.9;
-      font-family: var(--font-sans, 'Montserrat', sans-serif);
-      color: var(--white, var(--text, var(--color-text, #ccc)));
-    }
-    @keyframes rotatePhone {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(-90deg); }
-      100% { transform: rotate(-90deg); }
-    }
-    @media screen and (orientation: landscape) and (max-height: 600px) {
-      #landscape-warning {
-        display: flex;
-      }
-      #app {
-        display: none !important;
-      }
-    }
-    /* Professional Dismissible Alert Box */
+
+    /* ==========================================================================
+       14. UI Alerts & Feedback
+       ========================================================================== */
     .custom-alert-box {
       background: rgba(220, 39, 67, 0.1);
       border: 1px solid rgba(220, 39, 67, 0.3);
@@ -661,11 +840,18 @@
       position: relative;
       animation: alertSlideDown 0.3s ease-out;
     }
+
     @keyframes alertSlideDown {
       from { opacity: 0; transform: translateY(-8px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .custom-alert-icon { font-size: 1.1rem; color: #dc2743; flex-shrink: 0; }
+
+    .custom-alert-icon {
+      font-size: 1.1rem;
+      color: #dc2743;
+      flex-shrink: 0;
+    }
+
     .custom-alert-close {
       margin-left: auto;
       background: none;
@@ -677,9 +863,14 @@
       line-height: 1;
       opacity: 0.7;
     }
-    .custom-alert-close:hover { opacity: 1; }
 
-    /* Global Loader */
+    .custom-alert-close:hover {
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       15. Global Preloader
+       ========================================================================== */
     #global-loader {
       position: fixed;
       inset: 0;
@@ -690,10 +881,12 @@
       justify-content: center;
       transition: opacity 0.4s ease, visibility 0.4s ease;
     }
+
     #global-loader.hidden {
       opacity: 0;
       visibility: hidden;
     }
+
     .loader-ring {
       width: 40px;
       height: 40px;
@@ -702,19 +895,102 @@
       border-radius: 50%;
       animation: spinLoader 0.8s linear infinite;
     }
+
     @keyframes spinLoader {
       to { transform: rotate(360deg); }
+    }
+
+    /* ==========================================================================
+       16. Responsive Media Queries (Consolidated by Breakpoint)
+       ========================================================================== */
+
+    /* Tablet & Medium Displays (min-width: 768px) */
+    @media (min-width: 768px) {
+      /* Embla Carousel */
+      .embla__slide {
+        flex: 0 0 50%;
+      }
+
+    .hero-section {
+      background: url('images/Back_invitationDesktop1.avif') center bottom/cover no-repeat;
+    }
+
+    .event-mehndi { background-image: url('images/Back_invitationDesktop2.avif'); }
+    .event-sangeet { background-image: url('images/Back_invitationDesktop3.avif'); }
+    .event-baraat { background-image: url('images/Back_invitationDesktop4.avif'); }
+    .event-wedding { background-image: url('images/Back_invitationDesktop5.avif'); }
+    .event-reception { background-image: url('images/Back_invitationDesktop6.avif'); }
+
+      /* Sacred Ceremonies */
+      .event-block {
+        min-height: 100vh;
+      }
+
+      .event-card {
+        max-width: 700px;
+        padding: 50px 40px;
+      }
+
+      /* Venue, Stay & Travel */
+      .logistics-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      /* Attire Guidelines */
+      .attire-list {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      .attire-list li {
+        border-bottom: none !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+
+      /* RSVP Form */
+      #rsvp-form {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #rsvp-alert {
+        grid-column: 1 / -1;
+      }
+
+      .form-group.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .rsvp-btn-container {
+        grid-column: 1 / -1;
+      }
+
+      /* Footer */
+      .footer-names {
+        font-size: 3.5rem;
+      }
+
+      .footer-names .amp {
+        display: inline-block;
+        margin: 0 10px;
+      }
+
+      .footer-names br {
+        display: none;
+      }
+    }
+
+    /* Desktop & Large Displays (min-width: 1024px) */
+    @media (min-width: 1024px) {
+      /* Embla Carousel */
+      .embla__slide {
+        flex: 0 0 33.333%;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="landscape-warning">
-    <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor">
-      <path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm1 18H7V5h10v14z"/>
-    </svg>
-    <h2>Please Rotate Your Device</h2>
-    <p>This invitation is beautifully crafted for portrait viewing.</p>
-  </div>
+
 
   <!-- Global Loader -->
   <div id="global-loader">
@@ -764,8 +1040,9 @@
 
     <!-- 1. Opening Sequence -->
     <div id="intro-overlay">
-      <video id="intro-video" playsinline muted disablePictureInPicture fetchpriority="high" preload="auto" poster="images/invelopThumb.webp">
-        <source src="images/Envelopopen.webm" type="video/webm">
+      <video id="intro-video" playsinline webkit-playsinline muted disablePictureInPicture fetchpriority="high" preload="auto" poster="images/invelopThumb.webp">
+         <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1788321178/Invelop_Desktop_wzhcvs.mp4" type="video/mp4" media="(min-width: 768px)">
+        <source src="images/Envelopopen.webm" type="video/webm" media="(max-width: 767.98px)">
       </video>
       <div class="tap-hint" id="tap-hint">Tap to Open</div>
     </div>
@@ -860,42 +1137,45 @@
       <div class="logistics-content reveal">
         <p class="subtitle" style="text-align: center;">The Setting</p>
         <h2 class="section-title">Logistics & Stay</h2>
-        
-        <div class="info-card">
-          <h3 class="info-title">Mementos Ekaaya</h3>
-          <p style="font-size:0.8rem; margin-bottom:15px; color:var(--color-text-light);">Udaipur, Rajasthan</p>
-          <a href="#" class="btn btn-outline" style="margin-bottom: 20px;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-            </svg> Open in Google Maps
-          </a>
-          
-          <div class="stay-grid">
-            <div class="stay-box">
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-bottom: 8px;">
-                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-2-9h-4v4h4v-4z"/>
-              </svg>
-              <p>Check-In</p>
-              <span>25 Oct 2026</span>
-            </div>
-            <div class="stay-box">
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-bottom: 8px;">
-                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-5-11h-2v4l3.3 3.3 1.4-1.4-2.7-2.6V8z"/>
-              </svg>
-              <p>Check-Out</p>
-              <span>28 Oct 2026</span>
+        <div class="logistics-grid">
+          <div class="info-card">
+            <h3 class="info-title">Mementos Ekaaya</h3>
+            <p style="font-size:clamp(0.8rem, 1.2vw, 1rem); margin-bottom:15px; color:var(--color-text-light);">Udaipur, Rajasthan</p>
+            <div style="flex-grow: 1;"></div>
+            <a href="#" class="btn btn-outline" style="margin-bottom: 20px;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg> Open in Google Maps
+            </a>
+            
+            <div class="stay-grid">
+              <div class="stay-box">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-bottom: 8px;">
+                  <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-2-9h-4v4h4v-4z"/>
+                </svg>
+                <p>Check-In</p>
+                <span>25 Oct 2026</span>
+              </div>
+              <div class="stay-box">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-bottom: 8px;">
+                  <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-5-11h-2v4l3.3 3.3 1.4-1.4-2.7-2.6V8z"/>
+                </svg>
+                <p>Check-Out</p>
+                <span>28 Oct 2026</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="info-card reveal">
-          <h3 class="info-title">We're Here to Help</h3>
-          <p style="font-size:0.85rem; margin-bottom:15px; color:var(--color-text-light);">For any questions regarding travel, accommodation, or the itinerary, please connect with our wedding planners.</p>
-          <a href="#" class="btn btn-primary">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
-              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 16.27c-1.47 0-2.91-.39-4.18-1.14l-.3-.18-3.1.81.83-3.03-.2-.32c-.82-1.3-1.25-2.8-1.25-4.34 0-4.51 3.67-8.19 8.2-8.19 4.52 0 8.2 3.68 8.2 8.19 0 4.52-3.68 8.2-8.2 8.2m4.49-6.15c-.25-.12-1.47-.73-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.98-.15.17-.29.19-.54.07-1.31-.63-2.4-1.43-3.26-2.52-.22-.28-.01-.43.11-.55.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.32-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.21 0-.54.08-.82.39-.29.31-1.09 1.07-1.09 2.6s1.12 3.03 1.27 3.23c.16.21 2.2 3.36 5.34 4.72.75.32 1.33.52 1.79.66.75.24 1.44.2 1.98.12.61-.09 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.11-.23-.17-.48-.29"/>
-            </svg> Message on WhatsApp
-          </a>
+          <div class="info-card reveal">
+            <h3 class="info-title">We're Here to Help</h3>
+            <p style="font-size:clamp(0.85rem, 1.2vw, 1rem); margin-bottom:15px; color:var(--color-text-light);">For any questions regarding travel, accommodation, or the itinerary, please connect with our wedding planners.</p>
+            <div style="flex-grow: 1;"></div>
+            <a href="#" class="btn btn-primary" style="margin-top: auto;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 16.27c-1.47 0-2.91-.39-4.18-1.14l-.3-.18-3.1.81.83-3.03-.2-.32c-.82-1.3-1.25-2.8-1.25-4.34 0-4.51 3.67-8.19 8.2-8.19 4.52 0 8.2 3.68 8.2 8.19 0 4.52-3.68 8.2-8.2 8.2m4.49-6.15c-.25-.12-1.47-.73-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.98-.15.17-.29.19-.54.07-1.31-.63-2.4-1.43-3.26-2.52-.22-.28-.01-.43.11-.55.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.32-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.21 0-.54.08-.82.39-.29.31-1.09 1.07-1.09 2.6s1.12 3.03 1.27 3.23c.16.21 2.2 3.36 5.34 4.72.75.32 1.33.52 1.79.66.75.24 1.44.2 1.98.12.61-.09 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.11-.23-.17-.48-.29"/>
+              </svg> Message on WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -970,11 +1250,11 @@
           <label class="form-label">Departure Date & Time</label>
           <input type="text" id="rsvp-departure" class="form-input" placeholder="e.g. 28 Oct, 11:30 AM">
         </div>
-        <div class="form-group">
+        <div class="form-group full-width">
           <label class="form-label">Dietary Requirements & Allergies</label>
           <textarea id="rsvp-diet" class="form-input" placeholder="Please share any dietary needs..."></textarea>
         </div>
-        <div class="form-group">
+        <div class="form-group full-width">
           <label class="form-label">A song you'd love to dance to</label>
           <input type="text" id="rsvp-song" class="form-input">
         </div>
@@ -986,7 +1266,9 @@
           <label class="form-label">Performance Request (Optional)</label>
           <input type="text" id="rsvp-perf" class="form-input">
         </div>
-        <button type="button" class="btn btn-primary" onclick="sendAnjaliRSVP()" style="width: 100%; margin-top: 10px; padding: 15px;">Submit RSVP & Requests</button>
+        <div class="rsvp-btn-container" style="margin-top: 10px;">
+          <button type="button" class="btn btn-primary" onclick="sendAnjaliRSVP()" style="width: 100%; padding: 15px;">Submit RSVP & Requests</button>
+        </div>
       </form>
     </section>
 
@@ -999,17 +1281,17 @@
         <div class="embla__container">
           <div class="embla__slide">
             <div class="slide-inner">
-              <img src="images/WeddingGlimphs1.webp" alt="Couple Photo 1" loading="lazy">
+              <img src="images/WeddingGlimphs1.webp" alt="Couple Photo 1" loading="lazy" decoding="async">
             </div>
           </div>
           <div class="embla__slide">
             <div class="slide-inner">
-              <img src="images/WeddingGlimphs2.webp" alt="Couple Photo 2" loading="lazy">
+              <img src="images/WeddingGlimphs2.webp" alt="Couple Photo 2" loading="lazy" decoding="async">
             </div>
           </div>
           <div class="embla__slide">
             <div class="slide-inner">
-              <img src="images/WeddingGlimphs3.webp" alt="Couple Photo 3" loading="lazy">
+              <img src="images/WeddingGlimphs3.webp" alt="Couple Photo 3" loading="lazy" decoding="async">
             </div>
           </div>
         </div>
@@ -1028,7 +1310,7 @@
 
     <!-- 10. Footer -->
     <footer class="footer">
-      <h2 class="footer-names serif">Anjali Kaur<br>&<br>Maneet Singh</h2>
+      <h2 class="footer-names serif">Anjali Kaur<span class="amp">&</span>Maneet Singh</h2>
       <p class="footer-dates">25 — 28 October 2026</p>
       <p class="footer-location">Mementos by ITC Hotels, Ekaaya Udaipur</p>
       <p class="footer-signoff">We cannot wait to celebrate with you.</p>
@@ -1090,9 +1372,73 @@
     window.addEventListener('click', handleAnjaliFirstInteraction, { once: true });
     window.addEventListener('touchstart', handleAnjaliFirstInteraction, { once: true });
 
+    let curtainOpened = false;
+    
+    const MOBILE_VIDEO_SRC = "images/Envelopopen.webm";
+    const DESKTOP_VIDEO_SRC = "https://res.cloudinary.com/dticzwbrv/video/upload/v1788321178/Invelop_Desktop_wzhcvs.mp4";
+    const MOBILE_POSTER_SRC = "images/invelopThumb.webp";
+    const DESKTOP_POSTER_SRC = "images/Envelopopen_Desktop.webp";
+
+    function checkIsMobileView() {
+      const isLandscape = window.matchMedia && window.matchMedia('(orientation: landscape)').matches;
+      if (isLandscape && window.innerWidth >= 480) {
+        return false; 
+      }
+      return window.innerWidth < 768;
+    }
+
+    function updateVideoSourceAndPoster() {
+      if (curtainOpened) return;
+      if (!introVideo) return;
+
+      const isMobile = checkIsMobileView();
+      const targetSrc = isMobile ? MOBILE_VIDEO_SRC : DESKTOP_VIDEO_SRC;
+      const targetPoster = isMobile ? MOBILE_POSTER_SRC : DESKTOP_POSTER_SRC;
+
+      if (targetPoster && introVideo.getAttribute("poster") !== targetPoster) {
+        introVideo.poster = targetPoster;
+        introVideo.setAttribute("poster", targetPoster);
+      }
+
+      if (introVideo.getAttribute("data-active-src") !== targetSrc) {
+        introVideo.setAttribute("data-active-src", targetSrc);
+        const source = introVideo.querySelector("source");
+        if (source) source.src = targetSrc;
+        introVideo.src = targetSrc;
+        introVideo.load();
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", updateVideoSourceAndPoster);
+    updateVideoSourceAndPoster(); // run once immediately
+
+    let videoResizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(videoResizeTimer);
+      videoResizeTimer = setTimeout(updateVideoSourceAndPoster, 120);
+    });
+    window.addEventListener("orientationchange", () => {
+      updateVideoSourceAndPoster();
+      setTimeout(updateVideoSourceAndPoster, 150);
+      setTimeout(updateVideoSourceAndPoster, 350);
+    });
+    if (window.screen && window.screen.orientation) {
+      window.screen.orientation.addEventListener("change", () => {
+        updateVideoSourceAndPoster();
+        setTimeout(updateVideoSourceAndPoster, 150);
+        setTimeout(updateVideoSourceAndPoster, 350);
+      });
+    }
+
     introOverlay.addEventListener('click', () => {
+      if (curtainOpened) return;
+      curtainOpened = true;
       tapHint.style.display = 'none';
       
+      if (!introVideo.src || introVideo.src === window.location.href) {
+        updateVideoSourceAndPoster();
+      }
+
       // Play the intro video
       introVideo.play().catch(e => console.log('Video play error:', e));
       
