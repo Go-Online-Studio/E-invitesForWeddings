@@ -1340,16 +1340,34 @@ window.addEventListener('scroll', () => {
 /* ══ COUNTDOWN ══ */
 function initCountdown(){
   const T=new Date('2026-05-25T19:00:00');
+  var intervalId;
   function p(n){return String(n).padStart(2,'0');}
   function tick(){
     const d=T-new Date();
-    if(d<=0){['d','h','m','s'].forEach(k=>document.getElementById('cd'+k).textContent='00');return;}
+    if(d<=0){
+      if(intervalId) clearInterval(intervalId);
+      var cdParent=document.querySelector('.cd-sec');
+      if(cdParent){
+        cdParent.style.transition='opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+        cdParent.style.opacity='0';
+        cdParent.style.height=cdParent.offsetHeight+'px';
+        void cdParent.offsetHeight;
+        cdParent.style.overflow='hidden';
+        cdParent.style.height='0px';
+        cdParent.style.paddingTop='0px';
+        cdParent.style.paddingBottom='0px';
+        cdParent.style.marginTop='0px';
+        cdParent.style.marginBottom='0px';
+        setTimeout(function(){cdParent.remove();},1500);
+      }
+      return;
+    }
     document.getElementById('cdd').textContent=p(Math.floor(d/86400000));
     document.getElementById('cdh').textContent=p(Math.floor((d%86400000)/3600000));
     document.getElementById('cdm').textContent=p(Math.floor((d%3600000)/60000));
     document.getElementById('cds').textContent=p(Math.floor((d%60000)/1000));
   }
-  tick();setInterval(tick,1000);
+  tick();intervalId=setInterval(tick,1000);
 }
 
 /* ══ SCROLL REVEAL ══ */

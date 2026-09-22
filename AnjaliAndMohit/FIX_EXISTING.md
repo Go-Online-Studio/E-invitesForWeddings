@@ -502,6 +502,7 @@ In `<head>`, replace single preload with responsive preloads if desktop/mobile a
 - [ ] Pseudo-elements (stars/decorations): ensure `top` and `bottom` are not jointly assigned
 - [ ] WhatsApp RSVP: stylized with emojis, dividers (`━━━`), badges, and italics (not plain text)
 - [ ] Footer safe area padding: `padding-bottom` includes `env(safe-area-inset-bottom, 0px)`
+- [ ] Countdown timer: implement smooth removal animation when target date expires
 
 ---
 
@@ -706,4 +707,48 @@ txt += `_Sent via Digital Invitation_`;
 
 const base = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'https://api.whatsapp.com/send' : 'https://web.whatsapp.com/send';
 window.open(`${base}?phone=${HOST_PHONE}&text=${encodeURIComponent(txt)}`, '_blank');
+```
+
+---
+
+## 22. COUNTDOWN TIMER — SMOOTH REMOVAL ON EXPIRY
+
+When the countdown reaches zero, the section should not just freeze at 00:00:00 or roll forward to the next year. It must smoothly fade out, collapse its height, and remove itself from the DOM.
+
+**Find the countdown `tick()` or `updateCountdown()` function and replace the expiry condition:**
+
+```js
+// Before:
+// if (dist <= 0) { document.getElementById('cd-days').textContent = '00'; ... return; }
+
+// After:
+var cdIntervalId = setInterval(tick, 1000); // make sure to store interval ID when starting
+
+function tick() {
+  const dist = targetDate - Date.now();
+  if (dist <= 0) {
+    if (cdIntervalId) clearInterval(cdIntervalId);
+    
+    // Find the countdown section — adapt the selector to the specific file (.countdown-section, .cd-sec, etc)
+    var cdParent = document.querySelector('.countdown-section'); 
+    
+    if (cdParent) {
+      cdParent.style.transition = 'opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+      cdParent.style.opacity = '0';
+      cdParent.style.height = cdParent.offsetHeight + 'px';
+      void cdParent.offsetHeight; // Trigger reflow
+      cdParent.style.overflow = 'hidden';
+      cdParent.style.height = '0px';
+      cdParent.style.paddingTop = '0px';
+      cdParent.style.paddingBottom = '0px';
+      cdParent.style.marginTop = '0px';
+      cdParent.style.marginBottom = '0px';
+      
+      // Remove from DOM after transition completes
+      setTimeout(function() { cdParent.remove(); }, 1500);
+    }
+    return;
+  }
+  // ... rest of the ticking logic
+}
 ```

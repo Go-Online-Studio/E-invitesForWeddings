@@ -970,8 +970,27 @@ window.addEventListener('scroll', function() {
 
 /* COUNTDOWN */
 var targetDate = new Date("Sep 10, 2027 09:00:00").getTime();
-setInterval(function() {
-  var dist = Math.max(0, targetDate - Date.now());
+var cdIntervalId = setInterval(function() {
+  var dist = targetDate - Date.now();
+  if (dist <= 0) {
+    clearInterval(cdIntervalId);
+    var cdEl = document.getElementById('cd-d');
+    var cdParent = cdEl ? cdEl.closest('section') : null;
+    if (cdParent) {
+      cdParent.style.transition = 'opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+      cdParent.style.opacity = '0';
+      cdParent.style.height = cdParent.offsetHeight + 'px';
+      void cdParent.offsetHeight;
+      cdParent.style.overflow = 'hidden';
+      cdParent.style.height = '0px';
+      cdParent.style.paddingTop = '0px';
+      cdParent.style.paddingBottom = '0px';
+      cdParent.style.marginTop = '0px';
+      cdParent.style.marginBottom = '0px';
+      setTimeout(function() { cdParent.remove(); }, 1500);
+    }
+    return;
+  }
   document.getElementById('cd-d').innerText = Math.floor(dist/86400000).toString().padStart(2,'0');
   document.getElementById('cd-h').innerText = Math.floor((dist%86400000)/3600000).toString().padStart(2,'0');
   document.getElementById('cd-m').innerText = Math.floor((dist%3600000)/60000).toString().padStart(2,'0');

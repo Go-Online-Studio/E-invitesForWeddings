@@ -1877,6 +1877,7 @@ window.scrollTo(0, 0);
         // ══════════════════════════════════════
         function initCountdown() {
             const target = new Date('2027-05-25T19:00:00');
+            var intervalId;
 
             function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -1884,10 +1885,21 @@ window.scrollTo(0, 0);
                 const now = new Date();
                 const diff = target - now;
                 if (diff <= 0) {
-                    document.getElementById('cd-days').textContent = '00';
-                    document.getElementById('cd-hours').textContent = '00';
-                    document.getElementById('cd-mins').textContent = '00';
-                    document.getElementById('cd-secs').textContent = '00';
+                    if (intervalId) clearInterval(intervalId);
+                    var cdParent = document.querySelector('.countdown-section');
+                    if (cdParent) {
+                        cdParent.style.transition = 'opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+                        cdParent.style.opacity = '0';
+                        cdParent.style.height = cdParent.offsetHeight + 'px';
+                        void cdParent.offsetHeight;
+                        cdParent.style.overflow = 'hidden';
+                        cdParent.style.height = '0px';
+                        cdParent.style.paddingTop = '0px';
+                        cdParent.style.paddingBottom = '0px';
+                        cdParent.style.marginTop = '0px';
+                        cdParent.style.marginBottom = '0px';
+                        setTimeout(function() { cdParent.remove(); }, 1500);
+                    }
                     return;
                 }
                 const days = Math.floor(diff / 86400000);
@@ -1900,7 +1912,7 @@ window.scrollTo(0, 0);
                 document.getElementById('cd-secs').textContent = pad(secs);
             }
             tick();
-            setInterval(tick, 1000);
+            intervalId = setInterval(tick, 1000);
         }
 
         // ══════════════════════════════════════

@@ -1554,10 +1554,21 @@
       const distance = targetDate - now;
 
       if (distance < 0) {
-        cdDays.innerText = "00";
-        cdHours.innerText = "00";
-        cdMins.innerText = "00";
-        cdSecs.innerText = "00";
+        if (cdIntervalId) clearInterval(cdIntervalId);
+        var cdParent = document.querySelector('.countdown-section');
+        if (cdParent) {
+          cdParent.style.transition = 'opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+          cdParent.style.opacity = '0';
+          cdParent.style.height = cdParent.offsetHeight + 'px';
+          void cdParent.offsetHeight;
+          cdParent.style.overflow = 'hidden';
+          cdParent.style.height = '0px';
+          cdParent.style.paddingTop = '0px';
+          cdParent.style.paddingBottom = '0px';
+          cdParent.style.marginTop = '0px';
+          cdParent.style.marginBottom = '0px';
+          setTimeout(function() { cdParent.remove(); }, 1500);
+        }
         return;
       }
 
@@ -1571,7 +1582,7 @@
       cdMins.innerText = m.toString().padStart(2, '0');
       cdSecs.innerText = s.toString().padStart(2, '0');
     }
-    setInterval(updateCountdown, 1000);
+    var cdIntervalId = setInterval(updateCountdown, 1000);
     updateCountdown();
 
     // --- 6. Intersection Observer for Scroll Animations ---

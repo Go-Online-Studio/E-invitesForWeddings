@@ -1576,11 +1576,28 @@
      ========================================================================== */
   const targetDate = new Date("Dec 11, 2026 19:00:00").getTime();
   
-  setInterval(() => {
+  var cdIntervalId = setInterval(() => {
     const now = new Date().getTime();
     const distance = targetDate - now;
     
-    if (distance < 0) return; // Wedding has passed
+    if (distance < 0) {
+      clearInterval(cdIntervalId);
+      var cdParent = document.getElementById('countdown');
+      if (cdParent) {
+        cdParent.style.transition = 'opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+        cdParent.style.opacity = '0';
+        cdParent.style.height = cdParent.offsetHeight + 'px';
+        void cdParent.offsetHeight;
+        cdParent.style.overflow = 'hidden';
+        cdParent.style.height = '0px';
+        cdParent.style.paddingTop = '0px';
+        cdParent.style.paddingBottom = '0px';
+        cdParent.style.marginTop = '0px';
+        cdParent.style.marginBottom = '0px';
+        setTimeout(function() { cdParent.remove(); }, 1500);
+      }
+      return;
+    }
 
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

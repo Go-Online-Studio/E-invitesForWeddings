@@ -545,9 +545,28 @@ function startCountdown(targetISO) {
     m: document.getElementById('cd-mins'),
     s: document.getElementById('cd-secs'),
   };
+  let intervalId;
   function tick() {
     const diff = target - Date.now();
-    if (diff <= 0) { Object.values(els).forEach(el => { if (el) el.textContent = '00'; }); return; }
+    if (diff <= 0) {
+      if (intervalId) clearInterval(intervalId);
+      // Find the closest parent section to remove smoothly
+      var cdParent = els.d ? els.d.closest('section') || document.querySelector('.countdown-wrap') : null;
+      if (cdParent) {
+        cdParent.style.transition = 'opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+        cdParent.style.opacity = '0';
+        cdParent.style.height = cdParent.offsetHeight + 'px';
+        void cdParent.offsetHeight;
+        cdParent.style.overflow = 'hidden';
+        cdParent.style.height = '0px';
+        cdParent.style.paddingTop = '0px';
+        cdParent.style.paddingBottom = '0px';
+        cdParent.style.marginTop = '0px';
+        cdParent.style.marginBottom = '0px';
+        setTimeout(function() { cdParent.remove(); }, 1500);
+      }
+      return;
+    }
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff % 86400000) / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
@@ -558,7 +577,7 @@ function startCountdown(targetISO) {
     if (els.s) els.s.textContent = String(s).padStart(2, '0');
   }
   tick();
-  setInterval(tick, 1000);
+  intervalId = setInterval(tick, 1000);
 }
 // Usage: startCountdown('2026-10-24T18:00:00+05:30');
 ```

@@ -1561,16 +1561,29 @@ audioBtn.addEventListener('click', e => {
 (function initCountdown() {
     // Target date set to future wedding date
     const targetDate = new Date('June 15, 2027 09:00:00').getTime();
+    var intervalId;
     
     function updateCountdown() {
         const now = Date.now();
         let dist = targetDate - now;
 
-        // If date has passed, roll forward to next year
         if (dist <= 0) {
-            const nextYear = new Date(targetDate);
-            nextYear.setFullYear(new Date().getFullYear() + 1);
-            dist = Math.max(0, nextYear.getTime() - now);
+            if (intervalId) clearInterval(intervalId);
+            var cdParent = document.querySelector('.countdown-sec');
+            if (cdParent) {
+                cdParent.style.transition = 'opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+                cdParent.style.opacity = '0';
+                cdParent.style.height = cdParent.offsetHeight + 'px';
+                void cdParent.offsetHeight;
+                cdParent.style.overflow = 'hidden';
+                cdParent.style.height = '0px';
+                cdParent.style.paddingTop = '0px';
+                cdParent.style.paddingBottom = '0px';
+                cdParent.style.marginTop = '0px';
+                cdParent.style.marginBottom = '0px';
+                setTimeout(function() { cdParent.remove(); }, 1500);
+            }
+            return;
         }
 
         const days = Math.floor(dist / (1000 * 60 * 60 * 24));
@@ -1590,7 +1603,7 @@ audioBtn.addEventListener('click', e => {
     }
 
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+    intervalId = setInterval(updateCountdown, 1000);
 })();
 
 /* ════════════════════════════════════════

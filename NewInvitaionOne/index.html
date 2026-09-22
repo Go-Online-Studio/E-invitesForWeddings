@@ -1157,10 +1157,28 @@
     /* ══════════════════════════════════
        COUNTDOWN
     ══════════════════════════════════ */
-    // Future wedding date
     const targetDate = new Date("Dec 18, 2026 09:00:00").getTime();
+    var cdIntervalId;
     function updateCountdown() {
-      const dist = Math.max(0, targetDate - Date.now());
+      const dist = targetDate - Date.now();
+      if (dist <= 0) {
+        if (cdIntervalId) clearInterval(cdIntervalId);
+        var cdParent = document.querySelector('.countdown-sec');
+        if (cdParent) {
+          cdParent.style.transition = 'opacity 1.5s ease, height 1.5s ease, padding 1.5s ease, margin 1.5s ease';
+          cdParent.style.opacity = '0';
+          cdParent.style.height = cdParent.offsetHeight + 'px';
+          void cdParent.offsetHeight;
+          cdParent.style.overflow = 'hidden';
+          cdParent.style.height = '0px';
+          cdParent.style.paddingTop = '0px';
+          cdParent.style.paddingBottom = '0px';
+          cdParent.style.marginTop = '0px';
+          cdParent.style.marginBottom = '0px';
+          setTimeout(function() { cdParent.remove(); }, 1500);
+        }
+        return;
+      }
       const dEl = document.getElementById('cd-d');
       if(dEl) {
         dEl.innerText = Math.floor(dist/86400000).toString().padStart(2,'0');
@@ -1170,7 +1188,7 @@
       }
     }
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+    cdIntervalId = setInterval(updateCountdown, 1000);
 
     /* ══════════════════════════════════
        CAROUSEL (SWIPER) - Responsive Breakpoints
