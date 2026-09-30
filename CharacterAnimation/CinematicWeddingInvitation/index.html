@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Rohan & Priya — Cinematic Wedding Invitation</title>
+  <meta name="description" content="You are cordially invited to celebrate the wedding of Rohan & Priya. Join us for Mehndi, Haldi, Sangeet & the Grand Wedding ceremony.">
+  <meta name="theme-color" content="#a32a38">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+/* ==========================================================================
+   CSS Variables & Root Design System
+   ========================================================================== */
+:root {
+  --primary: #a32a38;
+  --primary-light: #c04050;
+  --secondary: #d4af37;
+  --secondary-dark: #c07a2c;
+  --text: #3d2b1f;
+  --text-muted: #7b6354;
+  --bg: #fcf8f2;
+  --bg-alt: #fdf5e6;
+  --white: #ffffff;
+  --card-width: 480px;
+  --script: "Great Vibes", cursive;
+  --sans: "Montserrat", sans-serif;
+  --serif: "Playfair Display", serif;
+  --vh: 1vh;
+}
+
+/* ==========================================================================
+   Reset & Base
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #1a1a1a;
+  font-family: var(--sans);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+body.unlocked {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* ==========================================================================
+   Landscape Warning Overlay
+   ========================================================================== */
+#landscape-warning {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  background: #1a1a1a;
+  color: var(--secondary);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  #landscape-warning { display: flex; }
+}
+
+.lw-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  animation: rotateDeviceAnim 2s ease-in-out infinite alternate;
+}
+
+@keyframes rotateDeviceAnim {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(-90deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.lw-title {
+  font-family: var(--script);
+  font-size: 2rem;
+  color: var(--secondary);
+  margin-bottom: 12px;
+}
+
+.lw-text {
+  font-size: 0.9rem;
+  color: #c8b89a;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Global Loader
+   ========================================================================== */
+#global-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#global-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-ring {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(212, 175, 55, 0.2);
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: loaderSpin 0.8s linear infinite;
+}
+
+@keyframes loaderSpin { to { transform: rotate(360deg); } }
+
+/* ==========================================================================
+   Main App Container
+   ========================================================================== */
+#app {
+  width: 100%;
+  max-width: var(--card-width);
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--bg);
+  position: relative;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+/* ==========================================================================
+   Intro Layer (Video Overlay)
+   ========================================================================== */
+#intro-layer {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--card-width);
+  height: 100%;
+  min-height: 100vh;
+  z-index: 9990;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1.5s ease-in-out;
+  overflow: hidden;
+}
+
+#intro-layer.fade-out { opacity: 0; pointer-events: none; }
+#intro-layer.hidden { display: none; }
+
+#intro-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+#intro-video.playing { opacity: 1; }
+
+/* Tap to Begin Screen */
+.intro-tap-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: linear-gradient(180deg, rgba(26,26,26,0.8) 0%, rgba(128,0,32,0.4) 50%, rgba(26,26,26,0.9) 100%);
+  transition: opacity 1s ease;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.intro-tap-screen.hidden { opacity: 0; pointer-events: none; }
+
+.intro-ganesh-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 24px;
+  color: var(--secondary);
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6));
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.intro-welcome-text {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 8px;
+}
+
+.intro-title {
+  font-family: var(--script);
+  font-size: 2rem;
+  color: var(--white);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.intro-names {
+  font-family: var(--script);
+  font-size: 1.4rem;
+  color: var(--secondary);
+  margin-bottom: 40px;
+  line-height: 1.3;
+}
+
+.btn-tap-begin {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+  padding: 14px 36px;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  cursor: pointer;
+  animation: pulseBorder 2s ease-in-out infinite;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.3s ease;
+}
+
+.btn-tap-begin:active { background: rgba(212, 175, 55, 0.2); }
+
+@keyframes pulseBorder {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(212, 175, 55, 0); }
+}
+
+/* ==========================================================================
+   Music FAB
+   ========================================================================== */
+#mfab {
+  position: fixed;
+  bottom: max(72px, calc(env(safe-area-inset-bottom, 0px) + 38px));
+  right: max(20px, env(safe-area-inset-right, 0px));
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.5);
+  z-index: 9500;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.6s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#mfab.visible { opacity: 1; pointer-events: auto; }
+#mfab:hover { transform: scale(1.1); }
+#mfab.playing { animation: fabPulse 2s ease-in-out infinite; }
+
+@keyframes fabPulse {
+  0%, 100% { box-shadow: 0 4px 18px rgba(212, 175, 55, 0.5); }
+  50% { box-shadow: 0 4px 30px rgba(212, 175, 55, 0.8), 0 0 0 8px rgba(212, 175, 55, 0.1); }
+}
+
+/* ==========================================================================
+   Scroll Down Indicator
+   ========================================================================== */
+#scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  pointer-events: none;
+  cursor: pointer;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  z-index: 20;
+}
+
+#scroll-indicator.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+#scroll-indicator.hidden-after-scroll { opacity: 0 !important; pointer-events: none !important; }
+
+#scroll-indicator span {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+#scroll-indicator svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--secondary);
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+
+/* ==========================================================================
+   Scroll Reveal (GSAP-controlled, but CSS baseline)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(35px) scale(0.92);
+  filter: blur(6px);
+  transition: opacity 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.85s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* ==========================================================================
+   SECTION 1: INTRO (Hand Merge)
+   ========================================================================== */
+#sec-intro {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.intro-bg {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.intro-bg img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hand-layer {
+  position: absolute;
+  z-index: 2;
+  width: 55%;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.hand-layer.girl-hand {
+  left: -70%;
+  opacity: 0.3;
+}
+
+.hand-layer.groom-hand {
+  right: -70%;
+  opacity: 0.3;
+}
+
+.hand-layer img {
+  width: 100%;
+  height: auto;
+}
+
+.intro-text-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  text-align: center;
+  padding: 0 4.16cqw;
+}
+
+.intro-text-content .hero-pre-title {
+  font-family: var(--sans);
+  font-size: 2.8cqw;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 1.6cqw;
+}
+
+.intro-text-content .hero-names {
+  font-family: var(--script);
+  font-size: 12cqw;
+  color: var(--white);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+  line-height: 1.1;
+}
+
+.intro-text-content .hero-ampersand {
+  font-family: var(--script);
+  font-size: 8cqw;
+  color: var(--secondary);
+  display: block;
+  margin: 1cqw 0;
+}
+
+.intro-text-content .hero-families {
+  font-family: var(--sans);
+  font-size: 2.8cqw;
+  color: rgba(255,255,255,0.75);
+  font-weight: 400;
+  margin-top: 0.4cqw;
+  margin-bottom: 1.6cqw;
+}
+
+/* ==========================================================================
+   SECTION 2: HALDI (Joyous Portraits)
+   ========================================================================== */
+#sec-haldi {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.haldi-bg {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.haldi-bg img {
+  width: 100%; height: auto;
+  display: block;
+}
+
+/* Latkans */
+.haldi-latkans {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 2%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.latkan-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+}
+
+.latkan-wrap.latkan-long {
+  width: 8%;
+  animation: latkanSwing 4s ease-in-out infinite;
+}
+
+.latkan-wrap.latkan-short {
+  width: 6%;
+  animation: latkanSwing 4.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.latkan-wrap img {
+  width: 100%;
+  height: auto;
+}
+
+@keyframes latkanSwing {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+/* Haldi Subject Composition */
+.haldi-subject {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.haldi-body-layer {
+  position: relative;
+  z-index: 1;
+}
+
+.haldi-body-layer img {
+  width: 100%;
+  height: auto;
+}
+
+.haldi-head-container {
+  position: absolute;
+  top: -2%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35%;
+  z-index: 2;
+  transform-origin: bottom center;
+}
+
+.haldi-back-head {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.haldi-front-head {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.haldi-content {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  text-align: center;
+  padding: 20% 4.16cqw 0;
+}
+
+/* ==========================================================================
+   SECTION 3: MEHNDI (3D Swing)
+   ========================================================================== */
+#sec-mehndi {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.mehndi-bg {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.mehndi-bg img {
+  width: 100%; height: auto;
+  display: block;
+}
+
+.mehndi-top-decor {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.mehndi-top-decor img {
+  width: 100%;
+}
+
+.mehndi-top-latkans {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-around;
+  z-index: 3;
+  padding: 0 5%;
+  pointer-events: none;
+}
+
+.mehndi-latkan {
+  width: 12%;
+  transform-origin: top center;
+  animation: latkanSwing 4.5s ease-in-out infinite;
+}
+
+.mehndi-latkan img {
+  width: 100%;
+  height: auto;
+}
+
+.mehndi-bottom-decor {
+  position: absolute;
+  bottom: 0;
+  width: 25%;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.mehndi-bottom-decor.left {
+  left: 0;
+  transform: scaleX(-1);
+}
+
+.mehndi-bottom-decor.right {
+  right: 0;
+}
+
+.mehndi-bottom-decor img {
+  width: 100%;
+}
+
+/* Swing Couple */
+.swing-couple-container {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  z-index: 4;
+  transform-origin: top center;
+  perspective: 800px;
+}
+
+.swing-couple-container img {
+  width: 100%;
+  height: auto;
+}
+
+/* Mehndi Text Content */
+.mehndi-content {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  text-align: center;
+  padding: 5% 4.16cqw 0;
+}
+
+/* ==========================================================================
+   SECTION 4: SANGEET (Festive Depth & Rituals)
+   ========================================================================== */
+#sec-sangeet {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sangeet-bg {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.sangeet-bg img {
+  width: 100%; height: auto;
+  display: block;
+}
+
+/* Dancing Girls (background) */
+.dancing-girls-layer {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 65%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.dancing-girls-layer img {
+  width: 100%;
+  height: auto;
+}
+
+/* Fountain (foreground, on top of dancing girls) */
+.fountain-layer {
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.fountain-layer img {
+  width: 100%;
+  height: auto;
+}
+
+/* Mala Girl */
+.mala-girl-container {
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  width: 40%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.mala-girl-body {
+  position: relative;
+  z-index: 1;
+}
+
+.mala-girl-body img {
+  width: 100%;
+  height: auto;
+}
+
+.mala-girl-hand {
+  position: absolute;
+  top: 30%;
+  right: 10%;
+  width: 35%;
+  z-index: 2;
+  transform-origin: top right;
+}
+
+.mala-girl-hand img {
+  width: 100%;
+  height: auto;
+}
+
+/* Rangoli Girl */
+.rangoli-girl-container {
+  position: absolute;
+  bottom: 5%;
+  right: 0;
+  width: 40%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.rangoli-girl-body {
+  position: relative;
+  z-index: 1;
+}
+
+.rangoli-girl-body img {
+  width: 100%;
+  height: auto;
+}
+
+.rangoli-girl-hand {
+  position: absolute;
+  top: 40%;
+  left: 15%;
+  width: 40%;
+  z-index: 2;
+  transform-origin: top left;
+}
+
+.rangoli-girl-hand img {
+  width: 100%;
+  height: auto;
+}
+
+/* Sangeet Text Content */
+.sangeet-content {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  text-align: center;
+  padding: 8% 4.16cqw 0;
+}
+
+/* ==========================================================================
+   Shared Section Title Styles
+   ========================================================================== */
+.section-title-script {
+  font-family: var(--script);
+  font-size: 12cqw;
+  color: var(--white);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2cqw;
+}
+
+.section-desc {
+  font-family: var(--sans);
+  font-size: 3.5cqw;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  max-width: 90%;
+  margin: 0 auto 4.16cqw;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 1.25cqw 4.16cqw;
+  border-radius: 30px;
+  font-size: 2.8cqw;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2.5cqw;
+}
+
+/* Date Block */
+.date-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 16px;
+  padding: 2.5cqw 5cqw;
+  margin-top: 3cqw;
+  color: var(--white);
+}
+
+.date-block-top {
+  font-family: var(--sans);
+  font-size: 3cqw;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+.date-block-middle {
+  display: flex;
+  align-items: center;
+  gap: 2.5cqw;
+  margin: 1cqw 0;
+}
+
+.date-block-side {
+  display: flex;
+  align-items: center;
+}
+
+.date-text {
+  font-family: var(--sans);
+  font-size: 2.5cqw;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+}
+
+.date-block-center {
+  font-family: var(--serif);
+  font-size: 12cqw;
+  font-weight: 700;
+  color: var(--secondary);
+  line-height: 1;
+}
+
+.date-block-bottom {
+  font-family: var(--sans);
+  font-size: 3cqw;
+  letter-spacing: 4px;
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   COUNTDOWN SECTION
+   ========================================================================== */
+.countdown-section {
+  background: linear-gradient(180deg, #2d1a1a 0%, #1a0a0a 100%);
+  padding: 10cqw 4.16cqw;
+  text-align: center;
+}
+
+.countdown-section h3 {
+  font-family: var(--script);
+  font-size: 10cqw;
+  color: var(--secondary);
+  margin-bottom: 1.6cqw;
+}
+
+.countdown-sub {
+  font-size: 3.2cqw;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 5cqw;
+}
+
+.timer-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2.5cqw;
+}
+
+.time-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 14px;
+  padding: 3cqw 3.3cqw;
+  min-width: 12.5cqw;
+}
+
+.time-val {
+  font-family: var(--serif);
+  font-size: 7cqw;
+  font-weight: 700;
+  color: var(--secondary);
+  line-height: 1;
+}
+
+.time-label {
+  font-size: 2.5cqw;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.8cqw;
+}
+
+/* ==========================================================================
+   RSVP SECTION
+   ========================================================================== */
+#sec-rsvp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8.3cqw 3.3cqw;
+  background: url('../images/rsvp_bg.jpg') center/cover no-repeat;
+  padding-bottom: calc(8.3cqw + env(safe-area-inset-bottom, 0px));
+  container-type: inline-size;
+}
+
+.rsvp-content {
+  position: relative;
+  z-index: 10;
+}
+
+.rsvp-header {
+  margin-bottom: 6.25cqw;
+  text-align: center;
+}
+
+.rsvp-header h2 {
+  font-family: var(--script);
+  font-size: 10cqw;
+  color: #800020;
+  margin-bottom: 2cqw;
+}
+
+.rsvp-header p {
+  color: #555;
+  font-size: 3.5cqw;
+  font-weight: 500;
+}
+
+.rsvp-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  padding: 5cqw 4.16cqw;
+}
+
+/* Alert box */
+.rsvp-alert {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 2.5cqw 3.3cqw;
+  border-radius: 12px;
+  background: #fff3f3;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  font-size: 3.2cqw;
+  margin-bottom: 3.3cqw;
+  position: relative;
+}
+
+.rsvp-alert.show { display: flex; }
+
+.alert-close {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  font-size: 1.2rem;
+  color: #e74c3c;
+  cursor: pointer;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 3.75cqw;
+}
+
+.form-label {
+  display: block;
+  font-size: 3cqw;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1.25cqw;
+}
+
+.form-control {
+  width: 100%;
+  padding: 2.5cqw 3.3cqw;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  font-family: var(--sans);
+  font-size: 3.5cqw;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+.form-control:focus { border-color: var(--secondary); }
+
+/* Attendance Toggle */
+.attendance-toggle {
+  display: flex;
+  gap: 2cqw;
+}
+
+.att-btn {
+  flex: 1;
+  padding: 2.5cqw;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: var(--white);
+  font-family: var(--sans);
+  font-size: 3.2cqw;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-muted);
+}
+
+.att-btn.active.yes {
+  border-color: #27ae60;
+  background: #eafaf1;
+  color: #27ae60;
+}
+
+.att-btn.active.no {
+  border-color: #e74c3c;
+  background: #fdf2f2;
+  color: #e74c3c;
+}
+
+/* Event Chips */
+.events-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6cqw;
+}
+
+.event-chip {
+  padding: 2cqw 3.75cqw;
+  border-radius: 50px;
+  border: 2px solid #ddd;
+  background: var(--white);
+  font-size: 3cqw;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  color: var(--text-muted);
+}
+
+.event-chip.active {
+  border-color: var(--secondary);
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--secondary-dark);
+}
+
+/* WhatsApp Send Button */
+.btn-whatsapp {
+  width: 100%;
+  padding: 3.3cqw;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  font-family: var(--sans);
+  font-size: 3.8cqw;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2cqw;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 2cqw;
+}
+
+.btn-whatsapp:active {
+  transform: scale(0.97);
+}
+
+.btn-whatsapp svg {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+  padding: clamp(40px,6vh,80px) max(20px, env(safe-area-inset-right, 0px)) calc(clamp(40px,6vh,80px) + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px));
+  text-align: center;
+  border-top: 1px solid rgba(231,191,133,0.2);
+  background: var(--bg);
+}
+
+.footer-om {
+  font-size: 10cqw;
+  color: var(--secondary);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Responsive Tweaks
+   ========================================================================== */
+@media (max-width: 360px) {
+  .intro-text-content .hero-names { font-size: 10cqw; }
+  .section-title-script { font-size: 10cqw; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- =====================================================
+     LANDSCAPE WARNING
+     ===================================================== -->
+<div id="landscape-warning" role="alert" aria-live="assertive">
+  <svg class="lw-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/>
+  </svg>
+  <p class="lw-title">Please Rotate</p>
+  <p class="lw-text">This wedding invitation is best viewed in portrait mode. Please rotate your device.</p>
+</div>
+
+<!-- =====================================================
+     GLOBAL LOADER
+     ===================================================== -->
+<div id="global-loader" aria-hidden="true">
+  <div class="loader-ring"></div>
+</div>
+
+<!-- =====================================================
+     INTRO LAYER (Video Overlay — fixed, full-screen)
+     ===================================================== -->
+<div id="intro-layer" role="dialog" aria-label="Opening invitation">
+
+  <!-- Tap to Begin Screen -->
+  <div class="intro-tap-screen" id="tap-screen">
+    <!-- Om SVG Icon -->
+    <svg class="intro-ganesh-icon" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+      <text x="50" y="75" text-anchor="middle" font-size="80" font-family="serif" fill="currentColor">ॐ</text>
+    </svg>
+    <p class="intro-welcome-text">You are cordially invited</p>
+    <p class="intro-title">Wedding Celebration</p>
+    <p class="intro-names">Rohan & Priya</p>
+    <button class="btn-tap-begin" id="btn-tap-begin" type="button">
+      ✦ TAP TO BEGIN ✦
+    </button>
+  </div>
+
+  <!-- Video element — no controls, no pause -->
+  <video
+    id="intro-video"
+    playsinline
+    webkit-playsinline
+    x5-playsinline
+    disablePictureInPicture
+    fetchpriority="high"
+    preload="auto"
+    aria-hidden="true"
+  >
+    <source src="../VideoTypeAnimatedTheme/images/Dummy.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- =====================================================
+     MAIN APP
+     ===================================================== -->
+<main id="app">
+
+  <!-- =================================================
+       SECTION 1: INTRO (The Hand Merge)
+       ================================================= -->
+  <section id="sec-intro" aria-label="Wedding Cover">
+    <div class="intro-bg" aria-hidden="true">
+      <img src="../images/IntroBG.png" alt="" loading="eager" draggable="false">
+    </div>
+
+    <!-- Girl Hand (Bride) -->
+    <div class="hand-layer girl-hand" id="girl-hand" aria-hidden="true">
+      <img src="../images/GirlHand.png" alt="" loading="eager" draggable="false">
+    </div>
+
+    <!-- Groom Hand -->
+    <div class="hand-layer groom-hand" id="groom-hand" aria-hidden="true">
+      <img src="../images/GroomHand.png" alt="" loading="eager" draggable="false">
+    </div>
+
+    <!-- Hero Text Content -->
+    <div class="intro-text-content">
+      <p class="hero-pre-title reveal">You are cordially invited to the wedding of</p>
+      <div class="hero-names reveal">
+        Rohan
+        <p class="hero-families">S/O Mr. & Mrs. Sharma</p>
+        <span class="hero-ampersand">&</span>
+        Priya
+        <p class="hero-families">D/O Mr. & Mrs. Verma</p>
+      </div>
+    </div>
+
+    <!-- Scroll Down Indicator -->
+    <div id="scroll-indicator" role="button" aria-label="Scroll down to explore" tabindex="0">
+      <span>Scroll Down</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- =================================================
+       SECTION 2: HALDI CEREMONY (Joyous Portraits)
+       ================================================= -->
+  <section id="sec-haldi" aria-label="Haldi Ceremony">
+    <div class="haldi-bg" aria-hidden="true">
+      <img src="../images/MainBG_Haldi.png" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <!-- Top Decor: Latkans -->
+    <div class="haldi-latkans" aria-hidden="true">
+      <div class="latkan-wrap latkan-long" style="animation-delay: 0s;">
+        <img src="../images/latkanLong.png" alt="" loading="lazy" draggable="false">
+      </div>
+      <div class="latkan-wrap latkan-short" style="animation-delay: 0.5s;">
+        <img src="../images/latkanShort.png" alt="" loading="lazy" draggable="false">
+      </div>
+      <div style="flex:1"></div>
+      <div class="latkan-wrap latkan-short" style="animation-delay: 0.7s;">
+        <img src="../images/latkanShort.png" alt="" loading="lazy" draggable="false">
+      </div>
+      <div class="latkan-wrap latkan-long" style="animation-delay: 0.2s;">
+        <img src="../images/latkanLong.png" alt="" loading="lazy" draggable="false">
+      </div>
+    </div>
+
+    <!-- Text Content -->
+    <div class="haldi-content">
+      <h2 class="section-title-script reveal" style="color: #4a3000;">Haldi</h2>
+      <p class="section-desc reveal" style="color: rgba(74,48,0,0.85);">
+        Bless the couple with turmeric, love and the warmth of family traditions.
+      </p>
+      <div class="date-block reveal" style="background: rgba(255,200,0,0.15); border-color: rgba(180,130,0,0.4);">
+        <div class="date-block-top" style="color: #8B6914;">DEC</div>
+        <div class="date-block-middle">
+          <div class="date-block-side"><div class="date-text" style="color: rgba(74,48,0,0.7);">THURSDAY</div></div>
+          <div class="date-block-center" style="color: #8B6914;">10</div>
+          <div class="date-block-side"><div class="date-text" style="color: rgba(74,48,0,0.7);">AT 10 AM</div></div>
+        </div>
+        <div class="date-block-bottom" style="color: #8B6914;">2026</div>
+      </div>
+    </div>
+
+    <!-- Haldi Subject Composite -->
+    <div class="haldi-subject" aria-hidden="true">
+      <!-- Body Layer (bottom) -->
+      <div class="haldi-body-layer">
+        <img src="../images/HaldiGirlBody.png" alt="" loading="lazy" draggable="false">
+      </div>
+      <!-- Head Container (both head layers) -->
+      <div class="haldi-head-container" id="haldi-head">
+        <img class="haldi-back-head" src="../images/HaldiGirlBackHead.png" alt="" loading="lazy" draggable="false">
+        <img class="haldi-front-head" src="../images/HaldiGirlFrontHead.png" alt="" loading="lazy" draggable="false">
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================
+       SECTION 3: MEHNDI CEREMONY (The 3D Swing)
+       ================================================= -->
+  <section id="sec-mehndi" aria-label="Mehndi Ceremony">
+    <div class="mehndi-bg" aria-hidden="true">
+      <img src="../images/BG_MainMehndi.png" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <!-- Top Decor with waving latkans -->
+    <div class="mehndi-top-latkans" aria-hidden="true">
+      <div class="mehndi-latkan" style="animation-delay: 0s;"><img src="../images/LatkanMehndi.png" alt="" loading="lazy" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0.5s;"><img src="../images/LatkanMehndi.png" alt="" loading="lazy" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0.2s;"><img src="../images/LatkanMehndi.png" alt="" loading="lazy" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0.7s;"><img src="../images/LatkanMehndi.png" alt="" loading="lazy" draggable="false"></div>
+    </div>
+
+    <!-- Text Content -->
+    <div class="mehndi-content">
+      <h2 class="section-title-script reveal">Mehndi</h2>
+      <p class="section-desc reveal">
+        An evening of intricate art, laughter and love as henna adorns the hands of the bride.
+      </p>
+      <div class="date-block reveal">
+        <div class="date-block-top">DEC</div>
+        <div class="date-block-middle">
+          <div class="date-block-side"><div class="date-text">WEDNESDAY</div></div>
+          <div class="date-block-center">09</div>
+          <div class="date-block-side"><div class="date-text">AT 6 PM</div></div>
+        </div>
+        <div class="date-block-bottom">2026</div>
+      </div>
+    </div>
+
+    <!-- Swing Couple (3D swing) -->
+    <div class="swing-couple-container" id="swing-couple" aria-hidden="true">
+      <img src="../images/SwingCouple.png" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <!-- Bottom Decor (highest z-index in section) -->
+    <div class="mehndi-bottom-decor left" aria-hidden="true">
+      <img src="../images/BottomDecorMehndi.png" alt="" loading="lazy" draggable="false">
+    </div>
+    <div class="mehndi-bottom-decor right" aria-hidden="true">
+      <img src="../images/BottomDecorMehndi.png" alt="" loading="lazy" draggable="false">
+    </div>
+  </section>
+
+  <!-- =================================================
+       SECTION 4: SANGEET (Festive Depth & Rituals)
+       ================================================= -->
+  <section id="sec-sangeet" aria-label="Sangeet Night">
+    <div class="sangeet-bg" aria-hidden="true">
+      <img src="../images/BG_Sangeet.png" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <!-- Text Content -->
+    <div class="sangeet-content">
+      <h2 class="section-title-script reveal" style="text-shadow: 0 0 30px rgba(212,175,55,0.5);">Sangeet</h2>
+      <p class="section-desc reveal">
+        An evening of music, dance and celebration. Let's make memories under the stars!
+      </p>
+      <div class="date-block reveal">
+        <div class="date-block-top">DEC</div>
+        <div class="date-block-middle">
+          <div class="date-block-side"><div class="date-text">FRIDAY</div></div>
+          <div class="date-block-center">11</div>
+          <div class="date-block-side"><div class="date-text">AT 7 PM</div></div>
+        </div>
+        <div class="date-block-bottom">2026</div>
+      </div>
+    </div>
+
+    <!-- Dancing Girls (background layer) -->
+    <div class="dancing-girls-layer" id="dancing-girls" aria-hidden="true">
+      <img src="../images/DancingGIrls.png" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <!-- Fountain (foreground, higher z-index) -->
+    <div class="fountain-layer" aria-hidden="true">
+      <img src="../images/FountainHalf.png" alt="" loading="lazy" draggable="false">
+    </div>
+
+    <!-- Mala Girl (side character 1) -->
+    <div class="mala-girl-container" aria-hidden="true">
+      <div class="mala-girl-body">
+        <img src="../images/MalaGirl.png" alt="" loading="lazy" draggable="false">
+      </div>
+      <div class="mala-girl-hand" id="mala-hand">
+        <img src="../images/malaGirlHand.png" alt="" loading="lazy" draggable="false">
+      </div>
+    </div>
+
+    <!-- Rangoli Girl (side character 2) -->
+    <div class="rangoli-girl-container" aria-hidden="true">
+      <div class="rangoli-girl-body">
+        <img src="../images/RangoliGirl.png" alt="" loading="lazy" draggable="false">
+      </div>
+      <div class="rangoli-girl-hand" id="rangoli-hand">
+        <img src="../images/RangoliGirlHand.png" alt="" loading="lazy" draggable="false">
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================
+       COUNTDOWN TIMER
+       ================================================= -->
+  <div class="countdown-section">
+    <h3 class="reveal">Counting Down</h3>
+    <p class="countdown-sub reveal">To the forever that begins...</p>
+    <div class="timer-grid reveal">
+      <div class="time-box">
+        <span class="time-val" id="cd-days">00</span>
+        <span class="time-label">Days</span>
+      </div>
+      <div class="time-box">
+        <span class="time-val" id="cd-hours">00</span>
+        <span class="time-label">Hours</span>
+      </div>
+      <div class="time-box">
+        <span class="time-val" id="cd-mins">00</span>
+        <span class="time-label">Mins</span>
+      </div>
+      <div class="time-box">
+        <span class="time-val" id="cd-secs">00</span>
+        <span class="time-label">Secs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================
+       RSVP SECTION
+       ================================================= -->
+  <section id="sec-rsvp" aria-label="RSVP">
+    <div class="rsvp-content">
+      <div class="rsvp-header">
+        <h2 class="reveal">Will You Join Us?</h2>
+        <p class="reveal">Kindly reply by 1 December 2026.<br>Your response opens straight in WhatsApp.</p>
+      </div>
+
+      <div class="rsvp-card reveal">
+        <!-- Alert box -->
+        <div class="rsvp-alert" id="rsvp-alert" role="alert">
+          <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          <span id="rsvp-alert-text">Please enter your name to proceed.</span>
+          <button type="button" class="alert-close" onclick="closeRsvpAlert()" aria-label="Close">&times;</button>
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="form-label" for="rsvp-name">Full Name</label>
+          <input type="text" id="rsvp-name" class="form-control" placeholder="e.g. Lakshmi Iyer" autocomplete="name">
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label class="form-label" for="rsvp-phone">Phone Number</label>
+          <input type="tel" id="rsvp-phone" class="form-control" placeholder="e.g. 9876512345" autocomplete="tel">
+        </div>
+
+        <!-- Attendance -->
+        <div class="form-group">
+          <label class="form-label">Will You Attend?</label>
+          <div class="attendance-toggle">
+            <button class="att-btn yes active" type="button" onclick="toggleAttendance('yes')">🎉 Joyfully Yes</button>
+            <button class="att-btn no" type="button" onclick="toggleAttendance('no')">💌 Regretfully No</button>
+          </div>
+        </div>
+
+        <!-- Events attending -->
+        <div class="form-group" id="events-group">
+          <label class="form-label">Which Celebrations? (Tap all that apply)</label>
+          <div class="events-checkboxes">
+            <div class="event-chip active" role="checkbox" aria-checked="true" tabindex="0" onclick="this.classList.toggle('active'); this.setAttribute('aria-checked', this.classList.contains('active'))">Mehndi</div>
+            <div class="event-chip active" role="checkbox" aria-checked="true" tabindex="0" onclick="this.classList.toggle('active'); this.setAttribute('aria-checked', this.classList.contains('active'))">Haldi</div>
+            <div class="event-chip active" role="checkbox" aria-checked="true" tabindex="0" onclick="this.classList.toggle('active'); this.setAttribute('aria-checked', this.classList.contains('active'))">Sangeet</div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn-whatsapp" type="button" onclick="sendRSVP()" id="btn-send-rsvp">
+          <svg viewBox="0 0 24 24" width="1.5rem" height="1.5rem" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m.01 16.27c-1.47 0-2.91-.39-4.18-1.14l-.3-.18-3.1.81.83-3.03-.2-.32c-.82-1.3-1.25-2.8-1.25-4.34 0-4.51 3.67-8.19 8.2-8.19 4.52 0 8.2 3.68 8.2 8.19 0 4.52-3.68 8.2-8.2 8.2m4.49-6.15c-.25-.12-1.47-.73-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.98-.15.17-.29.19-.54.07-1.31-.63-2.4-1.43-3.26-2.52-.22-.28-.01-.43.11-.55.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.32-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42h-.48c-.21 0-.54.08-.82.39-.29.31-1.09 1.07-1.09 2.6s1.12 3.03 1.27 3.23c.16.21 2.2 3.36 5.34 4.72.75.32 1.33.52 1.79.66.75.24 1.44.2 1.98.12.61-.09 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.11-.23-.17-.48-.29"/>
+          </svg>
+          Send RSVP on WhatsApp
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================
+       FOOTER
+       ================================================= -->
+  <footer class="footer reveal">
+    <p class="footer-om">ॐ</p>
+    <p style="font-family:var(--script); font-size: 5cqw; color:var(--primary);">Thank You</p>
+    <p style="color:var(--text-muted); font-size: 3.2cqw; margin-top:8px; letter-spacing:0.05em;">With the blessings of our elders and the warmth of your presence</p>
+    <p style="margin-top:24px; font-size: 2.8cqw; color:var(--text-muted);">
+      Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" style="color:var(--primary); text-decoration:none; font-weight:600;">Invite&nbsp;Box</a>
+    </p>
+  </footer>
+
+</main><!-- /#app -->
+
+<!-- =====================================================
+     MUSIC FAB
+     ===================================================== -->
+<button id="mfab" type="button" title="Toggle Background Music" onclick="toggleMusic()" aria-label="Toggle music">
+  <!-- Muted icon (shown by default) -->
+  <svg id="icon-off" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+  </svg>
+  <!-- Unmuted icon (shown when playing) -->
+  <svg id="icon-on" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="display:none;" aria-hidden="true">
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+  </svg>
+</button>
+
+<!-- Background Music Audio -->
+<audio id="bg-music" loop preload="none" aria-hidden="true">
+  <source src="../VideoTypeAnimatedTheme/images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- =====================================================
+     MAIN SCRIPT — All Vanilla JS + GSAP
+     ===================================================== -->
+<script>
+/* ============================================================
+   Cinematic Wedding Invitation — JS Engine
+   Pure Vanilla JS + GSAP / ScrollTrigger
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   1. Dynamic Viewport Height Fix
+   ---------------------------------------------------------- */
+function setActualVh() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', vh + 'px');
+}
+setActualVh();
+
+/* ----------------------------------------------------------
+   2. Scroll Restoration
+   ---------------------------------------------------------- */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
+window.addEventListener('beforeunload', function() { window.scrollTo(0, 0); });
+window.addEventListener('resize', function() {
+  setActualVh();
+  if (!document.body.classList.contains('unlocked')) window.scrollTo(0, 0);
+});
+window.addEventListener('orientationchange', function() {
+  setTimeout(setActualVh, 200);
+  if (!document.body.classList.contains('unlocked')) window.scrollTo(0, 0);
+});
+
+/* ----------------------------------------------------------
+   3. Global Loader
+   ---------------------------------------------------------- */
+(function () {
+  var loader = document.getElementById('global-loader');
+  if (!loader) return;
+  var done = false;
+
+  function hideLoader() {
+    if (done) return;
+    done = true;
+    loader.classList.add('hidden');
+  }
+
+  Promise.all([
+    document.fonts ? document.fonts.ready : Promise.resolve(),
+    new Promise(function(resolve) {
+      if (document.readyState === 'complete') resolve();
+      else window.addEventListener('load', resolve, { once: true });
+    })
+  ]).then(hideLoader).catch(hideLoader);
+
+  setTimeout(hideLoader, 3000);
+})();
+
+/* ----------------------------------------------------------
+   4. Intro Video Logic
+   ---------------------------------------------------------- */
+var introLayer = document.getElementById('intro-layer');
+var introVideo = document.getElementById('intro-video');
+var tapScreen  = document.getElementById('tap-screen');
+var btnTapBegin = document.getElementById('btn-tap-begin');
+var mfab       = document.getElementById('mfab');
+var scrollInd  = document.getElementById('scroll-indicator');
+var bgAudio    = document.getElementById('bg-music');
+
+var musicPlaying = false;
+var WHATSAPP_NUMBER = '918200482291'; // ← change to real number
+
+if (introVideo) introVideo.load();
+
+function safePlayVideo() {
+  if (!introVideo) return;
+  introVideo.muted = false;
+  introVideo.volume = 1.0;
+  if (bgAudio) { bgAudio.pause(); bgAudio.currentTime = 0; }
+  var p = introVideo.play();
+  if (p) p.catch(function() { introVideo.play().catch(function(){}); });
+}
+
+if (btnTapBegin) {
+  btnTapBegin.addEventListener('click', function() {
+    // Unlock audio context on user gesture
+    if (bgAudio) {
+      bgAudio.muted = true;
+      bgAudio.play().then(function(){ bgAudio.pause(); }).catch(function(){});
+      bgAudio.muted = false;
+      bgAudio.currentTime = 0;
+    }
+
+    introVideo.classList.add('playing');
+    safePlayVideo();
+
+    if (tapScreen) {
+      tapScreen.style.opacity = '0';
+      tapScreen.style.pointerEvents = 'none';
+      setTimeout(function() { tapScreen.classList.add('hidden'); }, 1000);
+    }
+  }, { once: true });
+}
+
+// Block pause attempts — video must play to end
+if (introVideo) {
+  introVideo.addEventListener('pause', function() {
+    if (!introVideo.ended && introVideo.classList.contains('playing')) {
+      introVideo.play().catch(function(){});
+    }
+  });
+
+  // Fade out near end
+  introVideo.addEventListener('timeupdate', function() {
+    if (!introVideo.duration) return;
+    var remaining = introVideo.duration - introVideo.currentTime;
+    if (remaining < 1.2 && introVideo.style.opacity !== '0') {
+      introVideo.style.transition = 'opacity 1s ease';
+      introVideo.style.opacity = '0';
+    }
+  });
+
+  introVideo.addEventListener('ended', function() {
+    revealApp();
+  });
+}
+
+function revealApp() {
+  // Fade out intro layer
+  if (introLayer) {
+    introLayer.classList.add('fade-out');
+    setTimeout(function() { introLayer.classList.add('hidden'); }, 1600);
+  }
+
+  // Unlock scroll and init animations
+  setTimeout(function() {
+    document.body.classList.add('unlocked');
+    if (mfab) mfab.classList.add('visible');
+    if (scrollInd) scrollInd.classList.add('visible');
+    initGSAPAnimations();
+    startBgMusic();
+  }, 800);
+}
+
+/* ----------------------------------------------------------
+   5. Music FAB
+   ---------------------------------------------------------- */
+function startBgMusic() {
+  if (!bgAudio) return;
+  bgAudio.volume = 0.45;
+  bgAudio.play().then(function() {
+    musicPlaying = true;
+    updateFabIcon(true);
+  }).catch(function() {
+    musicPlaying = false;
+    updateFabIcon(false);
+  });
+}
+
+function updateFabIcon(isOn) {
+  var iconOn  = document.getElementById('icon-on');
+  var iconOff = document.getElementById('icon-off');
+  if (isOn) {
+    if (mfab) mfab.classList.add('playing');
+    if (iconOn) iconOn.style.display = 'block';
+    if (iconOff) iconOff.style.display = 'none';
+  } else {
+    if (mfab) mfab.classList.remove('playing');
+    if (iconOn) iconOn.style.display = 'none';
+    if (iconOff) iconOff.style.display = 'block';
+  }
+}
+
+window.toggleMusic = function () {
+  if (!bgAudio) return;
+  if (musicPlaying) {
+    bgAudio.pause();
+    musicPlaying = false;
+    updateFabIcon(false);
+  } else {
+    bgAudio.play().then(function() {
+      musicPlaying = true;
+      updateFabIcon(true);
+    }).catch(function() { musicPlaying = false; updateFabIcon(false); });
+  }
+};
+
+/* Scroll-down indicator hide after scroll */
+window.addEventListener('scroll', function() {
+  if (!scrollInd) return;
+  if (window.scrollY > 60) {
+    scrollInd.classList.add('hidden-after-scroll');
+  } else {
+    scrollInd.classList.remove('hidden-after-scroll');
+  }
+}, { passive: true });
+
+/* ----------------------------------------------------------
+   6. GSAP Animations Master Init
+   ---------------------------------------------------------- */
+function initGSAPAnimations() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ---- TEXT REVEAL ANIMATIONS (all .reveal elements) ----
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    gsap.fromTo(el,
+      { opacity: 0, y: 35, scale: 0.92, filter: 'blur(6px)' },
+      {
+        opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      }
+    );
+  });
+
+  // ---- SECTION 1: HAND MERGE ANIMATION ----
+  var girlHand = document.getElementById('girl-hand');
+  var groomHand = document.getElementById('groom-hand');
+
+  if (girlHand && groomHand) {
+    var handTL = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#sec-intro',
+        start: 'top 50%',
+        once: true
+      }
+    });
+
+    handTL
+      .to(girlHand, {
+        left: '0%',
+        opacity: 1,
+        duration: 2,
+        ease: 'power2.out'
+      }, 0)
+      .to(groomHand, {
+        right: '0%',
+        opacity: 1,
+        duration: 2,
+        ease: 'power2.out'
+      }, 0);
+  }
+
+  // ---- SECTION 2: HALDI HEAD SWAY ANIMATION ----
+  var haldiHead = document.getElementById('haldi-head');
+  if (haldiHead) {
+    // Continuous joyous head sway
+    gsap.to(haldiHead, {
+      rotation: 3,
+      duration: 1.8,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+      transformOrigin: 'bottom center'
+    });
+  }
+
+  // ---- SECTION 3: MEHNDI 3D SWING ANIMATION ----
+  var swingCouple = document.getElementById('swing-couple');
+  if (swingCouple) {
+    gsap.set(swingCouple.parentElement, { perspective: 800 });
+    gsap.to(swingCouple, {
+      rotationX: 15,
+      rotationZ: 0,
+      rotationY: 0,
+      duration: 2.5,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+      transformOrigin: 'top center'
+    });
+  }
+
+  // ---- SECTION 4: SANGEET ANIMATIONS ----
+
+  // Dancing Girls - subtle continuous dance movement
+  var dancingGirls = document.getElementById('dancing-girls');
+  if (dancingGirls) {
+    gsap.to(dancingGirls, {
+      x: 5,
+      duration: 1.2,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1
+    });
+  }
+
+  // Mala Girl Hand - collecting flowers motion
+  var malaHand = document.getElementById('mala-hand');
+  if (malaHand) {
+    gsap.to(malaHand, {
+      rotation: 8,
+      y: 6,
+      duration: 1.5,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+      transformOrigin: 'right center'
+    });
+  }
+
+  // Rangoli Girl Hand - rangoli making motion
+  var rangoliHand = document.getElementById('rangoli-hand');
+  if (rangoliHand) {
+    gsap.to(rangoliHand, {
+      rotation: -5,
+      x: 3,
+      y: 4,
+      duration: 1.2,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+      transformOrigin: 'top left'
+    });
+  }
+}
+
+/* ----------------------------------------------------------
+   7. Countdown Timer
+   ---------------------------------------------------------- */
+(function initCountdown() {
+  var target = new Date('Dec 11, 2026 19:00:00').getTime();
+
+  var dEl = document.getElementById('cd-days');
+  var hEl = document.getElementById('cd-hours');
+  var mEl = document.getElementById('cd-mins');
+  var sEl = document.getElementById('cd-secs');
+  if (!dEl) return;
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    var dist = target - Date.now();
+    if (dist < 0) { clearInterval(tid); return; }
+    dEl.textContent = pad(Math.floor(dist / 86400000));
+    hEl.textContent = pad(Math.floor((dist % 86400000) / 3600000));
+    mEl.textContent = pad(Math.floor((dist % 3600000) / 60000));
+    sEl.textContent = pad(Math.floor((dist % 60000) / 1000));
+  }
+
+  tick();
+  var tid = setInterval(tick, 1000);
+})();
+
+/* ----------------------------------------------------------
+   8. RSVP — Toggle Attendance
+   ---------------------------------------------------------- */
+var rsvpAttendance = 'yes';
+
+window.toggleAttendance = function (val) {
+  rsvpAttendance = val;
+  var yesBtn    = document.querySelector('.att-btn.yes');
+  var noBtn     = document.querySelector('.att-btn.no');
+  var eventsGrp = document.getElementById('events-group');
+
+  if (val === 'yes') {
+    yesBtn && yesBtn.classList.add('active');
+    noBtn  && noBtn.classList.remove('active');
+    if (eventsGrp) eventsGrp.style.display = 'block';
+  } else {
+    noBtn  && noBtn.classList.add('active');
+    yesBtn && yesBtn.classList.remove('active');
+    if (eventsGrp) eventsGrp.style.display = 'none';
+  }
+};
+
+/* ----------------------------------------------------------
+   9. RSVP — Alert helpers
+   ---------------------------------------------------------- */
+window.showRsvpAlert = function (msg) {
+  var box  = document.getElementById('rsvp-alert');
+  var text = document.getElementById('rsvp-alert-text');
+  if (!box || !text) return;
+  text.textContent = msg;
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+window.closeRsvpAlert = function () {
+  var box = document.getElementById('rsvp-alert');
+  if (box) box.classList.remove('show');
+};
+
+/* ----------------------------------------------------------
+   10. RSVP — Send WhatsApp Message
+   ---------------------------------------------------------- */
+window.sendRSVP = function () {
+  var nameInput  = document.getElementById('rsvp-name');
+  var phoneInput = document.getElementById('rsvp-phone');
+  var name  = nameInput  ? nameInput.value.trim()  : '';
+  var phone = phoneInput ? phoneInput.value.trim() : '';
+
+  if (!name) {
+    window.showRsvpAlert('Please enter your full name before sending RSVP.');
+    if (nameInput) nameInput.focus();
+    return;
+  }
+  if (!phone || phone.length < 7) {
+    window.showRsvpAlert('Please enter a valid phone number before sending RSVP.');
+    if (phoneInput) phoneInput.focus();
+    return;
+  }
+  window.closeRsvpAlert();
+
+  var divider  = '━━━━━━━━━━━━━━━━━━━━━━';
+  var attending = rsvpAttendance === 'yes';
+  var events   = attending
+    ? Array.from(document.querySelectorAll('.event-chip.active')).map(function(c) { return c.textContent; }).join(', ') || 'None selected'
+    : '—';
+
+  var msg = '';
+  msg += '✨ *Rohan & Priya — RSVP* ✨\n';
+  msg += divider + '\n\n';
+  msg += '👤 *Guest:* ' + name + '\n';
+  msg += '📱 *Phone:* ' + phone + '\n\n';
+  msg += '💌 *Response:* ' + (attending ? '🎉 Joyfully Attending' : '🥺 Regretfully Unable to Attend') + '\n';
+  if (attending) {
+    msg += '🗓️ *Events Attending:*\n   ' + events + '\n';
+  }
+  msg += '\n' + divider + '\n';
+  msg += '_Sent via the Wedding Invitation of_\n';
+  msg += '_Rohan & Priya • 11 Dec 2026_\n';
+  msg += divider;
+
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  var waBase   = isMobile ? 'https://api.whatsapp.com/send' : 'https://web.whatsapp.com/send';
+  var waUrl    = waBase + '?phone=' + WHATSAPP_NUMBER + '&text=' + encodeURIComponent(msg);
+
+  window.open(waUrl, '_blank');
+
+  // Reset form
+  if (nameInput)  nameInput.value  = '';
+  if (phoneInput) phoneInput.value = '';
+};
+</script>
+
+</body>
+</html>
