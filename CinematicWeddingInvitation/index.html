@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Rohan & Priya — Cinematic Wedding Invitation</title>
-  <meta name="description" content="You are cordially invited to celebrate the wedding of Rohan & Priya. Join us for Mehndi, Haldi, Sangeet & the Grand Wedding ceremony.">
+  <meta name="description" content="You are cordially invited to celebrate the wedding of Rohan & Priya. Join us for Haldi, Mehndi, Sangeet & the Grand Wedding ceremony.">
   <meta name="theme-color" content="#a32a38">
 
   <!-- Google Fonts -->
@@ -1515,8 +1515,8 @@ color: #104b0f;
       <div class="date-block reveal" style="background: rgba(255,200,0,0.15); border-color: rgba(180,130,0,0.4);">
         <div class="date-block-top" style="color: #8B6914;">DEC</div>
         <div class="date-block-middle">
-          <div class="date-block-side"><div class="date-text" style="color: rgba(74,48,0,0.7);">THU</div></div>
-          <div class="date-block-center" style="color: #8B6914;">10</div>
+          <div class="date-block-side"><div class="date-text" style="color: rgba(74,48,0,0.7);">WED</div></div>
+          <div class="date-block-center" style="color: #8B6914;">09</div>
           <div class="date-block-side"><div class="date-text" style="color: rgba(74,48,0,0.7);">AT 10 AM</div></div>
         </div>
         <div class="date-block-bottom" style="color: #8B6914;">2026</div>
@@ -1570,8 +1570,8 @@ color: #104b0f;
       <div class="date-block reveal">
         <div class="date-block-top">DEC</div>
         <div class="date-block-middle">
-          <div class="date-block-side"><div class="date-text">WED</div></div>
-          <div class="date-block-center">09</div>
+          <div class="date-block-side"><div class="date-text">THU</div></div>
+          <div class="date-block-center">10</div>
           <div class="date-block-side"><div class="date-text">AT 6 PM</div></div>
         </div>
         <div class="date-block-bottom">2026</div>
@@ -1783,9 +1783,10 @@ color: #104b0f;
         <div class="form-group" id="events-group">
           <label class="form-label">Which Celebrations? (Tap all that apply)</label>
           <div class="events-checkboxes">
-            <div class="event-chip active" role="checkbox" aria-checked="true" tabindex="0" onclick="this.classList.toggle('active'); this.setAttribute('aria-checked', this.classList.contains('active'))">Mehndi</div>
             <div class="event-chip active" role="checkbox" aria-checked="true" tabindex="0" onclick="this.classList.toggle('active'); this.setAttribute('aria-checked', this.classList.contains('active'))">Haldi</div>
+            <div class="event-chip active" role="checkbox" aria-checked="true" tabindex="0" onclick="this.classList.toggle('active'); this.setAttribute('aria-checked', this.classList.contains('active'))">Mehndi</div>
             <div class="event-chip active" role="checkbox" aria-checked="true" tabindex="0" onclick="this.classList.toggle('active'); this.setAttribute('aria-checked', this.classList.contains('active'))">Sangeet</div>
+            <div class="event-chip active" role="checkbox" aria-checked="true" tabindex="0" onclick="this.classList.toggle('active'); this.setAttribute('aria-checked', this.classList.contains('active'))">Wedding</div>
           </div>
         </div>
 
@@ -2178,15 +2179,15 @@ function initGSAPAnimations() {
   var weddingCouple = document.getElementById('wedding-couple');
   if (weddingCouple) {
     gsap.to(weddingCouple, {
-      y: '-22vh',         // Move up 25% of viewport height
+      y: '-22vh',         // Move up 22% of viewport height
       scale: 0.4,         // Scale down less drastically
-      ease: 'none',
+      duration: 1.8,
+      ease: 'power2.out',
       scrollTrigger: {
         trigger: '#sec-wedding',
         start: 'top 50%',
         end: 'bottom 40%',
-        toggleActions: "play none none reset", 
-        scrub: true
+        toggleActions: "play none none reset"
       }
     });
   }
@@ -2196,7 +2197,7 @@ function initGSAPAnimations() {
    7. Countdown Timer
    ---------------------------------------------------------- */
 (function initCountdown() {
-  var target = new Date('Dec 11, 2026 19:00:00').getTime();
+  var target = new Date('Dec 12, 2026 20:00:00').getTime();
 
   var dEl = document.getElementById('cd-days');
   var hEl = document.getElementById('cd-hours');
@@ -2296,7 +2297,7 @@ window.sendRSVP = function () {
   }
   msg += '\n' + divider + '\n';
   msg += '_Sent via the Wedding Invitation of_\n';
-  msg += '_Rohan & Priya • 11 Dec 2026_\n';
+  msg += '_Rohan & Priya • 12 Dec 2026_\n';
   msg += divider;
 
   var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
