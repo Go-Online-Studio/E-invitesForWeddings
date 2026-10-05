@@ -101,8 +101,8 @@ function safePlayVideo() {
   if (p) p.catch(() => introVideo.play().catch(() => {}));
 }
 
-if (btnTapBegin) {
-  btnTapBegin.addEventListener('click', () => {
+if (tapScreen) {
+  tapScreen.addEventListener('click', () => {
     // Unlock audio context on this user gesture
     if (bgAudio) {
       bgAudio.muted = true;

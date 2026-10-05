@@ -196,6 +196,7 @@ img {
   transition: opacity 1s ease;
   text-align: center;
   padding: 40px 20px;
+  cursor: pointer;
 }
 
 .intro-tap-screen.hidden { opacity: 0; pointer-events: none; }

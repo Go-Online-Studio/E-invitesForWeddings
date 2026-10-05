@@ -113,8 +113,8 @@ function safePlayVideo() {
   if (p) p.catch(function() { introVideo.play().catch(function(){}); });
 }
 
-if (btnTapBegin) {
-  btnTapBegin.addEventListener('click', function() {
+if (tapScreen) {
+  tapScreen.addEventListener('click', function() {
     // Unlock audio context on user gesture
     if (bgAudio) {
       bgAudio.muted = true;

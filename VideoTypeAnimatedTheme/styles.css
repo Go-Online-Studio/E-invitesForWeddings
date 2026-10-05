@@ -216,6 +216,7 @@ body.unlocked {
   text-align: center;
   padding: 40px 20px;
   container-type: inline-size;
+  cursor: pointer;
 }
 
 .intro-tap-screen::before {
