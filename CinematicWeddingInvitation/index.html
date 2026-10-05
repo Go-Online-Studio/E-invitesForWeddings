@@ -7,14 +7,32 @@
   <meta name="description" content="You are cordially invited to celebrate the wedding of Rohan & Priya. Join us for Haldi, Mehndi, Sangeet & the Grand Wedding ceremony.">
   <meta name="theme-color" content="#a32a38">
 
-  <!-- Google Fonts -->
+  <!-- DNS Prefetch & Preconnect for Peak Network Efficiency -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+  <!-- Google Fonts with font-display: swap for Instant Text Render -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-  <!-- GSAP + ScrollTrigger CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Critical Preloads for First Section & Video (LCP / FCP Priority) -->
+  <link rel="preload" as="video" href="images/Dummy.mp4" type="video/mp4" fetchpriority="high">
+  <link rel="preload" as="image" href="images/IntroBG.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="images/GirlHand.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="images/GroomHand.webp" type="image/webp" fetchpriority="high">
+
+  <!-- Prefetch Subsequent Section Assets during Idle -->
+  <link rel="prefetch" href="images/MainBG_Haldi.webp" as="image">
+  <link rel="prefetch" href="images/BG_MainMehndi.webp" as="image">
+  <link rel="prefetch" href="images/BG_Sangeet.webp" as="image">
+  <link rel="prefetch" href="images/BG_WeddingDay.webp" as="image">
+
+  <!-- GSAP + ScrollTrigger CDN (Deferred for non-blocking HTML parser) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
 <style>
 /* ==========================================================================
@@ -1446,17 +1464,17 @@ color: #104b0f;
        ================================================= -->
   <section id="sec-intro" aria-label="Wedding Cover">
     <div class="intro-bg" aria-hidden="true">
-      <img src="images/IntroBG.webp" alt="" loading="eager" draggable="false">
+      <img src="images/IntroBG.webp" alt="Wedding Cover" loading="eager" fetchpriority="high" decoding="async" draggable="false">
     </div>
 
     <!-- Girl Hand (Bride) -->
     <div class="hand-layer girl-hand" id="girl-hand" aria-hidden="true">
-      <img src="images/GirlHand.webp" alt="" loading="eager" draggable="false">
+      <img src="images/GirlHand.webp" alt="Bride Hand" loading="eager" fetchpriority="high" decoding="async" draggable="false">
     </div>
 
     <!-- Groom Hand -->
     <div class="hand-layer groom-hand" id="groom-hand" aria-hidden="true">
-      <img src="images/GroomHand.webp" alt="" loading="eager" draggable="false">
+      <img src="images/GroomHand.webp" alt="Groom Hand" loading="eager" fetchpriority="high" decoding="async" draggable="false">
     </div>
 
     <!-- Hero Text Content -->
@@ -1485,24 +1503,24 @@ color: #104b0f;
        ================================================= -->
   <section id="sec-haldi" aria-label="Haldi Ceremony">
     <div class="haldi-bg" aria-hidden="true">
-      <img src="images/MainBG_Haldi.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/MainBG_Haldi.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
     <canvas id="canvas-haldi" class="petals-canvas"></canvas>
 
     <!-- Top Decor: Latkans -->
     <div class="haldi-latkans" aria-hidden="true">
       <div class="latkan-wrap latkan-long" style="animation-delay: 0s;">
-        <img src="images/latkanLong.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/latkanLong.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
       <div class="latkan-wrap latkan-short" style="animation-delay: 0.5s;">
-        <img src="images/latkanShort.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/latkanShort.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
       <div style="flex:1"></div>
       <div class="latkan-wrap latkan-short" style="animation-delay: 0.7s;">
-        <img src="images/latkanShort.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/latkanShort.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
       <div class="latkan-wrap latkan-long" style="animation-delay: 0.2s;">
-        <img src="images/latkanLong.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/latkanLong.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
     </div>
 
@@ -1527,17 +1545,17 @@ color: #104b0f;
     <div class="haldi-subject" aria-hidden="true">
       <!-- Back Head: BEHIND the body (lower z-index) -->
       <div class="haldi-back-head-wrap" id="haldi-back-head">
-        <img src="images/HaldiGirlBackHead.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/HaldiGirlBackHead.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
 
       <!-- Body Layer: in the middle -->
       <div class="haldi-body-layer">
-        <img src="images/HaldiGirlBody.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/HaldiGirlBody.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
 
       <!-- Front Head: ON TOP of the body (higher z-index) -->
       <div class="haldi-front-head-wrap" id="haldi-front-head">
-        <img src="images/HaldiGirlFrontHead.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/HaldiGirlFrontHead.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
     </div>
   </section>
@@ -1547,18 +1565,18 @@ color: #104b0f;
        ================================================= -->
   <section id="sec-mehndi" aria-label="Mehndi Ceremony">
     <div class="mehndi-bg" aria-hidden="true">
-      <img src="images/BG_MainMehndi.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/BG_MainMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
     <canvas id="canvas-mehndi" class="petals-canvas"></canvas>
 
     <!-- Top Decor with waving latkans -->
     <div class="mehndi-top-latkans" aria-hidden="true">
-      <div class="mehndi-latkan" style="animation-delay: 0s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" draggable="false"></div>
-      <div class="mehndi-latkan" style="animation-delay: 0.5s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" draggable="false"></div>
-      <div class="mehndi-latkan" style="animation-delay: 0.2s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" draggable="false"></div>
-      <div class="mehndi-latkan" style="animation-delay: 0.7s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" draggable="false"></div>
-      <div class="mehndi-latkan" style="animation-delay: 0.3s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" draggable="false"></div>
-      <div class="mehndi-latkan" style="animation-delay: 0.6s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0.5s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0.2s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0.7s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0.3s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false"></div>
+      <div class="mehndi-latkan" style="animation-delay: 0.6s;"><img src="images/LatkanMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false"></div>
     </div>
 
     <!-- Text Content -->
@@ -1580,15 +1598,15 @@ color: #104b0f;
 
     <!-- Swing Couple (3D swing) -->
     <div class="swing-couple-container" id="swing-couple" aria-hidden="true">
-      <img src="images/SwingCouple.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/SwingCouple.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
 
     <!-- Bottom Decor (highest z-index in section) -->
     <div class="mehndi-bottom-decor left" aria-hidden="true">
-      <img src="images/BottomDecorMehndi.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/BottomDecorMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
     <div class="mehndi-bottom-decor right" aria-hidden="true">
-      <img src="images/BottomDecorMehndi.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/BottomDecorMehndi.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
   </section>
 
@@ -1597,7 +1615,7 @@ color: #104b0f;
        ================================================= -->
   <section id="sec-sangeet" aria-label="Sangeet Night">
     <div class="sangeet-bg" aria-hidden="true">
-      <img src="images/BG_Sangeet.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/BG_Sangeet.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
     <canvas id="canvas-sangeet" class="petals-canvas"></canvas>
 
@@ -1620,31 +1638,31 @@ color: #104b0f;
 
     <!-- Dancing Girls (background layer) -->
     <div class="dancing-girls-layer" id="dancing-girls" aria-hidden="true">
-      <img src="images/DancingGIrls.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/DancingGIrls.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
 
     <!-- Fountain (foreground, higher z-index) -->
     <div class="fountain-layer" aria-hidden="true">
-      <img src="images/FountainHalf.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/FountainHalf.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
 
     <!-- Mala Girl (side character 1) -->
     <div class="mala-girl-container" aria-hidden="true">
       <div class="mala-girl-body">
-        <img src="images/MalaGirl.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/MalaGirl.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
       <div class="mala-girl-hand" id="mala-hand">
-        <img src="images/malaGirlHand.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/malaGirlHand.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
     </div>
 
     <!-- Rangoli Girl (side character 2) -->
     <div class="rangoli-girl-container" aria-hidden="true">
       <div class="rangoli-girl-body">
-        <img src="images/RangoliGirl.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/RangoliGirl.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
       <div class="rangoli-girl-hand" id="rangoli-hand">
-        <img src="images/RangoliGirlHand.webp" alt="" loading="lazy" draggable="false">
+        <img src="images/RangoliGirlHand.webp" alt="" loading="lazy" decoding="async" draggable="false">
       </div>
     </div>
     </div>
@@ -1655,18 +1673,18 @@ color: #104b0f;
        ================================================= -->
   <section id="sec-wedding" aria-label="Wedding Ceremony">
     <div class="wedding-bg" aria-hidden="true">
-      <img src="images/BG_WeddingDay.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/BG_WeddingDay.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
     <canvas id="canvas-wedding" class="petals-canvas"></canvas>
 
     <!-- Stars layer -->
     <div class="wedding-stars" aria-hidden="true">
-      <img src="images/Stars.gif" alt="" loading="lazy" draggable="false">
+      <img src="images/Stars.gif" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
 
     <!-- Mahal Layer -->
     <div class="wedding-mahal" aria-hidden="true">
-      <img src="images/Mahal.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/Mahal.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
 
     <!-- Text Content -->
@@ -1688,7 +1706,7 @@ color: #104b0f;
 
     <!-- Couple Layer -->
     <div class="wedding-couple-container" id="wedding-couple" aria-hidden="true">
-      <img src="images/WeddingCouple.webp" alt="" loading="lazy" draggable="false">
+      <img src="images/WeddingCouple.webp" alt="" loading="lazy" decoding="async" draggable="false">
     </div>
   </section>
 
@@ -1871,7 +1889,7 @@ window.addEventListener('orientationchange', function() {
 });
 
 /* ----------------------------------------------------------
-   3. Global Loader
+   3. Minimal Fast Loader (Intro Video & Section 1 assets only, max 3s)
    ---------------------------------------------------------- */
 (function () {
   var loader = document.getElementById('global-loader');
@@ -1882,16 +1900,49 @@ window.addEventListener('orientationchange', function() {
     if (done) return;
     done = true;
     loader.classList.add('hidden');
+    setTimeout(function() {
+      if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+    }, 500);
   }
 
-  Promise.all([
-    document.fonts ? document.fonts.ready : Promise.resolve(),
-    new Promise(function(resolve) {
-      if (document.readyState === 'complete') resolve();
-      else window.addEventListener('load', resolve, { once: true });
-    })
-  ]).then(hideLoader).catch(hideLoader);
+  function whenImageLoaded(img) {
+    if (!img) return Promise.resolve();
+    if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+    return new Promise(function(resolve) {
+      img.addEventListener('load', resolve, { once: true });
+      img.addEventListener('error', resolve, { once: true });
+    });
+  }
 
+  function whenVideoReady(vid) {
+    if (!vid) return Promise.resolve();
+    if (vid.readyState >= 2) return Promise.resolve();
+    return new Promise(function(resolve) {
+      var resolved = false;
+      function onReady() {
+        if (resolved) return;
+        resolved = true;
+        resolve();
+      }
+      vid.addEventListener('loadeddata', onReady, { once: true });
+      vid.addEventListener('canplay', onReady, { once: true });
+      vid.addEventListener('error', onReady, { once: true });
+      // Video safety fallback
+      setTimeout(onReady, 2500);
+    });
+  }
+
+  // ONLY wait for Section 1 assets, Intro Video, and critical fonts
+  var secIntroImages = Array.from(document.querySelectorAll('#sec-intro img'));
+  var introVid = document.getElementById('intro-video');
+
+  var criticalTasks = secIntroImages.map(whenImageLoaded);
+  if (introVid) criticalTasks.push(whenVideoReady(introVid));
+  if (document.fonts) criticalTasks.push(document.fonts.ready);
+
+  Promise.all(criticalTasks).then(hideLoader).catch(hideLoader);
+
+  // Maximum loader time strictly capped at 3 seconds
   setTimeout(hideLoader, 3000);
 })();
 
@@ -2179,15 +2230,15 @@ function initGSAPAnimations() {
   var weddingCouple = document.getElementById('wedding-couple');
   if (weddingCouple) {
     gsap.to(weddingCouple, {
-      y: '-22vh',         // Move up 22% of viewport height
+      y: '-22vh',         // Move up 25% of viewport height
       scale: 0.4,         // Scale down less drastically
-      duration: 1.8,
-      ease: 'power2.out',
+      ease: 'none',
       scrollTrigger: {
         trigger: '#sec-wedding',
         start: 'top 50%',
         end: 'bottom 40%',
-        toggleActions: "play none none reset"
+        toggleActions: "play none none reset", 
+        scrub: true
       }
     });
   }
