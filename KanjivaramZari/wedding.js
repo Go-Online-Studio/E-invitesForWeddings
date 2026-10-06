@@ -72,7 +72,7 @@ let videoBlobReady = false;
 
 if (introVideo) {
   introVideo.load();
-  fetch(VIDEO_SRC)
+  fetch(VIDEO_SRC, { priority: 'high', cache: 'force-cache' })
     .then(r => r.ok ? r.blob() : Promise.reject())
     .then(blob => {
       if (!videoBlobReady && introVideo.paused && introVideo.currentTime === 0) {

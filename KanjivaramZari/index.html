@@ -10,7 +10,11 @@
   <meta property="og:description" content="Join us for Mehndi, Haldi, Sangeet, Wedding & Reception — 12-15 Feb 2027, The Leela Palace, Udaipur.">
   <meta property="og:image" content="images/Sec1Top.webp">
   <meta property="og:type" content="website">
-  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1791273282/KanjivaramZariIntro_vcuf1n.mp4" as="video" type="video/mp4">
+  <!-- Preload Critical Assets -->
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1791273282/KanjivaramZariIntro_vcuf1n.mp4" as="video" type="video/mp4" fetchpriority="high" crossorigin="anonymous">
+  <link rel="preload" href="images/KanjivaramZariVideoThumb.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="images/Sec1Top.webp" as="image" fetchpriority="high">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Prata&display=swap" rel="stylesheet">
