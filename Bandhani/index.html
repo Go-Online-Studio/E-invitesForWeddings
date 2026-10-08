@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Aarav &amp; Meera — Wedding Invitation | 14 February 2027</title>
+  <meta name="description" content="You are cordially invited to celebrate the wedding of Aarav &amp; Meera on 14 February 2027 at The Leela Palace Udaipur.">
+  <meta name="theme-color" content="#980910">
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1791444124/Wedding_Invitation_Animation_Ope_20261008124941_b9up4u.mp4" as="video" type="video/mp4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- LANDSCAPE WARNING -->
+<div id="landscape-warning" role="alert" aria-live="assertive">
+  <p class="lw-title">Please Rotate</p>
+  <p class="lw-text">This wedding invitation is best<br>viewed in portrait mode. Please<br>rotate your device.</p>
+</div>
+
+<!-- GLOBAL LOADER -->
+<div id="global-loader" aria-hidden="true">
+  <div class="loader-ring"></div>
+</div>
+
+<!-- INTRO LAYER -->
+<div id="intro-layer" role="dialog" aria-label="Opening wedding invitation">
+  <div class="intro-tap-screen" id="tap-screen">
+    <div class="itap-bg" aria-hidden="true"></div>
+    <div class="itap-overlay" aria-hidden="true"></div>
+    <div class="itap-content">
+      <div class="itap-lotus" aria-hidden="true">
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 68C40 68 14 52 14 30C14 19 26 11 40 11C54 11 66 19 66 30C66 52 40 68 40 68Z" stroke="#c9a96e" stroke-width="1.5" fill="none"/>
+          <path d="M40 68C40 68 20 55 24 35C27 24 37 19 40 19C43 19 53 24 56 35C60 55 40 68 40 68Z" stroke="#c9a96e" stroke-width="1" fill="rgba(201,169,110,0.1)"/>
+          <path d="M40 68C40 68 28 58 30 44C32 35 38 30 40 30C42 30 48 35 50 44C52 58 40 68 40 68Z" stroke="#c9a96e" stroke-width="0.8" fill="rgba(201,169,110,0.15)"/>
+          <circle cx="40" cy="46" r="7" stroke="#c9a96e" stroke-width="1" fill="none"/>
+          <circle cx="40" cy="46" r="3" fill="#c9a96e"/>
+        </svg>
+      </div>
+      <p class="itap-supertitle">With Blessings of</p>
+      <h1 class="itap-title">Aarav &amp; Meera</h1>
+      <p class="itap-subtitle">#AaravWedsMeera</p>
+      <p class="itap-dateline">14 · February · 2027</p>
+      <button class="btn-tap-begin" id="btn-tap-begin" type="button" aria-label="Tap to begin">
+        ✦ TAP TO BEGIN ✦
+      </button>
+    </div>
+  </div>
+  <video id="intro-video" playsinline webkit-playsinline x5-playsinline disablePictureInPicture fetchpriority="high" preload="auto" aria-hidden="true">
+    <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1791444124/Wedding_Invitation_Animation_Ope_20261008124941_b9up4u.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- GLOBAL FLOATING PETALS OVERLAY (SINGLE CANVAS) -->
+<canvas id="canvas-petals" aria-hidden="true"></canvas>
+
+<!-- MAIN APP -->
+<main id="app">
+
+  <!-- SECTION 1: COVER -->
+  <section id="sec-cover" aria-label="Wedding Cover" class="bg-red">
+    <img src="images/FirstSecTopCorner.webp" class="bg-img top-corner" aria-hidden="true" alt="">
+    <img src="images/FirstSecBottom.webp" class="bg-img bottom-img" aria-hidden="true" alt="">
+    
+    <div class="content-wrapper cover-content">
+      
+      <div class="cover-names" data-aos="fade-up" data-aos-delay="200">
+        <span class="cover-name-groom text-white">Aarav</span>
+        <span class="cover-ampersand text-gold">&amp;</span>
+        <span class="cover-name-bride text-white">Meera</span>
+      </div>
+      
+      <p class="cover-date text-gold" data-aos="fade-up" data-aos-delay="400">14 FEBRUARY 2027</p>
+      <div class="venue-loc-row center-row text-white" data-aos="fade-up" data-aos-delay="500">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span>UDAIPUR, RAJASTHAN</span>
+      </div>
+    </div>
+    
+    <div id="scroll-indicator" role="button" aria-label="Scroll down" tabindex="0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v8M8 12l4 4 4-4"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE INVITATION -->
+  <section id="sec-invitation" aria-label="The Invitation" class="bg-cream">
+    <img src="images/topRightCommonDesign.webp" class="bg-img top-right-corner" aria-hidden="true" alt="">
+    <img src="images/Pagdi.webp" class="bg-img top-left-corner" data-aos="fade-down" data-aos-delay="50" aria-hidden="true" alt="">
+    
+    <div class="content-wrapper invitation-content">
+      
+      <h2 class="hero-title text-dark" data-aos="fade-up" data-aos-delay="100">
+        With love,<br>
+        <span class="text-red">we invite you</span><br>
+        to celebrate<br>
+        with us.
+      </h2>
+      
+      <p class="body-text text-dark mt-2" data-aos="fade-up" data-aos-delay="200">
+        Together with our families, we invite you to join us as we celebrate the beginning of a beautiful new chapter.
+      </p>
+      
+      <div class="section-divider" aria-hidden="true" data-aos="zoom-in" data-aos-delay="300">
+        <img src="images/IconDesign.webp" alt="Divider">
+      </div>
+      
+      <div class="families-row" data-aos="fade-up" data-aos-delay="400">
+        <div class="family-col">
+          <p class="family-label text-red">GROOM'S FAMILY</p>
+          <p class="family-names text-dark">Mr. Rajesh Sharma<br>&amp; Mrs. Sunita Sharma</p>
+          <p class="family-loc text-dark">AHMEDABAD, GUJARAT</p>
+        </div>
+        <div class="family-divider" aria-hidden="true">
+          <span class="family-divider-line"></span>
+          <svg class="family-divider-flower" viewBox="0 0 24 24" width="16" height="16" fill="none">
+            <circle cx="12" cy="12" r="2.2" fill="#980910"/>
+            <circle cx="12" cy="5" r="2" fill="#980910"/>
+            <circle cx="12" cy="19" r="2" fill="#980910"/>
+            <circle cx="5" cy="12" r="2" fill="#980910"/>
+            <circle cx="19" cy="12" r="2" fill="#980910"/>
+            <circle cx="7" cy="7" r="1.2" fill="#c9a96e"/>
+            <circle cx="17" cy="7" r="1.2" fill="#c9a96e"/>
+            <circle cx="7" cy="17" r="1.2" fill="#c9a96e"/>
+            <circle cx="17" cy="17" r="1.2" fill="#c9a96e"/>
+          </svg>
+          <span class="family-divider-line"></span>
+        </div>
+        <div class="family-col">
+          <p class="family-label text-red">BRIDE'S FAMILY</p>
+          <p class="family-names text-dark">Mr. Mahendra Patel<br>&amp; Mrs. Kavita Patel</p>
+          <p class="family-loc text-dark">VADODARA, GUJARAT</p>
+        </div>
+      </div>
+    </div>
+    <img src="images/secondSecBottom.webp" class="bg-img bottom-img" aria-hidden="true" alt="">
+  </section>
+
+  <!-- SECTION 3: EVENTS -->
+  <section id="sec-events" aria-label="Wedding Events" class="bg-cream">
+    <img src="images/topRightCommonDesign.webp" class="bg-img top-right-corner" aria-hidden="true" alt="">
+    
+    <div class="content-wrapper events-content">
+      
+      <h2 class="hero-title text-dark" data-aos="fade-up" data-aos-delay="100">
+        Save the<br>
+        <span class="text-red">moments</span>
+      </h2>
+      
+      <p class="body-text text-dark mt-2" data-aos="fade-up" data-aos-delay="200">
+        Join us for a series of joyous celebrations as we begin our new journey together.
+      </p>
+      
+      <!-- Swiper -->
+      <div class="swiper events-swiper mt-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="swiper-wrapper">
+          <!-- Mehendi -->
+          <div class="swiper-slide">
+            <div class="event-card bg-gold">
+              <div class="event-card-number">01<div class="event-card-line"></div></div>
+              <div class="event-card-art">
+                <img src="images/event-mehendi.webp" alt="Mehendi Ceremony Illustration" class="event-icon-img">
+              </div>
+              <div class="event-card-info">
+                <p class="event-name">MEHENDI</p>
+                <div class="event-divider-line"></div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span>13 FEB 2027</span>
+                </div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span>5:00 PM</span>
+                </div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Udaipur</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Haldi -->
+          <div class="swiper-slide">
+            <div class="event-card bg-red text-white-all">
+              <div class="event-card-number text-white">02<div class="event-card-line border-white"></div></div>
+              <div class="event-card-art">
+                <img src="images/event-haldi.webp" alt="Haldi Ceremony Illustration" class="event-icon-img">
+              </div>
+              <div class="event-card-info">
+                <p class="event-name text-white">HALDI</p>
+                <div class="event-divider-line border-white"></div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span>13 FEB 2027</span>
+                </div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span>10:00 AM</span>
+                </div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Udaipur</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Sangeet -->
+          <div class="swiper-slide">
+            <div class="event-card bg-gold">
+              <div class="event-card-number">03<div class="event-card-line"></div></div>
+              <div class="event-card-art">
+                <img src="images/event-sangeet.webp" alt="Sangeet Celebration Illustration" class="event-icon-img">
+              </div>
+              <div class="event-card-info">
+                <p class="event-name">SANGEET</p>
+                <div class="event-divider-line"></div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span>13 FEB 2027</span>
+                </div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span>7:00 PM</span>
+                </div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Udaipur</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Wedding -->
+          <div class="swiper-slide">
+            <div class="event-card bg-red text-white-all">
+              <div class="event-card-number text-white">04<div class="event-card-line border-white"></div></div>
+              <div class="event-card-art">
+                <img src="images/event-wedding.webp" alt="Wedding Ceremony Illustration" class="event-icon-img">
+              </div>
+              <div class="event-card-info">
+                <p class="event-name text-white">WEDDING</p>
+                <div class="event-divider-line border-white"></div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span>14 FEB 2027</span>
+                </div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span>6:00 PM</span>
+                </div>
+                <div class="event-detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>Udaipur</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Carousel Navigation & Pagination Bar -->
+      <div class="events-controls" data-aos="fade-up" data-aos-delay="350">
+        <div class="swiper-pagination events-pagination"></div>
+        <div class="events-nav-buttons">
+          <button type="button" class="swiper-button-prev events-prev" aria-label="Previous slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button type="button" class="swiper-button-next events-next" aria-label="Next slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="section-divider" aria-hidden="true" data-aos="zoom-in" data-aos-delay="400">
+        <img src="images/IconDesign.webp" alt="Divider">
+      </div>
+    </div>
+    <img src="images/SecThreeBottom.webp" class="bg-img bottom-img" aria-hidden="true" alt="">
+  </section>
+
+  <!-- SECTION 4: THE VENUE -->
+  <section id="sec-venue" aria-label="The Venue" class="bg-cream">
+    <img src="images/topRightCommonDesign.webp" class="bg-img top-right-corner" aria-hidden="true" alt="">
+    
+    <div class="content-wrapper venue-content">
+      <div class="section-badge-row" data-aos="fade-right">
+        <span class="badge-text text-dark">THE VENUE</span>
+      </div>
+      
+      <h2 class="hero-title text-dark" data-aos="fade-up" data-aos-delay="100">
+        Meet us in<br>
+        <span class="text-red">Udaipur</span>
+      </h2>
+      
+      <div class="venue-loc-row text-dark mt-2 mb-2" data-aos="fade-up" data-aos-delay="200">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span style="letter-spacing: 2px;">UDAIPUR, RAJASTHAN</span>
+      </div>
+      
+      <div class="venue-map-card mb-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="venue-map-info">
+          <svg class="venue-palace-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 14 14">
+	<path d="M0 0h14v14H0z" fill="none" />
+	<path fill="currentColor" d="M7 1S4 2 4 4h6c0-2-3-3-3-3M1.5 2S0 3 0 4.5V5h3v-.5C3 3 1.5 2 1.5 2m11 0S11 3 11 4.5V5h3v-.5C14 3 12.5 2 12.5 2M4 5v2H3V6H0v7h5c0-1 0-3 2-3s2 2 2 3h5V6h-3v1h-1V5zm1.5 1c.5 0 .5.79.5 1v1H5V7c0-.267 0-1 .5-1m3 0c.5 0 .5.79.5 1v1H8V7c0-.267 0-1 .5-1m-7 1c.512 0 .5.675.5 1v1H1V8c0-.325.015-1 .5-1m11 0c.512 0 .5.675.5 1v1h-1V8c0-.325.015-1 .5-1" />
+</svg>
+
+          <h3 class="venue-card-title text-dark">The Lakeview Palace</h3>
+          <p class="venue-card-address text-dark">Fateh Sagar Road,Udaipur 313001,<br>Rajasthan, India</p>
+        </div>
+        <div class="venue-map-visual">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15000.0!2d73.67483307487103!3d24.57857085648029!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967e55d8714f8bd%3A0xbe01c924b09c89a9!2sThe%20Leela%20Palace%20Udaipur%20%3A%20Udaipur's%20Only%20Modern%20Palace%20Hotel%20By%20Lake%20Pichola!5e0!3m2!1sen!2sin!4v1791355739605!5m2!1sen!2sin" style="border:0; width:100%; height:100%; min-height: 250px;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+      
+      <a href="https://maps.google.com" class="btn-dark" target="_blank" rel="noreferrer" data-aos="fade-up" data-aos-delay="400">
+        <span>GET DIRECTIONS</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+      
+      <div class="section-divider mt-4" aria-hidden="true" data-aos="zoom-in" data-aos-delay="500">
+        <img src="images/IconDesign.webp" alt="Divider">
+      </div>
+    </div>
+    <img src="images/SecFourBottom.webp" class="bg-img bottom-img" aria-hidden="true" alt="">
+  </section>
+
+  <!-- SECTION 5: RSVP -->
+  <section id="sec-rsvp" aria-label="RSVP" class="bg-cream">
+    <img src="images/topRightCommonDesign.webp" class="bg-img top-right-corner" aria-hidden="true" alt="">
+    
+    <div class="content-wrapper rsvp-outer">
+      
+      <h2 class="hero-title text-dark" data-aos="fade-up" data-aos-delay="100">
+        Will you<br>
+        <span class="text-red">join us?</span>
+      </h2>
+      
+      <p class="body-text text-dark mt-2 mb-4" data-aos="fade-up" data-aos-delay="200" style="text-align: left;">
+        We would be delighted to have you with us.<br>Please let us know your plans.
+      </p>
+
+      <div class="rsvp-card" data-aos="fade-up" data-aos-delay="300">
+        <div id="rsvp-alert" class="rsvp-alert-box">
+          <span class="alert-icon" aria-hidden="true">⚠</span>
+          <span id="rsvp-alert-text">Please fill out all fields.</span>
+          <button type="button" class="alert-x" onclick="closeRsvpAlert()" aria-label="Close alert">×</button>
+        </div>
+        
+        <!-- Form Fields -->
+        <div class="rsvp-field">
+          <label class="rsvp-label text-dark" for="rsvp-name">YOUR NAME <span class="text-red">*</span></label>
+          <div class="rsvp-input-box">
+            <input type="text" id="rsvp-name" class="rsvp-input" placeholder="Enter your name" autocomplete="name">
+          </div>
+        </div>
+        
+        <div class="rsvp-field">
+          <label class="rsvp-label text-dark" for="rsvp-phone">PHONE NUMBER <span class="text-red">*</span></label>
+          <div class="rsvp-input-box">
+            <input type="tel" id="rsvp-phone" class="rsvp-input" placeholder="Enter your phone number" autocomplete="tel">
+          </div>
+        </div>
+        
+        <div class="rsvp-field">
+          <label class="rsvp-label text-dark" for="rsvp-guests">NUMBER OF GUESTS <span class="text-red">*</span></label>
+          <div class="rsvp-input-box">
+            <div class="rsvp-select-wrap">
+              <select id="rsvp-guests" class="rsvp-input rsvp-select">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4+">4+</option>
+              </select>
+              <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Attending Toggle -->
+        <div class="rsvp-field">
+          <label class="rsvp-label text-dark">WILL YOU BE ATTENDING? <span class="text-red">*</span></label>
+          <div class="att-toggle" role="radiogroup">
+            <button type="button" class="att-toggle-btn active" id="att-yes-btn" role="radio" aria-checked="true" onclick="toggleAttendance('yes')">
+              YES
+            </button>
+            <button type="button" class="att-toggle-btn" id="att-no-btn" role="radio" aria-checked="false" onclick="toggleAttendance('no')">
+              NO
+            </button>
+          </div>
+        </div>
+        
+        <!-- Events Checkboxes -->
+        <div class="rsvp-field" id="events-group">
+          <label class="rsvp-label text-dark">WHICH EVENTS WILL YOU ATTEND? <span class="text-red">*</span></label>
+          <div class="events-checklist">
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Mehendi" class="ev-check" id="ev-mehendi" checked>
+              <div class="check-btn">
+                <div class="check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>Mehendi</span>
+              </div>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Haldi" class="ev-check" id="ev-haldi">
+              <div class="check-btn">
+                <div class="check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>Haldi</span>
+              </div>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Sangeet" class="ev-check" id="ev-sangeet">
+              <div class="check-btn">
+                <div class="check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>Sangeet</span>
+              </div>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Wedding" class="ev-check" id="ev-wedding">
+              <div class="check-btn">
+                <div class="check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>Wedding</span>
+              </div>
+            </label>
+            <label class="check-row" style="width: 100%;">
+              <input type="checkbox" name="ev" value="Reception" class="ev-check" id="ev-reception">
+              <div class="check-btn">
+                <div class="check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <span>Reception</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Submit -->
+        <button class="btn-dark w-100 mt-4" type="button" id="btn-rsvp-submit" onclick="sendRSVP()">
+          SUBMIT RSVP
+        </button>
+      </div>
+      
+      <div class="section-divider mt-4 mb-4" aria-hidden="true" data-aos="zoom-in" data-aos-delay="400">
+        <img src="images/IconDesign.webp" alt="Divider">
+      </div>
+    </div>
+    <img src="images/SecFiveBottom.webp" class="bg-img bottom-img" aria-hidden="true" alt="">
+  </section>
+
+  <!-- SECTION 6: CELEBRATE WITH US -->
+  <section id="sec-thankyou" aria-label="Celebrate With Us" class="bg-cream" style="padding-bottom: 0;">
+    <img src="images/topRightCommonDesign.webp" class="bg-img top-right-corner" aria-hidden="true" alt="">
+    
+    <div class="content-wrapper text-center">
+      <div class="section-badge-row" data-aos="fade-right">
+        <span class="badge-text text-dark">CELEBRATE WITH US</span>
+      </div>
+      
+      <div class="with-love-monogram" data-aos="zoom-in" data-aos-delay="100">
+        <span class="mono-letter text-red">A</span>
+        <span class="mono-divider">
+          <img src="images/IconDesign.webp" alt="Divider">
+        </span>
+        <span class="mono-letter text-red">M</span>
+      </div>
+      
+      <p class="hashtag-text text-dark mt-2" data-aos="fade-up" data-aos-delay="200">#AaravWedsMeera</p>
+      
+      <div class="section-divider mt-4 mb-4" aria-hidden="true" data-aos="zoom-in" data-aos-delay="300">
+        <img src="images/IconDesign.webp" alt="Divider">
+      </div>
+      
+      <div class="contact-actions" data-aos="fade-up" data-aos-delay="400">
+        <a href="tel:+919876543210" class="action-btn">
+          <div class="action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <span>CALL US</span>
+        </a>
+        <a href="https://wa.me/919876543210" class="action-btn">
+          <div class="action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          </div>
+          <span>MESSAGE US</span>
+        </a>
+        <a href="https://maps.google.com" class="action-btn" target="_blank">
+          <div class="action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <span>LOCATION</span>
+        </a>
+      </div>
+      
+      <div class="thin-divider" data-aos="fade-up" data-aos-delay="450"></div>
+      
+      <div class="families-row text-left mt-4" data-aos="fade-up" data-aos-delay="500">
+        <div class="family-col">
+          <p class="family-label text-red">GROOM'S FAMILY</p>
+          <p class="family-names text-dark">Mr. Rajesh Sharma<br>&amp; Mrs. Sunita Sharma</p>
+          <p class="family-loc text-dark">AHMEDABAD, GUJARAT</p>
+        </div>
+        <div class="family-divider" aria-hidden="true">
+          <span class="family-divider-line"></span>
+          <svg class="family-divider-flower" viewBox="0 0 24 24" width="16" height="16" fill="none">
+            <circle cx="12" cy="12" r="2.2" fill="#980910"/>
+            <circle cx="12" cy="5" r="2" fill="#980910"/>
+            <circle cx="12" cy="19" r="2" fill="#980910"/>
+            <circle cx="5" cy="12" r="2" fill="#980910"/>
+            <circle cx="19" cy="12" r="2" fill="#980910"/>
+            <circle cx="7" cy="7" r="1.2" fill="#c9a96e"/>
+            <circle cx="17" cy="7" r="1.2" fill="#c9a96e"/>
+            <circle cx="7" cy="17" r="1.2" fill="#c9a96e"/>
+            <circle cx="17" cy="17" r="1.2" fill="#c9a96e"/>
+          </svg>
+          <span class="family-divider-line"></span>
+        </div>
+        <div class="family-col">
+          <p class="family-label text-red">BRIDE'S FAMILY</p>
+          <p class="family-names text-dark">Mr. Mahendra Patel<br>&amp; Mrs. Kavita Patel</p>
+          <p class="family-loc text-dark">VADODARA, GUJARAT</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-wrapper">
+      <img src="images/SecSixBottom.webp" class="footer-bg-img" aria-hidden="true" alt="">
+      <div class="footer-bar bg-red text-white text-center">
+        <p class="footer-designed-by" style="font-family: var(--sans); font-size: clamp(0.6rem, 2.5vw, 0.8rem); opacity: 0.8; letter-spacing: 1px; text-transform: uppercase;">Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" class="text-gold" style="text-decoration: none; font-weight: 600;">INVITEBOX</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- MUSIC FAB -->
+<button id="mfab" type="button" title="Toggle Background Music" onclick="toggleMusic()" aria-label="Toggle background music">
+  <svg id="icon-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+  </svg>
+  <svg id="icon-playing" viewBox="0 0 24 24" fill="currentColor" style="display:none;" aria-hidden="true">
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+  </svg>
+</button>
+
+<audio id="bg-music" loop preload="none" aria-hidden="true">
+  <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="wedding.js"></script>
+</body>
+</html>

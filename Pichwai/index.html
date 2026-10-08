@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Aarav &amp; Meera — Wedding Invitation | 14 February 2027</title>
+  <meta name="description" content="You are cordially invited to celebrate the wedding of Aarav &amp; Meera on 14 February 2027 at The Leela Palace Udaipur.">
+  <meta name="theme-color" content="#0b162c">
+  <link rel="preload" href="VideoTypeAnimatedTheme/images/Dummy.mp4" as="video" type="video/mp4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- LANDSCAPE WARNING -->
+<div id="landscape-warning" role="alert" aria-live="assertive">
+  <p class="lw-title">Please Rotate</p>
+  <p class="lw-text">This wedding invitation is best<br>viewed in portrait mode. Please<br>rotate your device.</p>
+</div>
+
+<!-- GLOBAL LOADER -->
+<div id="global-loader" aria-hidden="true">
+  <div class="loader-ring"></div>
+</div>
+
+<!-- INTRO LAYER -->
+<div id="intro-layer" role="dialog" aria-label="Opening wedding invitation">
+  <div class="intro-tap-screen" id="tap-screen">
+    <div class="itap-bg" aria-hidden="true"></div>
+    <div class="itap-overlay" aria-hidden="true"></div>
+    <div class="itap-content">
+      <div class="itap-lotus" aria-hidden="true">
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 68C40 68 14 52 14 30C14 19 26 11 40 11C54 11 66 19 66 30C66 52 40 68 40 68Z" stroke="#c9a96e" stroke-width="1.5" fill="none"/>
+          <path d="M40 68C40 68 20 55 24 35C27 24 37 19 40 19C43 19 53 24 56 35C60 55 40 68 40 68Z" stroke="#c9a96e" stroke-width="1" fill="rgba(201,169,110,0.1)"/>
+          <path d="M40 68C40 68 28 58 30 44C32 35 38 30 40 30C42 30 48 35 50 44C52 58 40 68 40 68Z" stroke="#c9a96e" stroke-width="0.8" fill="rgba(201,169,110,0.15)"/>
+          <circle cx="40" cy="46" r="7" stroke="#c9a96e" stroke-width="1" fill="none"/>
+          <circle cx="40" cy="46" r="3" fill="#c9a96e"/>
+        </svg>
+      </div>
+      <p class="itap-supertitle">With Blessings of</p>
+      <h1 class="itap-title">Aarav &amp; Meera</h1>
+      <p class="itap-subtitle">#AaravWedsMeera</p>
+      <p class="itap-dateline">14 · February · 2027</p>
+      <button class="btn-tap-begin" id="btn-tap-begin" type="button" aria-label="Tap to begin">
+        ✦ TAP TO BEGIN ✦
+      </button>
+    </div>
+  </div>
+  <video id="intro-video" playsinline webkit-playsinline x5-playsinline disablePictureInPicture fetchpriority="high" preload="auto" aria-hidden="true">
+    <source src="images/Dummy.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- GLOBAL FLOATING PETALS OVERLAY (SINGLE CANVAS) -->
+<canvas id="canvas-petals" aria-hidden="true"></canvas>
+
+<!-- MAIN APP -->
+<main id="app">
+
+  <!-- TOP NAVIGATION BAR -->
+  <!--
+  <nav class="top-nav" aria-label="Main Navigation">
+    <a href="#sec-cover" class="nav-link active">Home</a>
+    <a href="#sec-invitation" class="nav-link">Our Story</a>
+    <a href="#sec-events" class="nav-link">Events</a>
+    <a href="#sec-venue" class="nav-link">Gallery</a>
+    <a href="#sec-rsvp" class="nav-link">RSVP</a>
+  </nav>
+  -->
+
+  <!-- SECTION 1: COVER -->
+  <section id="sec-cover" style="min-height: 100vh;" aria-label="Wedding Cover">
+    <div class="section-bg" style="background-image:url('images/Pichwai1.webp');" aria-hidden="true"></div>
+    <div class="cover-content">
+      <div class="cover-monogram" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" x="0" y="0" viewBox="0 0 508.747 508.747" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M254.374 333.373s-60-67.157-60-150 60-150 60-150 60 67.157 60 150-60 150-60 150M203.314 382.363c16.73 54.58 51.06 93.01 51.06 93.01s34.33-38.43 51.06-93.01" style="stroke-width:12;stroke-miterlimit:10" fill="none" stroke="#c9a96e" stroke-width="12" stroke-miterlimit="10" data-original="#c9a96e" class=""></path><path d="M254.024 333.443c.23.149.35.229.35.229s-42.59 60.44-106.98 72.69-126.2-28.311-126.2-28.311 34.189-48.51 87.609-67.41M254.724 333.443c-.23.149-.35.229-.35.229s42.59 60.44 106.98 72.69 126.199-28.311 126.199-28.311-34.189-48.51-87.609-67.41M197.844 148.243c-36.08-31.86-76.42-45.14-76.42-45.14s-10.24 49.09 3.8 101.119c3.68 13.61 9.01 27.42 16.62 40.601 36.43 63.09 111.35 88.16 112.52 88.54l.01.01" style="stroke-width:12;stroke-miterlimit:10" fill="none" stroke="#c9a96e" stroke-width="12" stroke-miterlimit="10" data-original="#c9a96e" class=""></path><path d="m254.364 333.363.01.01s-78.14 16.29-141.72-20.42c-63.59-36.72-88.55-112.53-88.55-112.53s49.09-10.23 101.12 3.8M254.374 333.373l.01-.01c1.17-.38 76.091-25.45 112.521-88.54 7.61-13.181 12.94-26.99 16.62-40.601 14.04-52.029 3.8-101.119 3.8-101.119s-40.34 13.279-76.42 45.14" style="stroke-width:12;stroke-miterlimit:10" fill="none" stroke="#c9a96e" stroke-width="12" stroke-miterlimit="10" data-original="#c9a96e" class=""></path><path d="m254.383 333.363-.01.01s78.141 16.29 141.721-20.42c63.59-36.72 88.55-112.53 88.55-112.53s-49.091-10.23-101.12 3.8" style="stroke-width:12;stroke-miterlimit:10" fill="none" stroke="#c9a96e" stroke-width="12" stroke-miterlimit="10" data-original="#c9a96e" class=""></path></g></svg>
+      </div>
+      <p class="cover-together" data-aos="fade-down" data-aos-delay="100">TOGETHER<br>FOREVER</p>
+      <div class="cover-names" data-aos="fade-up" data-aos-delay="200">
+        <span class="cover-name-groom">Aarav</span>
+        <span class="cover-ampersand">&amp;</span>
+        <span class="cover-name-bride">Meera</span>
+      </div>
+      <div class="gold-divider" aria-hidden="true" data-aos="zoom-in" data-aos-delay="300">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✿</span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="cover-date" data-aos="fade-up" data-aos-delay="400">14 FEBRUARY 2027</p>
+      <p class="cover-location" data-aos="fade-up" data-aos-delay="500">UDAIPUR, RAJASTHAN</p>
+      <div class="gold-divider" aria-hidden="true" data-aos="zoom-in" data-aos-delay="550">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✿</span>
+        <span class="divider-line"></span>
+      </div>
+    </div>
+    <div id="scroll-indicator" role="button" aria-label="Scroll down" tabindex="0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v8M8 12l4 4 4-4"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE INVITATION -->
+  <section id="sec-invitation" aria-label="The Invitation">
+    <div class="section-bg" style="background-image:url('images/Pichwai2.webp');" aria-hidden="true"></div>
+    <div class="invitation-content" style="padding-right: 42cqw;">
+      <div class="invitation-body-text" data-aos="fade-up" data-aos-delay="100">
+        <p class="inv-light smallPara" style="margin-bottom: 3cqw;">With hearts full of joy and gratitude,</p>
+        <p class="inv-family">The Patadia Family</p>
+        <p class="inv-amp">&amp;</p>
+        <p class="inv-family">The Shah Family</p>
+        <p class="inv-light smallPara" style="margin-top: 3cqw;">cordially invite you to celebrate<br>the wedding of our beloved children.</p>
+      </div>
+      <div class="gold-divider" aria-hidden="true" data-aos="zoom-in" data-aos-delay="200" style="margin: 4cqw auto;">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✿</span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="inv-closing smallPara" data-aos="fade-up" data-aos-delay="300">
+        Join us as we begin a new chapter<br>of love, togetherness and lifelong blessings.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 3: EVENTS -->
+  <section id="sec-events" aria-label="Wedding Events">
+    <div class="section-bg" style="background-image:url('images/Pichwai3.webp');" aria-hidden="true"></div>
+    <div class="events-content">
+      <h2 class="events-main-title" data-aos="fade-up" data-aos-delay="100">Our<br>Wedding<br>Events</h2>
+      <p class="events-main-sub" data-aos="fade-up" data-aos-delay="200">Five beautiful moments,<br>one unforgettable journey.</p>
+      <div class="gold-divider" style="margin: 2cqw 0;" aria-hidden="true" data-aos="zoom-in" data-aos-delay="250">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✿</span>
+        <span class="divider-line"></span>
+      </div>
+      <!-- Swiper -->
+      <div class="swiper events-swiper" data-aos="fade-up" data-aos-delay="300">
+        <div class="swiper-wrapper">
+          <!-- Mehendi -->
+          <div class="swiper-slide">
+            <div class="event-card">
+              <div class="event-card-art">
+                <img src="images/IconEvents1.webp" alt="Mehendi" class="event-icon-img">
+              </div>
+              <div class="event-card-info">
+                <p class="event-name">Mehendi</p>
+                <div class="event-divider"></div>
+                <p class="event-date">11 FEB</p>
+                <p class="event-time">10:00 AM</p>
+                <div class="event-loc">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span>The Courtyard</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Haldi -->
+          <div class="swiper-slide">
+            <div class="event-card">
+              <div class="event-card-art">
+                <img src="images/IconEvents2.webp" alt="Haldi" class="event-icon-img">
+              </div>
+              <div class="event-card-info">
+                <p class="event-name">Haldi</p>
+                <div class="event-divider"></div>
+                <p class="event-date">12 FEB</p>
+                <p class="event-time">09:00 AM</p>
+                <div class="event-loc">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span>Poolside Garden</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Sangeet -->
+          <div class="swiper-slide">
+            <div class="event-card">
+              <div class="event-card-art">
+                <img src="images/IconEvents3.webp" alt="Sangeet" class="event-icon-img">
+              </div>
+              <div class="event-card-info">
+                <p class="event-name">Sangeet</p>
+                <div class="event-divider"></div>
+                <p class="event-date">13 FEB</p>
+                <p class="event-time">07:30 PM</p>
+                <div class="event-loc">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span>Grand Ballroom</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Wedding -->
+          <div class="swiper-slide">
+            <div class="event-card">
+              <div class="event-card-art">
+                <img src="images/IconEvents4.webp" alt="Wedding" class="event-icon-img">
+              </div>
+              <div class="event-card-info">
+                <p class="event-name">Wedding</p>
+                <div class="event-divider"></div>
+                <p class="event-date">14 FEB</p>
+                <p class="event-time">05:00 PM</p>
+                <div class="event-loc">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span>Lake View Lawn</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Pagination & Navigation -->
+        <div class="swiper-pagination events-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: THE VENUE -->
+  <section id="sec-venue" aria-label="The Venue">
+    <div class="section-bg" style="background-image:url('images/Pichwai4.webp');" aria-hidden="true"></div>
+    <div class="venue-content">
+      <div class="section-badge-row" data-aos="fade-right">
+        <span class="badge-lotus">✿</span>
+        <span class="badge-text">THE VENUE</span>
+      </div>
+      <h2 class="venue-main-title" data-aos="fade-up" data-aos-delay="100">The Leela Palace</h2>
+      <p class="venue-main-sub" data-aos="fade-up" data-aos-delay="200">A royal setting for our forever begins.</p>
+      
+      <div class="venue-info" data-aos="fade-up" data-aos-delay="300" style=" margin-top: 4cqw; margin-bottom: 4cqw;">
+        <div class="venue-loc-row" style="justify-content: center;">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          <span><a href="#" target="_blank" style="color: inherit; text-decoration: none;">Lake Pichola, Udaipur,<br>Rajasthan 313001</a></span>
+        </div>
+      </div>
+      
+      <div class="venue-map-container" data-aos="zoom-in" data-aos-delay="400">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15000.0!2d73.67483307487103!3d24.57857085648029!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967e55d8714f8bd%3A0xbe01c924b09c89a9!2sThe%20Leela%20Palace%20Udaipur%20%3A%20Udaipur's%20Only%20Modern%20Palace%20Hotel%20By%20Lake%20Pichola!5e0!3m2!1sen!2sin!4v1791355739605!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      
+      <a href="https://maps.google.com" class="btn-get-directions" target="_blank" rel="noreferrer" data-aos="fade-up" data-aos-delay="500">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        <span>GET DIRECTIONS</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION 5: RSVP -->
+  <section id="sec-rsvp" aria-label="RSVP">
+    <div class="section-bg" style="background-image:url('images/Pichwai5.webp');" aria-hidden="true"></div>
+    <div class="rsvp-outer">
+
+      <h2 class="rsvp-main-title" data-aos="fade-up" data-aos-delay="100">Will you<br>join us?</h2>
+      <p class="rsvp-main-sub" data-aos="fade-up" data-aos-delay="200">Kindly RSVP by 10th January</p>
+
+      <div class="rsvp-card" data-aos="fade-up" data-aos-delay="300">
+        <div id="rsvp-alert" class="rsvp-alert-box">
+          <span class="alert-icon" aria-hidden="true">⚠</span>
+          <span id="rsvp-alert-text">Please fill out all fields.</span>
+          <button type="button" class="alert-x" onclick="closeAlert()" aria-label="Close alert">×</button>
+        </div>
+        
+        <!-- Form Fields -->
+        <div class="rsvp-field rsvp-input-box">
+          <label class="rsvp-label" for="rsvp-name">NAME</label>
+          <input type="text" id="rsvp-name" class="rsvp-input" placeholder="Enter your name" autocomplete="name">
+        </div>
+        <div class="rsvp-field rsvp-input-box">
+          <label class="rsvp-label" for="rsvp-phone">PHONE</label>
+          <input type="tel" id="rsvp-phone" class="rsvp-input" placeholder="Enter your phone number" autocomplete="tel">
+        </div>
+        <div class="rsvp-field rsvp-input-box">
+          <label class="rsvp-label" for="rsvp-guests">NUMBER OF GUESTS</label>
+          <div class="rsvp-select-wrap">
+            <select id="rsvp-guests" class="rsvp-input rsvp-select">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4+">4+</option>
+            </select>
+            <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <!-- Attending Toggle -->
+        <div class="rsvp-field">
+          <label class="rsvp-label" style="color: var(--cream-dark);">WILL YOU BE ATTENDING?</label>
+          <div class="att-toggle" role="radiogroup">
+            <div class="att-toggle-btn att-yes-btn active" role="radio" aria-checked="true" tabindex="0" onclick="setAttending(true)">
+              <div class="att-radio-dot filled"></div>
+              <span>YES</span>
+            </div>
+            <div class="att-toggle-btn att-no-btn" role="radio" aria-checked="false" tabindex="0" onclick="setAttending(false)">
+              <div class="att-radio-dot"></div>
+              <span>NO</span>
+            </div>
+          </div>
+        </div>
+        <!-- Events Checkboxes -->
+        <div class="rsvp-field" id="events-selection-group">
+          <label class="rsvp-label" style="color: var(--cream-dark);">WHICH EVENTS WILL YOU ATTEND?</label>
+          <div class="events-checklist">
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Mehendi" class="ev-check" id="ev-mehendi">
+              <span class="check-sq" aria-hidden="true"></span>
+              <span>Mehendi</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Haldi" class="ev-check" id="ev-haldi">
+              <span class="check-sq" aria-hidden="true"></span>
+              <span>Haldi</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Sangeet" class="ev-check" id="ev-sangeet">
+              <span class="check-sq" aria-hidden="true"></span>
+              <span>Sangeet</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Wedding" class="ev-check" id="ev-wedding">
+              <span class="check-sq" aria-hidden="true"></span>
+              <span>Wedding</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" name="ev" value="Reception" class="ev-check" id="ev-reception">
+              <span class="check-sq" aria-hidden="true"></span>
+              <span>Reception</span>
+            </label>
+          </div>
+        </div>
+        <!-- Submit -->
+        <button class="btn-rsvp-submit" type="button" id="btn-rsvp-submit" onclick="sendRSVP()">
+          SUBMIT RSVP
+          <span class="btn-pipe" aria-hidden="true">|</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: WITH LOVE -->
+  <section id="sec-intro" aria-label="With Love">
+    <div class="section-bg" style="background-image:url('images/Pichwai6.webp');" aria-hidden="true"></div>
+    <div class="intro-sec-content">
+
+      <div class="with-love-monogram" data-aos="zoom-in" data-aos-delay="100">
+        <span class="mono-letter">A</span>
+        <span class="mono-lotus">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="width: 10cqw; height: 10cqw;">
+	          <path d="M0 0h64v64H0z" fill="none"/>
+	          <path fill="#ff5a79" d="M28.3 32.2C29.6 24.3 16.8 11.5 6 21.9C-6 33.6 13.2 59 14 62c2.6-.8 34.4-1.6 36-18.2c1.3-15.4-17.2-17.4-21.7-11.6M59.2 3.6c-6.8-5.1-13.1 3.1-11.7 7c-3.3-2.9-13-.5-11.3 7.7c1.9 9.1 19.3 7.3 20.9 7.7c.4-1.5 9.3-16.9 2.1-22.4" />
+          </svg>
+        </span>
+        <span class="mono-letter">M</span>
+      </div>
+
+      <p class="hashtag-text" data-aos="fade-up" data-aos-delay="200" style="margin-top: 2cqw;">#AaravWedsMeera</p>
+      
+      <div class="gold-divider" style="margin: 2cqw auto;" aria-hidden="true" data-aos="zoom-in" data-aos-delay="250">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✿</span>
+        <span class="divider-line"></span>
+      </div>
+      
+      <p class="intro-love-label" data-aos="fade-up" data-aos-delay="300">With love from</p>
+      <div class="family-names-block" data-aos="fade-up" data-aos-delay="400" style="display:flex; flex-direction:row; align-items:center; justify-content:center; gap:3cqw; margin-top:2cqw;">
+        <p class="family-name-text">The Patadia Family</p>
+        <p class="family-amp" style="font-family: var(--sans); font-size:4cqw; color:var(--gold);">|</p>
+        <p class="family-name-text">The Shah Family</p>
+      </div>
+
+      <p class="contact-title" data-aos="fade-up" data-aos-delay="450" style="font-family: var(--sans); font-size: 2.2cqw; letter-spacing:2px; color:var(--text-muted);">FOR ANY QUERIES, PLEASE CONTACT</p>
+      <div style="width: 20%; height: 1px; background: rgba(201,169,110,0.6); margin: 0cqw auto;" data-aos="fade-up" data-aos-delay="450"></div>
+      
+      <div class="contact-grid" data-aos="fade-up" data-aos-delay="500" style="display:flex; flex-direction:row; justify-content:center; align-items:center; gap:4cqw; margin-top: 2cqw; background: transparent; border: none; padding: 0;">
+        <div class="contact-card" style="flex:unset; display:flex; flex-direction:column; gap:1cqw;">
+          <div class="contact-icon-wrap" aria-hidden="true" style="width:6cqw; height:6cqw; margin:0 auto; background:transparent; border:1px solid var(--gold); color:var(--gold);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <p class="contact-name-text" style="font-size:3cqw; font-family:var(--serif); margin-top:1cqw;">Rajesh Patadia</p>
+          <p style="font-size:2.5cqw; font-family:var(--sans); color:var(--text-cream); letter-spacing:1px;"><a href="tel:+919876543210" style="color: inherit; text-decoration: none;">+91 98765 43210</a></p>
+        </div>
+        <div class="contact-sep" aria-hidden="true" style="height:8cqw; width:1px; background:rgba(201,169,110,0.5);"></div>
+        <div class="contact-card" style="flex:unset; display:flex; flex-direction:column; gap:1cqw;">
+          <div class="contact-icon-wrap" aria-hidden="true" style="width:6cqw; height:6cqw; margin:0 auto; background:transparent; border:1px solid var(--gold); color:var(--gold);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <p class="contact-name-text" style="font-size:3cqw; font-family:var(--serif); margin-top:1cqw;">Viral Shah</p>
+          <p style="font-size:2.5cqw; font-family:var(--sans); color:var(--text-cream); letter-spacing:1px;"><a href="tel:+919876543210" style="color: inherit; text-decoration: none;">+91 98765 43210</a></p>
+        </div>
+      </div>
+
+      <div class="social-icons-row" data-aos="fade-up" data-aos-delay="550" style="display:flex; justify-content:center; gap:4cqw; margin-top:8cqw;">
+        <a href="#" target="_blank" class="s-icon" style="text-decoration:none; width:7cqw; height:7cqw; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+        <a href="#" target="_blank" class="s-icon" style="text-decoration:none; width:7cqw; height:7cqw; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+        <a href="#" target="_blank" class="s-icon" style="text-decoration:none; width:7cqw; height:7cqw; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+        <a href="#" target="_blank" class="s-icon" style="text-decoration:none; width:7cqw; height:7cqw; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></a>
+      </div>
+      
+      <div style="position: absolute; bottom: 4cqw; left: 0; width: 100%; padding-bottom: env(safe-area-inset-bottom, 0px); display:flex; flex-direction:column; align-items:center; gap:1cqw;" data-aos="fade-up" data-aos-delay="600">
+        <div class="footer-lotus-emoji" style="font-size:4cqw; color:var(--gold); line-height:1;">✿</div>
+        <div style="width:80%; height:1px; background:rgba(201,169,110,0.5); margin: 2cqw 0;"></div>
+        <p class="footer-credit" style="font-family:var(--sans); font-size:2cqw; font-weight:600; letter-spacing:2px; color:var(--text-muted); text-transform:uppercase;">
+          Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" style="color:var(--text-cream); text-decoration:none;">INVITEBOX</a>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- MUSIC FAB -->
+<button id="mfab" type="button" title="Toggle Background Music" onclick="toggleMusic()" aria-label="Toggle background music">
+  <svg id="icon-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+  </svg>
+  <svg id="icon-playing" viewBox="0 0 24 24" fill="currentColor" style="display:none;" aria-hidden="true">
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+  </svg>
+</button>
+
+<audio id="bg-music" loop preload="none" aria-hidden="true">
+  <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="wedding.js"></script>
+</body>
+</html>
