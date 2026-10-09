@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Aarav &amp; Meera — Wedding Invitation | 14 February 2027</title>
+  <meta name="description" content="You are cordially invited to celebrate the wedding of Aarav &amp; Meera on 14 February 2027 at Udaipur, Rajasthan.">
+  <meta name="theme-color" content="#7a1a2e">
+  <!-- Preconnect & DNS-Prefetch for Fast Video Streaming -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Preload Intro Video for Instant Playback -->
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1791519571/Wedding_Invitation_Animation_Ope_20261009094433_Gwr_Video_Mvp_egoqpm.mp4" as="video" type="video/mp4" crossorigin>
+
+  <!-- Preload Critical First Section / Intro Assets with High Priority -->
+  <link rel="preload" as="image" href="images/Sec1.png" fetchpriority="high">
+  <link rel="preload" as="image" href="images/LotusIcon.webp" fetchpriority="high">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- LANDSCAPE WARNING -->
+<div id="landscape-warning" role="alert" aria-live="assertive">
+  <div class="lw-icon" aria-hidden="true">
+    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="20" width="30" height="44" rx="4" stroke="#c9a96e" stroke-width="2" fill="none"/>
+      <path d="M20 62 h10" stroke="#c9a96e" stroke-width="2" stroke-linecap="round"/>
+      <path d="M54 30 l16 10 -16 10" stroke="#c9a96e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <p class="lw-title">Please Rotate</p>
+  <p class="lw-text">This wedding invitation is best<br>viewed in portrait mode.<br>Please rotate your device.</p>
+</div>
+
+<!-- GLOBAL LOADER -->
+<div id="global-loader" aria-hidden="true">
+  <div class="loader-ring"></div>
+</div>
+
+<!-- INTRO LAYER -->
+<div id="intro-layer" role="dialog" aria-label="Opening wedding invitation">
+  <div class="intro-tap-screen" id="tap-screen">
+    <div class="itap-bg" aria-hidden="true"></div>
+    <div class="itap-overlay" aria-hidden="true"></div>
+    <div class="itap-content">
+      <p class="itap-supertitle">|| Shri Ganeshaya Namah ||</p>
+      <div class="itap-lotus" aria-hidden="true"><img src="images/LotusIcon.webp" alt="" class="lotus-icon-img" fetchpriority="high" decoding="async"></div>
+      <h1 class="itap-title">Aarav &amp; Meera</h1>
+      <div class="itap-divider" aria-hidden="true">
+        <span class="itap-line"></span>
+        <span class="itap-diamond">&#10022;</span>
+        <span class="itap-line"></span>
+      </div>
+      <p class="itap-date">14 &middot; February &middot; 2027</p>
+      <p class="itap-location">Udaipur, Rajasthan</p>
+      <button class="btn-tap-begin" id="btn-tap-begin" type="button" aria-label="Tap to begin the invitation">
+        &#10022; TAP TO BEGIN &#10022;
+      </button>
+    </div>
+  </div>
+  <video id="intro-video" playsinline webkit-playsinline x5-playsinline disablePictureInPicture preload="auto" aria-hidden="true">
+    <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1791519571/Wedding_Invitation_Animation_Ope_20261009094433_Gwr_Video_Mvp_egoqpm.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- PETAL CANVAS -->
+<canvas id="canvas-petals" aria-hidden="true"></canvas>
+
+<!-- MAIN APP -->
+<main id="app">
+
+  <!-- SECTION 1: COVER -->
+  <section id="sec-cover" style="min-height: 100vh;" aria-label="Wedding Cover">
+    <div class="section-bg" aria-hidden="true">
+      <img src="images/Sec1.png" alt="" class="section-bg-img" fetchpriority="high" decoding="async">
+    </div>
+    <div class="cover-content">
+      <div class="cover-text-block">
+        <p class="cover-the-wedding reveal" data-aos="fade-up">The Wedding of</p>
+        <div class="cover-names reveal" data-aos="fade-up" data-aos-delay="100">
+          <span class="cover-name">Aarav</span>
+          <span class="cover-amp">&amp;</span>
+          <span class="cover-name">Meera</span>
+        </div>
+        <div class="cover-divider reveal" data-aos="fade-up" data-aos-delay="200" aria-hidden="true">
+          <span class="cd-line"></span>
+          <span class="cd-icon">&#10027;</span>
+          <span class="cd-line"></span>
+        </div>
+        <p class="cover-date reveal" data-aos="fade-up" data-aos-delay="300">14 February 2027</p>
+        <p class="cover-location reveal" data-aos="fade-up" data-aos-delay="400">Udaipur, Rajasthan</p>
+      </div>
+    </div>
+    <div id="scroll-indicator" role="button" aria-label="Scroll down" tabindex="0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SECTION 2: INVITATION -->
+  <section id="sec-invitation" aria-label="The Invitation">
+    <div class="section-bg" aria-hidden="true">
+      <img src="images/Sec2.png" alt="" class="section-bg-img" loading="lazy" decoding="async">
+    </div>
+    <div class="invitation-content">
+      <div class="sec-lotus reveal" data-aos="zoom-in" aria-hidden="true"><img src="images/LotusIcon.webp" alt="" class="lotus-icon-img" loading="lazy" decoding="async"></div>
+      <p class="inv-sub-title reveal" data-aos="fade-up">Shubh Vivah</p>
+      <div class="gold-divider reveal" data-aos="fade-up" aria-hidden="true">
+        <span class="gd-line"></span>
+        <span class="gd-icon">&#10027;</span>
+        <span class="gd-line"></span>
+      </div>
+      <h2 class="inv-hero-text reveal" data-aos="fade-up">With Joyful<br>Hearts,<br>We Invite You</h2>
+      <div class="gold-divider reveal" data-aos="fade-up" aria-hidden="true">
+        <span class="gd-line"></span>
+        <span class="gd-icon">&#10027;</span>
+        <span class="gd-line"></span>
+      </div>
+      <div class="inv-body reveal" data-aos="fade-up">
+        <p class="inv-para">Together with our families,<br>we cordially invite you to<br>celebrate the wedding of</p>
+        <p class="inv-couple"><strong>Aarav &amp; Meera</strong></p>
+        <p class="inv-para">as they begin their<br>sacred journey.</p>
+      </div>
+      <div class="gold-divider reveal" data-aos="fade-up" aria-hidden="true" style="margin-top:2cqw;">
+        <span class="gd-line"></span>
+        <span class="gd-icon">&#10027;</span>
+        <span class="gd-line"></span>
+      </div>
+      <p class="inv-closing reveal" data-aos="fade-up">Your presence will make<br>our celebration even more special.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE CELEBRATIONS -->
+  <section id="sec-events" aria-label="The Celebrations">
+    <div class="section-bg" aria-hidden="true">
+      <img src="images/Sec3.png" alt="" class="section-bg-img" loading="lazy" decoding="async">
+    </div>
+    <div class="events-content">
+
+      <div class="events-list">
+        <div class="event-card reveal" data-aos="fade-up">
+          <div class="event-card-info">
+            <p class="event-name">MEHENDI</p>
+            <p class="event-date">12 FEBRUARY 2027</p>
+            <p class="event-time">04:00 PM</p>
+          </div>
+        </div>
+        <div class="event-card reveal" data-aos="fade-up" data-aos-delay="100">
+          <div class="event-card-info">
+            <p class="event-name">HALDI</p>
+            <p class="event-date">12 FEBRUARY 2027</p>
+            <p class="event-time">10:00 AM</p>
+          </div>
+        </div>
+        <div class="event-card reveal" data-aos="fade-up" data-aos-delay="200">
+          <div class="event-card-info">
+            <p class="event-name">SANGEET</p>
+            <p class="event-date">13 FEBRUARY 2027</p>
+            <p class="event-time">10:00 AM</p>
+          </div>
+        </div>
+        <div class="event-card reveal" data-aos="fade-up" data-aos-delay="300">
+          <div class="event-card-info">
+            <p class="event-name">SHAADI</p>
+            <p class="event-date">15 FEBRUARY 2027</p>
+            <p class="event-time">07:30 AM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: VENUE -->
+  <section id="sec-venue" aria-label="The Venue">
+    <div class="section-bg" aria-hidden="true">
+      <img src="images/Sec4.png" alt="" class="section-bg-img" loading="lazy" decoding="async">
+    </div>
+    <div class="venue-content">
+      <div class="sec-lotus reveal" data-aos="zoom-in" aria-hidden="true"><img src="images/LotusIcon.webp" alt="" class="lotus-icon-img" loading="lazy" decoding="async"></div>
+      <div class="sec-label-row reveal" data-aos="fade-up">
+        <span class="sec-name">VENUE</span>
+      </div>
+      
+      <p class="venue-meet reveal" data-aos="fade-up">Meet us in</p>
+      <h2 class="venue-city reveal" data-aos="fade-up">Udaipur</h2>
+      <div class="gold-divider reveal" data-aos="fade-up" aria-hidden="true">
+        <span class="gd-line"></span>
+        <span class="gd-icon">&#10027;</span>
+        <span class="gd-line"></span>
+      </div>
+      <p class="venue-subtext reveal" data-aos="fade-up">Udaipur, Rajasthan</p>
+     
+      <a href="https://maps.google.com/?q=City+Palace+Udaipur+Rajasthan" class="btn-directions reveal" data-aos="fade-up" data-aos-delay="200" target="_blank" rel="noreferrer noopener" id="btn-get-directions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        Get Directions
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION 5: RSVP -->
+  <section id="sec-rsvp" aria-label="RSVP">
+    <div class="section-bg" aria-hidden="true">
+      <img src="images/Sec5.png" alt="" class="section-bg-img" loading="lazy" decoding="async">
+    </div>
+    <div class="rsvp-content">
+      <div class="sec-lotus reveal" data-aos="zoom-in" aria-hidden="true"><img src="images/LotusIcon.webp" alt="" class="lotus-icon-img" loading="lazy" decoding="async"></div>
+      <div class="sec-label-row reveal" data-aos="fade-up">
+        <span class="sec-name">RSVP</span>
+      </div>
+
+      <h2 class="rsvp-title reveal" data-aos="fade-up">Aapki Upasthiti</h2>
+      <p class="rsvp-subtitle reveal" data-aos="fade-up">Kindly confirm your presence</p>
+
+      <div id="rsvp-alert" class="rsvp-alert" role="alert" aria-live="polite">
+        <span class="alert-icon" aria-hidden="true">&#9888;</span>
+        <span id="rsvp-alert-text">Please fill all required fields.</span>
+        <button type="button" class="alert-close" onclick="closeAlert()" aria-label="Close alert">&times;</button>
+      </div>
+
+      <div class="rsvp-field reveal" data-aos="fade-up">
+        <label class="rsvp-label" for="rsvp-name">NAME</label>
+        <div class="rsvp-input-wrap">
+          <span class="field-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input type="text" id="rsvp-name" class="rsvp-input" placeholder="Enter your name" autocomplete="name" required>
+        </div>
+      </div>
+
+      <div class="rsvp-field reveal" data-aos="fade-up">
+        <label class="rsvp-label" for="rsvp-phone">PHONE NUMBER</label>
+        <div class="rsvp-input-wrap">
+          <span class="field-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <span class="phone-prefix">+91</span>
+          <input type="tel" id="rsvp-phone" class="rsvp-input rsvp-input--tel" placeholder="" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="rsvp-field reveal" data-aos="fade-up">
+        <label class="rsvp-label">NUMBER OF GUESTS</label>
+        <div class="rsvp-stepper">
+          <button type="button" class="stepper-btn" onclick="changeGuests(-1)" aria-label="Decrease">&#8722;</button>
+          <span class="stepper-val" id="guest-count" aria-live="polite" aria-atomic="true">2</span>
+          <button type="button" class="stepper-btn" onclick="changeGuests(1)" aria-label="Increase">+</button>
+        </div>
+      </div>
+
+      <div class="rsvp-field reveal" data-aos="fade-up">
+        <label class="rsvp-label">WILL YOU BE ATTENDING?</label>
+        <div class="att-toggle" role="radiogroup">
+          <button type="button" class="att-btn att-yes active" id="att-yes-btn" role="radio" aria-checked="true" onclick="setAttending('yes')">
+            <span class="att-check" aria-hidden="true">&#10003;</span>
+            YES, I'LL BE THERE
+          </button>
+          <button type="button" class="att-btn att-no" id="att-no-btn" role="radio" aria-checked="false" onclick="setAttending('no')">
+            SORRY, CAN'T MAKE IT
+          </button>
+        </div>
+      </div>
+
+      <div class="rsvp-field reveal" data-aos="fade-up" id="events-group">
+        <label class="rsvp-label">WHICH CELEBRATIONS WILL YOU ATTEND?</label>
+        <div class="events-checklist">
+          <label class="check-row">
+            <input type="checkbox" id="ev-mehendi" name="ev" value="Mehendi" class="ev-check">
+            <span class="check-box" aria-hidden="true"></span>
+            <span class="check-label">MEHENDI</span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" id="ev-haldi" name="ev" value="Haldi" class="ev-check">
+            <span class="check-box" aria-hidden="true"></span>
+            <span class="check-label">HALDI</span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" id="ev-sangeet" name="ev" value="Sangeet" class="ev-check">
+            <span class="check-box" aria-hidden="true"></span>
+            <span class="check-label">SANGEET</span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" id="ev-wedding" name="ev" value="Wedding" class="ev-check">
+            <span class="check-box" aria-hidden="true"></span>
+            <span class="check-label">WEDDING</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="button" class="btn-rsvp reveal" data-aos="fade-up" id="btn-confirm-rsvp" onclick="sendRSVP()">
+        Confirm RSVP &#8594;
+      </button>
+    </div>
+  </section>
+
+  <!-- SECTION 6: WITH LOVE -->
+  <section id="sec-withlove" aria-label="With Love">
+    <div class="section-bg" aria-hidden="true">
+      <img src="images/Sec6.png" alt="" class="section-bg-img" loading="lazy" decoding="async">
+    </div>
+    <div class="withlove-content">
+
+      <p class="wl-closing reveal" data-aos="fade-up">Thank you for being a part<br>of our journey.</p>
+
+      <div class="wl-families reveal" data-aos="fade-up" data-aos-delay="150">
+        <p class="wl-with-love">With love,</p>
+        <p class="wl-family-name">The Sharma &amp; Mehta Families</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER STRAP -->
+  <footer class="footer-strap " aria-label="Footer credits">
+    <p class="footer-strap-credit">
+      Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer">InviteBox</a>
+    </p>
+  </footer>
+
+</main>
+
+<!-- MUSIC FAB -->
+<button id="mfab" type="button" title="Toggle Background Music" onclick="toggleMusic()" aria-label="Toggle background music" aria-pressed="false">
+  <svg id="icon-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+  </svg>
+  <svg id="icon-playing" viewBox="0 0 24 24" fill="currentColor" style="display:none;" aria-hidden="true">
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+  </svg>
+</button>
+
+<audio id="bg-music" loop preload="none" aria-hidden="true">
+  <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="wedding.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Aarav &amp; Meera — Enchanted Udaipur Wedding</title>
+  <meta name="description" content="Together with our families, we invite you to celebrate the wedding of Aarav &amp; Meera on 14 February 2027 in Udaipur, Rajasthan.">
+  <meta name="theme-color" content="#153b2a">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Aarav &amp; Meera — Enchanted Udaipur Wedding">
+  <meta property="og:description" content="Celebrate the wedding festivities of Aarav &amp; Meera in Udaipur.">
+  <meta property="og:image" content="images/Sec1.webp">
+  <meta property="og:type" content="website">
+
+  <!-- Preload Critical Video & Image -->
+  <link rel="preload" href="images/Dummy.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="images/Sec1.webp" as="image">
+
+  <!-- Google Fonts: Royal Indian Wedding Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       Design System & Variables
+       ========================================================================== */
+    :root {
+      --primary: #153b2a;
+      --primary-dark: #0a1f16;
+      --secondary: #d4af37;
+      --secondary-dark: #b8860b;
+      --secondary-light: #f5df88;
+      --gold-gradient: linear-gradient(135deg, #fceda7 0%, #d4af37 50%, #b8860b 100%);
+      --deep-red: #8b1e2d;
+      --deep-red-dark: #5e0b17;
+      --text: #172b20;
+      --text-muted: #53695b;
+      --bg: #091610;
+      --card-width: 480px;
+      --serif: "Playfair Display", Georgia, serif;
+      --heading: "Cinzel", "Playfair Display", serif;
+      --sans: "Montserrat", -apple-system, sans-serif;
+      --script: "Great Vibes", cursive;
+      --vh: 1vh;
+    }
+
+    /* ==========================================================================
+       Reset & Base Styles
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      background-color: var(--bg);
+    }
+
+    body {
+      background-color: var(--bg);
+      font-family: var(--sans);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden; /* Scroll locked until intro video finishes */
+      min-height: 100vh;
+      min-height: calc(var(--vh, 1vh) * 100);
+      position: relative;
+    }
+
+    body.unlocked {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================================
+       Landscape Warning Overlay
+       ========================================================================== */
+    #landscape-warning {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999999;
+      background: #091610;
+      color: var(--secondary);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+    }
+
+    @media screen and (orientation: landscape) and (max-height: 500px) {
+      #landscape-warning {
+        display: flex;
+      }
+    }
+
+    .lw-icon {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 16px;
+      animation: rotateDeviceAnim 2s ease-in-out infinite alternate;
+      color: var(--secondary);
+    }
+
+    @keyframes rotateDeviceAnim {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(-90deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .lw-title {
+      font-family: var(--heading);
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      color: var(--secondary);
+      margin-bottom: 8px;
+    }
+
+    .lw-text {
+      font-size: 0.88rem;
+      color: #dfd2b5;
+      max-width: 290px;
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       Global App Container (#app with container-type: inline-size)
+       ========================================================================== */
+    #app {
+      width: 100%;
+      max-width: var(--card-width);
+      min-height: 100vh;
+      min-height: calc(var(--vh, 1vh) * 100);
+      margin: 0 auto;
+      background-color: var(--bg);
+      position: relative;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      container-type: inline-size; /* CRITICAL for all cqw units */
+    }
+
+    /* ==========================================================================
+       Intro Layer (Video Overlay)
+       ========================================================================== */
+    #intro-layer {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--card-width);
+      height: 100%;
+      height: 100vh;
+      height: calc(var(--vh, 1vh) * 100);
+      z-index: 9990;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1.2s ease-in-out, visibility 1.2s ease-in-out;
+      overflow: hidden;
+    }
+
+    #intro-layer.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #intro-layer.hidden {
+      display: none;
+    }
+
+    #intro-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    #intro-video.playing {
+      opacity: 1;
+    }
+
+    /* Tap to Begin Screen */
+    .intro-tap-screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      background: radial-gradient(circle at center, rgba(8, 26, 17, 0.76) 0%, rgba(4, 13, 8, 0.92) 100%),
+                  url("images/Sec1.webp") center top / cover no-repeat;
+      text-align: center;
+      padding: clamp(20px, 4vh, 40px) 5cqw;
+      cursor: pointer;
+      transition: opacity 0.8s ease;
+      overflow: hidden;
+    }
+
+    .intro-tap-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-couple-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+      margin-bottom: clamp(14px, 2.5vh, 26px);
+    }
+
+    .intro-name {
+      font-family: var(--serif);
+      font-size: clamp(2.3rem, 10cqw, 3.6rem);
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+    }
+
+    .intro-ampersand {
+      font-family: var(--script);
+      font-size: clamp(2.1rem, 8.5cqw, 3.2rem);
+      color: #ffffff;
+      line-height: 1;
+      display: block;
+      margin: clamp(3px, 0.6vh, 8px) 0;
+      text-shadow: 0 3px 14px rgba(0, 0, 0, 0.75);
+    }
+
+    .intro-date-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(3px, 0.5vh, 7px);
+      margin-bottom: clamp(20px, 3.5vh, 34px);
+    }
+
+    .intro-date-day {
+      font-family: var(--sans);
+      font-size: clamp(1.15rem, 4.4cqw, 1.6rem);
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: var(--secondary);
+      line-height: 1.1;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .intro-date-month {
+      font-family: var(--sans);
+      font-size: clamp(1.25rem, 4.8cqw, 1.75rem);
+      font-weight: 600;
+      letter-spacing: 0.32em;
+      color: var(--secondary);
+      line-height: 1.1;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .intro-date-year {
+      font-family: var(--sans);
+      font-size: clamp(1.15rem, 4.4cqw, 1.6rem);
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      color: var(--secondary);
+      line-height: 1.1;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .btn-tap-begin {
+      background: rgba(16, 42, 28, 0.5);
+      border: 1.8px solid var(--secondary);
+      color: var(--secondary);
+      padding: clamp(12px, 1.8vh, 16px) clamp(28px, 6.5cqw, 46px);
+      font-family: var(--sans);
+      font-size: clamp(0.85rem, 3.1cqw, 1.1rem);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      animation: pulseGoldBorder 2.2s ease-in-out infinite;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      flex-shrink: 0;
+    }
+
+    .btn-tap-begin:active {
+      transform: scale(0.97);
+      background: rgba(212, 175, 55, 0.3);
+    }
+
+    @keyframes pulseGoldBorder {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5), 0 4px 18px rgba(0, 0, 0, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 0 12px rgba(212, 175, 55, 0), 0 4px 22px rgba(212, 175, 55, 0.3);
+      }
+    }
+
+    /* ==========================================================================
+       Music FAB (Floating Action Button)
+       ========================================================================== */
+    #mfab {
+      position: fixed;
+      bottom: max(72px, calc(env(safe-area-inset-bottom, 0px) + 38px));
+      right: max(20px, env(safe-area-inset-right, 0px));
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #153b2a, #0a1f16);
+      border: 1.5px solid var(--secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 14px rgba(212, 175, 55, 0.3);
+      z-index: 9500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    #mfab.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #mfab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 24px rgba(212, 175, 55, 0.5);
+    }
+
+    #mfab.playing {
+      animation: fabGlowPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes fabGlowPulse {
+      0%, 100% {
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 12px rgba(212, 175, 55, 0.3);
+      }
+      50% {
+        box-shadow: 0 4px 22px rgba(0, 0, 0, 0.6), 0 0 24px rgba(212, 175, 55, 0.7);
+      }
+    }
+
+    /* ==========================================================================
+       Canvas Petal Overlay
+       ========================================================================== */
+    #canvas-petals {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--card-width);
+      height: 100%;
+      pointer-events: none;
+      z-index: 8000;
+    }
+
+    /* ==========================================================================
+       Section Layout (Exact 800 / 1729 aspect ratio of images)
+       ========================================================================== */
+    .wedding-sec {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 800 / 1729;
+      background-size: 100% 100%;
+      background-position: center top;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    /* Background Images */
+    #sec-hero { background-image: url("images/Sec1.webp"); }
+    #sec-haldi { background-image: url("images/Sec2.webp"); }
+    #sec-mehendi { background-image: url("images/Sec3.webp"); }
+    #sec-sangeet { background-image: url("images/Sec4.webp"); }
+    #sec-wedding { background-image: url("images/Sec5.webp"); }
+    #sec-reception { background-image: url("images/Sec6.webp"); }
+    #sec-map { background-image: url("images/Sec7.webp"); }
+    #sec-rsvp { background-image: url("images/Sec8.webp"); }
+    #sec-closing { background-image: url("images/Sec9.webp"); }
+
+    /* Reusable SVG Lotus */
+    .lotus-ornament {
+      width: 7cqw;
+      height: 5cqw;
+      display: block;
+      margin: 0 auto;
+      color: var(--secondary);
+    }
+
+    .lotus-ornament-sm {
+      width: 5.5cqw;
+      height: 3.5cqw;
+      display: block;
+      margin: 0 auto;
+      color: var(--secondary);
+    }
+
+    /* ==========================================================================
+       SECTION 1: HERO COVER (Sec1.webp)
+       Preserved user edits: top: 38cqw; margin: 1cqw 0 0;
+       ========================================================================== */
+    .hero-content-wrap {
+      position: absolute;
+      top: 38cqw;
+      left: 25cqw;
+      width: 54cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .hero-lotus-top {
+      margin-bottom: 1.6cqw;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    }
+
+    .hero-title-group {
+      margin-bottom: 1.5cqw;
+      width: 100%;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: 7.2cqw;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-ampersand {
+      font-family: var(--script);
+      font-size: 4.8cqw;
+      color: var(--secondary);
+      line-height: 1;
+      display: block;
+      margin: 1cqw 0 0;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-invitation-text {
+      font-family: var(--sans);
+      font-size: 2.2cqw;
+      font-weight: 400;
+      color: #eae5d8;
+      line-height: 1.55;
+      max-width: 48cqw;
+      margin: 1.6cqw auto 2cqw;
+      letter-spacing: 0.03em;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-lotus-mid {
+      margin-bottom: 1.5cqw;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+    }
+
+    .hero-date {
+      font-family: var(--sans);
+      font-size: 2.6cqw;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--secondary-light);
+      margin-bottom: 0.8cqw;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-city {
+      font-family: var(--sans);
+      font-size: 2.3cqw;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      color: #ded8cb;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Scroll Down Indicator */
+    #scroll-indicator {
+      position: absolute;
+      bottom: 5cqw;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8cqw;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      cursor: pointer;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    #scroll-indicator.visible {
+      opacity: 0.95;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    #scroll-indicator.hidden-after-scroll {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .scroll-ind-text {
+      font-family: var(--sans);
+      font-size: 2.2cqw;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #f7eed8;
+      font-weight: 500;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .scroll-ind-icon {
+      width: 4.5cqw;
+      height: 4.5cqw;
+      color: var(--secondary);
+      animation: bounceDown 1.8s ease-in-out infinite;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
+    }
+
+    @keyframes bounceDown {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(6px); }
+      60% { transform: translateY(3px); }
+    }
+
+    /* ==========================================================================
+       SECTION 2: EVENTS OVERVIEW (Sec2.webp – Sec6.webp)
+       Preserved user edits: title: 7cqw; meta: 3cqw;
+       ========================================================================== */
+    .event-board-content {
+      position: absolute;
+      top: 33cqw;
+      left: 37.5cqw;
+      width: 38cqw;
+      height: 43cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5cqw;
+      z-index: 10;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    .event-board-content .board-lotus {
+      margin-bottom: 0.8cqw;
+    }
+
+    .event-board-content .board-title {
+      font-family: var(--serif);
+      font-size: 7cqw;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 1.8cqw;
+    }
+
+    .event-board-content .board-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5cqw;
+    }
+
+    .meta-line-date, .meta-line-time, .meta-line-city {
+      font-family: var(--sans);
+      font-size: 3cqw;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: #304538;
+      text-transform: uppercase;
+    }
+
+    .meta-line-time {
+      color: #8c734b;
+    }
+
+    .meta-line-city {
+      color: #304538;
+      letter-spacing: 0.22em;
+    }
+
+    /* ==========================================================================
+       SECTION 3: MAP (Sec7.webp)
+       Preserved user edits: top-content: 50cqw; bottom-content: 147cqw;
+       ========================================================================== */
+    .map-top-content {
+      position: absolute;
+      top: 50cqw;
+      left: 12.5cqw;
+      width: 70cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .map-top-content .board-title {
+      font-family: var(--serif);
+      font-size: 6.6cqw;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.02em;
+      margin-top: 0.8cqw;
+    }
+
+    /* Pulsing Pin over the Watercolor Lake Pichola in the image */
+    .map-lake-pin-wrap {
+      position: absolute;
+      top: 100cqw;
+      left: 65.5cqw;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    .pin-pulse-ring {
+      position: absolute;
+      top: 2cqw;
+      width: 6cqw;
+      height: 6cqw;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.45);
+      animation: pulseMapRing 2s infinite ease-out;
+    }
+
+    @keyframes pulseMapRing {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+
+    .pin-icon-svg {
+      width: 6cqw;
+      height: 6cqw;
+      color: #b8860b;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Bottom Directions Content */
+    .map-bottom-content {
+      position: absolute;
+      top: 147cqw;
+      left: 12.5cqw;
+      width: 70cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .map-location-tag {
+      display: flex;
+      align-items: center;
+      gap: 1.2cqw;
+      font-family: var(--sans);
+      font-size: 2.6cqw;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: #384d41;
+      text-transform: uppercase;
+      margin-bottom: 2.2cqw;
+    }
+
+    .map-location-tag svg {
+      width: 3.2cqw;
+      height: 3.2cqw;
+      color: var(--secondary);
+    }
+
+    .btn-directions {
+      background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+      color: #17281f;
+      font-family: var(--sans);
+      font-size: 2.6cqw;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 2.4cqw 5.5cqw;
+      border-radius: 50px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 1.5cqw;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(184, 134, 11, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-directions:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 8px rgba(184, 134, 11, 0.3);
+    }
+
+    .btn-directions svg {
+      width: 3.2cqw;
+      height: 3.2cqw;
+      color: #17281f;
+    }
+
+    /* ==========================================================================
+       SECTION 3: RSVP FORM REDESIGN (Sec8.webp)
+       Warm cream background, gold accents, deep red pill tags,
+       and vibrant green full-width WhatsApp pill button.
+       ========================================================================== */
+    .rsvp-content-wrap {
+      position: absolute;
+      top: 47cqw;
+      left: 18cqw;
+      width: 64cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    .rsvp-arch-symbol {
+      width: 5cqw;
+      height: 3.2cqw;
+      color: var(--secondary);
+      margin-bottom: 0.6cqw;
+    }
+
+    .rsvp-content-wrap .board-title {
+      font-family: var(--serif);
+      font-size: 6.8cqw;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .rsvp-flourish {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5cqw;
+      margin: 0.8cqw 0 1cqw;
+      color: var(--secondary);
+    }
+
+    .flourish-line {
+      width: 13cqw;
+      height: 0.2cqw;
+      background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+    }
+
+    .flourish-star {
+      font-size: 2cqw;
+      color: var(--secondary);
+    }
+
+    .rsvp-subtitle {
+      font-family: var(--sans);
+      font-size: 2.1cqw;
+      color: #4a6052;
+      line-height: 1.45;
+      margin-bottom: 2.4cqw;
+    }
+
+    .rsvp-alert {
+      background: #fdf6e7;
+      border: 0.2cqw solid rgba(212, 175, 55, 0.5);
+      border-left: 0.8cqw solid #b8860b;
+      color: #6d4e12;
+      padding: 1.6cqw 2.2cqw;
+      border-radius: 1.5cqw;
+      margin-bottom: 1.8cqw;
+      font-size: 2.2cqw;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      width: 100%;
+    }
+
+    .rsvp-alert.show {
+      display: flex;
+    }
+
+    .alert-close {
+      background: none;
+      border: none;
+      font-size: 3.5cqw;
+      color: #6d4e12;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    #rsvp-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2cqw;
+    }
+
+    .rsvp-form-group {
+      text-align: left;
+      width: 100%;
+    }
+
+    .rsvp-label {
+      display: block;
+      font-family: var(--sans);
+      font-size: 1.9cqw;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.4cqw;
+    }
+
+    .input-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .rsvp-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 0.28cqw solid rgba(212, 175, 55, 0.65);
+      border-radius: 0;
+      padding: 1.1cqw 0 0.8cqw;
+      font-family: var(--sans);
+      font-size: 2.5cqw;
+      color: #1a2e23;
+      outline: none;
+      transition: border-color 0.3s ease;
+      -webkit-appearance: none;
+    }
+
+    .rsvp-input:focus {
+      border-bottom-color: var(--primary);
+    }
+
+    .rsvp-input::placeholder {
+      color: #8c9c91;
+      font-weight: 400;
+    }
+
+    .input-inline-icon {
+      position: absolute;
+      right: 0;
+      bottom: 0.8cqw;
+      width: 2.6cqw;
+      height: 2.6cqw;
+      color: #b8860b;
+      pointer-events: none;
+    }
+
+    /* Attendance Buttons (Side-by-side radio style) */
+    .attendance-buttons-wrap {
+      display: flex;
+      gap: 2cqw;
+      width: 100%;
+    }
+
+    .att-btn {
+      flex: 1;
+      padding: 1.6cqw 1cqw;
+      border-radius: 50px;
+      font-family: var(--sans);
+      font-size: 2.2cqw;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1cqw;
+      transition: all 0.25s ease;
+      background: #ffffff;
+      color: #4a6052;
+      border: 0.25cqw solid rgba(212, 175, 55, 0.5);
+    }
+
+    .att-btn.active#att-yes {
+      background: linear-gradient(135deg, #fceda7 0%, #d4af37 50%, #b8860b 100%);
+      color: #211c07;
+      border-color: #fae48c;
+      font-weight: 700;
+      box-shadow: 0 3px 12px rgba(184, 134, 11, 0.35);
+    }
+
+    .att-btn.active#att-no {
+      background: #ffffff;
+      color: #8b1e2d;
+      border: 0.25cqw solid #8b1e2d;
+      font-weight: 700;
+      box-shadow: 0 3px 10px rgba(139, 30, 45, 0.25);
+    }
+
+    /* Celebrations Multi-select Pill Tags (Deep Red) */
+    .celebrations-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2cqw;
+      width: 100%;
+    }
+
+    .celeb-pill {
+      background: rgba(139, 30, 45, 0.08);
+      color: #8b1e2d;
+      border: 0.24cqw solid rgba(139, 30, 45, 0.4);
+      border-radius: 50px;
+      padding: 1.4cqw 1cqw;
+      font-family: var(--sans);
+      font-size: 2.1cqw;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .celeb-pill.active {
+      background: linear-gradient(135deg, #8b1e2d 0%, #5e0b17 100%);
+      color: #ffffff;
+      border-color: var(--secondary);
+      box-shadow: 0 3px 10px rgba(94, 11, 23, 0.35);
+      font-weight: 700;
+    }
+
+    /* Submit Button (Full-width vibrant green gradient pill) */
+    .btn-submit-rsvp {
+      width: 100%;
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      padding: 2.2cqw 2cqw;
+      font-family: var(--sans);
+      font-size: 2.4cqw;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6cqw;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(18, 140, 126, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-top: 1cqw;
+    }
+
+    .btn-submit-rsvp:hover {
+      box-shadow: 0 6px 22px rgba(37, 211, 102, 0.5);
+    }
+
+    .btn-submit-rsvp:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 10px rgba(18, 140, 126, 0.3);
+    }
+
+    .btn-submit-rsvp svg {
+      width: 3.4cqw;
+      height: 3.4cqw;
+      fill: currentColor;
+    }
+
+    .rsvp-card-footer {
+      border-top: 0.15cqw solid rgba(212, 175, 55, 0.35);
+      padding-top: 1.5cqw;
+      margin-top: 0.8cqw;
+      width: 100%;
+    }
+
+    .rsvp-footer-names {
+      font-family: var(--serif);
+      font-size: 3.2cqw;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3cqw;
+    }
+
+    .rsvp-footer-date {
+      font-family: var(--sans);
+      font-size: 2.2cqw;
+      letter-spacing: 0.2em;
+      color: #8c734b;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       SECTION 4: CLOSING (Sec9.webp)
+       Centered between marigold garlands (Center is 55.9cqw)
+       left: 31cqw; width: 50cqw;
+       ========================================================================== */
+    .closing-content-wrap {
+      position: absolute;
+      top: 78cqw;
+      left: 31cqw;
+      width: 50cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .closing-lotus {
+      margin-bottom: 1.5cqw;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    }
+
+    .closing-name {
+      font-family: var(--serif);
+      font-size: 6.8cqw;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+    }
+
+    .closing-ampersand {
+      font-family: var(--script);
+      font-size: 4.5cqw;
+      color: var(--secondary);
+      line-height: 1;
+      display: block;
+      margin: 0.4cqw 0;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .closing-flourish {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5cqw;
+      margin: 1.2cqw 0 1.6cqw;
+      color: var(--secondary);
+      width: 100%;
+    }
+
+    .closing-date {
+      font-family: var(--sans);
+      font-size: 2.5cqw;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--secondary-light);
+      margin-bottom: 0.8cqw;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .closing-city {
+      font-family: var(--sans);
+      font-size: 2.2cqw;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      color: #ded8cb;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Bottom Designed By Overlay (Glassmorphism Blur on top of last section) */
+    .footer-glass-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(12, 28, 20, 0.45) 0%, rgba(6, 16, 11, 0.78) 100%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      backdrop-filter: blur(14px) saturate(160%);
+      border-top: 0.15cqw solid rgba(212, 175, 55, 0.35);
+      padding: 3cqw 4cqw calc(3cqw + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 25;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .footer-glass-text {
+      font-family: var(--sans);
+      font-size: 2.3cqw;
+      letter-spacing: 0.08em;
+      color: rgba(245, 238, 220, 0.85);
+      margin: 0;
+    }
+
+    .footer-glass-text a {
+      color: var(--secondary-light);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.25s ease, text-shadow 0.25s ease;
+    }
+
+    .footer-glass-text a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 8px rgba(231, 191, 133, 0.6);
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       Scroll Reveal Animation
+       Uses translateY only so elements never shift horizontally!
+       ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.85s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Prefers Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .lw-icon, .intro-lotus-badge, .btn-tap-begin, #mfab.playing, .scroll-ind-icon, .pin-pulse-ring {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       LANDSCAPE WARNING (Screen orientation check)
+       ===================================================== -->
+  <div id="landscape-warning" role="alert" aria-live="assertive">
+    <svg class="lw-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/>
+    </svg>
+    <p class="lw-title">Please Rotate Device</p>
+    <p class="lw-text">The Enchanted Udaipur Wedding invitation is crafted for portrait orientation.</p>
+  </div>
+
+  <!-- =====================================================
+       INTRO LAYER (Video Overlay — 1-tap required to play)
+       ===================================================== -->
+  <div id="intro-layer" role="dialog" aria-label="Wedding Invitation Intro">
+    <div class="intro-tap-screen" id="tap-screen">
+      <div class="intro-couple-wrap">
+        <h1 class="intro-name">Aarav</h1>
+        <span class="intro-ampersand">&amp;</span>
+        <h1 class="intro-name">Meera</h1>
+      </div>
+
+      <div class="intro-date-wrap">
+        <span class="intro-date-day">14</span>
+        <span class="intro-date-month">FEBRUARY</span>
+        <span class="intro-date-year">2027</span>
+      </div>
+
+      <button class="btn-tap-begin" id="btn-tap-begin" type="button" aria-label="Tap to begin invitation">
+        ✦ TAP TO BEGIN ✦
+      </button>
+    </div>
+
+    <!-- Unpauseable Video Element -->
+    <video
+      id="intro-video"
+      playsinline
+      webkit-playsinline
+      x5-playsinline
+      disablePictureInPicture
+      fetchpriority="high"
+      preload="auto"
+      aria-hidden="true"
+    >
+      <source src="images/Dummy.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- =====================================================
+       ATMOSPHERIC CANVAS (Falling Petals)
+       ===================================================== -->
+  <canvas id="canvas-petals" aria-hidden="true"></canvas>
+
+  <!-- =====================================================
+       MUSIC FAB (Floating Action Button)
+       ===================================================== -->
+  <button id="mfab" type="button" aria-label="Toggle background music" onclick="toggleMusic()">
+    <!-- Audio Muted Icon (shown when paused) -->
+    <svg id="icon-off" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+    </svg>
+    <!-- Audio Playing Icon (shown when playing) -->
+    <svg id="icon-on" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;" aria-hidden="true">
+      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+    </svg>
+  </button>
+
+  <!-- Background Music Audio -->
+  <audio id="bg-music" loop preload="none" aria-hidden="true">
+    <source src="images/bg-music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- =====================================================
+       MAIN CARD CONTAINER (#app with container-type: inline-size)
+       ===================================================== -->
+  <main id="app">
+
+    <!-- ===================================================
+         SECTION 1: HERO COVER (Sec1.webp)
+         =================================================== -->
+    <section id="sec-hero" class="wedding-sec" aria-label="Wedding Cover">
+      <div class="hero-content-wrap reveal">
+        <!-- Gold Lotus SVG -->
+        <svg class="lotus-ornament hero-lotus-top" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <path d="M50 20 C48 32 40 43 28 46 C38 46 48 40 50 30 C52 40 62 46 72 46 C60 43 52 32 50 20 Z" fill="#c59b27" opacity="0.85"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <circle cx="38" cy="50" r="2" fill="#d4af37"/>
+          <circle cx="62" cy="50" r="2" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+
+        <div class="hero-title-group">
+          <h1 class="hero-name">Aarav</h1>
+          <span class="hero-ampersand">&amp;</span>
+          <h1 class="hero-name">Meera</h1>
+        </div>
+
+        <p class="hero-invitation-text">
+          Together with our families, we invite you to celebrate our wedding.
+        </p>
+
+        <!-- Gold Lotus Divider SVG -->
+        <svg class="lotus-ornament-sm hero-lotus-mid" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+
+        <p class="hero-date">14 FEBRUARY 2027</p>
+        <p class="hero-city">UDAIPUR</p>
+      </div>
+
+      <!-- Animated Scroll Down Indicator -->
+      <div id="scroll-indicator" onclick="scrollToEvents()" aria-label="Scroll down to explore">
+        <span class="scroll-ind-text">Scroll Down</span>
+        <svg class="scroll-ind-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         SECTION 2: EVENTS OVERVIEW (Sec2.webp – Sec6.webp)
+         No extra card layer! Text sits directly in the image board.
+         =================================================== -->
+
+    <!-- Event 1: Haldi (Sec2.webp) -->
+    <section id="sec-haldi" class="wedding-sec" aria-label="Haldi Ceremony">
+      <div class="event-board-content reveal">
+        <svg class="lotus-ornament-sm board-lotus" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h2 class="board-title">Haldi</h2>
+        <div class="board-meta">
+          <p class="meta-line-date">10 FEBRUARY</p>
+          <p class="meta-line-time">11:00 AM</p>
+          <p class="meta-line-city">UDAIPUR</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event 2: Mehendi (Sec3.webp) -->
+    <section id="sec-mehendi" class="wedding-sec" aria-label="Mehendi Ceremony">
+      <div class="event-board-content reveal">
+        <svg class="lotus-ornament-sm board-lotus" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h2 class="board-title">Mehendi</h2>
+        <div class="board-meta">
+          <p class="meta-line-date">11 FEBRUARY</p>
+          <p class="meta-line-time">5:00 PM</p>
+          <p class="meta-line-city">UDAIPUR</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event 3: Sangeet (Sec4.webp) -->
+    <section id="sec-sangeet" class="wedding-sec" aria-label="Sangeet Celebration">
+      <div class="event-board-content reveal">
+        <svg class="lotus-ornament-sm board-lotus" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h2 class="board-title">Sangeet</h2>
+        <div class="board-meta">
+          <p class="meta-line-date">12 FEBRUARY</p>
+          <p class="meta-line-time">7:00 PM</p>
+          <p class="meta-line-city">UDAIPUR</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event 4: Wedding (Sec5.webp) -->
+    <section id="sec-wedding" class="wedding-sec" aria-label="Wedding Ceremony">
+      <div class="event-board-content reveal">
+        <svg class="lotus-ornament-sm board-lotus" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h2 class="board-title">Wedding</h2>
+        <div class="board-meta">
+          <p class="meta-line-date">14 FEBRUARY</p>
+          <p class="meta-line-time">7:00 PM</p>
+          <p class="meta-line-city">UDAIPUR</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event 5: Reception (Sec6.webp) -->
+    <section id="sec-reception" class="wedding-sec" aria-label="Reception Night">
+      <div class="event-board-content reveal">
+        <svg class="lotus-ornament-sm board-lotus" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h2 class="board-title">Reception</h2>
+        <div class="board-meta">
+          <p class="meta-line-date">15 FEBRUARY</p>
+          <p class="meta-line-time">7:30 PM</p>
+          <p class="meta-line-city">UDAIPUR</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         SECTION 3: MAP (Sec7.webp)
+         No extra card layer! Text sits over the image map card.
+         =================================================== -->
+    <section id="sec-map" class="wedding-sec" aria-label="Venue and Map Directions">
+      <!-- Title at top of card -->
+      <div class="map-top-content reveal">
+        <svg class="lotus-ornament-sm" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h2 class="board-title">Udaipur</h2>
+      </div>
+
+      <!-- Pulsing Pin directly over Lake Pichola Watercolor in image -->
+      <div class="map-lake-pin-wrap" aria-hidden="true">
+        <div class="pin-pulse-ring"></div>
+        <svg style="opacity: 0;" class="pin-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+      </div>
+
+      <!-- Location Text & Directions Button below map -->
+      <div class="map-bottom-content reveal">
+        <div class="map-location-tag">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <span>Udaipur, Rajasthan</span>
+        </div>
+
+        <a href="https://maps.google.com/?q=Lake+Pichola,+Udaipur,+Rajasthan" target="_blank" rel="noopener noreferrer" class="btn-directions">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+          <span>Get Directions</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         SECTION 3: RSVP FORM REDESIGN (Sec8.webp)
+         Warm cream background, gold accents, deep red pill tags,
+         and vibrant green full-width WhatsApp pill button.
+         =================================================== -->
+    <section id="sec-rsvp" class="wedding-sec" aria-label="RSVP Invitation Response">
+      <div class="rsvp-content-wrap reveal">
+        <!-- Delicate gold arch motif from wedding invitation card -->
+        <svg class="rsvp-arch-symbol" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20 2 C16 9 10 16 2 20 C10 20 17 16 20 9 C23 16 30 20 38 20 C30 16 24 9 20 2 Z" fill="#d4af37"/>
+          <circle cx="20" cy="22" r="1.8" fill="#d4af37"/>
+        </svg>
+
+        <h2 class="board-title">RSVP</h2>
+
+        <div class="rsvp-flourish">
+          <span class="flourish-line"></span>
+          <span class="flourish-star">✦</span>
+          <span class="flourish-line"></span>
+        </div>
+
+        <p class="rsvp-subtitle">
+          We would be delighted to have you with us.<br>
+          Please let us know your plans.
+        </p>
+
+        <!-- Alert Notification -->
+        <div id="rsvp-alert" class="rsvp-alert" role="alert">
+          <span id="rsvp-alert-text"></span>
+          <button type="button" class="alert-close" onclick="closeRsvpAlert()" aria-label="Close alert">&times;</button>
+        </div>
+
+        <form id="rsvp-form" onsubmit="event.preventDefault(); sendRSVP();" novalidate>
+          <!-- 1. Full Name -->
+          <div class="rsvp-form-group">
+            <label for="rsvp-name" class="rsvp-label">NAME</label>
+            <div class="input-container">
+              <input type="text" id="rsvp-name" class="rsvp-input" placeholder="e.g. Lakshmi Iyer" required autocomplete="name">
+            </div>
+          </div>
+
+          <!-- 2. Phone Number -->
+          <div class="rsvp-form-group">
+            <label for="rsvp-phone" class="rsvp-label">PHONE NUMBER</label>
+            <div class="input-container">
+              <input type="tel" id="rsvp-phone" class="rsvp-input" placeholder="e.g. 9876512345" required autocomplete="tel">
+              <svg class="input-inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- 3. Attendance Buttons (Radio style side-by-side) -->
+          <div class="rsvp-form-group">
+            <label class="rsvp-label">ATTENDING</label>
+            <div class="attendance-buttons-wrap">
+              <button type="button" class="att-btn active" id="att-yes" onclick="setAttendance('yes')">
+                <span>🎉</span> Joyfully Yes
+              </button>
+              <button type="button" class="att-btn" id="att-no" onclick="setAttendance('no')">
+                <span>💌</span> Regretfully No
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Celebrations Selection (Multi-select pill tags) -->
+          <div class="rsvp-form-group" id="celeb-group">
+            <label class="rsvp-label">CELEBRATIONS ATTENDING</label>
+            <div class="celebrations-grid">
+              <button type="button" class="celeb-pill active" data-event="Mehndi" onclick="toggleCeleb(this)">Mehndi</button>
+              <button type="button" class="celeb-pill active" data-event="Haldi" onclick="toggleCeleb(this)">Haldi</button>
+              <button type="button" class="celeb-pill active" data-event="Sangeet" onclick="toggleCeleb(this)">Sangeet</button>
+              <button type="button" class="celeb-pill active" data-event="The Wedding" onclick="toggleCeleb(this)">The Wedding</button>
+            </div>
+          </div>
+
+          <!-- 5. Number of Guests (pre-filled with 1) -->
+          <div class="rsvp-form-group" id="guests-group">
+            <label for="rsvp-guests" class="rsvp-label">NUMBER OF GUESTS</label>
+            <div class="input-container">
+              <input type="number" id="rsvp-guests" class="rsvp-input" min="1" max="15" value="1" placeholder="1">
+            </div>
+          </div>
+
+          <!-- 6. Submit Button (Full-width vibrant green gradient pill with WhatsApp icon) -->
+          <button type="submit" class="btn-submit-rsvp" id="btn-submit-rsvp" aria-label="Send RSVP on WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.41 1.56 1.56 2.41 3.63 2.41 5.83 0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24h.02zm-3.6 3.6c-.2 0-.44.07-.67.33-.23.26-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.48-.6 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.11-.23-.17-.48-.3-.25-.13-1.48-.73-1.71-.81-.23-.09-.4-.13-.57.13-.17.26-.66.81-.81.98-.15.17-.3.19-.55.07-.25-.13-1.07-.39-2.04-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.26-.02-.39.11-.52.11-.11.25-.3.38-.44.13-.15.17-.26.26-.43.09-.17.04-.33-.02-.46-.07-.13-.57-1.37-.78-1.88-.2-.49-.41-.43-.57-.43z"/>
+            </svg>
+            <span>SEND RSVP ON WHATSAPP</span>
+          </button>
+
+          <div class="rsvp-card-footer">
+            <p class="rsvp-footer-names">Aarav &amp; Meera</p>
+            <p class="rsvp-footer-date">14 FEBRUARY 2027</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         SECTION 4: CLOSING (Sec9.webp)
+         Centered between marigold garlands over lake
+         =================================================== -->
+    <section id="sec-closing" class="wedding-sec" aria-label="Closing Invitation Message">
+      <div class="closing-content-wrap reveal">
+        <svg class="lotus-ornament closing-lotus" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 6 C47 22 38 36 20 42 C34 42 46 34 50 20 C54 34 66 42 80 42 C62 36 53 22 50 6 Z" fill="#d4af37"/>
+          <path d="M50 20 C48 32 40 43 28 46 C38 46 48 40 50 30 C52 40 62 46 72 46 C60 43 52 32 50 20 Z" fill="#c59b27" opacity="0.85"/>
+          <circle cx="50" cy="50" r="3" fill="#d4af37"/>
+          <circle cx="38" cy="50" r="2" fill="#d4af37"/>
+          <circle cx="62" cy="50" r="2" fill="#d4af37"/>
+          <path d="M22 50 Q50 56 78 50" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+
+        <h2 class="closing-name">Aarav</h2>
+        <span class="closing-ampersand">&amp;</span>
+        <h2 class="closing-name">Meera</h2>
+
+        <div class="closing-flourish">
+          <span class="flourish-line"></span>
+          <span class="flourish-star">✦</span>
+          <span class="flourish-line"></span>
+        </div>
+
+        <p class="closing-date">14 FEBRUARY 2027</p>
+        <p class="closing-city">UDAIPUR</p>
+      </div>
+
+      <!-- Bottom Design By Overlay (Glassmorphism Blur on top of last section) -->
+      <footer class="footer-glass-overlay">
+        <p class="footer-glass-text">
+          Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer">Invite&nbsp;Box</a>
+        </p>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       INLINE JAVASCRIPT
+       ===================================================== -->
+  <script>
+    /* ============================================================
+       wedding.js — Aarav & Meera: Enchanted Udaipur Wedding
+       All vanilla JS, no build tools or frameworks.
+       ============================================================ */
+
+    /* ----------------------------------------------------------
+       1. Viewport Height Fix (MUST RUN FIRST)
+       ---------------------------------------------------------- */
+    function setActualVh() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    setActualVh();
+
+    /* ----------------------------------------------------------
+       2. Scroll Restoration & Resets
+       ---------------------------------------------------------- */
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
+    window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
+    window.addEventListener('resize', () => {
+      setActualVh();
+      if (!document.body.classList.contains('unlocked')) {
+        window.scrollTo(0, 0);
+      }
+    });
+    window.addEventListener('orientationchange', () => {
+      setTimeout(setActualVh, 200);
+      if (!document.body.classList.contains('unlocked')) {
+        window.scrollTo(0, 0);
+      }
+    });
+
+    /* ----------------------------------------------------------
+       3. DOM Elements & State
+       ---------------------------------------------------------- */
+    const introLayer  = document.getElementById('intro-layer');
+    const introVideo  = document.getElementById('intro-video');
+    const tapScreen   = document.getElementById('tap-screen');
+    const mfab        = document.getElementById('mfab');
+    const scrollInd   = document.getElementById('scroll-indicator');
+    const bgAudio     = document.getElementById('bg-music');
+    let musicPlaying  = false;
+    let rsvpAttendance = 'yes';
+    const WHATSAPP_NUMBER = '919876543210'; // Wedding Host WhatsApp
+
+    /* ----------------------------------------------------------
+       4. Video Intro & Unlock Logic
+       ---------------------------------------------------------- */
+    if (introVideo) {
+      introVideo.load();
+    }
+
+    function safePlayVideo() {
+      if (!introVideo) return;
+      introVideo.muted = false;
+      introVideo.volume = 1.0;
+      if (bgAudio) {
+        bgAudio.pause();
+        bgAudio.currentTime = 0;
+      }
+      const playPromise = introVideo.play();
+      if (playPromise) {
+        playPromise.catch(() => {
+          introVideo.muted = true;
+          introVideo.play().catch(() => {});
+        });
+      }
+    }
+
+    // Exactly one tap on entire screen to start playing
+    if (tapScreen) {
+      tapScreen.addEventListener('click', () => {
+        // Unlock Web Audio context safely
+        if (bgAudio) {
+          bgAudio.muted = true;
+          bgAudio.play().then(() => bgAudio.pause()).catch(() => {});
+          bgAudio.muted = false;
+          bgAudio.currentTime = 0;
+        }
+
+        introVideo.classList.add('playing');
+        safePlayVideo();
+
+        tapScreen.style.opacity = '0';
+        tapScreen.style.pointerEvents = 'none';
+        setTimeout(() => tapScreen.classList.add('hidden'), 800);
+      }, { once: true });
+    }
+
+    // Block pause attempts: video cannot be paused
+    if (introVideo) {
+      introVideo.addEventListener('pause', () => {
+        if (!introVideo.ended && introVideo.classList.contains('playing')) {
+          introVideo.play().catch(() => {});
+        }
+      });
+
+      // Smooth fade out near the end of the video
+      introVideo.addEventListener('timeupdate', () => {
+        if (!introVideo.duration) return;
+        const remaining = introVideo.duration - introVideo.currentTime;
+        if (remaining < 0.9 && introVideo.style.opacity !== '0') {
+          introVideo.style.transition = 'opacity 0.8s ease';
+          introVideo.style.opacity = '0';
+        }
+      });
+
+      introVideo.addEventListener('ended', () => {
+        revealApp();
+      });
+    }
+
+    function revealApp() {
+      // Fade out intro layer overlay
+      if (introLayer) {
+        introLayer.classList.add('fade-out');
+        setTimeout(() => introLayer.classList.add('hidden'), 1200);
+      }
+
+      // Unlock scrolling and reveal floating controls
+      setTimeout(() => {
+        document.body.classList.add('unlocked');
+        if (mfab) mfab.classList.add('visible');
+        if (scrollInd) scrollInd.classList.add('visible');
+        initScrollReveal();
+        startAtmosphericPetals();
+        startBgMusic();
+      }, 600);
+    }
+
+    /* ----------------------------------------------------------
+       5. Music FAB Controls
+       ---------------------------------------------------------- */
+    function startBgMusic() {
+      if (!bgAudio) return;
+      bgAudio.volume = 0.5;
+      bgAudio.play().then(() => {
+        musicPlaying = true;
+        updateFabIcon(true);
+      }).catch(() => {
+        musicPlaying = false;
+        updateFabIcon(false);
+      });
+    }
+
+    function updateFabIcon(isOn) {
+      const iconOn  = document.getElementById('icon-on');
+      const iconOff = document.getElementById('icon-off');
+      if (isOn) {
+        if (mfab) mfab.classList.add('playing');
+        if (iconOn) iconOn.style.display = 'block';
+        if (iconOff) iconOff.style.display = 'none';
+      } else {
+        if (mfab) mfab.classList.remove('playing');
+        if (iconOn) iconOn.style.display = 'none';
+        if (iconOff) iconOff.style.display = 'block';
+      }
+    }
+
+    window.toggleMusic = function () {
+      if (!bgAudio) return;
+      if (musicPlaying) {
+        bgAudio.pause();
+        musicPlaying = false;
+        updateFabIcon(false);
+      } else {
+        bgAudio.play().then(() => {
+          musicPlaying = true;
+          updateFabIcon(true);
+        }).catch(() => {
+          musicPlaying = false;
+          updateFabIcon(false);
+        });
+      }
+    };
+
+    /* Scroll Down Indicator helper */
+    window.scrollToEvents = function() {
+      const nextSec = document.getElementById('sec-haldi');
+      if (nextSec) {
+        nextSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!scrollInd) return;
+      if (window.scrollY > 80) {
+        scrollInd.classList.add('hidden-after-scroll');
+      } else {
+        scrollInd.classList.remove('hidden-after-scroll');
+      }
+    }, { passive: true });
+
+    /* ----------------------------------------------------------
+       6. Scroll Reveal (IntersectionObserver)
+       ---------------------------------------------------------- */
+    function initScrollReveal() {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealItems = document.querySelectorAll('.reveal');
+      if (!revealItems.length) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      revealItems.forEach(el => {
+        if (reduceMotion) {
+          el.classList.add('active');
+        } else {
+          observer.observe(el);
+        }
+      });
+    }
+
+    /* ----------------------------------------------------------
+       7. Atmospheric Canvas (Falling Petals)
+       ---------------------------------------------------------- */
+    function startAtmosphericPetals() {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const canvas = document.getElementById('canvas-petals');
+      if (!canvas || reducedMotion) return;
+
+      const ctx = canvas.getContext('2d');
+      let w, h;
+
+      function resize() {
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const petalColors = [
+        'rgba(245, 158, 11, 0.85)',
+        'rgba(217, 119, 6, 0.8)',
+        'rgba(249, 115, 22, 0.75)',
+        'rgba(239, 68, 68, 0.65)',
+        'rgba(255, 255, 255, 0.7)'
+      ];
+
+      const PETAL_COUNT = 20;
+      const petals = [];
+
+      for (let i = 0; i < PETAL_COUNT; i++) {
+        petals.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          size: 4 + Math.random() * 6,
+          speedY: 0.8 + Math.random() * 1.4,
+          speedX: (Math.random() - 0.5) * 0.8,
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 2,
+          color: petalColors[Math.floor(Math.random() * petalColors.length)]
+        });
+      }
+
+      function loop() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < petals.length; i++) {
+          const p = petals[i];
+          p.y += p.speedY;
+          p.x += Math.sin(p.y * 0.01) * 0.5 + p.speedX;
+          p.rotation += p.rotationSpeed;
+
+          if (p.y > h + 10) {
+            p.y = -10;
+            p.x = Math.random() * w;
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          ctx.restore();
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    }
+
+    /* ----------------------------------------------------------
+       8. RSVP Form & WhatsApp Messaging
+       ---------------------------------------------------------- */
+    window.setAttendance = function (val) {
+      rsvpAttendance = val;
+      const yesBtn = document.getElementById('att-yes');
+      const noBtn  = document.getElementById('att-no');
+      const celebGroup = document.getElementById('celeb-group');
+      const guestsGroup = document.getElementById('guests-group');
+
+      if (val === 'yes') {
+        if (yesBtn) yesBtn.classList.add('active');
+        if (noBtn) noBtn.classList.remove('active');
+        if (celebGroup) celebGroup.style.display = 'block';
+        if (guestsGroup) guestsGroup.style.display = 'block';
+      } else {
+        if (noBtn) noBtn.classList.add('active');
+        if (yesBtn) yesBtn.classList.remove('active');
+        if (celebGroup) celebGroup.style.display = 'none';
+        if (guestsGroup) guestsGroup.style.display = 'none';
+      }
+    };
+
+    window.toggleCeleb = function (el) {
+      el.classList.toggle('active');
+    };
+
+    window.showRsvpAlert = function (msg) {
+      const alertBox  = document.getElementById('rsvp-alert');
+      const alertText = document.getElementById('rsvp-alert-text');
+      if (!alertBox || !alertText) return;
+      alertText.textContent = msg;
+      alertBox.classList.add('show');
+      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    window.closeRsvpAlert = function () {
+      const alertBox = document.getElementById('rsvp-alert');
+      if (alertBox) alertBox.classList.remove('show');
+    };
+
+    window.sendRSVP = function () {
+      const nameInput   = document.getElementById('rsvp-name');
+      const phoneInput  = document.getElementById('rsvp-phone');
+      const guestInput  = document.getElementById('rsvp-guests');
+
+      const name   = nameInput  ? nameInput.value.trim()  : '';
+      const phone  = phoneInput ? phoneInput.value.trim() : '';
+      const guests = guestInput ? guestInput.value.trim() : '1';
+      const isAttending = rsvpAttendance === 'yes';
+
+      // Celebrations selected
+      const selectedCelebs = Array.from(document.querySelectorAll('.celeb-pill.active'))
+        .map(pill => pill.getAttribute('data-event') || pill.textContent.trim());
+      const celebsText = selectedCelebs.length > 0 ? selectedCelebs.join(', ') : 'None selected';
+
+      // Validation
+      if (!name) {
+        window.showRsvpAlert('Please enter your full name before submitting.');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      if (!phone || phone.length < 7) {
+        window.showRsvpAlert('Please enter a valid phone number before submitting.');
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+
+      window.closeRsvpAlert();
+
+      // Formatted WhatsApp message with visual dividers & emojis
+      const divider = '━━━━━━━━━━━━━━━━━━━━━━';
+      let msg = '';
+      msg += `✨ *Aarav & Meera — Wedding RSVP* ✨\n`;
+      msg += `${divider}\n\n`;
+      msg += `👤 *Guest Name:* ${name}\n`;
+      msg += `📱 *Phone:* ${phone}\n\n`;
+      msg += `💌 *Attendance:* ${isAttending ? '🎉 Joyfully Yes' : '💌 Regretfully No'}\n`;
+      if (isAttending) {
+        msg += `👥 *Number of Guests:* ${guests || '1'}\n`;
+        msg += `🗓️ *Celebrations Attending:*\n   ${celebsText}\n`;
+      }
+      msg += `\n📍 *Destination:* Udaipur, Rajasthan\n`;
+      msg += `🗓️ *Wedding Date:* 14 February 2027\n\n`;
+      msg += `${divider}\n`;
+      msg += `_Sent with love for the Enchanted Udaipur Wedding_\n`;
+      msg += `_Aarav & Meera • 14 Feb 2027_\n`;
+      msg += `${divider}`;
+
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const waBase = isMobile ? 'https://api.whatsapp.com/send' : 'https://web.whatsapp.com/send';
+      const waUrl = `${waBase}?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
+
+      window.open(waUrl, '_blank');
+    };
+  </script>
+</body>
+</html>

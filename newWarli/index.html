@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Aarav &amp; Meera — Wedding Invitation</title>
+  <meta name="description" content="Wedding Invitation of Aarav &amp; Meera. Join us for Mehendi, Haldi, Sangeet, Wedding &amp; Reception in Udaipur, Rajasthan.">
+  <meta name="theme-color" content="#6B3419">
+
+  <!-- Preconnect & DNS-Prefetch for external CDN (Video & Fonts) -->
+  <link rel="preconnect" href="https://res.cloudinary.com">
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Preload Critical Intro Video -->
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1791523766/Wedding_Invitation_Envelope_Anim_20261009105657_f3ppxx.mp4" as="video" type="video/mp4" fetchpriority="high">
+
+  <!-- Google Fonts Stylesheet (loaded in head to avoid @import render-blocking) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap">
+
+  <!-- Preload First Section Hero Critical Assets for Instant Display -->
+  <link rel="preload" href="images/Bg2.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="images/CoupleNameCircleFirstSec.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="images/firstSecBottom.webp" as="image" type="image/webp" fetchpriority="high">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Landscape Warning -->
+  <div id="landscape-warning">
+    <svg class="lw-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm1 18c0 .55-.45 1-1 1H8c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1h8c.55 0 1 .45 1 1v14z"/>
+    </svg>
+    <div class="lw-title">Please Rotate Your Device</div>
+    <div class="lw-text">This invitation is best experienced in portrait mode.</div>
+  </div>
+
+  <!-- Main App -->
+  <main id="app">
+
+    <!-- Intro Video Layer -->
+    <div id="intro-layer">
+      <!-- High-priority auto-preloaded video -->
+      <video
+        id="intro-video"
+        playsinline
+        webkit-playsinline
+        x5-playsinline
+        disablePictureInPicture
+        preload="auto"
+        fetchpriority="high"
+        aria-hidden="true"
+      >
+        <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1791523766/Wedding_Invitation_Envelope_Anim_20261009105657_f3ppxx.mp4" type="video/mp4">
+      </video>
+      <div class="intro-tap-screen">
+        <h2 style="font-family: var(--serif); font-size: 8cqw; margin-bottom: 2cqw;">Aarav &amp; Meera</h2>
+        <p style="font-size: 4cqw; letter-spacing: 0.1em; text-transform: uppercase;">Tap to Begin</p>
+      </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+      <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
+      <source src="images/bg_music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music FAB -->
+    <div id="music-fab">
+      <svg viewBox="0 0 24 24">
+        <path id="fab-icon-path" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      </svg>
+    </div>
+
+    <!-- Scroll Down Indicator -->
+    <div id="scroll-indicator">
+      <svg viewBox="0 0 24 24">
+        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </div>
+
+    <!-- Section 1: Hero / Welcome -->
+    <section id="hero">
+      <div class="hero-circle-container reveal">
+        <img src="images/CoupleNameCircleFirstSec.webp" alt="Circle Border" class="hero-border" fetchpriority="high" loading="eager" decoding="async">
+        <div class="hero-content">
+          <div class="hero-names">Aarav<br><span class="hero-and">&amp;</span><br>Meera</div>
+          <div class="hero-date">14 February 2027<br>Udaipur, Rajasthan</div>
+          <div class="hero-sub-divider">&#10070;</div>
+        </div>
+      </div>
+      
+      <div class="hero-footer-text reveal">
+        <div class="hero-divider">&#10070;</div>
+        TOGETHER<br>A BEAUTIFUL JOURNEY<br>BEGINS
+      </div>
+      <img src="images/firstSecBottom.webp" alt="Bottom Decor" class="hero-bottom-decor reveal" fetchpriority="high" loading="eager" decoding="async">
+    </section>
+
+    <!-- Section 2: Invitation -->
+    <section id="invitation">
+      
+      <div class="invitation-header-block reveal">
+        <h2 class="invitation-main-title">With love<br>from our<br>families</h2>
+        <img src="images/SecondSecTop.webp" alt="Top Decor" class="invitation-decor-img" loading="lazy" decoding="async">
+      </div>
+      
+      <div class="reveal">
+        <p class="invite-text">
+          We are delighted to invite you to celebrate<br>the beginning of a new chapter in the lives<br>of Aarav &amp; Meera.<br><br>
+          Your presence will make our celebrations<br>even more meaningful.
+        </p>
+      </div>
+
+      <div class="regards-section reveal">
+        <div class="regards-divider">&#10070;</div>
+        <p class="regards-title">WITH WARM REGARDS</p>
+        <div class="families-grid">
+          <div class="family-col">
+            <h4>SHARMA FAMILY</h4>
+            <p>Rajesh &amp; Neelam Sharma</p>
+          </div>
+          <div class="family-vertical-line"></div>
+          <div class="family-col">
+            <h4>PATEL FAMILY</h4>
+            <p>Vikram &amp; Kavita Patel</p>
+          </div>
+        </div>
+      </div>
+
+      <img src="images/SecondSecBottom.webp" alt="Bottom Decor" class="decor-bottom reveal" loading="lazy" decoding="async">
+    </section>
+
+    <!-- Section 3: Events -->
+    <section id="events">
+      
+      <div class="title-with-decor reveal">
+        <div class="title-left">
+          <h2 class="main-title">Our<br>Celebrations</h2>
+          <p class="subtitle">Join us for a series of special moments filled with love, tradition and joy.</p>
+        </div>
+        <div class="title-right">
+          <img src="images/EventSecTop.webp" alt="Top Decor" class="side-decor" style="width: 25cqw;" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="events-list">
+        <!-- Mehendi -->
+        <div class="event-card reveal">
+          <div class="event-left">
+            <img src="images/Events1.webp" alt="Mehendi" class="event-img" loading="lazy" decoding="async">
+          </div>
+          <div class="event-line"></div>
+          <div class="event-right">
+            <h3 class="event-name">MEHENDI</h3>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg> 11 February 2027</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 4:00 PM</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> The Courtyard</p>
+          </div>
+          <div class="event-arrow">&rarr;</div>
+        </div>
+
+        <!-- Haldi -->
+        <div class="event-card reveal">
+          <div class="event-left">
+            <img src="images/Events2.webp" alt="Haldi" class="event-img" loading="lazy" decoding="async">
+          </div>
+          <div class="event-line"></div>
+          <div class="event-right">
+            <h3 class="event-name">HALDI</h3>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg> 12 February 2027</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 10:00 AM</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Poolside</p>
+          </div>
+          <div class="event-arrow">&rarr;</div>
+        </div>
+
+        <!-- Sangeet -->
+        <div class="event-card reveal">
+          <div class="event-left">
+            <img src="images/Events3.webp" alt="Sangeet" class="event-img" loading="lazy" decoding="async">
+          </div>
+          <div class="event-line"></div>
+          <div class="event-right">
+            <h3 class="event-name">SANGEET</h3>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg> 13 February 2027</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 6:00 PM</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Banquet Lawn</p>
+          </div>
+          <div class="event-arrow">&rarr;</div>
+        </div>
+
+        <!-- Wedding -->
+        <div class="event-card reveal">
+          <div class="event-left">
+            <img src="images/Events4.webp" alt="Wedding" class="event-img" loading="lazy" decoding="async">
+          </div>
+          <div class="event-line"></div>
+          <div class="event-right">
+            <h3 class="event-name">WEDDING</h3>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg> 14 February 2027</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 7:00 PM</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Grand Lawn</p>
+          </div>
+          <div class="event-arrow">&rarr;</div>
+        </div>
+
+        <!-- Reception -->
+        <div class="event-card reveal">
+          <div class="event-left">
+            <img src="images/Events5.webp" alt="Reception" class="event-img" loading="lazy" decoding="async">
+          </div>
+          <div class="event-line"></div>
+          <div class="event-right">
+            <h3 class="event-name">RECEPTION</h3>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg> 15 February 2027</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 7:00 PM</p>
+            <p class="event-detail"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Royal Hall</p>
+          </div>
+          <div class="event-arrow">&rarr;</div>
+        </div>
+      </div>
+      
+      <!-- Event Bottom pattern (assuming a generic pattern or CSS border) -->
+      <div class="events-bottom-pattern reveal"></div>
+    </section>
+
+    <!-- Section 4: Venue & Map -->
+    <section id="venue">
+      <div class="title-with-decor reveal">
+        <div class="title-left">
+          <h2 class="main-title">The<br>Location</h2>
+          <p class="subtitle">Celebrating at the heart of<br>Rajasthan's royal beauty.</p>
+        </div>
+        <div class="title-right" style="margin-right: -8cqw;">
+          <img src="images/MapTopIcon.webp" alt="Top Decor" class="side-decor" style="width: 35cqw;" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="address-block reveal">
+        <div class="address-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div class="address-line"></div>
+        <div class="address-text">
+          <h3>THE OBEROI UDAIVILAS</h3>
+          <p>Haridas Ji Ki Magri, Udaipur<br>Rajasthan &mdash; 313001</p>
+        </div>
+      </div>
+
+      <div class="map-container reveal">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14502.822765859189!2d73.66601445!3d24.6045989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967e584ee7b03b1%3A0xc4eb04c7fb8fae19!2sThe%20Oberoi%20Udaivilas%2C%20Udaipur!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" class="map-iframe" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+      
+      <div class="reveal" style="padding: 0 5cqw;">
+        <a href="https://maps.app.goo.gl/3A3q4vjZ6Z5Z5Z5Z5" target="_blank" class="btn-outline">GET DIRECTIONS &rarr;</a>
+      </div>
+
+      <img src="images/MapBottom.webp" alt="Bottom Decor" class="decor-bottom reveal" loading="lazy" decoding="async">
+    </section>
+
+    <!-- Section 5: RSVP Form -->
+    <section id="rsvp" style="padding-bottom: 16px;">
+      
+      <div class="title-with-decor reveal">
+        <div class="title-left">
+          <h2 class="main-title">Will you<br>join us?</h2>
+          <p class="subtitle">Kindly let us know if you'll be celebrating with us.</p>
+        </div>
+        <div class="title-right">
+          <img src="images/RSVP-Top.webp" alt="Top Decor" class="side-decor" style="width: 35cqw;" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <form id="rsvp-form" class="rsvp-form reveal">
+        <div class="form-group">
+          <label class="form-label">FULL NAME</label>
+          <input type="text" id="rsvp-name" class="form-input" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">PHONE NUMBER</label>
+          <input type="tel" id="rsvp-phone" class="form-input" placeholder="Enter your phone number" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">NUMBER OF GUESTS</label>
+          <div class="guest-counter">
+            <button type="button" id="guest-minus" class="guest-btn">&minus;</button>
+            <div id="rsvp-guests" class="guest-val">1</div>
+            <button type="button" id="guest-plus" class="guest-btn">&plus;</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">WILL YOU BE ATTENDING?</label>
+          <div class="attending-group">
+            <label class="attending-btn active">
+              <input type="radio" name="attending" value="yes" checked class="hidden-radio"> YES
+            </label>
+            <label class="attending-btn">
+              <input type="radio" name="attending" value="no" class="hidden-radio"> NO
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">WHICH EVENTS WILL YOU ATTEND?</label>
+          <div class="form-checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" name="events" value="Mehendi"> <span class="custom-chk"></span> Mehendi</label>
+            <label class="checkbox-label"><input type="checkbox" name="events" value="Haldi"> <span class="custom-chk"></span> Haldi</label>
+            <label class="checkbox-label"><input type="checkbox" name="events" value="Sangeet"> <span class="custom-chk"></span> Sangeet</label>
+            <label class="checkbox-label"><input type="checkbox" name="events" value="Wedding"> <span class="custom-chk"></span> Wedding</label>
+            <label class="checkbox-label"><input type="checkbox" name="events" value="Reception"> <span class="custom-chk"></span> Reception</label>
+          </div>
+        </div>
+        
+        <button type="submit" class="submit-btn">SUBMIT RSVP &rarr;</button>
+      </form>
+
+      <img src="images/RSVP_Bottom.webp" alt="Bottom Decor" class="decor-bottom reveal" style="margin-top: 5cqw;" loading="lazy" decoding="async">
+    </section>
+
+    <!-- Section 6: Footer -->
+    <section id="footer" class="footer-section">
+
+      <div class="footer-hero reveal">
+        <div class="footer-monogram" aria-label="A &amp; M">
+          <img src="images/footerMonogram.webp" alt="A &amp; M" class="footer-monogram-img" loading="lazy" decoding="async">
+        </div>
+        <div class="footer-illustration">
+          <img src="images/footerPartNameCouple.webp" alt="Aarav &amp; Meera" class="footer-couple-img" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="hashtag reveal"># AaravWedsMeera</div>
+
+      <div class="footer-divider reveal">
+        <div class="f-line"></div>
+        <div class="f-icon">&#10070;</div>
+        <div class="f-line"></div>
+      </div>
+
+      <div class="stay-connected reveal">
+        <p class="connected-title">STAY CONNECTED</p>
+        <div class="connected-icons">
+          <a href="tel:+919876543210" class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </a>
+          <div class="c-line"></div>
+          <a href="https://wa.me/919876543210" class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+          </a>
+          <div class="c-line"></div>
+          <a href="https://maps.app.goo.gl/3A3q4vjZ6Z5Z5Z5Z5" target="_blank" class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </a>
+        </div>
+
+        <div class="families-grid footer-families">
+          <div class="family-col">
+            <h4>SHARMA FAMILY</h4>
+            <p>+91 98765 43210</p>
+          </div>
+          <div class="family-vertical-line"></div>
+          <div class="family-col">
+            <h4>PATEL FAMILY</h4>
+            <p>+91 98765 43210</p>
+          </div>
+        </div>
+      </div>
+
+      <img src="images/footerBottom.webp" alt="Bottom Decor" class="decor-bottom reveal" style="margin-top: 2cqw;" loading="lazy" decoding="async">
+
+      <div class="footer-copyright reveal">
+        <div class="sec-icon" style="margin-bottom:2cqw;">&#10070;</div>
+        <p class="copyright-sub">Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" style="color:var(--secondary); text-decoration:none; font-weight:600;">Invite&nbsp;Box</a></p>
+      </div>
+      
+      <!-- Pattern at the very bottom -->
+      <div class="footer-bottom-pattern reveal"></div>
+    </section>
+
+  </main>
+
+</body>
+</html>
