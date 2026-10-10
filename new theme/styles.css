@@ -154,29 +154,29 @@ body::before {
   pointer-events: none;
   z-index: 3;
   opacity: 0.92;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.7));
-  animation: floatSlow 7s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
 }
 
 .sprig-top-left {
-  top: -25px;
-  left: -25px;
-  width: 135px;
-  transform: scaleX(-1) rotate(20deg);
+  top: 0;
+  left: 0;
+  width: 130px;
+  height: auto;
+  transform: scaleX(-1) scaleY(-1);
 }
 
 .sprig-bottom-right {
-  bottom: 80px;
-  right: -20px;
-  width: 125px;
-  transform: rotate(15deg);
+  bottom: 60px;
+  right: 0;
+  width: 130px;
+  height: auto;
 }
 
 .sprig-bottom-left {
-  bottom: 85px;
-  left: -20px;
-  width: 115px;
-  transform: rotate(-35deg);
+  bottom: 70px;
+  left: 0;
+  width: 120px;
+  height: auto;
 }
 
 /* Polaroid Frames */
