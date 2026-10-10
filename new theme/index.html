@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Aarav &amp; Meera — The Wedding Mixtape | Udaipur 2027</title>
+  <meta name="description" content="You are cordially invited to celebrate the wedding of Aarav &amp; Meera in Udaipur on 14 February 2027. Experience The Wedding Mixtape — our story in every beat.">
+  <meta name="theme-color" content="#0D0E11">
+
+  <!-- Google Fonts: Playfair Display, Cormorant Garamond, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Audio Element for Shared Music State -->
+  <audio id="global-wedding-audio" preload="auto">
+    <source src="assets/audio/track-1.mp3" type="audio/mpeg">
+    <source src="assets/audio/track-2.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="app-wrapper">
+    <main class="invitation-canvas">
+
+      <!-- ==================================================================
+           SECTION 1: OPENING COVER (The Wedding Mixtape)
+           ================================================================== -->
+      <section id="cover" class="invite-section" aria-label="Wedding Invitation Cover">
+        <!-- Floating Flora & Polaroids -->
+        <img src="assets/images/floral-corner-tl.png" alt="" class="sprig-decor sprig-top-left">
+        <div class="polaroid-card cover-polaroid-top" id="polaroid-cover-top" title="Aarav &amp; Meera at Sunset">
+          <div class="polaroid-tape"></div>
+          <img src="assets/images/polaroid-sunset.png" alt="Aarav and Meera Sunset Embrace in Polaroid">
+        </div>
+
+        <div class="polaroid-card cover-polaroid-bottom" id="polaroid-cover-bottom" title="Romantic Moments">
+          <img src="assets/images/couple-polaroid-bokeh.png" alt="Aarav and Meera under Warm Lights">
+        </div>
+        <img src="assets/images/babys-breath-corner.png" alt="Baby's Breath Floral Decor" class="sprig-decor sprig-bottom-right">
+
+        <!-- Cover Header -->
+        <header class="cover-header">
+          <p class="section-subtitle-small">The</p>
+          <h1 class="section-title-large">Wedding</h1>
+          <h2 class="section-title-gradient">Mixtape</h2>
+
+          <div class="section-divider-line">
+            <span class="eq-mini-icon" aria-hidden="true">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+
+          <p class="tagline-text">Different Moments &bull; One Beautiful Playlist</p>
+        </header>
+
+        <!-- Center Interactive Turntable & Vinyl Record -->
+        <div class="vinyl-turntable-container" id="cover-turntable">
+          <div class="vinyl-disc-wrap" id="cover-vinyl-wrap" role="button" aria-label="Play or Pause Wedding Mixtape" tabindex="0">
+            <img src="assets/images/vinyl-record.png" alt="Aarav and Meera Botanical Vinyl Record" class="vinyl-disc-img" id="cover-vinyl-img">
+            
+            <!-- Vinyl Center Label Couple Typography -->
+            <div class="vinyl-label-center">
+              <span class="vinyl-label-name">Aarav</span>
+              <span class="vinyl-label-amp">&amp;</span>
+              <span class="vinyl-label-name">Meera</span>
+            </div>
+          </div>
+
+          <!-- Turntable Tonearm SVG Graphic -->
+          <svg class="turntable-tonearm" id="cover-tonearm" viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="70" cy="25" r="14" fill="#1C1F26" stroke="#42EAC7" stroke-width="2"/>
+            <circle cx="70" cy="25" r="6" fill="#F7F0E8"/>
+            <path d="M70 25 L45 130 L38 185" stroke="#B7B0AA" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M45 130 L38 185" stroke="#42EAC7" stroke-width="3" stroke-linecap="round"/>
+            <!-- Tonearm Cartridge / Head -->
+            <rect x="26" y="180" width="24" height="32" rx="3" fill="#181B22" stroke="#42EAC7" stroke-width="2"/>
+            <rect x="32" y="195" width="12" height="6" rx="1.5" fill="#42EAC7"/>
+          </svg>
+        </div>
+
+        <!-- Cover Date, Venue & Playback Action -->
+        <div class="cover-date-venue">
+          <time datetime="2027-02-14" class="cover-date-text">14 February 2027</time>
+          <div class="section-divider-line" style="margin: 4px auto; max-width: 140px;">
+            <span class="eq-mini-icon">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+          <p class="cover-venue-text">
+            Udaipur
+            <svg class="cover-venue-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </p>
+        </div>
+
+        <!-- Cover Play Button Controls -->
+        <div class="cover-controls-row">
+          <button class="btn-ctrl-icon" id="cover-btn-prev" aria-label="Previous Track">
+            <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+
+          <button class="btn-play-primary" id="cover-btn-play" aria-label="Play Music">
+            <svg id="cover-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+
+          <button class="btn-ctrl-icon" id="cover-btn-next" aria-label="Next Track">
+            <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+        </div>
+
+        <p class="tap-to-play-text" id="cover-tap-prompt">Tap to Play</p>
+
+        <!-- Waveform Visualizer -->
+        <div class="waveform-equalizer-container" id="cover-waveform" aria-hidden="true">
+          <!-- Dynamic equalizer bars generated by script -->
+        </div>
+      </section>
+
+
+      <!-- ==================================================================
+           SECTION 2: NOW PLAYING
+           ================================================================== -->
+      <section id="now-playing" class="invite-section" aria-label="Now Playing Section">
+        <!-- Floating Floral & Polaroids -->
+        <img src="assets/images/babys-breath-sprig.png" alt="" class="sprig-decor sprig-top-left">
+        <div class="polaroid-card now-playing-polaroid-top" title="Udaipur Lake Palace">
+          <img src="assets/images/udaipur-palace-polaroid.png" alt="Udaipur City Palace at Sunset">
+        </div>
+        <div class="polaroid-card now-playing-polaroid-bottom" title="Romantic Golden Sunset">
+          <img src="assets/images/polaroid-sunset.png" alt="Couple Golden Sunset Portrait">
+        </div>
+        <img src="assets/images/babys-breath-corner.png" alt="" class="sprig-decor sprig-bottom-right">
+
+        <!-- Header -->
+        <header class="now-playing-header">
+          <div class="section-divider-line" style="margin-bottom: 4px;">
+            <span class="eq-mini-icon">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+          <h2 class="section-subtitle-small" style="font-size: 0.82rem; color: var(--text-ivory);">Now Playing</h2>
+          <p class="tagline-text" style="color: var(--text-secondary); margin-top: 2px;">Our Wedding Story</p>
+        </header>
+
+        <!-- Album Cover Sleeve + Sliding Vinyl Record -->
+        <div class="album-player-card" id="album-sleeve-container">
+          <div class="album-sleeve">
+            <img src="assets/images/couple-embrace.png" alt="Aarav and Meera Wedding Album Cover" class="album-sleeve-img">
+            <div class="album-sleeve-overlay">
+              <h3 class="album-sleeve-title">Aarav <span>&amp;</span> Meera</h3>
+              <div class="section-divider-line" style="margin: 4px 0; max-width: 140px;">
+                <span class="eq-mini-icon">
+                  <span class="eq-mini-bar"></span>
+                  <span class="eq-mini-bar"></span>
+                  <span class="eq-mini-bar"></span>
+                </span>
+              </div>
+              <p class="album-sleeve-tagline">A Love Story In Every Beat</p>
+            </div>
+          </div>
+
+          <!-- Vinyl Record Sliding Out -->
+          <div class="album-vinyl-slide" id="album-vinyl-slide" role="button" aria-label="Vinyl Record">
+            <img src="assets/images/vinyl-record.png" alt="Spinning Vinyl Disc" class="vinyl-disc-img" id="album-vinyl-img">
+          </div>
+        </div>
+
+        <!-- Date & Location Metadata Row -->
+        <div class="now-playing-meta-row">
+          <div class="meta-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+            <span>14 February 2027</span>
+          </div>
+          <span class="meta-divider" aria-hidden="true"></span>
+          <div class="meta-item">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Udaipur</span>
+          </div>
+        </div>
+
+        <!-- Audio Progress Scrubber & Full Playback Controls -->
+        <div class="player-controls-container">
+          <div class="progress-bar-wrap">
+            <div class="progress-track" id="main-progress-track" role="slider" aria-label="Audio progress scrubber" tabindex="0">
+              <div class="progress-fill" id="main-progress-fill">
+                <div class="progress-thumb"></div>
+              </div>
+            </div>
+            <div class="time-stamps">
+              <span id="current-time">00:00</span>
+              <span id="total-time">03:45</span>
+            </div>
+          </div>
+
+          <div class="playback-buttons-bar">
+            <button class="btn-ctrl-secondary" id="btn-shuffle" aria-label="Shuffle Tracks">
+              <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+            </button>
+
+            <button class="btn-ctrl-secondary" id="btn-prev" aria-label="Previous Track">
+              <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+
+            <button class="btn-pause-primary" id="btn-play-toggle" aria-label="Play or Pause Track">
+              <svg id="main-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+
+            <button class="btn-ctrl-secondary" id="btn-next" aria-label="Next Track">
+              <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            </button>
+
+            <button class="btn-ctrl-secondary" id="btn-repeat" aria-label="Repeat Track">
+              <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+            </button>
+          </div>
+
+          <!-- Bottom Waveform Visualizer -->
+          <div class="waveform-equalizer-container" id="now-playing-waveform" aria-hidden="true">
+            <!-- Dynamic equalizer bars -->
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================================================================
+           SECTION 3: OUR STORY
+           ================================================================== -->
+      <section id="story" class="invite-section" aria-label="Our Story Section">
+        <!-- Floating Floral Sprigs -->
+        <img src="assets/images/babys-breath-sprig.png" alt="" class="sprig-decor sprig-top-left">
+        <div class="section-corner-vinyl">
+          <img src="assets/images/vinyl-record.png" alt="Vinyl record aesthetic">
+        </div>
+
+        <!-- Top Navigation Strip & Progress Bar (02 / 06) -->
+        <div class="story-header-bar">
+          <div class="story-progress-indicator">
+            <span>Our Story</span>
+            <div class="story-progress-line">
+              <div class="story-progress-line-fill"></div>
+            </div>
+            <span>02 / 06</span>
+          </div>
+
+          <!-- Functional Section Navigation Links -->
+          <nav class="section-nav-strip" aria-label="Section Navigation">
+            <a href="#cover" class="nav-strip-link">Invite</a>
+            <span class="nav-strip-sep">|</span>
+            <a href="#story" class="nav-strip-link active">Story</a>
+            <span class="nav-strip-sep">|</span>
+            <a href="#events" class="nav-strip-link">Events</a>
+            <span class="nav-strip-sep">|</span>
+            <a href="#venue" class="nav-strip-link">Venue</a>
+            <span class="nav-strip-sep">|</span>
+            <a href="#rsvp" class="nav-strip-link">RSVP</a>
+          </nav>
+        </div>
+
+        <!-- Editorial Heading -->
+        <div class="story-note-header">
+          <div class="section-divider-line" style="margin-bottom: 2px;">
+            <span class="eq-mini-icon">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+          <h2 class="story-title-line1">A Note</h2>
+          <h3 class="story-title-line2">From Us</h3>
+          <p class="story-subtitle">
+            Two hearts, one beautiful melody.<br>
+            Join us as we begin <span class="highlight-cyan">our forever</span>.
+          </p>
+        </div>
+
+        <!-- Romantic Story Timeline -->
+        <div class="story-timeline-container">
+          <div class="story-timeline-track"></div>
+
+          <div class="story-timeline-node">
+            <div class="story-node-dot"></div>
+            <p class="story-node-text-muted">Different paths<br>different dreams</p>
+          </div>
+
+          <div class="story-timeline-node">
+            <div class="story-node-dot"></div>
+            <p class="story-node-text-muted">But the same rhythm<br>brought us here</p>
+          </div>
+
+          <div class="story-timeline-node active-node">
+            <div class="story-node-dot"></div>
+            <p class="story-node-text-active">
+              Two hearts<br>
+              <span class="story-node-text-cyan">one beautiful melody</span>
+            </p>
+          </div>
+
+          <div class="story-timeline-node">
+            <div class="story-node-dot"></div>
+            <p class="story-node-text-muted">Now a new song begins</p>
+          </div>
+
+          <div class="story-timeline-node">
+            <div class="story-node-dot"></div>
+            <p class="story-node-text-muted">Join us as we begin<br>our forever</p>
+          </div>
+        </div>
+
+        <!-- Atmospheric Couple Hands Backdrop Layer -->
+        <div class="story-backdrop-layer">
+          <img src="assets/images/story-hands-backdrop.png" alt="Aarav and Meera Wedding Hand in Hand" loading="lazy">
+        </div>
+
+        <!-- Persistent Music Player Card (Integrated in Story) -->
+        <div class="persistent-player-card">
+          <div class="persistent-player-top">
+            <div class="persistent-thumb">
+              <img src="assets/images/couple-embrace.png" alt="Aarav and Meera">
+            </div>
+            <div class="persistent-info">
+              <p class="persistent-title">Aarav <span>&amp;</span> Meera</p>
+              <p class="persistent-sub">Our Wedding Story</p>
+            </div>
+            <button class="btn-heart" id="story-btn-heart" aria-label="Favorite Track">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+          </div>
+
+          <!-- Mini Scrubber -->
+          <div class="progress-bar-wrap" style="margin-top: 8px;">
+            <div class="progress-track" id="story-progress-track">
+              <div class="progress-fill" id="story-progress-fill" style="width: 35%;"></div>
+            </div>
+            <div class="time-stamps">
+              <span id="story-current-time">01:28</span>
+              <span id="story-total-time">03:10</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================================================================
+           SECTION 4: WEDDING PLAYLIST (Events Mixtape)
+           ================================================================== -->
+      <section id="events" class="invite-section" aria-label="Wedding Events Playlist">
+        <!-- Floating Floral & Vinyl Accents -->
+        <img src="assets/images/babys-breath-sprig.png" alt="" class="sprig-decor sprig-top-left">
+        <div class="section-corner-vinyl">
+          <img src="assets/images/vinyl-record.png" alt="Vinyl record corner aesthetic">
+        </div>
+
+        <div class="polaroid-card" style="bottom: 15px; left: -10px; width: 110px; transform: rotate(-8deg); z-index: 2;" title="Aarav and Meera Moments">
+          <img src="assets/images/polaroid-sunset.png" alt="Sunset Polaroid">
+        </div>
+        <img src="assets/images/babys-breath-corner.png" alt="" class="sprig-decor sprig-bottom-right">
+
+        <!-- Header -->
+        <header class="playlist-header">
+          <div class="section-divider-line" style="margin-bottom: 2px;">
+            <span class="eq-mini-icon">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+          <p class="section-subtitle-small">The</p>
+          <h2 class="section-title-large" style="font-size: 2.1rem;">Wedding</h2>
+          <h3 class="section-title-gradient" style="font-size: 1.6rem;">Mixtape</h3>
+          <p class="tagline-text" style="margin-top: 4px;">Same People &bull; New Memories</p>
+        </header>
+
+        <!-- Playlist Event Cards (5 Events) -->
+        <div class="playlist-cards-list" role="list">
+          
+          <!-- Track 01: Haldi -->
+          <article class="track-card active-track" data-track-id="0" role="listitem" tabindex="0">
+            <div class="track-cover-wrap">
+              <div class="track-thumb">
+                <img src="assets/images/haldi-event.png" alt="Haldi Ceremony turmeric bowl" loading="lazy">
+              </div>
+              <div class="track-mini-vinyl">
+                <img src="assets/images/vinyl-record.png" alt="Vinyl">
+              </div>
+            </div>
+            <div class="track-info-col">
+              <div class="track-number-title">
+                <span class="track-number">01</span>
+                <h4 class="track-title">Haldi</h4>
+              </div>
+              <p class="track-schedule">14 Feb &bull; 09:00 AM</p>
+              <div class="track-mini-waveform">
+                <span class="wf-bar" style="height: 10px;"></span>
+                <span class="wf-bar" style="height: 14px;"></span>
+                <span class="wf-bar" style="height: 6px;"></span>
+                <span class="wf-bar" style="height: 12px;"></span>
+                <span class="wf-bar" style="height: 8px;"></span>
+                <span class="wf-bar" style="height: 14px;"></span>
+                <span class="wf-bar" style="height: 7px;"></span>
+              </div>
+            </div>
+            <button class="btn-track-play" aria-label="Play Haldi Track">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </article>
+
+          <!-- Track 02: Mehendi -->
+          <article class="track-card" data-track-id="1" role="listitem" tabindex="0">
+            <div class="track-cover-wrap">
+              <div class="track-thumb">
+                <img src="assets/images/mehendi-event.png" alt="Mehendi henna pattern" loading="lazy">
+              </div>
+              <div class="track-mini-vinyl">
+                <img src="assets/images/vinyl-record.png" alt="Vinyl">
+              </div>
+            </div>
+            <div class="track-info-col">
+              <div class="track-number-title">
+                <span class="track-number">02</span>
+                <h4 class="track-title">Mehendi</h4>
+              </div>
+              <p class="track-schedule">14 Feb &bull; 12:00 PM</p>
+              <div class="track-mini-waveform">
+                <span class="wf-bar" style="height: 5px;"></span>
+                <span class="wf-bar" style="height: 9px;"></span>
+                <span class="wf-bar" style="height: 4px;"></span>
+                <span class="wf-bar" style="height: 8px;"></span>
+                <span class="wf-bar" style="height: 6px;"></span>
+              </div>
+            </div>
+            <button class="btn-track-play" aria-label="Play Mehendi Track">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </article>
+
+          <!-- Track 03: Sangeet -->
+          <article class="track-card" data-track-id="2" role="listitem" tabindex="0">
+            <div class="track-cover-wrap">
+              <div class="track-thumb">
+                <img src="assets/images/sangeet-event.png" alt="Sangeet disco ball party" loading="lazy">
+              </div>
+              <div class="track-mini-vinyl">
+                <img src="assets/images/vinyl-record.png" alt="Vinyl">
+              </div>
+            </div>
+            <div class="track-info-col">
+              <div class="track-number-title">
+                <span class="track-number">03</span>
+                <h4 class="track-title">Sangeet</h4>
+              </div>
+              <p class="track-schedule">14 Feb &bull; 07:00 PM</p>
+              <div class="track-mini-waveform">
+                <span class="wf-bar" style="height: 6px;"></span>
+                <span class="wf-bar" style="height: 11px;"></span>
+                <span class="wf-bar" style="height: 7px;"></span>
+                <span class="wf-bar" style="height: 13px;"></span>
+                <span class="wf-bar" style="height: 8px;"></span>
+              </div>
+            </div>
+            <button class="btn-track-play" aria-label="Play Sangeet Track">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </article>
+
+          <!-- Track 04: Wedding Ceremony -->
+          <article class="track-card" data-track-id="3" role="listitem" tabindex="0">
+            <div class="track-cover-wrap">
+              <div class="track-thumb">
+                <img src="assets/images/wedding-event.png" alt="Wedding Ceremony holding hands" loading="lazy">
+              </div>
+              <div class="track-mini-vinyl">
+                <img src="assets/images/vinyl-record.png" alt="Vinyl">
+              </div>
+            </div>
+            <div class="track-info-col">
+              <div class="track-number-title">
+                <span class="track-number">04</span>
+                <h4 class="track-title">Wedding</h4>
+              </div>
+              <p class="track-schedule">15 Feb &bull; 10:00 AM</p>
+              <div class="track-mini-waveform">
+                <span class="wf-bar" style="height: 8px;"></span>
+                <span class="wf-bar" style="height: 12px;"></span>
+                <span class="wf-bar" style="height: 6px;"></span>
+                <span class="wf-bar" style="height: 10px;"></span>
+                <span class="wf-bar" style="height: 7px;"></span>
+              </div>
+            </div>
+            <button class="btn-track-play" aria-label="Play Wedding Track">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </article>
+
+          <!-- Track 05: Reception -->
+          <article class="track-card" data-track-id="4" role="listitem" tabindex="0">
+            <div class="track-cover-wrap">
+              <div class="track-thumb">
+                <img src="assets/images/reception-event.png" alt="Reception champagne celebration" loading="lazy">
+              </div>
+              <div class="track-mini-vinyl">
+                <img src="assets/images/vinyl-record.png" alt="Vinyl">
+              </div>
+            </div>
+            <div class="track-info-col">
+              <div class="track-number-title">
+                <span class="track-number">05</span>
+                <h4 class="track-title">Reception</h4>
+              </div>
+              <p class="track-schedule">15 Feb &bull; 07:00 PM</p>
+              <div class="track-mini-waveform">
+                <span class="wf-bar" style="height: 7px;"></span>
+                <span class="wf-bar" style="height: 12px;"></span>
+                <span class="wf-bar" style="height: 9px;"></span>
+                <span class="wf-bar" style="height: 14px;"></span>
+                <span class="wf-bar" style="height: 6px;"></span>
+              </div>
+            </div>
+            <button class="btn-track-play" aria-label="Play Reception Track">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </article>
+
+        </div>
+
+        <!-- Playlist Footer Divider -->
+        <div class="playlist-footer-row">
+          <div class="playlist-heart-divider">
+            <svg class="playlist-heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <p class="tagline-text">Different Moments &bull; One Beautiful Playlist</p>
+        </div>
+      </section>
+
+
+      <!-- ==================================================================
+           SECTION 5: THE VENUE
+           ================================================================== -->
+      <section id="venue" class="invite-section" aria-label="Wedding Venue Section">
+        <!-- Floating Flora & Vinyl -->
+        <img src="assets/images/babys-breath-sprig.png" alt="" class="sprig-decor sprig-top-left">
+        <div class="section-corner-vinyl">
+          <img src="assets/images/vinyl-record.png" alt="Vinyl record corner decoration">
+        </div>
+        <img src="assets/images/babys-breath-corner.png" alt="" class="sprig-decor sprig-bottom-right">
+
+        <!-- Header -->
+        <header class="venue-header">
+          <div class="section-divider-line" style="margin-bottom: 2px;">
+            <span class="eq-mini-icon">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+          <p class="section-subtitle-small">&mdash; The &mdash;</p>
+          <h2 class="section-title-large" style="font-size: 2.2rem;">Ven<span style="color: var(--accent-coral);">ue</span></h2>
+          <p class="tagline-text" style="margin-top: 4px;">Where Our Story Continues</p>
+        </header>
+
+        <!-- Large Lakeside Venue Photograph -->
+        <div class="venue-photo-card">
+          <img src="assets/images/udaipur-venue.png" alt="Lake Pichola royal wedding mandap overlooking Udaipur City Palace" loading="lazy">
+        </div>
+
+        <!-- Venue Metadata & Skyline Illustration Bar -->
+        <div class="venue-location-bar">
+          <div class="venue-info-left">
+            <svg class="venue-pin-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <div>
+              <p class="venue-city-title">Udaipur</p>
+              <p class="venue-country-sub">Rajasthan, India</p>
+            </div>
+          </div>
+          <span class="venue-bar-divider" aria-hidden="true"></span>
+          <div class="venue-skyline-art">
+            <img src="assets/images/udaipur-skyline.png" alt="Udaipur Palace Skyline Illustration">
+          </div>
+        </div>
+
+        <!-- Topographic Map Visual -->
+        <div class="venue-map-card">
+          <img src="assets/images/udaipur-map.png" alt="Lake Pichola Udaipur Topographic Map with Location Pin" loading="lazy">
+        </div>
+
+        <!-- Google Maps Directions Button -->
+        <a href="https://maps.google.com/?q=Lake+Pichola,+Udaipur,+Rajasthan,+India" target="_blank" rel="noopener noreferrer" class="btn-directions-cta" id="btn-directions">
+          <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+          Get Directions
+        </a>
+      </section>
+
+
+      <!-- ==================================================================
+           SECTION 6: RSVP
+           ================================================================== -->
+      <section id="rsvp" class="invite-section" aria-label="RSVP Section">
+        <!-- Floating Flora & Polaroids -->
+        <img src="assets/images/babys-breath-sprig.png" alt="" class="sprig-decor sprig-top-left">
+        <div class="section-corner-vinyl">
+          <img src="assets/images/vinyl-record.png" alt="Vinyl record corner decoration">
+        </div>
+
+        <div class="polaroid-card" style="bottom: 12px; right: -8px; width: 110px; transform: rotate(10deg); z-index: 2;" title="Udaipur Lake Palace">
+          <img src="assets/images/udaipur-palace-polaroid.png" alt="Lake Palace Polaroid">
+        </div>
+        <img src="assets/images/babys-breath-corner.png" alt="" class="sprig-decor sprig-bottom-right">
+
+        <!-- Couple Portrait Hero (Fading into matte black) -->
+        <div class="rsvp-couple-hero">
+          <img src="assets/images/couple-embrace.png" alt="Aarav and Meera Wedding Portrait">
+          <div class="rsvp-hero-gradient-mask"></div>
+        </div>
+
+        <!-- RSVP Header -->
+        <header class="rsvp-header" style="text-align: center; margin-top: -15px; position: relative; z-index: 2;">
+          <div class="section-divider-line" style="margin-bottom: 2px;">
+            <span class="eq-mini-icon">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+          <p class="section-subtitle-small">&mdash; Join Our &mdash;</p>
+          <h2 class="section-title-large" style="font-size: 2.15rem;">Play<span style="color: var(--accent-coral);">list</span></h2>
+          <h3 class="album-sleeve-title" style="font-size: 1.45rem; margin-top: 2px;">Aarav <span>&amp;</span> Meera</h3>
+          <time datetime="2027-02-14" class="cover-date-text" style="font-size: 0.76rem; letter-spacing: 0.24em; display: block; margin-top: 2px;">14 February 2027</time>
+          <div class="section-divider-line" style="margin: 6px auto; max-width: 140px;">
+            <span class="eq-mini-icon">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+        </header>
+
+        <!-- RSVP Interactive Form -->
+        <form class="rsvp-form-container" id="wedding-rsvp-form">
+          <!-- Input 1: Guest Name -->
+          <div class="form-group-custom">
+            <svg class="form-input-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <input type="text" id="rsvp-guest-name" class="form-input-text" placeholder="Your Name" required autocomplete="name">
+          </div>
+
+          <!-- Input 2: Attendance Event Choice -->
+          <div class="form-group-custom">
+            <svg class="form-input-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+            <select id="rsvp-event-selection" class="form-input-text" style="cursor: pointer; -webkit-appearance: none; appearance: none; padding-right: 32px;">
+              <option value="all">Will You Join Us? (All Celebrations)</option>
+              <option value="wedding-reception">Wedding &amp; Reception</option>
+              <option value="sangeet-wedding-reception">Sangeet, Wedding &amp; Reception</option>
+              <option value="haldi-mehendi">Haldi &amp; Mehendi</option>
+            </select>
+            <svg style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted); pointer-events: none;" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+          </div>
+
+          <!-- Attendance Option Cards -->
+          <fieldset class="attendance-choice-row" style="border: none; padding: 0;">
+            <legend class="sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;">Attendance Confirmation</legend>
+            <!-- Option 1: Joyfully Accept -->
+            <label class="attendance-card-label" id="label-accept">
+              <input type="radio" name="rsvp_status" value="accept" checked>
+              <div class="radio-indicator-row">
+                <span class="custom-radio-circle"></span>
+                <svg class="card-music-note" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              </div>
+              <span class="attendance-primary-title">Joyfully Accept</span>
+              <span class="attendance-sub-desc">Can't wait to jam with you!</span>
+            </label>
+
+            <!-- Option 2: Regretfully Decline -->
+            <label class="attendance-card-label" id="label-decline">
+              <input type="radio" name="rsvp_status" value="decline">
+              <div class="radio-indicator-row">
+                <span class="custom-radio-circle"></span>
+                <svg class="card-music-note decline-note" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              </div>
+              <span class="attendance-primary-title">Regretfully Decline</span>
+              <span class="attendance-sub-desc">Will be cheering from afar!</span>
+            </label>
+          </fieldset>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-rsvp-submit" id="btn-submit-rsvp">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Add to Your Playlist
+          </button>
+        </form>
+
+        <!-- RSVP Bottom Divider -->
+        <div style="margin-top: 14px; text-align: center;">
+          <p class="section-subtitle-small">&mdash; RSVP &mdash;</p>
+          <div class="section-divider-line" style="margin: 4px auto; max-width: 140px;">
+            <span class="eq-mini-icon">
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+              <span class="eq-mini-bar"></span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ====================================================================
+         FLOATING PERSISTENT BOTTOM MUSIC CONTROLLER
+         ==================================================================== -->
+    <aside class="floating-bottom-player" id="floating-player" aria-label="Persistent Audio Player">
+      <!-- Thin interactive scrubber line -->
+      <div class="fbp-progress-thin" id="fbp-progress-bar" role="slider" aria-label="Quick track scrubber">
+        <div class="fbp-progress-fill" id="fbp-progress-fill"></div>
+      </div>
+
+      <div class="fbp-left">
+        <div class="fbp-thumb">
+          <img src="assets/images/couple-embrace.png" alt="Aarav and Meera" id="fbp-thumb-img">
+        </div>
+        <div class="fbp-text">
+          <p class="fbp-track-name" id="fbp-track-title">Aarav <span>&amp;</span> Meera</p>
+          <p class="fbp-sub" id="fbp-track-sub">The Wedding Mixtape</p>
+        </div>
+      </div>
+
+      <div class="fbp-center-ctrls">
+        <button class="btn-ctrl-secondary" id="fbp-btn-prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+
+        <button class="fbp-btn-play" id="fbp-btn-play" aria-label="Play or Pause">
+          <svg id="fbp-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+
+        <button class="btn-ctrl-secondary" id="fbp-btn-next" aria-label="Next">
+          <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- RSVP Submission Toast Notification -->
+    <div class="rsvp-toast" id="rsvp-success-toast" role="status" aria-live="polite">
+      <svg style="width: 22px; height: 22px; color: var(--accent-cyan); fill: currentColor; flex-shrink: 0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      <div>
+        <p style="font-weight: 700; color: var(--text-ivory);">You're on the Guestlist!</p>
+        <p style="font-size: 0.72rem; color: var(--text-secondary);" id="rsvp-toast-message">Thank you for RSVPing. Can't wait to jam with you!</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
