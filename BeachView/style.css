@@ -55,4 +55,8 @@ body.unlocked{overflow-y:auto;overflow-x:hidden}
 .obtn:active{transform:scale(.96)}
 .ocal{background:rgba(7,85,104,.75);backdrop-filter:blur(6px);border:1px solid rgba(244,119,89,.5);color:var(--ci)}
 .osh{background:rgba(244,119,89,.85);backdrop-filter:blur(6px);color:#fff}
-#footer{padding:4cqw max(5cqw,env(safe-area-inset-right,0px)) calc(4cqw + env(safe-area-inset-bottom,0px)) max(5cqw,env(safe-area-inset-left,0px));text-align:center;border-top:1px solid rgba(7,85,104,.25);background:#030a0d;container-type:inline-size}
+#footer{position:absolute;bottom:max(3cqw,calc(env(safe-area-inset-bottom,0px) + 2cqw));left:50%;transform:translateX(-50%);z-index:5;padding:1.4cqw 4cqw;text-align:center;background:rgba(6,61,75,0.45);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,240,216,0.22);border-radius:10cqw;box-shadow:0 4px 20px rgba(0,0,0,0.35);container-type:inline-size;pointer-events:auto;white-space:nowrap;transition:background .25s ease,border-color .25s ease;width: 90%;}
+#footer:hover{background:rgba(6,61,75,0.65);border-color:rgba(244,119,89,0.5);}
+.footer-credit{font-family:var(--fn);font-size:2.6cqw;letter-spacing:.08em;color:rgba(255,240,216,0.85);margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.4)}
+.footer-credit a{color:var(--ci);text-decoration:none;font-weight:600;letter-spacing:.06em;transition:color .2s ease;border-bottom:1px solid rgba(244,119,89,0.5);padding-bottom:1px}
+.footer-credit a:hover{color:var(--cc);border-bottom-color:var(--cc)}
