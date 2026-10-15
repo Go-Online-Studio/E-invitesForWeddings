@@ -1,0 +1,1790 @@
+/* ==========================================================================
+   CSS Variables & Root Design System
+   ========================================================================== */
+:root {
+  --primary: #8b1a2f;
+  --primary-light: #b83050;
+  --secondary: #c9922a;
+  --secondary-light: #e7b84c;
+  --teal: #1d5c4a;
+  --teal-light: #2a7a62;
+  --text: #3d2b1f;
+  --text-muted: #7b5e4d;
+  --bg: #fdf6ee;
+  --bg-alt: #faf0e6;
+  --white: #ffffff;
+  --card-width: 480px;
+  --serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --sans: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --script: "Great Vibes", cursive;
+  --cormorant: "Cormorant Garamond", Georgia, serif;
+  --vh: 1vh;
+}
+
+/* ==========================================================================
+   Reset & Base
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background-color: #1a1212;
+  font-family: var(--sans);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+body.unlocked {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Landscape Warning
+   ========================================================================== */
+#landscape-warning {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  background: #1a0a0a;
+  color: var(--secondary);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  #landscape-warning {
+    display: flex;
+  }
+}
+.lw-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  animation: rotateDeviceAnim 2s ease-in-out infinite alternate;
+}
+@keyframes rotateDeviceAnim {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.lw-title {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--secondary);
+  margin-bottom: 12px;
+}
+.lw-text {
+  font-size: 0.9rem;
+  color: #c8b89a;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Global Loader
+   ========================================================================== */
+#global-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+}
+#global-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-ring {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(201, 146, 42, 0.2);
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: loaderSpin 0.8s linear infinite;
+}
+@keyframes loaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   Main App Container
+   ========================================================================== */
+#app {
+  width: 100%;
+  max-width: var(--card-width);
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--bg);
+  position: relative;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+/* ==========================================================================
+   Intro Layer
+   ========================================================================== */
+#intro-layer {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--card-width);
+  height: 100%;
+  min-height: 100vh;
+  z-index: 9990;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1.5s ease-in-out;
+  overflow: hidden;
+}
+#intro-layer.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+#intro-layer.hidden {
+  display: none;
+}
+#intro-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#intro-video.playing {
+  opacity: 1;
+}
+.intro-tap-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  z-index: 10;
+  background: url("images/Pastel_Lotus_Wedding_Invitation_Suite1.webp") center /
+    cover no-repeat;
+  transition: opacity 1s ease;
+  text-align: center;
+  padding: 40% 20px 40px;
+  container-type: inline-size;
+  cursor: pointer;
+}
+.intro-tap-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.intro-tap-screen > * {
+  position: relative;
+  z-index: 1;
+}
+.intro-tap-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.intro-lotus-icon {
+  font-size: 3.5rem;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 0 16px rgba(201, 146, 42, 0.7));
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+@keyframes gentleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.intro-welcome-text {
+  font-family: var(--sans);
+  font-size: 2.8cqw;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--secondary-light);
+  margin-bottom: 6px;
+}
+.intro-title {
+  font-family: var(--script);
+  font-size: 8cqw;
+  color: var(--white);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+  margin-bottom: 6px;
+  line-height: 1.2;
+  word-spacing: 2cqw;
+}
+.intro-names {
+  font-family: var(--script);
+  font-size: 5cqw;
+  color: var(--secondary-light);
+  margin-bottom: 40px;
+  line-height: 1.3;
+}
+.btn-tap-begin {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--secondary-light);
+  color: var(--secondary-light);
+  padding: 14px 38px;
+  font-family: var(--sans);
+  font-size: 3cqw;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  cursor: pointer;
+  animation: pulseBorder 2s ease-in-out infinite;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.3s ease;
+}
+.btn-tap-begin:active {
+  background: rgba(201, 146, 42, 0.3);
+}
+@keyframes pulseBorder {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(231, 184, 76, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(231, 184, 76, 0);
+  }
+}
+
+/* ==========================================================================
+   Music FAB
+   ========================================================================== */
+#mfab {
+  position: fixed;
+  bottom: max(72px, calc(env(safe-area-inset-bottom, 0px) + 38px));
+  right: max(20px, env(safe-area-inset-right, 0px));
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary), #a0701e);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(201, 146, 42, 0.55);
+  z-index: 9500;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.6s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+#mfab.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#mfab:hover {
+  transform: scale(1.1);
+}
+#mfab.playing {
+  animation: fabPulse 2s ease-in-out infinite;
+}
+@keyframes fabPulse {
+  0%,
+  100% {
+    box-shadow: 0 4px 20px rgba(201, 146, 42, 0.55);
+  }
+  50% {
+    box-shadow:
+      0 4px 35px rgba(201, 146, 42, 0.9),
+      0 0 0 10px rgba(201, 146, 42, 0.1);
+  }
+}
+
+/* ==========================================================================
+   Scroll Indicator
+   ========================================================================== */
+#scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+  pointer-events: none;
+  cursor: pointer;
+  margin-top: 2cqw;
+}
+#scroll-indicator.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+#scroll-indicator.hidden-after-scroll {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+#scroll-indicator span {
+  font-size: 2.2cqw;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.8);
+}
+#scroll-indicator svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--secondary);
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Scroll Reveal
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(3px);
+  transition:
+    opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.8s ease;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+.reveal:nth-child(2) {
+  transition-delay: 0.08s;
+}
+.reveal:nth-child(3) {
+  transition-delay: 0.15s;
+}
+.reveal:nth-child(4) {
+  transition-delay: 0.22s;
+}
+.reveal:nth-child(5) {
+  transition-delay: 0.28s;
+}
+.reveal:nth-child(6) {
+  transition-delay: 0.35s;
+}
+
+/* ==========================================================================
+   Petal Canvas (Single Canvas Across Entire Theme)
+   ========================================================================== */
+.petal-canvas {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--card-width);
+  height: 100%;
+  height: 100vh;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 8000;
+}
+
+/* ==========================================================================
+   Motif & Divider Utilities
+   ========================================================================== */
+.motif-line {
+  flex: 1;
+  max-width: 12cqw;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c9922a, transparent);
+}
+.motif-line-gold {
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(231, 184, 76, 0.7),
+    transparent
+  );
+}
+.lotus-motif-img {
+  width: 4.8cqw;
+  height: auto;
+  opacity: 0.9;
+  filter: drop-shadow(0 1px 3px rgba(184, 80, 40, 0.2));
+}
+.lotus-motif-img-sm {
+  width: 4.2cqw;
+  height: auto;
+  opacity: 0.9;
+}
+.lotus-motif-img-xs {
+  width: 3.5cqw;
+  height: auto;
+  opacity: 0.85;
+}
+.flower-motif-img {
+  width: 4.8cqw;
+  height: auto;
+  opacity: 0.9;
+  filter: drop-shadow(0 1px 3px rgba(184, 80, 40, 0.2));
+}
+.flower-motif-img-sm {
+  width: 4.2cqw;
+  height: auto;
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   SECTION 1: Hero / Cover
+   Aspect Ratio: 1000 / 2207 (~0.4531)
+   ========================================================================== */
+#sec-hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 2207;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url("images/Pastel_Lotus_Wedding_Invitation_Suite1.webp") center /
+    cover no-repeat;
+  z-index: 0;
+}
+.hero-content {
+  position: absolute;
+  top: 17%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  text-align: center;
+  width: 78%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero-top-motif,
+.hero-bottom-motif {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin: 1.5cqw 0;
+}
+.hero-pre-title {
+  font-family: var(--cormorant);
+  font-size: 2.8cqw;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #1a4235;
+  font-weight: 600;
+  margin: 1.5cqw 0 2cqw;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+}
+.hero-names-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.95;
+  margin: 2cqw 0;
+}
+.hero-name-aarav {
+  font-family: var(--cormorant);
+  font-size: 15cqw;
+  color: #0f3d32;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.95);
+  line-height: 0.92;
+}
+.hero-ampersand {
+  font-family: var(--script);
+  font-size: 11cqw;
+  color: #c9882a;
+  line-height: 0.85;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.9);
+  margin: 0.5cqw 0px -4cqw;
+}
+.hero-name-meera {
+  font-family: var(--cormorant);
+  font-size: 16cqw;
+  color: var(--primary-light);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.95);
+  line-height: 0.92;
+}
+.hero-date {
+  font-family: var(--cormorant);
+  font-size: 4cqw;
+  font-weight: 700;
+  color: #1a4235;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-top: 3.5cqw;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.95);
+}
+.hero-location {
+  font-family: var(--cormorant);
+  font-size: 3.2cqw;
+  font-weight: 600;
+  color: #4a5c53;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.95);
+  margin-top: 0.8cqw;
+  margin-bottom: 2cqw;
+}
+
+/* ==========================================================================
+   SECTION 2: Welcome
+   Aspect Ratio: 1000 / 2278 (~0.4390)
+   ========================================================================== */
+#sec-welcome {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 2278;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px 2278px;
+}
+.welcome-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg) center / cover no-repeat;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+.welcome-bg.lazy-loaded {
+  background-image: url("images/Pastel_Lotus_Wedding_Invitation_Suite2.webp");
+}
+.welcome-content {
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  width: 82%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.welcome-sub-title {
+  font-family: var(--cormorant);
+  font-size: 4.8cqw;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #0f3d32;
+  font-weight: 600;
+  margin-bottom: 0.5cqw;
+}
+.welcome-main-title {
+  font-family: var(--cormorant);
+  font-size: 15cqw;
+  color: var(--primary-light);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  margin-bottom: 1cqw;
+}
+.welcome-title-rest {
+  font-family: var(--cormorant);
+  font-size: 6.5cqw;
+  color: #0f3d32;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  margin-bottom: 0.5cqw;
+}
+.welcome-hearts-title {
+  font-family: var(--cormorant);
+  font-size: 9cqw;
+  color: #0f3d32;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+}
+.welcome-motif {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin: 1.8cqw 0;
+}
+.welcome-paragraph {
+  font-family: var(--cormorant);
+  font-size: 3.8cqw;
+  color: #2b302c;
+  line-height: 1.6;
+  max-width: 78%;
+  margin: 0 auto;
+  font-weight: 500;
+}
+.families-row {
+  display: flex;
+  width: 100%;
+  gap: 0;
+  margin: 0 auto 2.5cqw;
+}
+.family-col {
+  flex: 1;
+  padding: 0 3cqw;
+}
+.family-col:first-child {
+  border-right: 1px solid rgba(201, 146, 42, 0.45);
+  text-align: right;
+}
+.family-col:last-child {
+  text-align: left;
+}
+.family-name {
+  font-family: var(--cormorant);
+  font-size: 3.6cqw;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9e2344;
+  margin-bottom: 1cqw;
+}
+.family-members {
+  font-family: var(--cormorant);
+  font-size: 3.5cqw;
+  color: #2b302c;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.welcome-shloka {
+  font-family: var(--serif);
+  font-size: 3.8cqw;
+  color: #9e2344;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 2cqw auto 0;
+  max-width: 92%;
+  text-align: center;
+}
+.welcome-blessing {
+  font-family: var(--cormorant);
+  font-size: 3.2cqw;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2b302c;
+  line-height: 1.6;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   SECTION 3: Events
+   Aspect Ratio: 1000 / 2220 (~0.4505)
+   ========================================================================== */
+#sec-events {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 2220;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px 2220px;
+}
+.events-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg) center / cover no-repeat;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+.events-bg.lazy-loaded {
+  background-image: url("images/Pastel_Lotus_Wedding_Invitation_Suite3.webp");
+}
+.events-content {
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.events-header {
+  text-align: center;
+  margin-bottom: 5.5cqw;
+}
+.events-subtitle {
+  font-family: var(--cormorant);
+  font-size: 4.5cqw;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #0f3d32;
+  margin-bottom: 0.5cqw;
+  font-weight: 600;
+}
+.events-title {
+  font-family: var(--cormorant);
+  font-size: 7.8cqw;
+  color: var(--primary-light);
+  font-weight: 700;
+  line-height: 1;
+}
+.events-tagline {
+  font-family: var(--cormorant);
+  font-size: 3.8cqw;
+  color: #2b302c;
+  margin-top: 1.2cqw;
+  font-style: italic;
+}
+.events-motif {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 1.5cqw;
+}
+.event-cards-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.6cqw;
+}
+.event-card {
+  width: 100%;
+  height: 29.5cqw;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.event-left-slot {
+  width: 32cqw;
+  flex-shrink: 0;
+}
+.event-date-col {
+  width: 14cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.event-lotus-icon {
+  width: 5.2cqw;
+  height: auto;
+  margin-bottom: 0.8cqw;
+}
+.event-day {
+  font-family: var(--cormorant);
+  font-size: 5.4cqw;
+  font-weight: 700;
+  color: var(--primary-light);
+  line-height: 1;
+}
+.event-month {
+  font-family: var(--cormorant);
+  font-size: 2.8cqw;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--primary-light);
+  margin-top: 1.6cqw;
+}
+.event-year {
+  font-family: var(--cormorant);
+  font-size: 3.5cqw;
+  color: #6a4c38;
+  margin-top: 0.2cqw;
+}
+.event-card-body {
+  flex: 1;
+  min-width: 0;
+  padding-left: 3.5cqw;
+  padding-right: 3cqw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.event-card-title {
+  font-family: var(--cormorant);
+  font-size: 5.6cqw;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #9e2344;
+  line-height: 1.15;
+  margin-bottom: 1.2cqw;
+}
+.event-card-detail,
+.event-card-venue {
+  font-family: var(--sans);
+  font-size: 2.85cqw;
+  color: #3d342d;
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 2.2cqw;
+  margin-bottom: 0.9cqw;
+}
+.event-row-icon {
+  font-size: 2.7cqw;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2cqw;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.event-palette {
+  display: flex;
+  gap: 8px;
+  margin-top: 1.2cqw;
+}
+.palette-dot {
+  width: 2.8cqw;
+  height: 2.8cqw;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   SECTION 4: Venue
+   Aspect Ratio: 1000 / 2339 (~0.4275)
+   ========================================================================== */
+#sec-venue {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 2339;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px 2339px;
+}
+.venue-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg) center / cover no-repeat;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+.venue-bg.lazy-loaded {
+  background-image: url("images/Pastel_Lotus_Wedding_Invitation_Suite4.webp");
+}
+.venue-content {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86%;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.venue-header {
+  text-align: center;
+  margin-bottom: 63.2cqw;
+}
+.venue-subtitle {
+  font-family: var(--cormorant);
+  font-size: 4.8cqw;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #0f3d32;
+  margin-bottom: 0.5cqw;
+  font-weight: 600;
+}
+.venue-title {
+  font-family: var(--cormorant);
+  font-size: 6.8cqw;
+  color: #9e2344;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+.venue-motif {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin: 1.5cqw 0;
+}
+.venue-tagline {
+  font-family: var(--cormorant);
+  font-size: 3.2cqw;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2b302c;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.venue-info-card {
+  width: 100%;
+  padding: 4.5cqw 5cqw 1cqw;
+}
+.venue-info-top {
+  display: flex;
+  gap: 2cqw;
+  width: 75%;
+  margin: 0.8cqw auto 1cqw;
+}
+.venue-pin-badge {
+  width: 9cqw;
+  height: 9cqw;
+  border-radius: 50%;
+  background: rgba(214, 138, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d68a00;
+  flex-shrink: 0;
+  margin-top: 1.7cqw;
+}
+.venue-pin-svg {
+  width: 5cqw;
+  height: 5cqw;
+}
+.venue-title-group {
+  flex: 1;
+}
+.venue-place-name {
+  font-family: var(--cormorant);
+  font-size: 3.8cqw;
+  font-weight: 700;
+  color: #9e2344;
+  line-height: 1.2;
+}
+.venue-place-address {
+  font-family: var(--sans);
+  font-size: 2.8cqw;
+  color: #4a3c31;
+  line-height: 1.4;
+}
+.map-placeholder {
+  width: 100%;
+  aspect-ratio: 2.36/1;
+  border-radius: 3cqw;
+  overflow: hidden;
+  background: #e8f0e8;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+.map-placeholder iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.btn-directions {
+  display: block;
+  width: 72%;
+  margin: 0.8cqw 0 4cqw;
+  background: linear-gradient(135deg, #8c1825, #6a101b);
+  color: var(--white);
+  padding: 2cqw 4cqw;
+  border-radius: 50px;
+  font-family: var(--cormorant);
+  font-size: 3cqw;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(139, 26, 47, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.btn-directions:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(139, 26, 47, 0.45);
+}
+.trip-card {
+  width: 75%;
+  padding: 4.6cqw 5.4cqw;
+  text-align: center;
+}
+.trip-card-icon-badge {
+  width: 9cqw;
+  height: 9cqw;
+  border-radius: 50%;
+  background: rgba(140, 24, 37, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #8c1825;
+  margin-bottom: 1.5cqw;
+}
+.trip-card-title {
+  font-family: var(--cormorant);
+  font-size: 3.4cqw;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8c1825;
+  margin-bottom: 1cqw;
+}
+.trip-card-text {
+  font-family: var(--sans);
+  font-size: 2.6cqw;
+  color: #4a3c31;
+  line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   SECTION 5: RSVP
+   Aspect Ratio: 1000 / 2440 (~0.4098)
+   ========================================================================== */
+#sec-rsvp {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 2440;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px 2440px;
+}
+.rsvp-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg) center / cover no-repeat;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+.rsvp-bg.lazy-loaded {
+  background-image: url("images/Pastel_Lotus_Wedding_Invitation_Suite5.webp");
+}
+.rsvp-content {
+  position: absolute;
+  top: 10.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 82.8%;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.rsvp-header {
+  text-align: center;
+  margin-bottom: 2.2cqw;
+  width: 100%;
+}
+.rsvp-main-title {
+  font-family: var(--cormorant);
+  font-size: 8.8cqw;
+  color: #921c38;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  margin: 0 0 1cqw;
+}
+.rsvp-motif {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0.8cqw 0;
+}
+.rsvp-motif .motif-line {
+  width: 10cqw;
+  height: 1px;
+  background: rgba(180, 135, 95, 0.45);
+}
+.flower-motif-img-sm {
+  width: 2.6cqw;
+  height: auto;
+  opacity: 0.85;
+}
+.rsvp-subtitle {
+  font-family: var(--cormorant);
+  font-size: 2.9cqw;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #173d34;
+  line-height: 1.4;
+  font-weight: 600;
+  margin: 0;
+}
+.rsvp-card {
+  width: 100%;
+  background: transparent;
+  border-radius: 0;
+  padding: 5.5cqw 2.8cqw 3cqw;
+  box-shadow: none;
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+/* ==========================================================================
+   Input Error Tooltip & Validation State (Zero Extra Space)
+   ========================================================================== */
+.field-error-tooltip {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  right: 0.5cqw;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2cqw;
+  background: #a31c36;
+  color: #ffffff;
+  padding: 0.7cqw 2cqw;
+  border-radius: 0.8cqw;
+  font-family: var(--sans);
+  font-size: clamp(10px, 2.3cqw, 12px);
+  font-weight: 500;
+  line-height: 1.2;
+  box-shadow: 0 4px 14px rgba(163, 28, 54, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+  white-space: nowrap;
+}
+.field-error-tooltip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.field-error-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 1.8cqw;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #a31c36 transparent transparent transparent;
+}
+.field-error-tooltip svg {
+  width: 2.6cqw;
+  height: 2.6cqw;
+  min-width: 12px;
+  min-height: 12px;
+  flex-shrink: 0;
+}
+
+/* Bootstrap-like validation error effect (Pure CSS) */
+.input-wrap.is-invalid,
+.textarea-wrap.is-invalid {
+  border-color: #dc3545 !important;
+  background-color: rgba(220, 53, 69, 0.05) !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+  animation: inputErrorShake 0.35s ease-in-out;
+}
+.input-wrap.is-invalid .input-icon,
+.textarea-wrap.is-invalid .textarea-icon {
+  color: #dc3545;
+  stroke: #dc3545;
+}
+.input-wrap.is-invalid:focus-within,
+.textarea-wrap.is-invalid:focus-within {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.35) !important;
+}
+
+@keyframes inputErrorShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-4px);
+  }
+  40%, 80% {
+    transform: translateX(4px);
+  }
+}
+
+.form-group {
+  margin-bottom: 2.6cqw;
+  position: relative;
+}
+.form-label {
+  display: block;
+  font-family: var(--cormorant);
+  font-size: 2.7cqw;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #74172a;
+  margin-bottom: 0.9cqw;
+}
+.form-label .required {
+  color: #9e2344;
+}
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.8cqw;
+  border: 1px solid rgba(220, 200, 185, 0.85);
+  border-radius: 1.2cqw;
+  padding: 1.3cqw 2.4cqw;
+  background: rgba(255, 255, 255, 0.45);
+  min-height: 6.6cqw;
+  box-sizing: border-box;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.input-wrap:focus-within {
+  border-color: #921c38;
+  background: rgba(255, 255, 255, 0.75);
+}
+.input-icon {
+  width: 2.8cqw;
+  height: 2.8cqw;
+  color: #a49184;
+  flex-shrink: 0;
+  transition: color 0.25s ease;
+}
+.form-control {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--cormorant);
+  font-size: 3.0cqw;
+  color: #2b1f1a;
+  outline: none;
+  -webkit-appearance: none;
+  padding: 0;
+}
+.form-control::placeholder {
+  color: #a49184;
+  font-family: var(--cormorant);
+  font-weight: 400;
+}
+.attendance-toggle {
+  display: flex;
+  gap: 1.4cqw;
+  width: 100%;
+}
+.att-btn {
+  flex: 1;
+  min-height: 6.6cqw;
+  padding: 1.2cqw 1cqw;
+  border: 1px solid rgba(220, 200, 185, 0.85);
+  border-radius: 1.2cqw;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  font-family: var(--cormorant);
+  font-size: 3.0cqw;
+  font-weight: 600;
+  color: #3c2a23;
+  text-align: center;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2cqw;
+  box-sizing: border-box;
+}
+.att-btn:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+.att-btn.yes.active {
+  background: linear-gradient(135deg, #a32846, #85172e);
+  color: #ffffff;
+  border-color: #85172e;
+  box-shadow: 0 3px 10px rgba(133, 23, 46, 0.25);
+}
+.att-check-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8cqw;
+  height: 2.8cqw;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #85172e;
+  flex-shrink: 0;
+}
+.att-check-circle svg {
+  width: 2.0cqw;
+  height: 2.0cqw;
+}
+.att-btn.no.active {
+  background: #6a574f;
+  color: #ffffff;
+  border-color: #6a574f;
+}
+.att-btn.maybe.active {
+  background: #194a3e;
+  color: #ffffff;
+  border-color: #194a3e;
+}
+.guest-counter {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid rgba(220, 200, 185, 0.85);
+  border-radius: 1.2cqw;
+  background: rgba(255, 255, 255, 0.45);
+  overflow: hidden;
+  height: 6.6cqw;
+  box-sizing: border-box;
+}
+.counter-btn {
+  width: 7cqw;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 3.6cqw;
+  color: #74172a;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+.counter-btn:first-child {
+  border-right: 1px solid rgba(220, 200, 185, 0.85);
+}
+.counter-btn:last-child {
+  border-left: 1px solid rgba(220, 200, 185, 0.85);
+}
+.counter-btn:hover {
+  background: rgba(116, 23, 42, 0.08);
+}
+.counter-display {
+  font-family: var(--cormorant);
+  font-size: 3.4cqw;
+  font-weight: 700;
+  color: #74172a;
+  min-width: 9cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.pills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4cqw;
+  width: 100%;
+}
+.pills-break {
+  flex-basis: 100%;
+  height: 0;
+  margin: 0;
+  border: none;
+}
+.pills-grid.pills-4 {
+  gap: 1.0cqw;
+}
+.pills-grid.pills-4 .pill-chip {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 1.2cqw 0.6cqw;
+  justify-content: center;
+}
+.pill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2cqw;
+  padding: 1.2cqw 2.2cqw;
+  border: 1px solid rgba(220, 200, 185, 0.85);
+  border-radius: 1.2cqw;
+  font-family: var(--cormorant);
+  font-size: 2.8cqw;
+  font-weight: 600;
+  color: #3c2a23;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.45);
+  min-height: 5.6cqw;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+.pill-chip:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+.pill-chip svg {
+  width: 2.8cqw;
+  height: 2.8cqw;
+  flex-shrink: 0;
+  stroke: #c05a2b;
+  stroke-width: 1.8;
+  fill: none;
+  transition: stroke 0.25s ease;
+}
+.pill-chip.active {
+  background: #8e1c38;
+  color: #ffffff;
+  border-color: #8e1c38;
+  box-shadow: 0 3px 10px rgba(142, 28, 56, 0.25);
+}
+.pill-chip.active svg {
+  stroke: #ffffff;
+}
+.textarea-wrap {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid rgba(220, 200, 185, 0.85);
+  border-radius: 1.2cqw;
+  background: rgba(255, 255, 255, 0.45);
+  padding: 1.2cqw 2cqw;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+  box-sizing: border-box;
+}
+.textarea-wrap:focus-within {
+  border-color: #921c38;
+  background: rgba(255, 255, 255, 0.75);
+}
+.textarea-icon {
+  width: 2.8cqw;
+  height: 2.8cqw;
+  color: #a49184;
+  margin-top: 0.6cqw;
+  margin-right: 1.4cqw;
+  flex-shrink: 0;
+}
+.form-textarea {
+  flex: 1;
+  min-height: 11.5cqw;
+  max-height: 14cqw;
+  border: none;
+  background: transparent;
+  font-family: var(--cormorant);
+  font-size: 2.9cqw;
+  color: #2b1f1a;
+  resize: none;
+  outline: none;
+  padding: 0;
+  line-height: 1.4;
+}
+.form-textarea::placeholder {
+  color: #a49184;
+  font-family: var(--cormorant);
+  font-weight: 400;
+}
+.btn-whatsapp {
+  width: 100%;
+  background: linear-gradient(180deg, #871329 0%, #680b1d 100%);
+  color: #ffffff;
+  min-height: 8.0cqw;
+  padding: 2.0cqw 3.5cqw;
+  border-radius: 1.4cqw;
+  font-family: var(--cormorant);
+  font-size: 3.1cqw;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8cqw;
+  margin-top: 2.2cqw;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(104, 11, 29, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+.btn-whatsapp:active {
+  transform: scale(0.98);
+}
+.btn-wa-icon {
+  width: 3.4cqw;
+  height: 3.4cqw;
+  fill: #ffffff;
+  flex-shrink: 0;
+}
+.btn-arrow-icon {
+  width: 2.8cqw;
+  height: 2.8cqw;
+  stroke: #ffffff;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   SECTION 6: Closing
+   Aspect Ratio: 1000 / 2385 (~0.4193)
+   ========================================================================== */
+#sec-closing {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 2385;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px 2385px;
+}
+.closing-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg) center / cover no-repeat;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+.closing-bg.lazy-loaded {
+  background-image: url("images/Pastel_Lotus_Wedding_Invitation_Suite6.webp");
+}
+.closing-content {
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 82%;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.closing-monogram {
+  font-family: var(--cormorant);
+  font-size: 16cqw;
+  color: #fd758b;
+  text-shadow:0 2px 25px rgb(255 180 231 / 50%), 0 0 50px rgb(255 180 197 / 30%);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.closing-monogram span{
+  font-size: 12cqw;
+  color: var(--secondary-light);
+}
+.closing-motif {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 85%;
+  margin: 2cqw 0 1.5cqw;
+}
+.closing-lotus-img {
+  width: 6.5cqw;
+  height: auto;
+  filter: drop-shadow(0 2px 8px rgba(240, 140, 100, 0.6));
+}
+.closing-hashtag {
+  font-family: var(--cormorant);
+  font-size: 7.2cqw;
+  font-style: italic;
+  color: #f7d5c3;
+  text-shadow: 0 2px 18px rgba(255, 200, 160, 0.4);
+  margin: 1.5cqw 0;
+  letter-spacing: 0.03em;
+}
+.closing-motif-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 75%;
+  margin: 1cqw 0 2cqw;
+}
+.closing-lotus-img-sm {
+  width: 4.5cqw;
+  height: auto;
+  filter: drop-shadow(0 1px 6px rgba(240, 140, 100, 0.5));
+}
+.closing-date {
+  font-family: var(--cormorant);
+  font-size: 4.2cqw;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(247, 213, 195, 0.95);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.8cqw;
+}
+.closing-location {
+  font-family: var(--cormorant);
+  font-size: 3.2cqw;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(247, 213, 195, 0.85);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 4cqw;
+}
+.social-icons-row {
+  display: flex;
+  gap: 4.5cqw;
+  align-items: center;
+  justify-content: center;
+  margin: 2cqw 0 3cqw;
+}
+.social-icon-btn {
+  width: 11cqw;
+  height: 11cqw;
+  border-radius: 50%;
+  border: 1.5px solid rgba(247, 213, 195, 0.7);
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #f7d5c3;
+  transition:
+    background 0.3s,
+    border-color 0.3s,
+    transform 0.2s;
+  backdrop-filter: blur(4px);
+}
+.social-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+.social-icon-btn svg {
+  width: 5cqw;
+  height: 5cqw;
+}
+.closing-thankyou {
+  font-family: var(--cormorant);
+  font-size: 4.8cqw;
+  color: rgba(247, 213, 195, 0.95);
+  font-style: italic;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+  line-height: 1.5;
+  margin: 2cqw 0 3cqw;
+}
+.btn-calendar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2cqw;
+  margin: 1cqw auto 3cqw;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(247, 213, 195, 0.6);
+  color: var(--primary-light);
+  padding: 3cqw 6cqw;
+  border-radius: 50px;
+  font-family: var(--cormorant);
+  font-size: 3.4cqw;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+  transition:
+    background 0.3s ease,
+    transform 0.2s;
+}
+.btn-calendar:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+.btn-calendar svg {
+  width: 4cqw;
+  height: 4cqw;
+}
+.closing-bottom-motif {
+  margin-top: 14cqw;
+}
+.closing-bottom-motif .heart-icon {
+  font-size: 3cqw;
+  color: rgba(247, 213, 195, 0.6);
+}
+.closing-designed {
+  font-family: var(--cormorant);
+  font-size: 2.8cqw;
+  color: rgba(247, 213, 195, 0.65);
+  margin-top: 1cqw;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer {
+  padding: clamp(40px, 6vh, 80px) max(20px, env(safe-area-inset-right, 0px))
+    calc(clamp(40px, 6vh, 80px) + env(safe-area-inset-bottom, 0px))
+    max(20px, env(safe-area-inset-left, 0px));
+  text-align: center;
+  position: absolute;
+  bottom: 4cqw;
+  width: 100%;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    filter: none !important;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease !important;
+  }
+  .intro-lotus-icon,
+  .btn-tap-begin {
+    animation: none !important;
+  }
+}
