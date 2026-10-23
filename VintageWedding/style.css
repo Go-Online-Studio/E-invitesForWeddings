@@ -1,0 +1,1065 @@
+/* ==========================================================================
+   Vintage Scrapbook Wedding Invitation Design System
+   ========================================================================== */
+
+:root {
+  --primary: #5c1816;
+  --primary-hover: #451110;
+  --accent: #b65c36;
+  --accent-light: #e7bf85;
+  --text-dark: #3b2014;
+  --text-body: #2c1a11;
+  --text-muted: #6e5545;
+  --paper-bg: #f5ede0;
+  --card-width: 480px;
+  --serif: "Playfair Display", Georgia, serif;
+  --typewriter: "Special Elite", "Courier Prime", Courier, monospace;
+  --script: "Caveat", cursive;
+  --sans: "Montserrat", sans-serif;
+  --vh: 1vh;
+}
+
+/* ==========================================================================
+   Reset & Base Setup
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background-color: #17110c;
+}
+
+body {
+  background-color: #17110c;
+  font-family: var(--typewriter);
+  color: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* Scroll locked until intro video finishes */
+  position: relative;
+  min-height: 100vh;
+}
+
+body.unlocked {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Landscape Warning Overlay
+   ========================================================================== */
+#landscape-warning {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  background: #17110c;
+  color: #e7bf85;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  #landscape-warning {
+    display: flex;
+  }
+}
+
+.lw-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 18px;
+  animation: rotateDeviceAnim 2s ease-in-out infinite alternate;
+}
+
+@keyframes rotateDeviceAnim {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(-90deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.lw-title {
+  font-family: var(--script);
+  font-size: 28px;
+  color: #e7bf85;
+  margin-bottom: 10px;
+}
+
+.lw-text {
+  font-family: var(--typewriter);
+  font-size: 14px;
+  color: #cbb497;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Main App Container (Mobile Card with Container Queries)
+   ========================================================================== */
+#app {
+  width: 100%;
+  max-width: var(--card-width);
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.85);
+  background-color: #17110c;
+  overflow: hidden;
+  container-type: inline-size; /* Enables cqw units based strictly on card width */
+}
+
+/* ==========================================================================
+   Intro Layer (Fullscreen Video Overlay)
+   ========================================================================== */
+#intro-layer {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--card-width);
+  height: 100%;
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  z-index: 9990;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1.2s ease-in-out;
+  overflow: hidden;
+  container-type: inline-size; /* CRITICAL: locks cqw units strictly to the 480px mobile frame */
+}
+
+#intro-layer.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#intro-layer.hidden {
+  display: none !important;
+}
+
+#intro-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* Tap to Begin Screen inside Intro Overlay */
+.intro-tap-screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: url("images/vlcsnap-2026-10-23-09h17m33s013.webp") center / cover no-repeat;
+  text-align: center;
+  padding: 6cqw;
+  cursor: pointer;
+  transition: opacity 0.8s ease;
+  container-type: inline-size; /* locks cqw within tap screen */
+  box-sizing: border-box;
+}
+
+.intro-tap-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(23, 17, 12, 0.7) 0%, rgba(23, 17, 12, 0.86) 100%);
+  backdrop-filter: blur(2px);
+}
+
+.intro-tap-screen > * {
+  position: relative;
+  z-index: 1;
+  max-width: 90cqw;
+}
+
+.intro-seal {
+  width: 18cqw;
+  height: 18cqw;
+  margin-bottom: 3.5cqw;
+  filter: drop-shadow(0 4px 12px rgba(182, 92, 54, 0.5));
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5cqw); }
+}
+
+.intro-tagline {
+  font-family: var(--script);
+  font-size: 5.5cqw;
+  color: #e7bf85;
+  margin-bottom: 2cqw;
+  line-height: 1.25;
+}
+
+.intro-title {
+  font-family: var(--serif);
+  font-size: 8.5cqw;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+  margin-bottom: 2cqw;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.intro-date {
+  font-family: var(--typewriter);
+  font-size: 3.5cqw;
+  letter-spacing: 0.15em;
+  color: #e8d7c1;
+  margin-bottom: 7cqw;
+  line-height: 1.2;
+}
+
+.intro-tap-badge {
+  display: flex;
+  align-items: center;
+  gap: 2.5cqw;
+  padding: 2.8cqw 6cqw;
+  background: rgba(92, 24, 22, 0.88);
+  border: 1px solid rgba(231, 191, 133, 0.45);
+  border-radius: 6cqw;
+  color: #fcf8f2;
+  font-family: var(--typewriter);
+  font-size: 3.4cqw;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  animation: tapPulse 1.8s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+@keyframes tapPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 191, 133, 0.4); }
+  50% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(231, 191, 133, 0); }
+}
+
+.intro-tap-badge svg {
+  width: 4.2cqw;
+  height: 4.2cqw;
+  stroke: #e7bf85;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Global Petal Canvas
+   ========================================================================== */
+#petal-canvas {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--card-width);
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* ==========================================================================
+   Music Floating Action Button (FAB)
+   ========================================================================== */
+#mfab {
+  position: fixed;
+  bottom: max(72px, calc(env(safe-area-inset-bottom, 0px) + 38px));
+  right: max(20px, calc(env(safe-area-inset-right, 0px) + 16px));
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #5c1816;
+  border: 1.5px solid rgba(231, 191, 133, 0.55);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9980;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+  transition: opacity 0.6s ease, transform 0.6s ease, background-color 0.3s ease;
+}
+
+#mfab.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+#mfab:hover {
+  background: #451110;
+  transform: scale(1.08);
+}
+
+#mfab.playing {
+  animation: musicPlayingPulse 2.4s infinite ease-in-out;
+}
+
+@keyframes musicPlayingPulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 0 0 rgba(231, 191, 133, 0.4); }
+  50% { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(231, 191, 133, 0); }
+}
+
+#mfab svg {
+  width: 22px;
+  height: 22px;
+  fill: #fdf8ee;
+  stroke: #fdf8ee;
+}
+
+/* ==========================================================================
+   Scroll Down Indicator
+   ========================================================================== */
+#scroll-indicator {
+  position: absolute;
+  bottom: 3.5cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1cqw;
+  color: #e7bf85;
+  font-family: var(--typewriter);
+  font-size: 2.6cqw;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+#scroll-indicator.visible {
+  opacity: 0.9;
+  pointer-events: auto;
+}
+
+#scroll-indicator.hidden-after-scroll {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.scroll-arrow-anim {
+  width: 4cqw;
+  height: 4cqw;
+  animation: bounceArrow 1.6s ease-in-out infinite;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(1.5cqw); }
+}
+
+/* ==========================================================================
+   Shared Vintage Section Setup & Typography
+   ========================================================================== */
+.scrapbook-sec {
+  width: 100cqw;
+  position: relative;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: top left;
+  overflow: hidden;
+}
+
+.vintage-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5cqw auto;
+  width: 54cqw;
+  height: 3.2cqw;
+}
+
+.vintage-divider svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* GSAP Reveal State */
+.vintage-reveal {
+  will-change: transform, opacity, filter;
+}
+
+/* ==========================================================================
+   Section 1: The Cover (Sec1.webp)
+   Aspect Ratio: 900 x 1599 -> Height = 177.67cqw
+   ========================================================================== */
+.sec-1 {
+  height: 177.67cqw;
+  background-image: url("images/Sec1.webp");
+}
+
+.sec1-content {
+  position: absolute;
+  top: 36cqw;
+  left: 10cqw;
+  width: 80cqw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sec1-title {
+  font-family: var(--serif);
+  font-size: 8.8cqw;
+  font-weight: 700;
+  color: #432213;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.sec1-subtitle {
+  font-family: var(--serif);
+  font-size: 3.8cqw;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #432213;
+  margin-top: 1.2cqw;
+  text-transform: uppercase;
+}
+
+.sec1-date-box {
+  margin-top: 2.2cqw;
+  width: 44cqw;
+  height: 7.4cqw;
+  border: 1.2px solid #5a3825;
+  border-radius: 1.2cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--typewriter);
+  font-size: 4cqw;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  color: #432213;
+  background: rgba(255, 250, 240, 0.15);
+}
+
+.sec1-location {
+  margin-top: 2.2cqw;
+  font-family: var(--serif);
+  font-size: 3.2cqw;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #432213;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Section 2: The Invite (Sec2.webp)
+   Aspect Ratio: 900 x 2078 -> Height = 230.89cqw
+   ========================================================================== */
+.sec-2 {
+  height: 230.89cqw;
+  background-image: url("images/Sec2.webp");
+}
+
+.sec2-content {
+  position: absolute;
+  top: 64cqw;
+  left: 16cqw;
+  width: 68cqw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sec2-title {
+  font-family: var(--serif);
+  font-size: 8.8cqw;
+  font-weight: 700;
+  color: #432213;
+  line-height: 1.15;
+}
+
+.sec2-p1 {
+  font-family: var(--typewriter);
+  font-size: 3.4cqw;
+  line-height: 1.58;
+  color: #2c1a11;
+  max-width: 78cqw;
+  margin-top: 2cqw;
+}
+
+.sec2-p2 {
+  font-family: var(--typewriter);
+  font-size: 3.4cqw;
+  line-height: 1.58;
+  color: #2c1a11;
+  max-width: 78cqw;
+  margin-top: 3.5cqw;
+}
+
+/* ==========================================================================
+   Section 3: Events (Sec3.webp)
+   Aspect Ratio: 900 x 2005 -> Height = 222.78cqw
+   ========================================================================== */
+.sec-3 {
+  height: 222.78cqw;
+  background-image: url("images/Sec3.webp");
+}
+
+.sec3-header {
+  position: absolute;
+  top: 8.5cqw;
+  left: 8cqw;
+  width: 84cqw;
+  text-align: center;
+}
+
+.sec3-title {
+  font-family: var(--serif);
+  font-size: 6.5cqw;
+  font-weight: 700;
+  color: #432213;
+  line-height: 1.15;
+}
+
+.sec3-subtitle {
+  font-family: var(--typewriter);
+  font-size: 3.2cqw;
+  color: #3b2417;
+  letter-spacing: 0.02em;
+}
+
+/* 4 Event Cards positioned to match Sec3.webp layout */
+.event-card {
+  position: absolute;
+  width: 100cqw;
+}
+
+.event-card-1 { top: 41.5cqw; }
+.event-card-2 { top: 85.8cqw; }
+.event-card-3 { top: 130.8cqw; }
+.event-card-4 { top: 174.6cqw; }
+
+.event-info {
+  position: absolute;
+  left: 57.2cqw;
+  top: 0;
+  width: 32cqw;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-name {
+  font-family: var(--serif);
+  font-size: 5.8cqw;
+  font-weight: 700;
+  color: #3b2014;
+  line-height: 1.1;
+  margin-bottom: 3.2cqw;
+}
+
+.event-date {
+  font-family: var(--typewriter);
+  font-size: 3.4cqw;
+  font-weight: bold;
+  color: #2c1a11;
+  letter-spacing: 0.04em;
+  margin-bottom: 3.8cqw;
+}
+
+.event-desc {
+  font-family: var(--typewriter);
+  font-size: 2.8cqw;
+  line-height: 1.45;
+  color: #382418;
+}
+
+/* ==========================================================================
+   Section 4: Venue (Sec4.webp)
+   Aspect Ratio: 900 x 2034 -> Height = 226.00cqw
+   ========================================================================== */
+.sec-4 {
+  height: 226cqw;
+  background-image: url("images/Sec4.webp");
+}
+
+.sec4-header {
+  position: absolute;
+  top: 7.5cqw;
+  left: 8cqw;
+  width: 84cqw;
+  text-align: center;
+}
+
+.sec4-title {
+  font-family: var(--serif);
+  font-size: 8.8cqw;
+  font-weight: 700;
+  color: #432213;
+}
+
+.sec4-subtitle {
+  font-family: var(--typewriter);
+  font-size: 3.2cqw;
+  color: #3b2417;
+  max-width: 76cqw;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+/* Passport Stamp on Polaroid */
+.passport-stamp {
+  position: absolute;
+  top: 34.3cqw;
+  right: 4cqw;
+  width: 26cqw;
+  height: 26cqw;
+  pointer-events: none;
+  transform: rotate(-10deg);
+  opacity: 0.95;
+  mix-blend-mode: multiply;
+}
+
+.passport-stamp svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Venue Sub-Title on Torn Parchment */
+.sec4-celebration {
+  position: absolute;
+  top: 102.5cqw;
+  left: 10cqw;
+  width: 80cqw;
+  text-align: center;
+}
+
+.sec4-celebration-title {
+  font-family: var(--serif);
+  font-size: 5.4cqw;
+  font-weight: 700;
+  color: #432213;
+}
+
+.sec4-hotel {
+  font-family: var(--typewriter);
+  font-size: 3.6cqw;
+  color: #332117;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.sec4-city {
+  font-family: var(--typewriter);
+  font-size: 3.4cqw;
+  color: #332117;
+  line-height: 1.4;
+}
+
+/* Map Polaroid Container & View on Map Button */
+.venue-map-box {
+  position: absolute;
+  top: 131cqw;
+  left: 0;
+  width: 100cqw;
+  height: 88.2cqw;
+}
+
+.map-iframe-container {
+  position: absolute;
+  top: 5.5cqw;
+  left: 14.5cqw;
+  width: 70.5cqw;
+  height: 54.5cqw;
+  transform: rotate(-3deg);
+  transform-origin: center center;
+  z-index: 1;
+  overflow: hidden;
+  background: #ded2c0;
+  border-radius: 1cqw;
+}
+
+.venue-map-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: sepia(0.62) contrast(1.18) brightness(0.92) saturate(0.85) hue-rotate(-8deg);
+}
+
+.map-vintage-tint {
+  position: absolute;
+  inset: 0;
+  background: rgba(226, 203, 168, 0.35);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.venue-map-frame-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.btn-view-map {
+  position: absolute;
+  left: 31.5cqw;
+  bottom: 17cqw;
+  width: 48cqw;
+  height: 10cqw;
+  rotate: -6deg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2cqw;
+  color: #fdfaf4;
+  font-family: var(--typewriter);
+  font-size: 3.6cqw;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.btn-view-map:hover,
+.btn-view-map:active {
+  transform: scale(1.04);
+  filter: brightness(1.15);
+}
+
+.btn-view-map-circle {
+  width: 5cqw;
+  height: 5cqw;
+  border: 1.4px solid #fdfaf4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-view-map-circle svg {
+  width: 2.8cqw;
+  height: 2.8cqw;
+  stroke: #fdfaf4;
+}
+
+/* ==========================================================================
+   Section 5: RSVP (Sec5.webp)
+   Aspect Ratio: 900 x 2096 -> Height = 232.89cqw
+   ========================================================================== */
+.sec-5 {
+  height: 232.89cqw;
+  background-image: url("images/Sec5.webp");
+}
+
+.sec5-header {
+  position: absolute;
+  top: 14cqw;
+  left: 8cqw;
+  width: 84cqw;
+  text-align: center;
+}
+
+.sec5-title {
+  font-family: var(--serif);
+  font-size: 8.8cqw;
+  font-weight: 700;
+  color: #432213;
+}
+
+.sec5-subtitle {
+  font-family: var(--typewriter);
+  font-size: 3.3cqw;
+  color: #3b2417;
+  max-width: 76cqw;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+/* RSVP Form Area */
+.rsvp-form-container {
+  position: absolute;
+  top: 57cqw;
+  left: 11.5cqw;
+  width: 77cqw;
+  display: flex;
+  flex-direction: column;
+}
+
+.rsvp-alert {
+  display: none;
+  padding: 2.5cqw 3.5cqw;
+  background: rgba(92, 24, 22, 0.9);
+  color: #fdf8ee;
+  border-radius: 1.5cqw;
+  font-family: var(--typewriter);
+  font-size: 3cqw;
+  margin-bottom: 2cqw;
+  line-height: 1.4;
+  border: 1px solid rgba(231, 191, 133, 0.5);
+}
+
+.rsvp-alert.show {
+  display: block;
+  animation: shakeAlert 0.4s ease;
+}
+
+@keyframes shakeAlert {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.rsvp-label {
+  font-family: var(--typewriter);
+  font-size: 3.4cqw;
+  color: #2c1a11;
+  font-weight: bold;
+  margin-top: 3.2cqw;
+  margin-bottom: 1.4cqw;
+  display: block;
+}
+
+.rsvp-label:first-of-type {
+  margin-top: 0;
+}
+
+.rsvp-input,
+.rsvp-select,
+.rsvp-textarea {
+  width: 100%;
+  border: 1.2px solid rgba(75, 45, 25, 0.45);
+  border-radius: 1.5cqw;
+  background: rgba(255, 250, 240, 0.55);
+  padding: 0 3cqw;
+  font-family: var(--typewriter);
+  font-size: 3.4cqw;
+  color: #3b2014;
+  outline: none;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.rsvp-input:focus,
+.rsvp-select:focus,
+.rsvp-textarea:focus {
+  border-color: #5c1816;
+  background: rgba(255, 252, 246, 0.85);
+  box-shadow: 0 0 8px rgba(92, 24, 22, 0.2);
+}
+
+.rsvp-input {
+  height: 8.5cqw;
+}
+
+.rsvp-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.rsvp-select {
+  height: 8.5cqw;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 8cqw;
+}
+
+.rsvp-select-icon {
+  position: absolute;
+  right: 3cqw;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 3.5cqw;
+  height: 3.5cqw;
+  stroke: #2c1a11;
+}
+
+/* Radio Group */
+.rsvp-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2cqw;
+  margin-top: 0.5cqw;
+}
+
+.rsvp-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 2.8cqw;
+  font-family: var(--typewriter);
+  font-size: 3.3cqw;
+  color: #2c1a11;
+  cursor: pointer;
+}
+
+.rsvp-radio-label input[type="radio"] {
+  display: none;
+}
+
+.radio-circle {
+  width: 4.8cqw;
+  height: 4.8cqw;
+  border: 1.6px solid #2c1a11;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease;
+}
+
+.radio-circle-dot {
+  width: 2.4cqw;
+  height: 2.4cqw;
+  border-radius: 50%;
+  background: #2c1a11;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.rsvp-radio-label input[type="radio"]:checked + .radio-circle .radio-circle-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.rsvp-radio-label input[type="radio"]:checked + .radio-circle {
+  border-color: #5c1816;
+}
+
+.rsvp-textarea {
+  height: 22cqw;
+  padding: 2cqw 3cqw;
+  resize: none;
+  line-height: 1.4;
+}
+
+.btn-rsvp-submit {
+  width: 100%;
+  height: 9.6cqw;
+  margin-top: 4.5cqw;
+  background: #5c1816;
+  border: none;
+  border-radius: 1.5cqw;
+  color: #fdfaf4;
+  font-family: var(--typewriter);
+  font-size: 3.8cqw;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2cqw;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(75, 20, 18, 0.4);
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.btn-rsvp-submit:hover,
+.btn-rsvp-submit:active {
+  background: #451110;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(75, 20, 18, 0.5);
+}
+
+.btn-rsvp-submit svg {
+  width: 4cqw;
+  height: 4cqw;
+  stroke: #fdfaf4;
+}
+
+/* ==========================================================================
+   Section 6: Outro (Sec6.webp)
+   Aspect Ratio: 900 x 2070 -> Height = 230.00cqw
+   ========================================================================== */
+.sec-6 {
+  height: 230cqw;
+  background-image: url("images/Sec6.webp");
+}
+
+.sec6-content {
+  position: absolute;
+  top: 183cqw;
+  left: 8cqw;
+  width: 84cqw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sec6-text {
+  font-family: var(--typewriter);
+  font-size: 3.8cqw;
+  line-height: 1.5;
+  color: #2c1a11;
+  font-weight: 600;
+  max-width: 62cqw;
+}
+
+/* ==========================================================================
+   Strict Footer Implementation
+   ========================================================================== */
+.footer {
+  padding: max(8px, env(safe-area-inset-left, 0px)) max(12px + env(safe-area-inset-bottom, 0px));
+  text-align: center;
+  border-top: 1px solid rgba(231, 191, 133, 0.2);
+  background: #17110c;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 2.8cqw;
+  color: #8c7362;
+  font-family: var(--sans);
+}
+
+/* ==========================================================================
+   Reduced Motion Accessibility
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .vintage-reveal {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}

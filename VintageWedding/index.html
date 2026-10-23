@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Smit &amp; Riya — Wedding Invitation</title>
+  <meta name="description" content="A vintage scrapbook chapter celebrating the wedding of Smit &amp; Riya on 24 November 2026 in Vadodara, Gujarat.">
+  <meta name="theme-color" content="#432213">
+
+  <!-- Fast Preconnect & Preload for Intro Video & Overlay Poster -->
+  <link rel="preconnect" href="https://res.cloudinary.com">
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1792727143/Vintage_Wedding_Invitation_Anima_20261022175926_Gwr_Video_Mvp_qg82hj.mp4" as="video" type="video/mp4" crossorigin="anonymous">
+  <link rel="preload" href="images/vlcsnap-2026-10-23-09h17m33s013.webp" as="image" type="image/webp">
+  <link rel="preload" href="images/Sec1.webp" as="image" type="image/webp">
+
+  <!-- Vintage Google Fonts: Playfair Display, Special Elite (Typewriter), Caveat, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- GSAP & ScrollTrigger via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- Landscape Warning Overlay -->
+  <div id="landscape-warning" role="alert" aria-live="polite">
+    <svg class="lw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+      <line x1="12" y1="18" x2="12.01" y2="18"></line>
+    </svg>
+    <div class="lw-title">Please Rotate Your Device</div>
+    <div class="lw-text">Our vintage wedding album is crafted for portrait mobile viewing.</div>
+  </div>
+
+  <!-- Fullscreen Video Intro Layer -->
+  <div id="intro-layer">
+    <video id="intro-video" src="https://res.cloudinary.com/dticzwbrv/video/upload/v1792727143/Vintage_Wedding_Invitation_Anima_20261022175926_Gwr_Video_Mvp_qg82hj.mp4" poster="images/vlcsnap-2026-10-23-09h17m33s013.webp" playsinline webkit-playsinline preload="auto"></video>
+    <div class="intro-tap-screen" id="tap-screen">
+      <!-- Vintage Wax Seal Motif -->
+      <div class="intro-seal">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" fill="#842220" stroke="#e7bf85" stroke-width="2.5" stroke-dasharray="4 2"/>
+          <circle cx="50" cy="50" r="38" fill="#5c1816"/>
+          <!-- Inner Heart Motif -->
+          <path d="M50 64 C50 64 32 50 32 38 C32 30 38 25 45 25 C48 25 50 28 50 28 C50 28 52 25 55 25 C62 25 68 30 68 38 C68 50 50 64 50 64 Z" fill="#e7bf85"/>
+        </svg>
+      </div>
+      <div class="intro-tagline">A New Chapter of Our Family Album</div>
+      <div class="intro-title">Smit &amp; Riya</div>
+      <div class="intro-date">24 · 11 · 2026 • VADODARA</div>
+      <div class="intro-tap-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a4 4 0 0 0-4 4v7a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4z"></path>
+          <path d="M19 10v3a7 7 0 0 1-14 0v-3"></path>
+          <line x1="12" y1="20" x2="12" y2="23"></line>
+        </svg>
+        <span>Tap Anywhere to Open</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global HTML5 Canvas for Gently Falling Petals -->
+  <canvas id="petal-canvas"></canvas>
+
+  <!-- Music FAB (Floating Action Button) -->
+  <button id="mfab" aria-label="Toggle background music" title="Toggle Music">
+    <!-- Sound On SVG -->
+    <svg id="icon-music-on" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+    </svg>
+    <!-- Sound Off SVG -->
+    <svg id="icon-music-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+      <line x1="1" y1="1" x2="23" y2="23"></line>
+      <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4h5v4"></path>
+      <path d="M17 17a5 5 0 0 1-7 0"></path>
+    </svg>
+  </button>
+
+  <!-- Main Scrapbook Card App -->
+  <div id="app">
+
+    <!-- ======================================================================
+         SECTION 1: THE COVER
+         ====================================================================== -->
+    <section class="scrapbook-sec sec-1" id="sec-1">
+      <div class="sec1-content gsap-fade-blur" style="transform: rotate(351.5deg);">
+        <h1 class="sec1-title">Smit &amp; Riya</h1>
+
+        <!-- Floral Divider SVG -->
+        <div class="vintage-divider">
+          <svg viewBox="0 0 300 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="12" x2="125" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+            <g transform="translate(150, 12)">
+              <circle cx="0" cy="0" r="2.2" fill="#b65c36"/>
+              <ellipse cx="0" cy="-6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="0" cy="6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(-45 -4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(45 4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(45 -4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(-45 4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+            </g>
+            <line x1="175" y1="12" x2="290" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="sec1-subtitle">ARE GETTING MARRIED</div>
+        <div class="sec1-date-box">24 · 11 · 2026</div>
+        <div class="sec1-location">VADODARA, GUJARAT</div>
+      </div>
+
+      <!-- Scroll Down Indicator -->
+      <div id="scroll-indicator">
+        <svg class="scroll-arrow-anim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+        <span>Scroll to Explore</span>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: THE INVITE
+         ====================================================================== -->
+    <section class="scrapbook-sec sec-2" id="sec-2">
+      <div class="sec2-content gsap-fade-blur">
+        <h2 class="sec2-title">You’re Invited</h2>
+
+        <!-- Floral Divider SVG -->
+        <div class="vintage-divider">
+          <svg viewBox="0 0 300 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="12" x2="125" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+            <g transform="translate(150, 12)">
+              <circle cx="0" cy="0" r="2.2" fill="#b65c36"/>
+              <ellipse cx="0" cy="-6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="0" cy="6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(-45 -4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(45 4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(45 -4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(-45 4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+            </g>
+            <line x1="175" y1="12" x2="290" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <p class="sec2-p1">
+          Just like the old family albums that hold our dearest memories, we’re adding a new chapter to our story.
+        </p>
+
+        <p class="sec2-p2">
+          With love and blessings from our families, we invite you to celebrate our wedding.
+        </p>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: EVENTS
+         ====================================================================== -->
+    <section class="scrapbook-sec sec-3" id="sec-3">
+      <div class="sec3-header gsap-fade-blur">
+        <h2 class="sec3-title">Our<br>Celebrations</h2>
+
+        <!-- Floral Divider SVG -->
+        <div class="vintage-divider">
+          <svg viewBox="0 0 300 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="12" x2="125" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+            <g transform="translate(150, 12)">
+              <circle cx="0" cy="0" r="2.2" fill="#b65c36"/>
+              <ellipse cx="0" cy="-6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="0" cy="6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(-45 -4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(45 4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(45 -4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(-45 4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+            </g>
+            <line x1="175" y1="12" x2="290" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <p class="sec3-subtitle">Different days, same beautiful story.</p>
+      </div>
+
+      <!-- Event 1: Haldi -->
+      <div class="event-card event-card-1">
+        <div class="event-info">
+          <div class="event-name">Haldi</div>
+          <div class="event-date">21 NOV 2026</div>
+          <div class="event-desc">Fun, colour<br>and new beginnings.</div>
+        </div>
+      </div>
+
+      <!-- Event 2: Mehendi -->
+      <div class="event-card event-card-2">
+        <div class="event-info">
+          <div class="event-name">Mehendi</div>
+          <div class="event-date">22 NOV 2026</div>
+          <div class="event-desc">Patterns, laughter<br>and love in the air.</div>
+        </div>
+      </div>
+
+      <!-- Event 3: Sangeet -->
+      <div class="event-card event-card-3">
+        <div class="event-info">
+          <div class="event-name">Sangeet</div>
+          <div class="event-date">23 NOV 2026</div>
+          <div class="event-desc">Music, dance and<br>endless joy.</div>
+        </div>
+      </div>
+
+      <!-- Event 4: Wedding -->
+      <div class="event-card event-card-4">
+        <div class="event-info">
+          <div class="event-name">Wedding</div>
+          <div class="event-date">24 NOV 2026</div>
+          <div class="event-desc">Two families<br>one forever.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: VENUE
+         ====================================================================== -->
+    <section class="scrapbook-sec sec-4" id="sec-4">
+      <div class="sec4-header gsap-fade-blur">
+        <h2 class="sec4-title">Venue</h2>
+
+        <!-- Floral Divider SVG -->
+        <div class="vintage-divider">
+          <svg viewBox="0 0 300 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="12" x2="125" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+            <g transform="translate(150, 12)">
+              <circle cx="0" cy="0" r="2.2" fill="#b65c36"/>
+              <ellipse cx="0" cy="-6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="0" cy="6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(-45 -4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(45 4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(45 -4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(-45 4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+            </g>
+            <line x1="175" y1="12" x2="290" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <p class="sec4-subtitle">Where our next beautiful memory will be created.</p>
+      </div>
+
+      <!-- Passport Stamp on Polaroid Top Right -->
+      <div class="passport-stamp">
+        <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path id="stamp-top" d="M 24,80 A 56,56 0 0,1 136,80" fill="none"/>
+            <path id="stamp-bot" d="M 136,80 A 56,56 0 0,1 24,80" fill="none"/>
+          </defs>
+          <text fill="#a8322d" font-family="'Special Elite', monospace" font-size="13" font-weight="bold" letter-spacing="3.5">
+            <textPath href="#stamp-top" startOffset="50%" text-anchor="middle">VADODARA</textPath>
+          </text>
+          <text x="80" y="85" text-anchor="middle" fill="#a8322d" font-family="'Special Elite', monospace" font-size="16" font-weight="bold" letter-spacing="1.5">
+            24 NOV 2026
+          </text>
+          <text fill="#a8322d" font-family="'Special Elite', monospace" font-size="12" font-weight="bold" letter-spacing="4">
+            <textPath href="#stamp-bot" startOffset="50%" text-anchor="middle">GUJARAT</textPath>
+          </text>
+        </svg>
+      </div>
+
+      <!-- Middle Torn Paper: The Grand Celebration -->
+      <div class="sec4-celebration gsap-fade-blur">
+        <div class="sec4-celebration-title">The Grand Celebration</div>
+
+        <!-- Floral Divider SVG -->
+        <div class="vintage-divider">
+          <svg viewBox="0 0 300 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="12" x2="125" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+            <g transform="translate(150, 12)">
+              <circle cx="0" cy="0" r="2.2" fill="#b65c36"/>
+              <ellipse cx="0" cy="-6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="0" cy="6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(-45 -4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(45 4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(45 -4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(-45 4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+            </g>
+            <line x1="175" y1="12" x2="290" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="sec4-hotel">Royal Orchid Hotel</div>
+        <div class="sec4-city">Vadodara, Gujarat</div>
+      </div>
+
+      <!-- Map Polaroid Area with Live Google Map Iframe behind MapFrame.webp -->
+      <div class="venue-map-box">
+        <!-- Google Maps Embed Iframe behind the frame -->
+        <div class="map-iframe-container">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.767870913089!2d73.16643507589698!3d22.286781343384234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc7d21a812849%3A0x8f4b458d00cd1a22!2sRoyal%20Orchid%20Central!5e0!3m2!1sen!2sin!4v1792669145228!5m2!1sen!2sin" 
+            class="venue-map-iframe" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+          <!-- Vintage Parchment Blend Tint Overlay -->
+          <div class="map-vintage-tint"></div>
+        </div>
+
+        <!-- Transparent Polaroid Map Frame Overlay -->
+        <img class="venue-map-frame-overlay" src="images/MapFrame.webp" alt="Royal Orchid Hotel Vadodara Map Frame" loading="lazy">
+
+        <!-- Interactive View on Map Button over Scalloped Badge -->
+        <a class="btn-view-map" href="https://maps.google.com/?q=Royal+Orchid+Central+Vadodara+Gujarat" target="_blank" rel="noopener noreferrer" aria-label="Open Royal Orchid Hotel in Google Maps">
+          <span>View on Map</span>
+          <div class="btn-view-map-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5: RSVP
+         ====================================================================== -->
+    <section class="scrapbook-sec sec-5" id="sec-5">
+      <div class="sec5-header gsap-fade-blur">
+        <h2 class="sec5-title">RSVP</h2>
+
+        <!-- Floral Divider SVG -->
+        <div class="vintage-divider">
+          <svg viewBox="0 0 300 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="12" x2="125" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+            <g transform="translate(150, 12)">
+              <circle cx="0" cy="0" r="2.2" fill="#b65c36"/>
+              <ellipse cx="0" cy="-6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="0" cy="6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(-45 -4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(45 4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(45 -4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(-45 4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+            </g>
+            <line x1="175" y1="12" x2="290" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <p class="sec5-subtitle">We would be delighted to have you with us.</p>
+      </div>
+
+      <!-- RSVP Form on Vintage Airmail Paper -->
+      <form class="rsvp-form-container gsap-fade-blur" id="rsvp-form" onsubmit="sendRSVP(event)">
+        <div class="rsvp-alert" id="rsvp-alert" role="alert"></div>
+
+        <!-- Field 1: Name -->
+        <label class="rsvp-label" for="rsvp-name">Your Name</label>
+        <input class="rsvp-input" type="text" id="rsvp-name" name="name" placeholder="Your Full Name" required autocomplete="name">
+
+        <!-- Field 2: Number of Guests -->
+        <label class="rsvp-label" for="rsvp-guests">Number of Guests</label>
+        <div class="rsvp-select-wrapper">
+          <select class="rsvp-select" id="rsvp-guests" name="guests">
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5+">5+</option>
+          </select>
+          <svg class="rsvp-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <!-- Field 3: Attendance -->
+        <label class="rsvp-label">Will you be attending?</label>
+        <div class="rsvp-radio-group">
+          <label class="rsvp-radio-label">
+            <input type="radio" name="attending" value="Yes" checked>
+            <div class="radio-circle">
+              <div class="radio-circle-dot"></div>
+            </div>
+            <span>Yes, can’t wait!</span>
+          </label>
+          <label class="rsvp-radio-label">
+            <input type="radio" name="attending" value="No">
+            <div class="radio-circle">
+              <div class="radio-circle-dot"></div>
+            </div>
+            <span>Sorry, will miss it</span>
+          </label>
+        </div>
+
+        <!-- Field 4: Special Message -->
+        <label class="rsvp-label" for="rsvp-message">Special Message (Optional)</label>
+        <textarea class="rsvp-textarea" id="rsvp-message" name="message" placeholder="Leave your warm wishes..."></textarea>
+
+        <!-- Submit Button -->
+        <button class="btn-rsvp-submit" type="submit" id="btn-rsvp">
+          <span>Send RSVP</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </form>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6: OUTRO
+         ====================================================================== -->
+    <section class="scrapbook-sec sec-6" id="sec-6">
+      <div class="sec6-content gsap-fade-blur">
+        <p class="sec6-text">Looking forward to celebrating with you!</p>
+
+        <!-- Floral Divider SVG -->
+        <div class="vintage-divider">
+          <svg viewBox="0 0 300 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="12" x2="125" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+            <g transform="translate(150, 12)">
+              <circle cx="0" cy="0" r="2.2" fill="#b65c36"/>
+              <ellipse cx="0" cy="-6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="0" cy="6" rx="2.4" ry="4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="6" cy="0" rx="4" ry="2.4" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(-45 -4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="-4.2" rx="3.6" ry="2.2" transform="rotate(45 4.2 -4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="-4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(45 -4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+              <ellipse cx="4.2" cy="4.2" rx="3.6" ry="2.2" transform="rotate(-45 4.2 4.2)" fill="none" stroke="#b65c36" stroke-width="1.2"/>
+            </g>
+            <line x1="175" y1="12" x2="290" y2="12" stroke="#b65c36" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         STRICT FOOTER IMPLEMENTATION
+         ====================================================================== -->
+    <footer class="footer" style="padding: max(8px, env(safe-area-inset-left, 0px)) max(12px + env(safe-area-inset-bottom, 0px)); text-align: center; border-top: 1px solid rgba(231,191,133,0.2);">
+      <p style="margin: 0; font-size: 2.8cqw; color: #8c7362; font-family: var(--sans);">
+        Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" style="color:var(--accent-light); text-decoration:none; font-weight:600;">Invite&nbsp;Box</a>
+      </p>
+    </footer>
+
+  </div><!-- /#app -->
+
+  <!-- Background Music Audio Element -->
+  <audio id="bg-music" src="images/bg-music.mp3" preload="auto" loop></audio>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
