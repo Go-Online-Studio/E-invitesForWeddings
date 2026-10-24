@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Shaadi Air ✈️ — Aarav &amp; Meera Wedding Invitation</title>
+  <meta name="description" content="Board Shaadi Air Flight 1402 to celebrate the destination wedding of Aarav &amp; Meera on 14 February 2027 in Manali, India.">
+  <meta name="theme-color" content="#0a1628">
+
+  <!-- Preconnect & Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- High Priority Asset Preloads (Intro & First Section) -->
+  <link rel="preload" href="images/Overlay.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="images/Shutter.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="images/Scenary.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="images/Sec1.webp" as="image" type="image/webp" fetchpriority="high">
+
+  <!-- GSAP Animation Library (Deferred for unblocked rendering) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <!-- Custom Modular Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Pre-Flight Boarding Loader (Max 3s / Critical Assets Aware) -->
+  <div id="preflight-loader" role="status" aria-label="Loading boarding pass">
+    <div class="pfl-container">
+      <div class="pfl-badge">
+        <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        <span>Shaadi Air &middot; 1402</span>
+      </div>
+      
+      <div class="pfl-radar">
+        <div class="pfl-radar-ring"></div>
+        <div class="pfl-radar-sweep"></div>
+        <svg class="pfl-plane-icon" viewBox="0 0 24 24">
+          <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+        </svg>
+      </div>
+
+      <h2 class="pfl-title">Preparing for Boarding</h2>
+      <p class="pfl-status" id="pfl-status-text">Loading Flight Assets...</p>
+
+      <div class="pfl-progress-track">
+        <div class="pfl-progress-bar" id="pfl-progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Landscape Orientation Warning -->
+  <aside id="landscape-warning" role="alert">
+    <svg class="lw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+      <line x1="12" y1="18" x2="12.01" y2="18"/>
+    </svg>
+    <h2 class="lw-title">Please Rotate Your Device</h2>
+    <p class="lw-text">Shaadi Air is best experienced aboard your mobile device in portrait mode.</p>
+  </aside>
+
+
+  <!-- 3. Music Floating Action Button (FAB) -->
+  <button id="music-fab" type="button" aria-label="Toggle background music">
+    <div class="music-ring" aria-hidden="true"></div>
+    <svg id="music-icon-playing" viewBox="0 0 24 24">
+      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+    </svg>
+    <svg id="music-icon-paused" viewBox="0 0 24 24" style="display: none;">
+      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+    </svg>
+  </button>
+
+  <!-- Audio Assets -->
+  <audio id="shutter-sound" preload="metadata" src="images/magnific__create-a-4-second-stereo-audio-file-_wav_mp3_-44_1-khz_-featuring-a-seamless_-la__1607%20(1).mp3"></audio>
+  <audio id="bg-music" loop preload="none" src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3"></audio>
+
+  <!-- 5. Main Application (#app) Constrained Container -->
+  <main id="app">
+
+    <!-- 4. Intro Overlay Sequence ("The Airplane Window" Experience) - Contained within #app theme boundaries -->
+    <div id="intro-layer" role="button" aria-label="Tap anywhere to open airplane window">
+      <div class="intro-stage">
+
+        <!-- Top Header Bar -->
+        <div class="intro-top-bar">
+          <div class="itb-brand">
+            <span>SHAADI AIR</span>
+            <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          </div>
+          <div class="itb-divider"></div>
+          <div class="itb-item">
+            <span class="lbl">FLIGHT</span>
+            <span class="val">1402</span>
+          </div>
+          <div class="itb-divider"></div>
+          <div class="itb-item">
+            <span class="lbl">GATE</span>
+            <span class="val">07</span>
+          </div>
+        </div>
+
+        <!-- Window Cutout with 3 Stacked Layers -->
+        <div class="intro-window-mask">
+          <!-- Layer 1: Scenary (Bottom) -->
+          <img class="intro-scenery" src="images/Scenary.webp" alt="Landscape outside airplane window" fetchpriority="high" loading="eager" decoding="async">
+          <!-- Sun glare light layer -->
+          <div class="intro-light-flare"></div>
+          <!-- Layer 2: Shutter (Middle) -->
+          <img class="intro-shutter" src="images/Shutter.webp" alt="Airplane window blind shutter" fetchpriority="high" loading="eager" decoding="async">
+        </div>
+
+        <!-- Layer 3: Overlay (Top airplane cabin frame) -->
+        <img class="intro-overlay-img" src="images/Overlay.webp" alt="Airplane interior cabin view" fetchpriority="high" loading="eager" decoding="async">
+
+        <!-- Natural Sun Flood Light coming inside cabin from window -->
+        <div class="intro-cabin-light"></div>
+
+        <!-- Prompt: TAP TO OPEN -->
+        <div class="intro-prompt" id="intro-prompt">
+          <button class="intro-tap-btn" type="button">TAP TO OPEN</button>
+          <div class="intro-chevron">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================================
+         SECTION 1: COVER / HERO
+         ======================================================== -->
+    <section class="invitation-section ratio-cover" id="sec1">
+      <!-- Top Corners -->
+      <div class="s1-corner-tl reveal-item">
+        DIFFERENT<br>PLACES<br>SAME<br>HEARTS
+      </div>
+      <div class="s1-corner-tr reveal-item">
+        A LIFETIME<br>JOURNEY<br>TOGETHER
+      </div>
+
+      <!-- Names & Subtitles -->
+      <div class="s1-content">
+        <h1 class="s1-names reveal-item">
+          Aarav<span class="amp">&amp;</span><br>Meera
+        </h1>
+        <p class="s1-tagline reveal-item">Two continents. One forever.</p>
+
+        <!-- Boarding Ticket Pill -->
+        <div class="s1-ticket-tag reveal-item">
+          <span>SHAADI AIR</span>
+          <svg class="inline-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          <span class="sep">|</span>
+          <span>DESTINATION WEDDING</span>
+        </div>
+
+        <!-- Date & Destination -->
+        <div class="s1-meta-row reveal-item">
+          <div class="s1-meta-col">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+              <circle cx="8" cy="14" r="1" fill="currentColor"/>
+              <circle cx="12" cy="14" r="1" fill="currentColor"/>
+              <circle cx="16" cy="14" r="1" fill="currentColor"/>
+            </svg>
+            <div class="s1-meta-text">
+              <span class="s1-meta-lbl">DATE</span>
+              <span class="s1-meta-val">14 FEBRUARY 2027</span>
+            </div>
+          </div>
+
+          <div class="s1-meta-divider"></div>
+
+          <div class="s1-meta-col">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="s1-meta-text">
+              <span class="s1-meta-lbl">DESTINATION</span>
+              <span class="s1-meta-val">MANALI, INDIA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator (Directly below the flight route) -->
+      <div class="s1-scroll-indicator" id="scroll-prompt">
+        <div class="s1-scroll-line"></div>
+        <span class="s1-scroll-text">SCROLL TO BEGIN</span>
+        <svg class="s1-scroll-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 2: 01 / HALDI
+         ======================================================== -->
+    <section class="invitation-section ratio-standard theme-light lazy-bg" id="sec2" data-bg="images/Sec2.webp">
+      <!-- Dark Blue Flight Bar -->
+      <div class="ticket-flight-bar reveal-item">
+        <div class="tfb-airline">
+          <span>SHAADI AIR</span>
+          <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">FLIGHT</span>
+          <span class="val">1402</span>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">DESTINATION</span>
+          <span class="val">MANALI</span>
+        </div>
+      </div>
+
+      <!-- Ticket Body -->
+      <div class="ticket-body">
+        <div class="ticket-heading-row reveal-item">
+          <span class="ticket-index">01 /</span>
+          <h2 class="ticket-title">HALDI</h2>
+          <p class="ticket-subtitle">A golden start to forever.</p>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-datetime-row reveal-item">
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">DATE</span>
+              <span class="tmb-val">14 FEBRUARY 2027</span>
+            </div>
+          </div>
+
+          <div class="t-meta-sep"></div>
+
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">TIME</span>
+              <span class="tmb-val">10:00 AM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-venue-row reveal-item">
+          <div class="ticket-venue-block">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="tv-text">
+              <span class="tv-lbl">VENUE</span>
+              <span class="tv-val">THE RIVERSIDE RETREAT<br>MANALI, INDIA</span>
+            </div>
+          </div>
+
+          <button class="ticket-cta-btn btn-yellow" type="button" onclick="showToast('Haldi Ceremony saved to calendar!')">
+            <svg class="c-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            <span>HALDI CEREMONY</span>
+            <svg class="c-arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Perforation Dotted Tear Line -->
+      <div class="ticket-perforation" aria-hidden="true"></div>
+
+      <!-- Bottom Stub Text (Right of barcode) -->
+      <div class="ticket-stub-text reveal-item">
+        GOOD PEOPLE<br>BRIGHTER<br>CELEBRATIONS<br>TOGETHER
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 3: 02 / MEHENDI
+         ======================================================== -->
+    <section class="invitation-section ratio-standard theme-light lazy-bg" id="sec3" data-bg="images/Sec3.webp">
+      <!-- Dark Blue Flight Bar -->
+      <div class="ticket-flight-bar reveal-item">
+        <div class="tfb-airline">
+          <span>SHAADI AIR</span>
+          <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">FLIGHT</span>
+          <span class="val">1402</span>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">DESTINATION</span>
+          <span class="val">UDAIPUR</span>
+        </div>
+      </div>
+
+      <!-- Ticket Body -->
+      <div class="ticket-body">
+        <div class="ticket-heading-row reveal-item">
+          <span class="ticket-index">02 /</span>
+          <h2 class="ticket-title">MEHENDI</h2>
+          <p class="ticket-subtitle">Patterns of love, moments to remember.</p>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-datetime-row reveal-item">
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">DATE</span>
+              <span class="tmb-val">14 FEBRUARY 2027</span>
+            </div>
+          </div>
+
+          <div class="t-meta-sep"></div>
+
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">TIME</span>
+              <span class="tmb-val">02:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-venue-row reveal-item">
+          <div class="ticket-venue-block">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="tv-text">
+              <span class="tv-lbl">VENUE</span>
+              <span class="tv-val">LAKESIDE LAWN<br>UDAIPUR, INDIA</span>
+            </div>
+          </div>
+
+          <button class="ticket-cta-btn btn-coral" type="button" onclick="showToast('Mehendi Celebration saved to calendar!')">
+            <svg class="c-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            <span>MEHENDI CELEBRATION</span>
+            <svg class="c-arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Perforation Dotted Tear Line -->
+      <div class="ticket-perforation" aria-hidden="true"></div>
+
+      <!-- Bottom Stub Text (Right of barcode) -->
+      <div class="ticket-stub-text reveal-item">
+        GOOD PEOPLE<br>BRIGHTER<br>CELEBRATIONS<br>TOGETHER
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 4: 03 / SANGEET
+         ======================================================== -->
+    <section class="invitation-section ratio-standard theme-dark lazy-bg" id="sec4" data-bg="images/Sec4.webp">
+      <!-- Dark Blue Flight Bar -->
+      <div class="ticket-flight-bar reveal-item">
+        <div class="tfb-airline">
+          <span>SHAADI AIR</span>
+          <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">FLIGHT</span>
+          <span class="val">1402</span>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">DESTINATION</span>
+          <span class="val">UDAIPUR</span>
+        </div>
+      </div>
+
+      <!-- Ticket Body -->
+      <div class="ticket-body">
+        <div class="ticket-heading-row reveal-item">
+          <span class="ticket-index">03 /</span>
+          <h2 class="ticket-title">SANGEET</h2>
+          <p class="ticket-subtitle">One night. A thousand memories.</p>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-datetime-row reveal-item">
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">DATE</span>
+              <span class="tmb-val">14 FEBRUARY 2027</span>
+            </div>
+          </div>
+
+          <div class="t-meta-sep"></div>
+
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">TIME</span>
+              <span class="tmb-val">07:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-venue-row reveal-item">
+          <div class="ticket-venue-block">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="tv-text">
+              <span class="tv-lbl">VENUE</span>
+              <span class="tv-val">THE GRAND BALLROOM<br>UDAIPUR, INDIA</span>
+            </div>
+          </div>
+
+          <button class="ticket-cta-btn btn-yellow" type="button" onclick="showToast('Sangeet Night saved to calendar!')">
+            <svg class="c-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            <span>SANGEET NIGHT</span>
+            <svg class="c-arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Perforation Dotted Tear Line -->
+      <div class="ticket-perforation" aria-hidden="true"></div>
+
+      <!-- Bottom Stub Text (Right of barcode) -->
+      <div class="ticket-stub-text reveal-item">
+        DANCE<br>MUSIC<br>GOOD PEOPLE<br>FOREVER TOGETHER
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 5: 04 / WEDDING
+         ======================================================== -->
+    <section class="invitation-section ratio-standard theme-dark lazy-bg" id="sec5" data-bg="images/Sec5.webp">
+      <!-- Dark Blue Flight Bar -->
+      <div class="ticket-flight-bar reveal-item">
+        <div class="tfb-airline">
+          <span>SHAADI AIR</span>
+          <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">FLIGHT</span>
+          <span class="val">1402</span>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">DESTINATION</span>
+          <span class="val">MANALI</span>
+        </div>
+      </div>
+
+      <!-- Ticket Body -->
+      <div class="ticket-body">
+        <div class="ticket-heading-row reveal-item">
+          <span class="ticket-index">04 /</span>
+          <h2 class="ticket-title">WEDDING</h2>
+          <p class="ticket-subtitle">Our forever begins here.</p>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-datetime-row reveal-item">
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">DATE</span>
+              <span class="tmb-val">14 FEBRUARY 2027</span>
+            </div>
+          </div>
+
+          <div class="t-meta-sep"></div>
+
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">TIME</span>
+              <span class="tmb-val">06:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-venue-row reveal-item">
+          <div class="ticket-venue-block">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="tv-text">
+              <span class="tv-lbl">VENUE</span>
+              <span class="tv-val">THE RIVERSIDE TERRACE<br>MANALI, INDIA</span>
+            </div>
+          </div>
+
+          <button class="ticket-cta-btn btn-yellow" type="button" onclick="showToast('Wedding Ceremony saved to calendar!')">
+            <svg class="c-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            <span>WEDDING CEREMONY</span>
+            <svg class="c-arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Perforation Dotted Tear Line -->
+      <div class="ticket-perforation" aria-hidden="true"></div>
+
+      <!-- Bottom Stub Text (Right of barcode) -->
+      <div class="ticket-stub-text reveal-item">
+        LOVE<br>FAMILY<br>NEW BEGINNINGS<br>TOGETHER ALWAYS
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 6: 05 / RECEPTION
+         ======================================================== -->
+    <section class="invitation-section ratio-standard theme-light lazy-bg" id="sec6" data-bg="images/Sec6.webp">
+      <!-- Dark Blue Flight Bar -->
+      <div class="ticket-flight-bar reveal-item">
+        <div class="tfb-airline">
+          <span>SHAADI AIR</span>
+          <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">FLIGHT</span>
+          <span class="val">1402</span>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">DESTINATION</span>
+          <span class="val">MANALI</span>
+        </div>
+      </div>
+
+      <!-- Ticket Body -->
+      <div class="ticket-body">
+        <div class="ticket-heading-row reveal-item">
+          <span class="ticket-index">05 /</span>
+          <h2 class="ticket-title">RECEPTION</h2>
+          <p class="ticket-subtitle">Let's celebrate our next chapter.</p>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-datetime-row reveal-item">
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">DATE</span>
+              <span class="tmb-val">14 FEBRUARY 2027</span>
+            </div>
+          </div>
+
+          <div class="t-meta-sep"></div>
+
+          <div class="ticket-meta-block">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div class="tmb-text">
+              <span class="tmb-lbl">TIME</span>
+              <span class="tmb-val">08:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-divider reveal-item"></div>
+
+        <div class="ticket-venue-row reveal-item">
+          <div class="ticket-venue-block">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="tv-text">
+              <span class="tv-lbl">VENUE</span>
+              <span class="tv-val">THE MOUNTAIN VIEW RESORT<br>MANALI, INDIA</span>
+            </div>
+          </div>
+
+          <button class="ticket-cta-btn btn-yellow" type="button" onclick="showToast('Reception saved to calendar!')">
+            <svg class="c-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            <span>RECEPTION EVENING</span>
+            <svg class="c-arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Perforation Dotted Tear Line -->
+      <div class="ticket-perforation" aria-hidden="true"></div>
+
+      <!-- Bottom Stub Text (Right of barcode) -->
+      <div class="ticket-stub-text reveal-item">
+        LOVE<br>FAMILY<br>NEW BEGINNINGS<br>TOGETHER ALWAYS
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 7: DESTINATION & MAP
+         ======================================================== -->
+    <section class="invitation-section ratio-standard lazy-bg" id="sec7" data-bg="images/Sec7.webp">
+      <!-- Flight Header Bar -->
+      <div class="s7-flight-bar reveal-item">
+        <div class="itb-brand">
+          <svg class="inline-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          <div>
+            <div style="font-weight:700; line-height: 1.1;">SHAADI AIR</div>
+            <div style="font-size: 1.7cqw; color: #718096; letter-spacing:0.12em;">DESTINATION WEDDING</div>
+          </div>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">FLIGHT</span>
+          <span class="val" style="color:var(--text-dark);">1402</span>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">DESTINATION</span>
+          <span class="val" style="color:var(--text-dark);">MANALI</span>
+        </div>
+      </div>
+      <div class="ticket-perforation" aria-hidden="true"></div>
+
+      <!-- Top Text inside card -->
+      <div class="s7-card-top reveal-item">
+        <span class="s7-badge">FINAL DESTINATION</span>
+        <h2 class="s7-title">Manali, India</h2>
+        <p class="s7-date">14 FEBRUARY 2027</p>
+      </div>
+
+      <!-- Venue details under Map -->
+      <div class="s7-venue-box reveal-item">
+        <img class="s7-resort-thumb lazy-img" data-src="images/Sec7.webp" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 16'%3E%3C/svg%3E" alt="Resort Thumbnail" loading="lazy" decoding="async" style="object-position: center top;">
+        <div class="s7-venue-info">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="#ffffff"/></svg>
+          <div class="s7-vi-text">
+            <span class="s7-vi-lbl">VENUE</span>
+            <span class="s7-vi-val">Wedding Venue</span>
+            <span class="s7-vi-city">MANALI, INDIA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Get Directions Button -->
+      <a class="s7-directions-btn reveal-item" href="https://maps.google.com/?q=Manali,Himachal+Pradesh,India" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        <div class="btn-divider"></div>
+        <span>GET DIRECTIONS</span>
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+
+      <!-- Bottom 3 Feature Labels -->
+      <div class="s7-features-labels reveal-item">
+        <div class="s7-feat">SNOWY<br>MOUNTAINS</div>
+        <div class="s7-feat">SCENIC<br>BEAUTY</div>
+        <div class="s7-feat">UNFORGETTABLE<br>CELEBRATIONS</div>
+      </div>
+
+      <!-- Section 7 Stub text -->
+      <div class="s7-stub-text reveal-item">
+        AARAV &amp; MEERA &nbsp;&middot;&nbsp; 14 FEB 2027
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 8: RSVP ("YOUR SEAT IS WAITING")
+         ======================================================== -->
+    <section class="invitation-section ratio-standard lazy-bg" id="sec8" data-bg="images/Sec8.webp">
+      <!-- Sky Text -->
+      <div class="s8-sky-tl reveal-item">
+        TOGETHER<br>BEYOND<br>BORDERS
+      </div>
+      <div class="s8-sky-tr reveal-item">
+        LOVE<br>TAKES<br>FLIGHT
+      </div>
+
+      <!-- Flight Bar -->
+      <div class="s8-flight-bar reveal-item">
+        <div class="itb-brand">
+          <svg class="inline-plane" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          <div>
+            <div style="font-weight:700; line-height: 1.1;">SHAADI AIR</div>
+            <div style="font-size: 1.7cqw; color: #718096; letter-spacing:0.12em;">DESTINATION WEDDING</div>
+          </div>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">FLIGHT</span>
+          <span class="val" style="color:var(--text-dark);">1402</span>
+        </div>
+        <div class="tfb-div"></div>
+        <div class="tfb-item">
+          <span class="lbl">DESTINATION</span>
+          <span class="val" style="color:var(--text-dark);">MANALI</span>
+        </div>
+      </div>
+      <div class="ticket-perforation" aria-hidden="true"></div>
+
+      <!-- Card Content -->
+      <div class="s8-content">
+        <!-- Decorative Globe Icon -->
+
+        <h2 class="s8-title reveal-item">Your Seat<br>Is Waiting</h2>
+        <p class="s8-subtitle reveal-item">KINDLY RSVP TO CONFIRM YOUR ARRIVAL</p>
+
+        <!-- The RSVP WhatsApp Form -->
+        <form class="rsvp-form" id="rsvp-form" novalidate onsubmit="handleRsvpSubmit(event)">
+          <!-- Name Input -->
+          <div class="form-group reveal-item">
+            <label class="form-label" for="rsvp-name">YOUR NAME</label>
+            <div class="input-container">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input class="form-input" id="rsvp-name" type="text" placeholder="Enter your name" required autocomplete="name">
+            </div>
+          </div>
+
+          <!-- Email Input -->
+          <div class="form-group reveal-item">
+            <label class="form-label" for="rsvp-email">EMAIL ADDRESS</label>
+            <div class="input-container">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input class="form-input" id="rsvp-email" type="email" placeholder="Enter your email address" required autocomplete="email">
+            </div>
+          </div>
+
+          <!-- Guests Select -->
+          <div class="form-group reveal-item">
+            <label class="form-label" for="rsvp-guests">GUESTS</label>
+            <div class="input-container">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <select class="form-select" id="rsvp-guests">
+                <option value="1 Guest">1 Guest</option>
+                <option value="2 Guests" selected>2 Guests</option>
+                <option value="3 Guests">3 Guests</option>
+                <option value="4+ Guests">4+ Guests</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Attendance Toggle -->
+          <div class="form-group reveal-item">
+            <label class="form-label">WILL YOU JOIN US?</label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" id="toggle-yes" type="button" onclick="setAttendance('Yes')">
+                <span class="radio-circle"></span>
+                <span>Yes</span>
+              </button>
+              <button class="toggle-btn" id="toggle-no" type="button" onclick="setAttendance('No')">
+                <span class="radio-circle"></span>
+                <span>No</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button class="rsvp-submit-btn reveal-item" type="submit">
+            <span>RSVP</span>
+            <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Section 8 Stub -->
+      <div class="s8-stub-text reveal-item">
+        AARAV &amp; MEERA &nbsp;&middot;&nbsp; 14 FEB 2027
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SECTION 9: 09 / THANK YOU ("FLIGHT COMPLETE")
+         ======================================================== -->
+    <section class="invitation-section ratio-thankyou lazy-bg" id="sec9" data-bg="images/Sec9.webp">
+      <!-- Top Complete Header -->
+      <div class="s9-top-header reveal-item">
+        <div class="s9-brand-line">
+          <div class="s9-line"></div>
+          <span>SHAADI AIR</span>
+          <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          <div class="s9-line"></div>
+        </div>
+        <span class="s9-complete-tag">FLIGHT COMPLETE</span>
+      </div>
+
+      <!-- Names & Journey Message -->
+      <div class="s9-names-box">
+        <h2 class="s9-names reveal-item">
+          Aarav <span class="amp">&amp;</span> Meera
+        </h2>
+        <p class="s9-date reveal-item">14 &nbsp;FEBRUARY&nbsp; 2027</p>
+
+        <div class="s9-heart-icon reveal-item">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+
+        <p class="s9-message reveal-item">
+          Thank you for being<br>part of our journey.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         STRICT FOOTER IMPLEMENTATION
+         ======================================================== -->
+    <footer class="footer">
+      <p class="footer-credit">
+        Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer">Invite&nbsp;Box</a>
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- Toast Notification for Feedback -->
+  <div class="form-toast" id="toast-msg" role="status" aria-live="polite"></div>
+
+  <!-- ==========================================================================
+       Inline JavaScript
+       ========================================================================== -->
+  <!-- Custom Modular Application Script -->
+  <script src="script.js" defer></script>
+</body>
+</html>
