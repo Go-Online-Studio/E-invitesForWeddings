@@ -275,13 +275,21 @@ body.unlocked {
    Intro Overlay Sequence ("Airplane Window" 3-Layer Experience)
    ========================================================================== */
 #intro-layer {
-  position: absolute;
+  position: fixed;
+  inset: 0;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
   width: 100%;
+  height: 100%;
   height: 100vh;
-  height: 100dvh;
-  max-height: 100%;
+  height: 100lvh;
+  min-height: 100%;
+  min-height: 100vh;
+  min-height: 100lvh;
+  min-height: -webkit-fill-available;
   z-index: 99999;
   background-color: #030812;
   display: flex;
@@ -290,33 +298,39 @@ body.unlocked {
   cursor: pointer;
   overflow: hidden;
   user-select: none;
+  touch-action: none;
+  overscroll-behavior: none;
   transition: opacity 0.8s ease;
 }
 
 .intro-stage {
   position: relative;
   width: 100%;
+  max-width: var(--card-width);
   height: 100%;
+  min-height: 100%;
   overflow: hidden;
   background: #02060d;
+  container-type: inline-size;
+  container-name: introStage;
 }
 
 /* Top Header Bar inside Intro */
 .intro-top-bar {
   position: absolute;
-  top: 5.5cqw;
-  left: 6cqw;
-  right: 6cqw;
+  top: max(16px, calc(env(safe-area-inset-top, 0px) + 12px));
+  left: max(16px, calc(env(safe-area-inset-left, 0px) + 16px));
+  right: max(16px, calc(env(safe-area-inset-right, 0px) + 16px));
   z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2cqw 4cqw;
+  padding: clamp(6px, 1.8cqw, 10px) clamp(10px, 3.5cqw, 16px);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(5, 15, 30, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 4px;
+  background: rgba(5, 15, 30, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 6px;
   font-family: var(--font-sans);
   font-size: clamp(10px, 2.5cqw, 13px);
   letter-spacing: 0.14em;
@@ -475,16 +489,22 @@ body.unlocked {
 /* Bottom Tap Prompt */
 .intro-prompt {
   position: absolute;
-  bottom: 8cqw;
+  bottom: max(38px, calc(env(safe-area-inset-bottom, 0px) + 32px));
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5cqw;
+  gap: clamp(6px, 1.5cqw, 10px);
   z-index: 40;
   pointer-events: none;
   transition: opacity 0.4s ease;
+}
+
+@media (max-height: 680px) {
+  .intro-prompt {
+    bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+  }
 }
 
 .intro-tap-btn {
@@ -492,19 +512,20 @@ body.unlocked {
   border: 1px solid #c89d58;
   color: #d4a860;
   font-family: var(--font-sans);
-  font-size: clamp(11px, 3cqw, 14px);
+  font-size: clamp(11px, 2.9cqw, 13.5px);
   font-weight: 600;
   letter-spacing: 0.25em;
-  padding: clamp(8px, 2cqw, 11px) clamp(18px, 6.5cqw, 32px);
+  padding: clamp(9px, 2.2cqw, 12px) clamp(20px, 6.5cqw, 32px);
   border-radius: 4px;
   text-transform: uppercase;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.4),
     inset 0 0 10px rgba(200, 157, 88, 0.15);
   animation: promptPulse 2.4s ease-in-out infinite;
   white-space: nowrap;
+  pointer-events: auto;
 }
 
 @keyframes promptPulse {

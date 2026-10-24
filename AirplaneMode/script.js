@@ -244,6 +244,11 @@
 
     if (introLayer) {
       introLayer.addEventListener('click', handleIntroTap, { once: true });
+      introLayer.addEventListener('touchmove', (e) => {
+        if (!introCompleted) {
+          e.preventDefault();
+        }
+      }, { passive: false });
     }
 
     /* 6. Post-Intro Unlock & Triggers */
