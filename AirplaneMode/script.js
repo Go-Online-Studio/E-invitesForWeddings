@@ -470,3 +470,202 @@ Thank you for being part of our journey! ✨`;
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    /* ==========================================================================
+       13. Wedding Events & Calendar Integration (Google & Apple)
+       ========================================================================== */
+    const WEDDING_EVENTS = {
+      haldi: {
+        id: 'haldi',
+        badge: '01 / CEREMONY',
+        title: 'Haldi Ceremony — Aarav & Meera Wedding',
+        shortTitle: 'Haldi Ceremony',
+        displayDate: '14 February 2027',
+        displayTime: '10:00 AM',
+        location: 'The Riverside Retreat, Manali, Himachal Pradesh, India',
+        description: 'Join us to celebrate the joyous Haldi Ceremony of Aarav & Meera aboard Shaadi Air Flight 1402! Location: The Riverside Retreat, Manali.',
+        // 2027-02-14 10:00 AM to 01:00 PM IST (UTC+05:30 -> 04:30 to 07:30 UTC)
+        startUtc: '20270214T043000Z',
+        endUtc: '20270214T073000Z',
+        startLocal: '20270214T100000',
+        endLocal: '20270214T130000'
+      },
+      mehendi: {
+        id: 'mehendi',
+        badge: '02 / CELEBRATION',
+        title: 'Mehendi Celebration — Aarav & Meera Wedding',
+        shortTitle: 'Mehendi Celebration',
+        displayDate: '14 February 2027',
+        displayTime: '02:00 PM',
+        location: 'Lakeside Lawn, Udaipur, Rajasthan, India',
+        description: 'Celebrate the colorful Mehendi patterns and music of Aarav & Meera! Flight 1402 Destination Udaipur.',
+        // 2027-02-14 02:00 PM to 05:30 PM IST (UTC+05:30 -> 08:30 to 12:00 UTC)
+        startUtc: '20270214T083000Z',
+        endUtc: '20270214T120000Z',
+        startLocal: '20270214T140000',
+        endLocal: '20270214T173000'
+      },
+      sangeet: {
+        id: 'sangeet',
+        badge: '03 / NIGHT',
+        title: 'Sangeet Night — Aarav & Meera Wedding',
+        shortTitle: 'Sangeet Night',
+        displayDate: '14 February 2027',
+        displayTime: '07:00 PM',
+        location: 'The Grand Ballroom, Udaipur, Rajasthan, India',
+        description: 'An evening of rhythm, performances, dance and celebration for Aarav & Meera Wedding!',
+        // 2027-02-14 07:00 PM to 11:30 PM IST (UTC+05:30 -> 13:30 to 18:00 UTC)
+        startUtc: '20270214T133000Z',
+        endUtc: '20270214T180000Z',
+        startLocal: '20270214T190000',
+        endLocal: '20270214T233000'
+      },
+      wedding: {
+        id: 'wedding',
+        badge: '04 / MAIN CEREMONY',
+        title: 'Wedding Ceremony (Pheras) — Aarav & Meera',
+        shortTitle: 'Wedding Ceremony',
+        displayDate: '14 February 2027',
+        displayTime: '06:00 PM',
+        location: 'The Riverside Terrace, Manali, Himachal Pradesh, India',
+        description: 'The sacred wedding ceremony and pheras of Aarav & Meera against the majestic snowy Himalayan peaks.',
+        // 2027-02-14 06:00 PM to 10:00 PM IST (UTC+05:30 -> 12:30 to 16:30 UTC)
+        startUtc: '20270214T123000Z',
+        endUtc: '20270214T163000Z',
+        startLocal: '20270214T180000',
+        endLocal: '20270214T220000'
+      },
+      reception: {
+        id: 'reception',
+        badge: '05 / EVENING',
+        title: 'Wedding Reception — Aarav & Meera',
+        shortTitle: 'Reception Evening',
+        displayDate: '14 February 2027',
+        displayTime: '08:00 PM',
+        location: 'The Mountain View Resort, Manali, Himachal Pradesh, India',
+        description: 'Dinner, toasts, and unforgettable celebrations with the newlyweds Aarav & Meera!',
+        // 2027-02-14 08:00 PM to 11:59 PM IST (UTC+05:30 -> 14:30 to 18:29 UTC)
+        startUtc: '20270214T143000Z',
+        endUtc: '20270214T182900Z',
+        startLocal: '20270214T200000',
+        endLocal: '20270214T235900'
+      }
+    };
+
+    let activeCalendarEvent = WEDDING_EVENTS.haldi;
+
+    function openCalendarModal(eventId) {
+      const eventData = WEDDING_EVENTS[eventId];
+      if (!eventData) return;
+      activeCalendarEvent = eventData;
+
+      // Populate preview data inside the modal
+      const badgeEl = document.getElementById('cal-summary-badge');
+      const titleEl = document.getElementById('cal-summary-title');
+      const dateEl = document.getElementById('cal-summary-date');
+      const timeEl = document.getElementById('cal-summary-time');
+      const venueEl = document.getElementById('cal-summary-venue');
+
+      if (badgeEl) badgeEl.textContent = eventData.badge;
+      if (titleEl) titleEl.textContent = eventData.shortTitle;
+      if (dateEl) dateEl.textContent = eventData.displayDate;
+      if (timeEl) timeEl.textContent = eventData.displayTime;
+      if (venueEl) venueEl.textContent = eventData.location;
+
+      const modal = document.getElementById('calendar-modal');
+      if (modal) {
+        modal.style.display = 'flex';
+        // Force reflow for CSS transition
+        void modal.offsetWidth;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeCalendarModal() {
+      const modal = document.getElementById('calendar-modal');
+      if (!modal) return;
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        if (!modal.classList.contains('active')) {
+          modal.style.display = 'none';
+        }
+      }, 300);
+    }
+
+    // Close on backdrop tap or Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCalendarModal();
+      }
+    });
+
+    const calModalBackdrop = document.getElementById('calendar-modal');
+    if (calModalBackdrop) {
+      calModalBackdrop.addEventListener('click', (e) => {
+        if (e.target === calModalBackdrop) {
+          closeCalendarModal();
+        }
+      });
+    }
+
+    // Save to Google Calendar
+    function saveEventToGoogle() {
+      if (!activeCalendarEvent) return;
+      const ev = activeCalendarEvent;
+      const googleUrl = new URL('https://calendar.google.com/calendar/render');
+      googleUrl.searchParams.set('action', 'TEMPLATE');
+      googleUrl.searchParams.set('text', ev.title);
+      googleUrl.searchParams.set('dates', `${ev.startUtc}/${ev.endUtc}`);
+      googleUrl.searchParams.set('details', ev.description);
+      googleUrl.searchParams.set('location', ev.location);
+
+      window.open(googleUrl.toString(), '_blank');
+      showToast(`${ev.shortTitle} opened in Google Calendar!`);
+      closeCalendarModal();
+    }
+
+    // Save to Apple Calendar (.ics file generation with data URI / blob download)
+    function saveEventToApple() {
+      if (!activeCalendarEvent) return;
+      const ev = activeCalendarEvent;
+
+      const icsLines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Shaadi Air//Wedding Invitation//EN',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'BEGIN:VEVENT',
+        `UID:shaadiair-${ev.id}-20270214@invitebox.in`,
+        `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
+        `DTSTART:${ev.startUtc}`,
+        `DTEND:${ev.endUtc}`,
+        `SUMMARY:${ev.title}`,
+        `DESCRIPTION:${ev.description.replace(/\n/g, '\\n')}`,
+        `LOCATION:${ev.location}`,
+        'STATUS:CONFIRMED',
+        'BEGIN:VALARM',
+        'TRIGGER:-PT60M',
+        'ACTION:DISPLAY',
+        `DESCRIPTION:Reminder: ${ev.shortTitle} begins in 1 hour`,
+        'END:VALARM',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ];
+
+      const icsContent = icsLines.join('\r\n');
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const downloadUrl = URL.createObjectURL(blob);
+      const tempLink = document.createElement('a');
+      tempLink.href = downloadUrl;
+      tempLink.setAttribute('download', `${ev.id}-ceremony-shaadiair.ics`);
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      setTimeout(() => URL.revokeObjectURL(downloadUrl), 4000);
+
+      showToast(`Apple Calendar invitation downloaded for ${ev.shortTitle}!`);
+      closeCalendarModal();
+    }
