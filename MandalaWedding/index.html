@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Tejas &amp; Mitali — Wedding Invitation</title>
+  <meta name="description" content="Together with our families, we joyfully invite you to celebrate the wedding celebrations of Tejas and Mitali on 17 February 2028 in Jaipur, Rajasthan.">
+  <meta name="theme-color" content="#68253A">
+
+  <!-- Preload Critical Above-the-fold Assets -->
+  <link rel="preload" href="images/Sec1.webp" as="image" type="image/webp">
+  <link rel="preload" href="images/MapFrame.webp" as="image" type="image/webp">
+  <link rel="preload" href="images/EventCard1.webp" as="image" type="image/webp">
+
+  <!-- Google Fonts: Playfair Display, Great Vibes, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- GSAP & ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Landscape Warning Overlay
+       ========================================================================== -->
+  <div id="landscape-warning" role="alert" aria-live="assertive">
+    <div class="lw-content">
+      <div class="lw-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="6" width="24" height="36" rx="4" stroke="currentColor" stroke-width="2.5"/>
+          <circle cx="24" cy="36" r="2" fill="currentColor"/>
+          <path d="M20 10H28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="lw-title">Please Rotate Your Device</h2>
+      <p class="lw-text">For the most enchanting wedding invitation experience, please view in portrait mode.</p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Full-Screen Video Intro Overlay
+       ========================================================================== -->
+  <div id="intro-layer" aria-label="Wedding Invitation Intro">
+    <div class="intro-app-wrapper" id="intro-app-wrapper">
+      <!-- Tap Screen Prompt Card -->
+      <div id="tap-screen" class="tap-card">
+        <div class="intro-wax-seal" aria-hidden="true">
+          <svg viewBox="0 0 100 100" class="wax-seal-svg">
+            <circle cx="50" cy="50" r="44" fill="#68253A" stroke="#C68057" stroke-width="2"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#C68057" stroke-width="1" stroke-dasharray="3,3"/>
+            <path d="M50 24C50 24 43 32 43 37C43 41.5 46.5 43 50 43C53.5 43 57 41.5 57 37C57 32 50 24 50 24Z" fill="#C68057"/>
+            <text x="50" y="64" font-family="'Great Vibes', cursive" font-size="24" fill="#FAF3E8" text-anchor="middle">T &amp; M</text>
+          </svg>
+        </div>
+        <p class="intro-caption">An Auspicious Union</p>
+        <h1 class="intro-couple">Tejas &amp; Mitali</h1>
+        <div class="intro-tap-prompt">
+          <span class="tap-pulse-ring"></span>
+          <button type="button" class="tap-btn" id="start-btn" aria-label="Open Invitation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tap-hand-icon">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+            </svg>
+            <span>Tap Anywhere to Open</span>
+          </button>
+        </div>
+        <p class="intro-date">17 • FEBRUARY • 2028</p>
+      </div>
+
+      <!-- Intro Video -->
+      <video
+        id="intro-video"
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        poster="images/vlcsnap-2026-10-29-13h40m48s302.webp"
+        aria-hidden="true"
+      >
+        <source src="https://res.cloudinary.com/dticzwbrv/video/upload/v1793261425/Gemini_Generated_Video_8Cce1df7_Gwr_Video_lbjcfz.mp4" type="video/mp4">
+      </video>
+
+      <!-- Fallback Skip Button -->
+      <button type="button" id="skip-intro-btn" class="skip-btn" aria-label="Skip Intro Video">
+        Skip Intro &rsaquo;
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Global Canvas Petals (Single Canvas Over Full Document)
+       ========================================================================== -->
+  <canvas id="global-petal-canvas" aria-hidden="true"></canvas>
+
+  <!-- ==========================================================================
+       Floating Music FAB (Revealed Post-Video)
+       ========================================================================== -->
+  <button id="music-fab" class="music-fab" aria-label="Toggle background music" type="button">
+    <!-- Music Playing Icon -->
+    <svg class="music-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 18V5l12-2v13"></path>
+      <circle cx="6" cy="18" r="3" fill="currentColor"></circle>
+      <circle cx="18" cy="16" r="3" fill="currentColor"></circle>
+    </svg>
+    <!-- Music Muted Icon -->
+    <svg class="music-icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="1" y1="1" x2="23" y2="23"></line>
+      <path d="M9 18V5l12-2v4"></path>
+      <path d="M15 11.5V16"></path>
+      <circle cx="6" cy="18" r="3"></circle>
+      <circle cx="18" cy="16" r="3"></circle>
+    </svg>
+    <span class="music-ripple"></span>
+  </button>
+
+  <!-- ==========================================================================
+       Scroll Down Indicator (Revealed Post-Video)
+       ========================================================================== -->
+  <div id="scroll-indicator" class="scroll-indicator" aria-hidden="true">
+    <span class="scroll-text">Scroll to explore</span>
+    <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+
+  <!-- ==========================================================================
+       Background Audio Source
+       ========================================================================== -->
+  <audio id="bg-music" loop preload="none" aria-hidden="true">
+    <source src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ==========================================================================
+       Main Mobile App Container (container-type: inline-size)
+       ========================================================================== -->
+  <main id="app">
+
+    <!-- ------------------------------------------------------------------------
+         SECTION 1: HERO / COVER (Sec1.webp)
+         ------------------------------------------------------------------------ -->
+    <section id="sec-1" class="wedding-sec" aria-label="Hero Invitation Cover">
+      <div class="sec-bg" style="background-image: url('images/Sec1.webp');"></div>
+
+      <!-- Mandala Center Names & Date Overlay -->
+      <div class="sec1-content">
+        <!-- Couple's Names in Center Circle (Mandala Center: 50cqw, 110.5cqw) -->
+        <div class="sec1-names-group gsap-reveal">
+          <span class="couple-name">Tejas</span>
+          <span class="couple-ampersand">&amp;</span>
+          <span class="couple-name" style="margin-top: -3.4cqw;">Mitali</span>
+        </div>
+
+        <!-- Curved Date along Inner Mandala Rim -->
+        <svg class="sec1-curved-date-svg gsap-reveal" viewBox="0 0 800 1729" aria-hidden="true">
+          <defs>
+            <path id="sec1DateArc" d="M 139.5 1060.4 A 318 318 0 0 0 660.5 1060.4" fill="none"/>
+          </defs>
+          <text class="sec1-date-text" font-size="24" font-family="'Cormorant Garamond', Georgia, serif" font-weight="600" letter-spacing="0.32em" fill="#68253A" text-anchor="middle">
+            <textPath href="#sec1DateArc" startOffset="50%">
+              • 17 FEBRUARY 2028 •
+            </textPath>
+          </text>
+        </svg>
+
+        <!-- Subtitle below Mandala -->
+        <p class="sec1-sacred-quote gsap-reveal">
+          Two hearts, seven sacred steps
+        </p>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         SECTION 2: WELCOME (Sec2.webp)
+         ------------------------------------------------------------------------ -->
+    <section id="sec-2" class="wedding-sec" aria-label="Welcome to our Wedding">
+      <div class="sec-bg" style="background-image: url('images/Sec2.webp');"></div>
+
+      <div class="sec2-content">
+        <!-- Top Ornamental Lotus Divider -->
+        <!-- Main Welcome Heading -->
+        <h2 class="sec2-title gsap-reveal">Welcome</h2>
+        <p class="sec2-subtitle gsap-reveal">TO OUR WEDDING</p>
+
+        <!-- Lotus Divider -->
+
+        <!-- Welcome Quote -->
+        <p class="sec2-quote gsap-reveal">
+          Two hearts,<br>
+          one beautiful journey<br>
+          surrounded by the people<br>
+          we love.
+        </p>
+
+        <!-- Couple's Signature -->
+        <div class="sec2-couple gsap-reveal">
+          <span class="sec2-couple-name">Tejas</span>
+          <span class="sec2-couple-amp">&amp;</span>
+          <span class="sec2-couple-name">Mitali</span>
+        </div>
+
+        <!-- Wedding Date -->
+        <p class="sec2-date gsap-reveal">17 FEBRUARY 2028</p>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         SECTION 3: WEDDING CELEBRATIONS / EVENTS (Sec3.webp)
+         ------------------------------------------------------------------------ -->
+    <section id="sec-3" class="wedding-sec" aria-label="Our Wedding Celebrations">
+      <div class="sec-bg" style="background-image: url('images/Sec3.webp');"></div>
+
+      <div class="sec3-content">
+        <!-- Section Header -->
+        <div class="sec3-header gsap-reveal">
+          <h2 class="sec3-title">Our Wedding<br>Celebrations</h2>
+          <p class="sec3-subtitle">Five moments, seven sacred steps</p>
+        </div>
+
+        <!-- Horizontal Swipeable Event Cards Track with Custom EventCard Images -->
+        <div class="carousel-container gsap-reveal" id="events-carousel-wrap">
+          <div class="carousel-track" id="events-carousel-track">
+            
+            <!-- Card 1: MEHNDI (EventCard2.webp) — Active centered on load -->
+            <div class="event-card card-mehndi active" data-index="0" aria-label="Mehndi Ceremony">
+              <img src="images/EventCard2.webp" alt="Mehndi Ceremony" class="event-card-bg-img" loading="eager">
+              <div class="event-card-text-overlay">
+                <h3 class="card-event-title">MEHNDI</h3>
+                <p class="card-event-date">14 FEB 2028</p>
+                <p class="card-event-time">04:00 PM</p>
+              </div>
+            </div>
+
+            <!-- Card 2: HALDI (EventCard1.webp) -->
+            <div class="event-card card-haldi" data-index="1" aria-label="Haldi Ceremony">
+              <img src="images/EventCard1.webp" alt="Haldi Ceremony" class="event-card-bg-img" loading="lazy">
+              <div class="event-card-text-overlay">
+                <h3 class="card-event-title">HALDI</h3>
+                <p class="card-event-date">15 FEB 2028</p>
+                <p class="card-event-time">10:00 AM</p>
+              </div>
+            </div>
+
+            <!-- Card 3: SANGEET (EventCard3.webp) -->
+            <div class="event-card card-sangeet" data-index="2" aria-label="Sangeet Night">
+              <img src="images/EventCard3.webp" alt="Sangeet Night" class="event-card-bg-img" loading="lazy">
+              <div class="event-card-text-overlay">
+                <h3 class="card-event-title">SANGEET</h3>
+                <p class="card-event-date">16 FEB 2028</p>
+                <p class="card-event-time">07:00 PM</p>
+              </div>
+            </div>
+
+            <!-- Card 4: PHERAS (EventCard4.webp) -->
+            <div class="event-card card-pheras" data-index="3" aria-label="Pheras Sacred Wedding">
+              <img src="images/EventCard4.webp" alt="Pheras Sacred Wedding" class="event-card-bg-img" loading="lazy">
+              <div class="event-card-text-overlay">
+                <h3 class="card-event-title">PHERAS</h3>
+                <p class="card-event-date">17 FEB 2028</p>
+                <p class="card-event-time">11:00 AM</p>
+              </div>
+            </div>
+
+            <!-- Card 5: RECEPTION (EventCard5.webp) -->
+            <div class="event-card card-reception" data-index="4" aria-label="Grand Reception">
+              <img src="images/EventCard5.webp" alt="Grand Reception" class="event-card-bg-img" loading="lazy">
+              <div class="event-card-text-overlay">
+                <h3 class="card-event-title">RECEPTION</h3>
+                <p class="card-event-date">18 FEB 2028</p>
+                <p class="card-event-time">07:30 PM</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Carousel Navigation Controls -->
+          <div class="carousel-nav-bar">
+            <button class="carousel-arrow prev" id="carousel-prev-btn" aria-label="Previous Event">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Event Slides">
+              <button class="dot active" data-index="0" role="tab" aria-selected="true" aria-label="Mehndi"></button>
+              <button class="dot" data-index="1" role="tab" aria-selected="false" aria-label="Haldi"></button>
+              <button class="dot" data-index="2" role="tab" aria-selected="false" aria-label="Sangeet"></button>
+              <button class="dot" data-index="3" role="tab" aria-selected="false" aria-label="Pheras"></button>
+              <button class="dot" data-index="4" role="tab" aria-selected="false" aria-label="Reception"></button>
+            </div>
+            <button class="carousel-arrow next" id="carousel-next-btn" aria-label="Next Event">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         SECTION 4: FIND US / MAP (Sec4.webp + MapFrame.webp Overlay)
+         ------------------------------------------------------------------------ -->
+    <section id="sec-4" class="wedding-sec" aria-label="Find Us Map Location">
+      <div class="sec-bg" style="background-image: url('images/Sec4.webp');"></div>
+
+      <div class="sec4-content">
+        <!-- Section Title -->
+        <h2 class="sec4-title gsap-reveal">FIND US</h2>
+
+        <!-- Circular Map Stage with MapFrame.webp Overlay -->
+        <div class="sec4-map-stage gsap-reveal">
+          <!-- Underlying Live Google Map Iframe (Clipped to Circle) -->
+          <div class="map-iframe-container" id="map-iframe-box">
+            <iframe
+              title="Lotus Gardens Location Map"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d899719.5607105995!2d77.28931299999999!3d28.251956!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cd0ad76d4073f%3A0xee503b22d0fb8748!2sLotus%20Gardens!5e0!3m2!1sen!2sin!4v1793250502420!5m2!1sen!2sin"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              aria-label="Google Map showing Lotus Gardens"
+            ></iframe>
+          </div>
+
+          <!-- Decorative Circular Mask Frame (MapFrame.webp) Absolutely Positioned ON TOP -->
+          <img
+            src="images/MapFrame.webp"
+            alt="Decorative Circular Mandala Map Frame"
+            class="sec4-map-frame-overlay"
+            loading="lazy"
+            aria-hidden="true"
+          >
+        </div>
+
+        <!-- Venue Details Below Map -->
+        <div class="sec4-venue-info gsap-reveal">
+
+          <h3 class="sec4-venue-name">The Lotus Garden</h3>
+          <p class="sec4-venue-city">Jaipur, Rajasthan</p>
+
+          <!-- Get Directions Pill Button -->
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Lotus+Gardens"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="get-directions-btn"
+            aria-label="Open Directions in Google Maps"
+          >
+            <span>Get Directions</span>
+            <span class="btn-arrow-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         SECTION 5: RSVP (Sec5.webp)
+         ------------------------------------------------------------------------ -->
+    <section id="sec-5" class="wedding-sec" aria-label="Wedding RSVP">
+      <div class="sec-bg" style="background-image: url('images/Sec5.webp');"></div>
+
+      <div class="sec5-content">
+        <!-- RSVP Heading -->
+        <h2 class="sec5-title gsap-reveal">RSVP</h2>
+
+        <!-- RSVP Form Formatted to Exact Template -->
+        <form id="rsvp-form" class="rsvp-form gsap-reveal" novalidate>
+          
+          <!-- Field 1: Full Name -->
+          <div class="form-row">
+            <label for="guest-name" class="form-icon-label" aria-label="Your Name">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </label>
+            <div class="form-input-wrap">
+              <input type="text" id="guest-name" name="name" class="form-input" placeholder="Your Name" required autocomplete="name">
+            </div>
+          </div>
+
+          <!-- Field 2: Phone Number -->
+          <div class="form-row">
+            <label for="guest-phone" class="form-icon-label" aria-label="Phone Number">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </label>
+            <div class="form-input-wrap">
+              <input type="tel" id="guest-phone" name="phone" class="form-input" placeholder="Phone Number" required autocomplete="tel">
+            </div>
+          </div>
+
+          <!-- Field 3: Attending Radios -->
+          <div class="form-row form-attendance-row">
+            <span class="form-icon-label" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </span>
+            <div class="attendance-options">
+              <span class="attendance-label-text">Attending?</span>
+              <div class="radio-group">
+                <label class="custom-radio">
+                  <input type="radio" name="attending" value="Yes, I'll be there" checked>
+                  <span class="radio-circle"></span>
+                  <span class="radio-text">Yes, I'll be there</span>
+                </label>
+                <label class="custom-radio">
+                  <input type="radio" name="attending" value="Sorry, can't make it">
+                  <span class="radio-circle"></span>
+                  <span class="radio-text">Sorry, can't make it</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Field 4: Number of Guests -->
+          <div class="form-row form-guests-row" id="rsvp-guests-row">
+            <label for="guest-count" class="form-icon-label" aria-label="Number of Guests">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </label>
+            <div class="form-input-wrap custom-select-wrap">
+              <select id="guest-count" name="guests" class="form-select">
+                <option value="1 Guest">Number of Guests: 1</option>
+                <option value="2 Guests" selected>Number of Guests: 2</option>
+                <option value="3 Guests">Number of Guests: 3</option>
+                <option value="4 Guests">Number of Guests: 4</option>
+                <option value="5+ Guests">Number of Guests: 5+</option>
+              </select>
+              <span class="select-chevron" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Field 5: Choose Events -->
+          <div class="form-row form-events-row" id="rsvp-events-row">
+            <span class="form-icon-label" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C8 7 4 10 4 14a8 8 0 0 0 16 0c0-4-4-7-8-12z"></path>
+                <path d="M12 2v20"></path>
+              </svg>
+            </span>
+            <div class="events-checkbox-container">
+              <span class="events-label-text">Choose Events</span>
+              <div class="checkbox-grid">
+                <label class="custom-checkbox">
+                  <input type="checkbox" name="events" value="Haldi" checked>
+                  <span class="checkbox-box"></span>
+                  <span class="checkbox-title">Haldi</span>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" name="events" value="Mehendi" checked>
+                  <span class="checkbox-box"></span>
+                  <span class="checkbox-title">Mehendi</span>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" name="events" value="Sangeet" checked>
+                  <span class="checkbox-box"></span>
+                  <span class="checkbox-title">Sangeet</span>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" name="events" value="Pheras" checked>
+                  <span class="checkbox-box"></span>
+                  <span class="checkbox-title">Pheras</span>
+                </label>
+                <label class="custom-checkbox">
+                  <input type="checkbox" name="events" value="Reception" checked>
+                  <span class="checkbox-box"></span>
+                  <span class="checkbox-title">Reception</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Submit Button -> WhatsApp -->
+          <button type="submit" class="whatsapp-submit-btn" id="rsvp-submit-btn">
+            <span class="wa-btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.711 1.456h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.414z"/>
+              </svg>
+            </span>
+            <span>Reply with love</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="wa-btn-chevron">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </form>
+
+
+
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         SECTION 6: CLOSING / THANK YOU (Sec6.webp)
+         ------------------------------------------------------------------------ -->
+    <section id="sec-6" class="wedding-sec" aria-label="Closing Blessing">
+      <div class="sec-bg" style="background-image: url('images/Sec6.webp');"></div>
+
+      <div class="sec6-content">
+        <!-- Top Stylized Lotus Motif -->
+        <div class="sec6-lotus-motif gsap-reveal" aria-hidden="true">
+          <svg viewBox="0 0 80 50" class="sec6-lotus-svg">
+            <path d="M40 5C40 5 30 18 30 27C30 35 35 38 40 38C45 38 50 35 50 27C50 18 40 5 40 5Z" fill="#E89B93" stroke="#68253A" stroke-width="1.2"/>
+            <path d="M30 27C25 21 15 23 15 30C15 36 21 38 27 37C29 36 30 33 30 27Z" fill="#F4B8B2" stroke="#68253A" stroke-width="1.2"/>
+            <path d="M50 27C55 21 65 23 65 30C65 36 59 38 53 37C51 36 50 33 50 27Z" fill="#F4B8B2" stroke="#68253A" stroke-width="1.2"/>
+          </svg>
+        </div>
+
+        <!-- Couple's Name -->
+        <div class="sec6-names gsap-reveal">
+          <span class="sec6-name">Tejas</span>
+          <span class="sec6-amp">&amp;</span>
+          <span class="sec6-name">Mitali</span>
+        </div>
+
+        <!-- Date -->
+        <p class="sec6-date gsap-reveal">17 FEBRUARY 2028</p>
+
+
+        <!-- Vow Quote -->
+        <p class="sec6-vow-quote gsap-reveal">
+          With seven vows and all our love
+        </p>
+
+        <!-- Footer Centered Inside Bottom Half Mandala Circle -->
+        <footer class="sec6-mandala-footer" role="contentinfo">
+          <p class="footer-designed-by">
+            Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" class="footer-link">Invite&nbsp;Box</a>
+          </p>
+        </footer>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       Mandala Blessing Modal / Toast
+       ========================================================================== -->
+  <div id="toast-notification" class="toast-box" role="status" aria-live="polite">
+    <div class="toast-content" id="toast-message"></div>
+  </div>
+
+  <!-- External JavaScript Block -->
+  <script src="script.js"></script>
+</body>
+</html>
