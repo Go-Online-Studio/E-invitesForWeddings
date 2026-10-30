@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Arjun &amp; Kavya — Wedding Invitation</title>
+  <meta name="description" content="You are cordially invited to celebrate the wedding celebrations of Arjun &amp; Kavya on 10 February 2028.">
+  <meta name="theme-color" content="#083d30">
+
+  <!-- Preload Critical Video -->
+  <link rel="preload" href="https://res.cloudinary.com/dticzwbrv/video/upload/v1793334309/Gemini_Generated_Video_22375A61_joflhg.mp4" as="video" type="video/mp4">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- GSAP for Smooth Scroll & Entrance Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Landscape Warning Overlay -->
+  <div id="landscape-warning" role="alert" aria-live="assertive">
+    <svg class="lw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="5" y="2" width="14" height="20" rx="3" ry="3"/>
+      <path d="M12 18h.01"/>
+      <path d="M19 8l3-3m0 0l-3-3m3 3H15" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h2 class="lw-title">Please Rotate Your Device</h2>
+    <p class="lw-text">For the most immersive experience of Arjun &amp; Kavya's wedding invitation, please view in portrait orientation.</p>
+  </div>
+
+  <!-- Single Fixed Global Canvas for Falling Petals -->
+  <canvas id="global-petals" aria-hidden="true"></canvas>
+
+  <!-- Intro Video Layer Overlay -->
+  <div id="intro-layer">
+    <div class="intro-container">
+      <video id="intro-video" playsinline webkit-playsinline preload="auto" poster="images/vlcsnap-2026-10-30-09h53m22s747.webp" src="https://res.cloudinary.com/dticzwbrv/video/upload/v1793334309/Gemini_Generated_Video_22375A61_joflhg.mp4"></video>
+      <div id="tap-screen" role="button" aria-label="Tap to begin celebration">
+        <div class="tap-content">
+          
+          <h1 class="tap-title">Arjun &amp; Kavya</h1>
+          <p class="tap-subtitle">The Wedding Invitation</p>
+          <div class="tap-button-pill">
+            <svg class="tap-play-icon" viewBox="0 0 24 24">
+              <polygon points="6,4 20,12 6,20"/>
+            </svg>
+            <span>Tap to Open Invitation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Music Floating Action Button (FAB) -->
+  <button id="mfab" aria-label="Toggle background music" onclick="toggleMusic()">
+    <svg id="icon-on" class="mfab-icon" viewBox="0 0 24 24">
+      <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <svg id="icon-off" class="mfab-icon" viewBox="0 0 24 24">
+      <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+      <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <!-- Background Music Audio -->
+  <audio id="bg-music" loop preload="auto" src="images/ikoliks_aj-indian-india-hindi-song-music-3922142.mp3"></audio>
+
+  <!-- Main Container (#app) with Container Query Context -->
+  <main id="app">
+
+    <!-- ====================================================================
+         SECTION 1: Cover & Countdown
+         ==================================================================== -->
+    <section id="sec-cover" class="section">
+
+      <!-- Scroll Down Bouncing Indicator -->
+      <div id="scroll-indicator" aria-hidden="true">
+        <span class="scroll-text">Scroll Down</span>
+        <svg class="scroll-arrow" viewBox="0 0 24 24">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+
+      <div class="cover-content">
+        <p class="cover-pretitle reveal">Together with their families</p>
+        <div class="couple-names reveal delay-1">
+          <span class="name">Arjun</span>
+          <span class="ampersand">&amp;</span>
+          <span class="name">Kavya</span>
+        </div>
+
+
+        <p class="cover-date reveal delay-2">10 February 2028</p>
+
+        <!-- Countdown Timer: 4 Blocks -->
+        <div class="countdown-grid reveal delay-3">
+          <div class="countdown-box">
+            <span class="cd-val" id="cd-days">000</span>
+            <span class="cd-lbl">Days</span>
+          </div>
+          <div class="countdown-box">
+            <span class="cd-val" id="cd-hours">00</span>
+            <span class="cd-lbl">Hours</span>
+          </div>
+          <div class="countdown-box">
+            <span class="cd-val" id="cd-mins">00</span>
+            <span class="cd-lbl">Minutes</span>
+          </div>
+          <div class="countdown-box">
+            <span class="cd-val" id="cd-secs">00</span>
+            <span class="cd-lbl">Seconds</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 2: Welcome Message
+         ==================================================================== -->
+    <section id="sec-welcome" class="section">
+      <div class="welcome-content">
+        <h2 class="welcome-heading reveal">
+          <span>With your</span>
+          <span>blessings</span>
+        </h2>
+
+
+        <p class="welcome-text reveal delay-2" >
+          We are delighted to invite you to share in our joy as we begin this beautiful journey together. Your presence will make our celebration even more special.
+        </p>
+
+        <div class="welcome-footer reveal delay-4">
+          <p class="welcome-footer-love">With love,</p>
+          <p class="welcome-footer-family">The Sharma Family</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 3: Wedding Events (5 Event Cards)
+         ==================================================================== -->
+    <section id="sec-events" class="section">
+      <div class="events-header-wrap reveal">
+        <h2 class="events-title">Wedding Events</h2>
+      </div>
+
+      <div class="events-list">
+        <!-- 1. Haldi -->
+        <div class="event-card reveal">
+          <div class="event-artwork-spacer"></div>
+          <div class="event-details" style="margin-top: 2cqw;">
+            <h3 class="event-name">Haldi</h3>
+            <div class="event-meta">
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>08 February 2028</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>10:00 AM</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Venue Name, City</span>
+              </div>
+            </div>
+            <div class="event-actions">
+              <button type="button" class="btn-cal" onclick="addToCalendar('Haldi', '20280208T100000', '20280208T130000', 'Haldi Ceremony of Arjun &amp; Kavya', 'Venue Name, City')">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+                Add to calendar
+              </button>
+              <a href="https://maps.google.com/?q=Taj+Palace+New+Delhi" target="_blank" rel="noreferrer" class="btn-map">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                Map
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Mehendi -->
+        <div class="event-card reveal">
+          <div class="event-artwork-spacer"></div>
+          <div class="event-details">
+            <h3 class="event-name">Mehendi</h3>
+            <div class="event-meta">
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>08 February 2028</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>4:00 PM</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Venue Name, City</span>
+              </div>
+            </div>
+            <div class="event-actions">
+              <button type="button" class="btn-cal" onclick="addToCalendar('Mehendi', '20280208T160000', '20280208T190000', 'Mehendi Ceremony of Arjun &amp; Kavya', 'Venue Name, City')">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+                Add to calendar
+              </button>
+              <a href="https://maps.google.com/?q=Taj+Palace+New+Delhi" target="_blank" rel="noreferrer" class="btn-map">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                Map
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Sangeet -->
+        <div class="event-card reveal">
+          <div class="event-artwork-spacer"></div>
+          <div class="event-details">
+            <h3 class="event-name">Sangeet</h3>
+            <div class="event-meta">
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>09 February 2028</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>6:00 PM</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Venue Name, City</span>
+              </div>
+            </div>
+            <div class="event-actions">
+              <button type="button" class="btn-cal" onclick="addToCalendar('Sangeet', '20280209T180000', '20280209T230000', 'Sangeet Night of Arjun &amp; Kavya', 'Venue Name, City')">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+                Add to calendar
+              </button>
+              <a href="https://maps.google.com/?q=Taj+Palace+New+Delhi" target="_blank" rel="noreferrer" class="btn-map">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                Map
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Pheras -->
+        <div class="event-card reveal">
+          <div class="event-artwork-spacer"></div>
+          <div class="event-details">
+            <h3 class="event-name">Pheras</h3>
+            <div class="event-meta">
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>10 February 2028</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>10:00 AM</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Venue Name, City</span>
+              </div>
+            </div>
+            <div class="event-actions">
+              <button type="button" class="btn-cal" onclick="addToCalendar('Pheras', '20280210T100000', '20280210T140000', 'Pheras &amp; Wedding Ceremony of Arjun &amp; Kavya', 'Venue Name, City')">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+                Add to calendar
+              </button>
+              <a href="https://maps.google.com/?q=Taj+Palace+New+Delhi" target="_blank" rel="noreferrer" class="btn-map">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                Map
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Reception -->
+        <div class="event-card reveal">
+          <div class="event-artwork-spacer"></div>
+          <div class="event-details">
+            <h3 class="event-name">Reception</h3>
+            <div class="event-meta">
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>10 February 2028</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>7:00 PM</span>
+              </div>
+              <div class="meta-row">
+                <svg class="meta-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Venue Name, City</span>
+              </div>
+            </div>
+            <div class="event-actions">
+              <button type="button" class="btn-cal" onclick="addToCalendar('Reception', '20280210T190000', '20280210T235900', 'Grand Wedding Reception of Arjun &amp; Kavya', 'Venue Name, City')">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+                Add to calendar
+              </button>
+              <a href="https://maps.google.com/?q=Taj+Palace+New+Delhi" target="_blank" rel="noreferrer" class="btn-map">
+                <svg class="btn-action-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                Map
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 4: Venue
+         ==================================================================== -->
+    <section id="sec-venue" class="section">
+      <div class="venue-header-wrap reveal">
+        <h2 class="venue-title">Venue</h2>
+      </div>
+
+      <!-- Centered Map Container -->
+      <div class="venue-map-wrap reveal delay-1">
+        <img src="images/venue-map.png" alt="Venue Location Map" class="venue-map-img" loading="lazy">
+      </div>
+
+      <div class="venue-info-wrap reveal delay-2">
+        <h3 class="venue-name">Venue Name</h3>
+        <h4 class="venue-city">City</h4>
+
+        <div class="venue-address">
+          <p>123 Celebration Road,</p>
+          <p>Area Name,</p>
+          <p>City - 000000</p>
+        </div>
+
+        <a href="https://maps.google.com/?q=Taj+Palace+New+Delhi" target="_blank" rel="noreferrer" class="btn-directions">
+          Get directions &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 5: RSVP Form
+         ==================================================================== -->
+    <section id="sec-rsvp" class="section">
+      <div class="rsvp-header-wrap reveal">
+        <h2 class="rsvp-title">Kindly respond</h2>
+      </div>
+
+      <div class="rsvp-card reveal delay-1">
+        <!-- Floating Alert Tooltip -->
+        <div id="rsvp-alert" class="rsvp-alert" role="alert" aria-live="polite">
+          <svg class="rsvp-alert-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+          </svg>
+          <span id="rsvp-alert-text"></span>
+        </div>
+
+        <form id="rsvp-form" onsubmit="handleRsvpSubmit(event)" novalidate>
+          <div class="form-group">
+            <label for="rsvp-name" class="form-label">Name</label>
+            <input type="text" id="rsvp-name" class="form-input" placeholder="Your name" autocomplete="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="rsvp-phone" class="form-label">Phone</label>
+            <input type="tel" id="rsvp-phone" class="form-input" placeholder="Your phone number" autocomplete="tel" required>
+          </div>
+
+          <div class="form-group" id="attendance-group">
+            <label class="form-label">Will you be joining us?</label>
+            <div class="radio-options">
+              <label class="radio-btn accept active" id="btn-accept">
+                <input type="radio" name="attendance" value="accept" checked onchange="toggleAttendance('accept')">
+                <span class="radio-indicator"></span>
+                <span class="radio-text">Joyfully accept</span>
+              </label>
+              <label class="radio-btn decline" id="btn-decline">
+                <input type="radio" name="attendance" value="decline" onchange="toggleAttendance('decline')">
+                <span class="radio-indicator"></span>
+                <span class="radio-text">Regretfully decline</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" id="guests-selection">
+            <label for="rsvp-guests" class="form-label">Number of guests</label>
+            <div class="select-wrapper">
+              <select id="rsvp-guests" class="form-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6+">6+</option>
+              </select>
+              <svg class="select-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+
+          <!-- Which events will you attend? (disabled if declined) -->
+          <div class="form-group" id="events-selection">
+            <label class="form-label">Which events will you attend?</label>
+            <div class="checkbox-list">
+              <label class="checkbox-item">
+                <input type="checkbox" name="rsvp-event" value="Haldi" checked>
+                <span class="chk-box"></span>
+                <span>Haldi</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="rsvp-event" value="Mehendi" checked>
+                <span class="chk-box"></span>
+                <span>Mehendi</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="rsvp-event" value="Sangeet" checked>
+                <span class="chk-box"></span>
+                <span>Sangeet</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="rsvp-event" value="Pheras" checked>
+                <span class="chk-box"></span>
+                <span>Pheras</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="rsvp-event" value="Reception" checked>
+                <span class="chk-box"></span>
+                <span>Reception</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-rsvp">
+            <span>Send RSVP</span>
+            <span>&rarr;</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 6: Thank You
+         ==================================================================== -->
+    <section id="sec-thankyou" class="section">
+      <div class="thankyou-content">
+        <h2 class="thankyou-heading reveal">Thank You</h2>
+        <div class="thankyou-message reveal delay-2">
+          <p>Your love, blessings and presence mean the world to us.</p>
+          <p>We are truly grateful to have you as a part of our special day.</p>
+        </div>
+
+        <div class="thankyou-couple reveal delay-4">
+          <span class="name">Arjun</span>
+          <span class="ampersand">&amp;</span>
+          <span class="name">Kavya</span>
+        </div>
+
+        <p class="thankyou-date reveal delay-5">10 February 2028</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         STRICT FOOTER REQUIREMENT
+         ==================================================================== -->
+    <footer class="footer" style="padding: 8px 8px max(8px, env(safe-area-inset-right, 0px)); text-align: center; border-top: 1px solid rgba(231,191,133,0.2);">
+      <p style="font-size:0.75rem; color:var(--text-muted);">
+        Designed by <a href="https://invitebox.in/" target="_blank" rel="noreferrer" style="color:var(--primary); text-decoration:none; font-weight:600;">Invite&nbsp;Box</a>
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
+
