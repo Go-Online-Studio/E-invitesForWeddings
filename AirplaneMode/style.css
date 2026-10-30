@@ -276,20 +276,16 @@ body.unlocked {
    ========================================================================== */
 #intro-layer {
   position: fixed;
-  inset: 0;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100vw;
   width: 100%;
   height: 100%;
   height: 100vh;
-  height: 100lvh;
-  min-height: 100%;
-  min-height: 100vh;
-  min-height: 100lvh;
-  min-height: -webkit-fill-available;
+  height: 100dvh;
+  height: calc(var(--vh, 1vh) * 100);
+  height: -webkit-fill-available;
   z-index: 99999;
   background-color: #030812;
   display: flex;
@@ -300,6 +296,7 @@ body.unlocked {
   user-select: none;
   touch-action: none;
   overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
   transition: opacity 0.8s ease;
 }
 
@@ -308,7 +305,10 @@ body.unlocked {
   width: 100%;
   max-width: var(--card-width);
   height: 100%;
-  min-height: 100%;
+  height: 100vh;
+  height: 100dvh;
+  height: calc(var(--vh, 1vh) * 100);
+  height: -webkit-fill-available;
   overflow: hidden;
   background: #02060d;
   container-type: inline-size;
@@ -489,7 +489,7 @@ body.unlocked {
 /* Bottom Tap Prompt */
 .intro-prompt {
   position: absolute;
-  bottom: max(38px, calc(env(safe-area-inset-bottom, 0px) + 32px));
+  bottom: max(60px, calc(env(safe-area-inset-bottom, 0px) + 54px));
   left: 0;
   right: 0;
   display: flex;
@@ -503,7 +503,7 @@ body.unlocked {
 
 @media (max-height: 680px) {
   .intro-prompt {
-    bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+    bottom: max(44px, calc(env(safe-area-inset-bottom, 0px) + 38px));
   }
 }
 

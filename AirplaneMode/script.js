@@ -1,11 +1,15 @@
-    /* 1. Viewport Height Safe Cascade */
+    /* 1. Viewport Height Safe Cascade (iOS-aware) */
     function setActualVh() {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      var vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight) * 0.01;
+      document.documentElement.style.setProperty('--vh', vh + 'px');
+      /* Force-set intro-layer height for older iOS that ignores dvh */
+      var intro = document.getElementById('intro-layer');
+      if (intro) intro.style.height = (vh * 100) + 'px';
     }
     setActualVh();
     window.addEventListener('resize', setActualVh);
-    window.addEventListener('orientationchange', () => setTimeout(setActualVh, 150));
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', setActualVh);
+    window.addEventListener('orientationchange', function() { setTimeout(setActualVh, 150); });
 
     /* 2. Manual Scroll Restoration on Load */
     if ('scrollRestoration' in history) {
