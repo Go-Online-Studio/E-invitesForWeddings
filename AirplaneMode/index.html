@@ -23,7 +23,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <!-- Custom Modular Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=1.0">
+  <link rel="stylesheet" href="style.css?v=1.1">
 </head>
 <body>
 
@@ -113,9 +113,6 @@
       <!-- Layer 3: Overlay (Top airplane cabin frame) -->
       <img class="intro-overlay-img" src="images/Overlay.webp" alt="Airplane interior cabin view" fetchpriority="high" loading="eager" decoding="async">
 
-      <!-- Natural Sun Flood Light coming inside cabin from window -->
-      <div class="intro-cabin-light"></div>
-
       <!-- Prompt: TAP TO OPEN -->
       <div class="intro-prompt" id="intro-prompt">
         <button class="intro-tap-btn" type="button">TAP TO OPEN</button>
@@ -125,6 +122,9 @@
       </div>
 
     </div>
+
+    <!-- Natural Sun Flood Light - outside intro-stage so it covers full viewport on iOS -->
+    <div class="intro-cabin-light"></div>
   </div>
 
   <!-- 5. Main Application (#app) Constrained Container -->
@@ -965,6 +965,6 @@
        Inline JavaScript
        ========================================================================== -->
   <!-- Custom Modular Application Script -->
-  <script src="script.js?v=1.0" defer></script>
+  <script src="script.js?v=1.1" defer></script>
 </body>
 </html>

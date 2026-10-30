@@ -458,14 +458,21 @@ body.unlocked {
   transition: filter 1.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Natural Sunlight Flood coming inside the cabin from the window */
+/* Natural Sunlight Flood coming inside the cabin from the window
+   Now a direct child of #intro-layer (fixed fullscreen) so it
+   covers the entire visible area including behind iOS browser chrome */
 .intro-cabin-light {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   background: 
         /* Soft directional sunlight beam emanating from the window aperture */
     radial-gradient(
-      ellipse 83% 63% at 48% 47%,
+      ellipse 83% 63% at 48% 45%,
       rgb(255 248 225 / 34%) 0%,
       rgb(255 228 160 / 28%) 35%,
       rgb(255 200 110 / 13%) 65%,
